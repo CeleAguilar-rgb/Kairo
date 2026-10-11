@@ -1,0 +1,88 @@
+/*
+ * Primitivos: valores crudos extraídos de las pantallas del canvas de diseño
+ * (docs/design/screens/Main.dc.html, Tareas.dc.html, TareaNueva.dc.html).
+ * Nombran el valor, no el uso. Nadie fuera de semantic.css/modes/ debería
+ * usar estas variables directamente — ver docs/guides/theming.md.
+ */
+
+:root {
+  /* Color: crema / superficie */
+  --cream-50: #fffdf9;
+  --cream-100: #f7f2ea;
+  --cream-200: #f3eee6;
+  --cream-300: #f0eadf;
+
+  /* Color: bordes */
+  --sand-100: #efe8dd;
+  --sand-200: #e6ded2;
+  --sand-300: #d8cfc2;
+
+  /* Color: tinta (texto y superficies oscuras) */
+  --ink-900: #1f1c19;
+  --ink-800: #3a3530;
+  --ink-700: #4a443d;
+  --ink-600: #6b645b;
+  --ink-500: #8a8278;
+  --ink-on-dark-muted: #b8b0a5;
+  --ink-on-dark-soft: #cfc8bd;
+
+  /* Color: acento lavanda */
+  --lavender-100: #e9e7fb;
+  --lavender-300: #cbc6f5;
+  --lavender-600: #6a62d6;
+  --lavender-ink: #3a3480;
+
+  /* Color: cálido de apoyo */
+  --amber-200: #f3e3c3;
+
+  /* Color: error */
+  --danger-700: #8c2f1b;
+  --danger-on-dark: #f6c8bb;
+  --blush-100: #f6e3dd;
+
+  /* Espacio — pasos reales del diseño, no una escala inventada de múltiplos de 4 */
+  --space-1: 4px;
+  --space-2: 6px;
+  --space-3: 8px;
+  --space-4: 10px;
+  --space-5: 12px;
+  --space-6: 14px;
+  --space-7: 16px;
+  --space-8: 18px;
+  --space-9: 20px;
+  --space-10: 22px;
+  --space-11: 24px;
+  --space-12: 28px;
+  --space-13: 32px;
+  --space-14: 44px;
+  --space-15: 56px;
+
+  /* Radios */
+  --radius-8: 8px;
+  --radius-12: 12px;
+  --radius-14: 14px;
+  --radius-20: 20px;
+  --radius-28: 28px;
+  --radius-pill: 999px;
+
+  /* Sombras */
+  --shadow-sm: 0 10px 22px -8px rgba(31, 28, 25, 0.45);
+  --shadow-md: 0 14px 28px -18px rgba(31, 28, 25, 0.5);
+  --shadow-lg: 0 24px 48px -24px rgba(31, 28, 25, 0.45);
+  --shadow-xl: 0 30px 60px -20px rgba(31, 28, 25, 0.45);
+
+  /* Capas translúcidas (hover sobre fondos claros, scrim de modales) */
+  --tint-ink-06: rgba(31, 28, 25, 0.06);
+  --tint-ink-28: rgba(31, 28, 25, 0.28);
+
+  /* Duración y curvas de animación (Motion las reutiliza igual) */
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 380ms;
+  --ease-out: cubic-bezier(0.3, 0.7, 0.2, 1);
+  --ease-spring: cubic-bezier(0.3, 1.6, 0.5, 1);
+
+  /* Fuentes — las variables --font-outfit/--font-gochi las define next/font en layout.tsx */
+  --font-sans: var(--font-outfit), system-ui, sans-serif;
+  --font-script: var(--font-gochi), cursive;
+}

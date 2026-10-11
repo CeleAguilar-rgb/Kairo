@@ -7,6 +7,8 @@ https://claude.ai/artifact/4bUuw6JPtK1D3dV1AhYbXG
 
 Una copia de sus pantallas está en `docs/design/screens/` (un archivo `.dc.html` por pantalla, más `canvas.json` con el índice y los títulos). **El canvas manda**: cuando el usuario lo edite, actualizará esa carpeta. Si una pantalla del repo no coincide con lo que el usuario describe, pregunta cuál es la vigente.
 
+`docs/guides/Kairo-Sistema-de-diseno.pdf` es el sistema de diseño formal (tokens de color con valores claro/oscuro, tipografía, espacio, radios, sombras y specs de componentes). Cuando haya diferencia con un valor aproximado que aparezca en `theming.md`, **manda el PDF** — `theming.md` describe la estructura de capas (primitivos → semánticos → modo), no los valores exactos.
+
 Cómo usarlo:
 - Los colores, tipografías, radios, sombras y espacios se **extraen** de las pantallas a `apps/web/src/styles/tokens.css` (ver `docs/guides/theming.md`). No se copian valores sueltos a los componentes.
 - Las pantallas son una referencia de layout, jerarquía y comportamiento, **no código para pegar**. Los archivos `.dc.html` usan un formato propio del editor (`<x-dc>`, `{{…}}`, estilos en línea); se reescriben como componentes de React con CSS Modules. Cómo leer ese formato: `docs/design/README.md`.

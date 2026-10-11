@@ -1,0 +1,28 @@
+.checkbox {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-8);
+  border: 1.5px solid var(--text-subtle);
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+  transition:
+    background var(--duration-base) ease,
+    border-color var(--duration-base) ease,
+    transform var(--duration-fast) ease;
+}
+
+.checkbox:active {
+  transform: scale(0.9);
+}
+
+.checked {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text);
+}

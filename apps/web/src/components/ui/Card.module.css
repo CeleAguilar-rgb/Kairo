@@ -1,0 +1,18 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-11);
+  border-radius: var(--radius-28);
+}
+
+.surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.inverted {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}

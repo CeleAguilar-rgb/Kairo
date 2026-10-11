@@ -1,0 +1,38 @@
+/*
+ * Semánticos: el único vocabulario que deberían usar los componentes
+ * (var(--surface), var(--text-muted)…), nunca un primitivo de tokens.css.
+ * Nombres y usos tomados de docs/guides/Kairo-Sistema-de-diseno.pdf
+ * (fuente de verdad de tokens desde octubre 2026), en inglés por
+ * consistencia con el resto del código — el PDF los nombra en español
+ * entre paréntesis para que sea fácil ir y volver.
+ *
+ * Este archivo es solo el contrato — no asigna valores. Quien les da
+ * un valor real es el modo activo (hoy modes/light.css, mañana dark.css),
+ * así el modo oscuro es escribir ese archivo y nada más.
+ *
+ * --bg                      fondo general de la app (crema)
+ * --surface                 tarjetas, inputs, popovers (superficie)
+ * --surface-raised          filas, campos, días de la semana (superficie-2)
+ * --surface-muted           pista de barras de progreso, etiquetas neutras, botón secundario (arena-suave)
+ * --surface-inverted        tarjeta destacada por pantalla — la más importante (tarjeta-destacada)
+ * --surface-inverted-muted  pistas e íconos dentro de --surface-inverted (tinta-2)
+ * --border                  borde por defecto de tarjetas y menús (linea)
+ * --border-soft             línea divisoria, más tenue que --border (no está en el PDF; uso propio para separadores de fila)
+ * --border-control          borde de inputs y botón "fantasma" (linea-fuerte)
+ * --text                    texto principal (tinta)
+ * --text-muted              texto secundario: fechas, notas, etiquetas (texto-2)
+ * --text-subtle             placeholder, tachado de "hecho", borde de casilla vacía — nunca texto que se deba leer (texto-3)
+ * --text-on-inverted        texto sobre --surface-inverted (crema)
+ * --text-on-inverted-muted  metadatos sobre --surface-inverted (texto-tenue-oscuro)
+ * --accent                  lo hecho, lo elegido, el avance: checks, anillo, barras, subrayado, doodles (lavanda)
+ * --accent-soft              fondo suave de acento: recordatorios, eventos, chips (lavanda-suave)
+ * --accent-ink               texto sobre --accent-soft (lavanda-tinta)
+ * --focus-ring               anillo de foco de teclado, 2px — nunca para otra cosa (foco)
+ * --danger                   error / acción destructiva, siempre sobre --surface (peligro)
+ * --danger-soft               fondo de confirmaciones de borrar (peligro-suave)
+ * --danger-on-inverted        error sobre --surface-inverted
+ * --surface-hover             tinte sutil al pasar el mouse sobre superficies planas (no está en el PDF)
+ *
+ * --success: pendiente. El PDF no define un verde — "lavanda" ya cubre
+ * lo hecho/el avance; se agrega si aparece un uso que de verdad lo pida.
+ */

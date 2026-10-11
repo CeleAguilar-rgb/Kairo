@@ -25,7 +25,7 @@ apps/web/src/styles/
 
 ## Paleta y tipografía observadas en el diseño
 
-Referencia para arrancar; **verifica contra las pantallas** al crear `tokens.css`:
+Valores aproximados — la referencia exacta es `docs/guides/Kairo-Sistema-de-diseno.pdf` (tokens con nombre, valores de claro/oscuro y specs de componentes). Lo de acá queda como resumen rápido, no se vuelve a actualizar valor por valor:
 
 - **Base cálida crema y tinta casi negra:** tinta `#1f1c19`; fondos `#f3eee6`, `#f7f2ea`, `#fffdf9`; bordes `#e6ded2`; texto secundario `#6b645b`.
 - **Acento lavanda:** `#cbc6f5`, `#e9e7fb`, `#6a62d6`, y `#3a3480` para texto sobre lavanda.

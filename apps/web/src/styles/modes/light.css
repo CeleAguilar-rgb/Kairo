@@ -1,0 +1,36 @@
+/*
+ * Único modo por ahora. Asigna cada semántico de semantic.css a un
+ * primitivo de tokens.css. El modo oscuro (fase posterior) será un
+ * dark.css con esta misma lista — los valores ya están documentados
+ * en docs/guides/Kairo-Sistema-de-diseno.pdf cuando toque escribirlo.
+ */
+
+:root[data-mode='light'] {
+  --bg: var(--cream-200);
+  --surface: var(--cream-50);
+  --surface-raised: var(--cream-100);
+  --surface-muted: var(--cream-300);
+  --surface-inverted: var(--ink-900);
+  --surface-inverted-muted: var(--ink-800);
+
+  --border: var(--sand-200);
+  --border-soft: var(--sand-100);
+  --border-control: var(--sand-300);
+
+  --text: var(--ink-900);
+  --text-muted: var(--ink-600);
+  --text-subtle: var(--ink-500);
+  --text-on-inverted: var(--cream-200);
+  --text-on-inverted-muted: var(--ink-on-dark-muted);
+
+  --accent: var(--lavender-300);
+  --accent-soft: var(--lavender-100);
+  --accent-ink: var(--lavender-ink);
+  --focus-ring: var(--lavender-600);
+
+  --danger: var(--danger-700);
+  --danger-soft: var(--blush-100);
+  --danger-on-inverted: var(--danger-on-dark);
+
+  --surface-hover: var(--tint-ink-06);
+}
