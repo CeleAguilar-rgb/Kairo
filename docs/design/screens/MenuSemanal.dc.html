@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Menú semanal</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Outfit:wght@300;400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1f1c19}a:hover{color:#4a443d}
+.wrap{padding:26px 44px 56px;box-sizing:border-box}
+@media (max-width:720px){.wrap{padding:14px 12px 40px}.topnav{order:3;width:100%}.hide-sm{display:none!important}}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:inherit;font-weight:500;cursor:pointer;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease}
+.pill-dark{background:#1f1c19;color:#f3eee6;box-shadow:0 10px 22px -8px rgba(31,28,25,.45)}
+.pill-dark:hover{transform:translateY(-1px);color:#f3eee6}
+.pill-ghost{background:transparent;border:1px solid #d8cfc2;color:#1f1c19}
+.pill-ghost:hover{background:#f0eadf}
+.pill-danger{background:#8c2f1b;color:#fffdf9}
+.pill-danger:hover{transform:translateY(-1px);color:#fffdf9}
+.navlink{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s ease}
+.navlink:hover{background:rgba(31,28,25,.06)}
+.icon{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;border:0;background:transparent;color:inherit;cursor:pointer;flex-shrink:0}
+.icon:hover{background:rgba(31,28,25,.07)}
+.h2i{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;flex-shrink:0}
+.card{background:#fffdf9;border:1px solid #e6ded2;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:6px}
+.lbl{font-weight:500;font-size:14px}
+.inp{box-sizing:border-box;width:100%;min-height:48px;padding:0 14px;border-radius:14px;border:1px solid #d8cfc2;background:#fffdf9;font:inherit;color:#1f1c19;transition:border-color .2s ease}
+.inp::placeholder{color:#8a8278}
+.inp:focus{outline:2px solid #6a62d6;outline-offset:1px}
+textarea.inp{padding:12px 14px;resize:vertical;line-height:1.55}
+.inp.bad{border-color:#8c2f1b}
+.hint{font-size:13px;color:#6b645b}
+.err{font-size:13px;color:#8c2f1b;display:flex;align-items:center;gap:6px}
+.seg{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .2s ease,color .2s ease}
+.squig{stroke-dasharray:320;animation:draw .9s .2s ease-out both}
+@keyframes draw{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+.pill:focus-visible,.navlink:focus-visible,.icon:focus-visible,.seg:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.squig{animation:none}.pill,.seg,.inp{transition:none}.pill:hover{transform:none}}
+/*common*/
+@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#fffdf9!important;box-shadow:0 18px 40px -16px rgba(31,28,25,.45);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
+.chk{position:relative}.chk::after{content:"";position:absolute;inset:-10px}
+.dotbtn{position:relative}.dotbtn::after{content:"";position:absolute;inset:-4px}
+.bar{transition:none!important;transform-origin:left center;animation:barIn .7s cubic-bezier(.3,.7,.2,1) both}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wbar{transition:none!important;transform-origin:bottom center;animation:wbarIn .6s cubic-bezier(.3,.7,.2,1) both}
+@keyframes wbarIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.bar,.wbar{animation:none}}
+
+.tabs{display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(255,253,249,.7);border:1px solid #e6ded2;align-self:flex-start;overflow-x:auto;max-width:100%;box-sizing:border-box}
+.tab{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border-radius:999px;text-decoration:none;white-space:nowrap;font-weight:500}
+.tab:focus-visible{outline:2px solid #6a62d6;outline-offset:2px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
+@media (max-width:1000px){.grid{grid-template-columns:1fr}}
+.mwrap{overflow-x:auto;margin:0 -4px;padding:4px}
+.mx{display:grid;grid-template-columns:84px repeat(7,minmax(88px,1fr));gap:8px;min-width:756px}
+.dh{display:flex;flex-direction:column;align-items:flex-start;padding:6px 10px;border-radius:12px}
+.slot{all:unset;box-sizing:border-box;min-height:84px;padding:10px 11px;border-radius:16px;display:flex;flex-direction:column;gap:4px;cursor:pointer;font-size:14px;line-height:1.3;transition:transform .15s ease,box-shadow .15s ease,background .2s ease}
+.slot:hover{transform:translateY(-1px)}
+.slot:focus-visible{outline:2px solid #6a62d6;outline-offset:2px}
+.slot.on{box-shadow:0 0 0 2px #fffdf9,0 0 0 4px #1f1c19}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;align-self:flex-start}
+.toggle{all:unset;box-sizing:border-box;width:44px;height:26px;border-radius:999px;position:relative;cursor:pointer;transition:background .2s ease;flex-shrink:0}
+.toggle span{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fffdf9;transition:transform .2s ease;box-shadow:0 1px 3px rgba(31,28,25,.3)}
+.toggle:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+.wk{all:unset;box-sizing:border-box;width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid #e6ded2;background:#fffdf9}
+.wk:focus-visible{outline:2px solid #6a62d6;outline-offset:2px}
+.fill{animation:fill .4s cubic-bezier(.3,.7,.2,1) both}
+@keyframes fill{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slot,.toggle,.toggle span{transition:none}.slot:hover{transform:none}.fill{animation:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: radial-gradient(1200px 600px at 85% -10%, #fbf8f2 0%, rgba(251,248,242,0) 60%), #f3eee6; color: #1f1c19; font-family: 'Outfit', system-ui, sans-serif; font-size: 15px; line-height: 1.5; position: relative; overflow-x: hidden">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 20px">
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Gochi Hand', cursive; font-size: 28px; text-decoration: none; line-height: 1">
+<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#1f1c19" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#cbc6f5" stroke="#1f1c19" stroke-width="3.5"></circle></svg>
+kairo</a>
+<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,253,249,.7); border: 1px solid #e6ded2">
+<a class="navlink nb" href="Main.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
+<a class="navlink nb" href="Tareas.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
+<a class="navlink nx" href="Proyectos.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
+<a class="navlink nb" href="Agenda.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
+<a class="navlink nx" href="FinResumen.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
+<a class="navlink nx" href="EscritosInicio.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
+<a class="navlink nb" href="DiaADia.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
+<a class="navlink nmore" href="Mas.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
+</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #fffdf9; border: 1px solid #e6ded2; flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#1f1c19" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#cbc6f5"></path></svg></a><!--/AV-->
+<a class="pill pill-ghost" href="RutinaEditar.dc.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path></svg>Editar rutina</a>
+</header>
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-family: 'Gochi Hand', cursive; font-weight: 400; font-size: clamp(48px, 12vw, 64px); line-height: 1">Día a día</h1>
+<div style="display: flex; align-items: center; gap: 8px">
+<button class="wk" type="button" aria-label="Semana anterior" onClick="{{prev}}" disabled="{{prevDisabled}}" style="{{prevStyle}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+<span style="min-width: 150px; text-align: center; font-weight: 500">{{weekLabel}}</span>
+<button class="wk" type="button" aria-label="Semana siguiente" onClick="{{next}}" disabled="{{nextDisabled}}" style="{{nextStyle}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+</div>
+</div>
+<nav class="tabs" aria-label="Día a día">
+<a class="tab" href="DiaADia.dc.html" style="color: #1f1c19">Hoy</a>
+<a class="tab" href="MenuSemanal.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6">Menú</a>
+<a class="tab" href="Reporte.dc.html" style="color: #1f1c19">Reporte</a>
+<a class="tab" href="Diario.dc.html" style="color: #1f1c19">Diario</a>
+<a class="tab" href="Metas.dc.html" style="color: #1f1c19">Metas</a>
+</nav>
+</div>
+
+<div class="grid">
+<section class="card" aria-label="Menú de la semana" style="gap: 14px">
+<sc-if value="{{hasMenu}}" hint-placeholder-val="{{true}}">
+<div class="mwrap">
+<div class="mx">
+<span></span>
+<sc-for list="{{heads}}" as="h" hint-placeholder-count="7"><div class="dh" style="{{h.style}}"><span style="font-size: 13px">{{h.dow}}</span><span style="font-size: 20px; font-weight: 500; line-height: 1.1">{{h.num}}</span></div></sc-for>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; justify-content: center; gap: 2px; padding-right: 4px">
+<span style="font-weight: 500">{{r.name}}</span><span class="hint" style="font-size: 12px">{{r.time}}</span>
+</div>
+<sc-for list="{{r.cells}}" as="c" hint-placeholder-count="7">
+<button class="{{c.cls}}" type="button" aria-label="{{c.label}}" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="{{c.style}}">
+<sc-if value="{{c.empty}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; gap: 6px; color: #6b645b; margin: auto"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Agregar</span></sc-if>
+<sc-if value="{{c.full}}" hint-placeholder-val="{{true}}"><span style="font-weight: 500">{{c.dish}}</span></sc-if>
+<sc-if value="{{c.prep}}" hint-placeholder-val="{{false}}"><span class="tag" style="background: #f3e3c3; color: #1f1c19">Meal prep</span></sc-if>
+<sc-if value="{{c.event}}" hint-placeholder-val="{{false}}"><span class="tag" style="background: #e9e7fb; color: #3a3480">Evento</span></sc-if>
+<sc-if value="{{c.ate}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; color: #6a62d6; display: inline-flex; align-items: center; gap: 4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Comido</span></sc-if>
+</button>
+</sc-for>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center; font-size: 13px; color: #4a443d; border-top: 1px solid #f3ede3; padding-top: 12px">
+<span>{{summary}}</span>
+<span style="flex: 1"></span>
+<button type="button" onClick="{{askClear}}" style="all: unset; cursor: pointer; color: #8c2f1b; font-weight: 500; min-height: 36px; display: inline-flex; align-items: center">Vaciar semana</button>
+</div>
+<sc-if value="{{confirmClear}}" hint-placeholder-val="{{false}}">
+<div role="alertdialog" aria-labelledby="cc-t" style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 12px 14px; border-radius: 16px; background: #f6e3dd">
+<span id="cc-t" style="flex: 1; min-width: 200px">¿Vaciar los {{filledN}} platillos de esta semana? Van a la papelera.</span>
+<button class="pill pill-ghost" type="button" onClick="{{cancelClear}}" style="min-height: 40px; background: #fffdf9">Cancelar</button>
+<button class="pill pill-danger" type="button" onClick="{{doClear}}" style="min-height: 40px">Vaciar {{filledN}} platillos</button>
+</div>
+</sc-if>
+</sc-if>
+<sc-if value="{{noMenu}}" hint-placeholder-val="{{false}}">
+<div class="fill" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 56px 16px 48px">
+<svg width="84" height="72" viewBox="0 0 84 72" fill="none" stroke="#1f1c19" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 38h60c0 14-12 24-30 24S12 52 12 38z" fill="#f3e3c3"></path><path d="M30 28c0-6 6-6 6-12M42 28c0-6 6-6 6-12M54 28c0-4 4-5 4-9"></path><path d="M8 62h68"></path></svg>
+<span style="font-family: 'Gochi Hand', cursive; font-size: 30px; line-height: 1">Semana sin menú</span>
+<span style="color: #4a443d; max-width: 400px">{{emptyText}}</span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 6px">
+<button class="pill pill-dark" type="button" onClick="{{copyPrev}}">Copiar {{prevLabel}}</button>
+<button class="pill pill-ghost" type="button" onClick="{{startBlank}}">Empezar en blanco</button>
+</div>
+</div>
+</sc-if>
+</section>
+
+<aside class="card" aria-labelledby="ed-t" style="gap: 16px; position: sticky; top: 16px">
+<sc-if value="{{hasSel}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span class="hint">{{selDay}}</span>
+<h2 id="ed-t" style="margin: 0; font-size: 22px; font-weight: 500">{{selMeal}}</h2>
+</div>
+<div class="field">
+<label class="lbl" for="m-plato">Platillo</label>
+<input id="m-plato" class="inp" type="text" value="{{dish}}" onChange="{{setDish}}" placeholder="Ej. Tinga con arroz">
+</div>
+<div style="display: flex; align-items: center; gap: 10px">
+<button class="toggle" type="button" role="switch" aria-checked="{{prepOn}}" aria-label="Es meal prep" onClick="{{togglePrep}}" style="{{prepBg}}"><span style="{{prepKnob}}"></span></button>
+<span style="font-size: 14px">Es meal prep</span>
+</div>
+<div class="field">
+<label class="lbl" for="m-nota">Nota <span style="font-weight: 400; color: #6b645b">(opcional)</span></label>
+<input id="m-nota" class="inp" type="text" value="{{note}}" onChange="{{setNote}}" placeholder="Ej. Descongelar la noche anterior">
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<button class="pill pill-dark" type="button" onClick="{{save}}">Guardar</button>
+<button class="pill pill-ghost" type="button" onClick="{{repeatWeek}}">{{repeatLabel}}</button>
+<sc-if value="{{canRemove}}" hint-placeholder-val="{{true}}"><button type="button" onClick="{{remove}}" style="all: unset; cursor: pointer; align-self: center; min-height: 40px; display: inline-flex; align-items: center; color: #8c2f1b; font-weight: 500">Quitar platillo</button></sc-if>
+</div>
+<div style="display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 16px; background: #f7f2ea; font-size: 13px; color: #4a443d">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 1px"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+<span>{{blockHint}}</span>
+</div>
+</sc-if>
+<sc-if value="{{noSel}}" hint-placeholder-val="{{false}}">
+<h2 style="margin: 0; font-size: 20px; font-weight: 500">Elige un espacio</h2>
+<span class="hint">Pica un día y una comida para escribir el platillo.</span>
+</sc-if>
+</aside>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    var W0 = {
+      d: [
+        ['Hotcakes de avena con plátano', 'Chilaquiles verdes', 'Hotcakes de avena con plátano', 'Avena con plátano', 'Yogur con granola y fruta', 'Molletes', ''],
+        ['Pollo en salsa verde con arroz', 'Pollo en salsa verde con arroz', 'Tinga con arroz', 'Tinga con arroz', 'Picadillo con papa', 'Pasta con pollo', 'Comida familiar'],
+        ['Sincronizadas', 'Tostadas de pollo', 'Sándwich de pollo', 'Quesadillas con frijoles', 'Pizza', '', 'Cereal con leche']
+      ],
+      prep: { '1-0': 1, '1-1': 1, '1-2': 1, '1-3': 1, '1-4': 1 },
+      note: { '1-3': 'Sacar del congelador la noche anterior', '1-6': 'Casa de mi mamá, 13:00' }
+    };
+    this.state = { wk: 0, weeks: { 0: W0, 1: null }, sel: '1-3', draft: null, confirmClear: false };
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var val = function (e) { return e && e.target ? e.target.value : ''; };
+    var MEALS = [['Desayuno', '7:30', 'Desayunar'], ['Comida', '14:00', 'Comer'], ['Cena', '20:30', 'Cenar']];
+    var DOWS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], DFULL = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+    var base = st.wk === 0 ? 5 : 12, TODAY = st.wk === 0 ? 3 : -1;
+    var w = st.weeks[st.wk];
+    var heads = DOWS.map(function (d, i) { var t = i === TODAY; return { dow: d, num: String(base + i), style: t ? 'background: #1f1c19; color: #f3eee6;' : 'color: #1f1c19;' }; });
+    var filled = 0;
+    var rows = w ? MEALS.map(function (m, mi) {
+      return { name: m[0], time: m[1], cells: DOWS.map(function (d, di) {
+        var key = mi + '-' + di, dish = w.d[mi][di], on = st.sel === key;
+        if (dish) filled++;
+        var past = st.wk === 0 && (di < TODAY || (di === TODAY && mi < 2));
+        var isEvent = dish === 'Comida familiar';
+        var bg = !dish ? 'background: transparent; border: 1.5px dashed #d8cfc2;' : (di === TODAY ? 'background: #e9e7fb;' : 'background: #f7f2ea;');
+        return {
+          cls: on ? 'slot on' : 'slot', style: bg + (past && dish ? ' opacity: .72;' : ''),
+          dish: dish, empty: !dish, full: !!dish, prep: !!w.prep[key] && !!dish, event: isEvent, ate: past && !!dish,
+          label: DFULL[di] + ', ' + m[0] + ': ' + (dish || 'vacío'), pressed: on ? 'true' : 'false',
+          pick: function () { self.setState({ sel: key, draft: null, confirmClear: false }); }
+        };
+      }) };
+    }) : [];
+    var sp = st.sel ? st.sel.split('-').map(Number) : null;
+    var cur = w && sp ? w.d[sp[0]][sp[1]] : '';
+    var dr = st.draft || { dish: cur, prep: !!(w && w.prep[st.sel]), note: (w && w.note[st.sel]) || '' };
+    var setDraft = function (patch) { self.setState({ draft: Object.assign({}, dr, patch) }); };
+    var write = function (fn) { var ws = JSON.parse(JSON.stringify(self.state.weeks)); fn(ws[self.state.wk]); self.setState({ weeks: ws, draft: null }); };
+    var mealName = sp ? MEALS[sp[0]][0] : '';
+    var sameDish = 0;
+    if (w && sp && cur) for (var i = 0; i < 5; i++) if (w.d[sp[0]][i] === cur) sameDish++;
+    var prevW = st.weeks[0];
+    var sw = function (on) { return ['background: ' + (on ? '#1f1c19' : '#d8cfc2') + ';', 'transform: translateX(' + (on ? '18px' : '0') + ');']; };
+    var pk = sw(dr.prep);
+    return {
+      weekLabel: st.wk === 0 ? '5 – 11 oct' : '12 – 18 oct', prevLabel: '5 – 11 oct',
+      prev: function () { self.setState({ wk: 0, sel: '1-3', draft: null, confirmClear: false }); },
+      next: function () { self.setState({ wk: 1, sel: null, draft: null, confirmClear: false }); },
+      prevDisabled: st.wk === 0 ? 'true' : null, prevStyle: st.wk === 0 ? 'opacity: .4; cursor: default;' : '',
+      nextDisabled: st.wk === 1 ? 'true' : null, nextStyle: st.wk === 1 ? 'opacity: .4; cursor: default;' : '',
+      hasMenu: !!w, noMenu: !w, heads: heads, rows: rows,
+      summary: filled + ' de 21 comidas planeadas · comida de lunes a viernes es meal prep',
+      filledN: filled,
+      askClear: function () { self.setState({ confirmClear: true }); },
+      cancelClear: function () { self.setState({ confirmClear: false }); },
+      doClear: function () { var ws = Object.assign({}, self.state.weeks); ws[self.state.wk] = null; self.setState({ weeks: ws, confirmClear: false, sel: null, draft: null }); },
+      confirmClear: st.confirmClear,
+      emptyText: st.wk === 1 ? 'Del 12 al 18 de octubre todavía no hay nada. Copia la semana pasada y cambia lo que quieras, o empieza en blanco.' : 'Vaciaste esta semana. Puedes deshacerlo desde la papelera o empezar otra vez.',
+      copyPrev: function () { var ws = JSON.parse(JSON.stringify(self.state.weeks)); var src = ws[0] || { d: [['', '', '', '', '', '', ''], ['', '', '', '', '', '', ''], ['', '', '', '', '', '', '']], prep: {}, note: {} }; if (self.state.wk === 1 || !ws[0]) { ws[self.state.wk] = { d: src.d, prep: src.prep, note: {} }; self.setState({ weeks: ws, sel: '0-0', draft: null }); } },
+      startBlank: function () { var ws = Object.assign({}, self.state.weeks); ws[self.state.wk] = { d: [['', '', '', '', '', '', ''], ['', '', '', '', '', '', ''], ['', '', '', '', '', '', '']], prep: {}, note: {} }; self.setState({ weeks: ws, sel: '0-0', draft: null }); },
+      hasSel: !!(w && sp), noSel: !(w && sp),
+      selDay: sp ? DFULL[sp[1]] + ' ' + (base + sp[1]) + ' de octubre' : '', selMeal: mealName,
+      dish: dr.dish, note: dr.note, prepOn: dr.prep ? 'true' : 'false', prepBg: pk[0], prepKnob: pk[1],
+      setDish: function (e) { setDraft({ dish: val(e) }); },
+      setNote: function (e) { setDraft({ note: val(e) }); },
+      togglePrep: function () { setDraft({ prep: !dr.prep }); },
+      save: function () { var k = self.state.sel; write(function (x) { x.d[sp[0]][sp[1]] = dr.dish.trim(); if (dr.prep) x.prep[k] = 1; else delete x.prep[k]; x.note[k] = dr.note; }); },
+      repeatLabel: 'Repetir de lunes a viernes',
+      repeatWeek: function () { var d = dr.dish.trim(); if (!d) return; write(function (x) { for (var i = 0; i < 5; i++) { x.d[sp[0]][i] = d; if (dr.prep) x.prep[sp[0] + '-' + i] = 1; } }); },
+      canRemove: !!cur,
+      remove: function () { write(function (x) { x.d[sp[0]][sp[1]] = ''; delete x.prep[self.state.sel]; }); },
+      blockHint: sp ? 'Sale en tu bloque "' + MEALS[sp[0]][2] + '" de las ' + MEALS[sp[0]][1] + ' ese día, y en el aviso si no lo marcas.' : ''
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Escritos · Auralun</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Outfit:wght@300;400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1f1c19}a:hover{color:#4a443d}
+.wrap{padding:26px 44px 56px;box-sizing:border-box}
+@media (max-width:720px){.wrap{padding:14px 12px 40px}.topnav{order:3;width:100%;overflow-x:auto}.hide-sm{display:none!important}.hero-name{font-size:72px!important}}
+.pill{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:inherit;font-weight:500;cursor:pointer;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease}
+.pill-dark{background:#1f1c19;color:#f3eee6;box-shadow:0 10px 22px -8px rgba(31,28,25,.45)}
+.pill-dark:hover{transform:translateY(-1px);color:#f3eee6}
+.navlink{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s ease}
+.navlink:hover{background:rgba(31,28,25,.06)}
+.seg{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .25s ease,color .25s ease}
+.tabs{display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(255,253,249,.7);border:1px solid #e6ded2;align-self:flex-start;max-width:100%;overflow-x:auto}
+.matrix{display:grid;grid-template-columns:150px repeat(4,minmax(150px,1fr));gap:8px;min-width:780px}
+.cellbtn{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:8px;min-height:36px;padding:6px 10px;border-radius:12px;font-size:13px;line-height:1.3;cursor:pointer;transition:transform .2s ease}
+.cellbtn:hover{transform:translateY(-1px)}
+.erabtn{all:unset;box-sizing:border-box;display:flex;flex-direction:column;gap:4px;padding:16px;border-radius:22px;cursor:pointer;min-height:118px;transition:background .25s ease,color .25s ease,box-shadow .25s ease}
+.char{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:18px;cursor:pointer;transition:background .2s ease,box-shadow .2s ease}
+.char:hover{background:#fffdf9}
+.split{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.grow{flex:999 1 520px;min-width:0}
+.side{flex:1 1 320px;max-width:420px;display:flex;flex-direction:column;gap:16px}
+@media (max-width:1080px){.side{max-width:none}}
+.h2i{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;flex-shrink:0}
+.lnk{display:flex;align-items:center;gap:12px;min-height:44px;padding:0 10px;margin:0 -10px;border-radius:12px;text-decoration:none;transition:background .2s ease}
+.lnk:hover{background:#f7f2ea}
+.v0{animation:fv0 .35s ease both}.v1{animation:fv1 .35s ease both}
+@keyframes fv0{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes fv1{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.moon{animation:glow 6s ease-in-out infinite}
+@keyframes glow{0%,100%{opacity:1}50%{opacity:.82}}
+.squig{stroke-dasharray:320;animation:draw .9s .2s ease-out both}
+@keyframes draw{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+.pill:focus-visible,.navlink:focus-visible,.seg:focus-visible,.cellbtn:focus-visible,.erabtn:focus-visible,.char:focus-visible,.lnk:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.squig,.v0,.v1,.moon{animation:none}.cellbtn,.erabtn,.char,.pill,.seg,.lnk{transition:none}.cellbtn:hover{transform:none}}
+/*common*/
+@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#fffdf9!important;box-shadow:0 18px 40px -16px rgba(31,28,25,.45);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
+.chk{position:relative}.chk::after{content:"";position:absolute;inset:-10px}
+.dotbtn{position:relative}.dotbtn::after{content:"";position:absolute;inset:-4px}
+.bar{transition:none!important;transform-origin:left center;animation:barIn .7s cubic-bezier(.3,.7,.2,1) both}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wbar{transition:none!important;transform-origin:bottom center;animation:wbarIn .6s cubic-bezier(.3,.7,.2,1) both}
+@keyframes wbarIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.bar,.wbar{animation:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: radial-gradient(1200px 600px at 85% -10%, #fbf8f2 0%, rgba(251,248,242,0) 60%), #f3eee6; color: #1f1c19; font-family: 'Outfit', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 20px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Gochi Hand', cursive; font-size: 28px; text-decoration: none; line-height: 1">
+<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#1f1c19" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#cbc6f5" stroke="#1f1c19" stroke-width="3.5"></circle></svg>
+kairo</a>
+<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,253,249,.7); border: 1px solid #e6ded2">
+<a class="navlink nb" href="Main.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
+<a class="navlink nb" href="Tareas.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
+<a class="navlink nx" href="Proyectos.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
+<a class="navlink nb" href="Agenda.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
+<a class="navlink nx" href="FinResumen.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
+<a class="navlink nx" href="EscritosInicio.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
+<a class="navlink nb" href="DiaADia.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
+<a class="navlink nmore" href="Mas.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
+</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #fffdf9; border: 1px solid #e6ded2; flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#1f1c19" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#cbc6f5"></path></svg></a><!--/AV-->
+<button class="pill pill-dark" type="button" style="gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path></svg>Escribir</button>
+</header>
+<nav aria-label="Ruta" style="display: flex; align-items: center; gap: 6px; font-size: 14px; color: #6b645b"><a href="EscritosInicio.dc.html" style="color: #6b645b">Escritos</a><span aria-hidden="true">/</span><span style="color: #1f1c19">Auralun</span><span style="flex: 1"></span><a href="BaseDatos.dc.html" style="color: #3a3480">Ver como base de datos</a></nav>
+
+<section aria-label="Auralun" style="position: relative; border-radius: 32px; overflow: hidden; background: #1f1c19; color: #f3eee6; min-height: 280px; display: flex; align-items: flex-end; box-shadow: 0 30px 60px -36px rgba(31,28,25,.8)">
+<svg viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%">
+<rect width="1200" height="300" fill="#1f1c19"></rect>
+<g fill="#f3eee6" opacity=".55"><circle cx="120" cy="40" r="1.6"></circle><circle cx="260" cy="90" r="1.2"></circle><circle cx="420" cy="30" r="1.8"></circle><circle cx="560" cy="70" r="1.2"></circle><circle cx="700" cy="24" r="1.4"></circle><circle cx="1150" cy="60" r="1.6"></circle><circle cx="1060" cy="250" r="1.2"></circle><circle cx="640" cy="140" r="1"></circle><circle cx="340" cy="150" r="1.2"></circle></g>
+<g class="moon"><circle cx="930" cy="128" r="86" fill="#f3e3c3"></circle><circle cx="964" cy="108" r="78" fill="#1f1c19"></circle></g>
+<path d="M760 300c40-60 90-78 140-62s80 4 110-30 90-40 150 6v86z" fill="#3a3530"></path>
+<path d="M600 300c50-40 110-60 170-40s110 10 150-10 110-20 180 20v30z" fill="#2a2622"></path>
+<path d="M1020 40c1.2 12 6 18 21 22-15 2.2-20 8-22 23-2.2-15-7.6-20.6-21.4-22.4 14-4 19.8-10.4 22.4-22.6z" fill="#cbc6f5" stroke="#f3eee6" stroke-width="2" stroke-linejoin="round"></path>
+</svg>
+<div style="position: relative; padding: 28px 32px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px; width: 100%; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 560px">
+<span style="font-size: 13px; color: #d6cfc4">Mundo</span>
+<h1 class="hero-name" style="margin: 0; font-family: 'Gochi Hand', cursive; font-weight: 400; font-size: 104px; line-height: .9; color: #f3e3c3">Auralun</h1>
+<p style="margin: 6px 0 0; color: #e9e3da; font-size: 16px; line-height: 1.55">"Aure", dorado o brillante; "lun", la luna. Un mundo que valora la luz de la luna como fuente de poder y sabiduría.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{stats}}" as="s" hint-placeholder-count="5">
+<span style="display: inline-flex; flex-direction: column; min-width: 76px; padding: 10px 14px; border-radius: 18px; background: rgba(243,238,230,.08); border: 1px solid rgba(243,238,230,.16)"><span style="font-size: 24px; font-weight: 300; line-height: 1.1">{{s.n}}</span><span style="font-size: 12px; color: #d6cfc4">{{s.label}}</span></span>
+</sc-for>
+</div>
+</div>
+</section>
+
+<div class="tabs" role="tablist" aria-label="Secciones de Auralun">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="6">
+<button class="seg" type="button" role="tab" aria-selected="{{t.sel}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.name}}</button>
+</sc-for>
+</div>
+
+<div class="{{anim}}">
+
+<sc-if value="{{isResumen}}" hint-placeholder-val="{{true}}">
+<div class="split">
+<section class="grow" aria-labelledby="h-mx" style="background: #fffdf9; border: 1px solid #e6ded2; border-radius: 28px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span class="h2i" style="background: #e9e7fb; color: #3a3480"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M3 9h18M3 15h18M9 3v18M15 3v18"></path></svg></span>
+<div style="display: flex; flex-direction: column"><h2 id="h-mx" style="margin: 0; font-size: 20px; font-weight: 500">Dónde y cuándo</h2><span style="font-size: 13px; color: #6b645b">Cada región en cada era. Toca algo para abrirlo.</span></div>
+</div>
+<div style="display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: #6b645b">
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 4px; background: #1f1c19"></span>Historia</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 4px; background: #cbc6f5"></span>Lore o registro</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 4px; border: 1.5px dashed #8a8278"></span>Idea por escribir</span>
+</div>
+</div>
+<div style="overflow-x: auto">
+<div class="matrix">
+<span></span>
+<sc-for list="{{eraHeads}}" as="e" hint-placeholder-count="4">
+<button class="cellbtn" type="button" onClick="{{e.pick}}" style="flex-direction: column; align-items: flex-start; gap: 0; padding: 8px 10px; background: transparent">
+<span style="font-weight: 600; font-size: 15px; line-height: 1; color: #6b645b">{{e.num}}</span>
+<span style="font-weight: 600; font-size: 13px">{{e.short}}</span>
+</button>
+</sc-for>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; justify-content: center; padding: 8px 4px; border-top: 1px solid #efe8dd">
+<span style="font-weight: 600">{{r.name}}</span>
+<span style="font-size: 12px; color: #6b645b">{{r.sub}}</span>
+</div>
+<sc-for list="{{r.cells}}" as="c" hint-placeholder-count="4">
+<div style="{{c.style}}">
+<sc-for list="{{c.items}}" as="i" hint-placeholder-count="1">
+<button class="cellbtn" type="button" onClick="{{i.go}}" style="{{i.style}}">{{i.label}}</button>
+</sc-for>
+</div>
+</sc-for>
+</sc-for>
+</div>
+</div>
+</section>
+
+<aside class="side">
+<section aria-labelledby="h-huecos" style="position: relative; background: #e9e7fb; border-radius: 28px; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+<svg width="44" height="44" viewBox="0 0 40 40" fill="#cbc6f5" stroke="#1f1c19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: absolute; top: -12px; right: 18px; transform: rotate(10deg)"><path d="M20 4c.8 8.4 4.2 12.6 15 15.6-10.6 1.6-14 5.6-15.4 16.2C18.4 25.4 14.6 21.4 5 20.2 14.8 17.4 18.8 13 20 4z"></path></svg>
+<h2 id="h-huecos" style="margin: 0; font-size: 20px; font-weight: 500">Huecos por llenar</h2>
+<span style="font-size: 13px; color: #3a3480">Sacados de tus notas en Notion</span>
+<sc-for list="{{gaps}}" as="g" hint-placeholder-count="4">
+<div style="display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 16px; background: rgba(255,253,249,.8)">
+<span style="width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; border-radius: 7px; border: 1.5px solid #3a3480"></span>
+<div style="display: flex; flex-direction: column"><span style="font-weight: 500">{{g.t}}</span><span style="font-size: 13px; color: #6b645b">{{g.d}}</span></div>
+</div>
+</sc-for>
+</section>
+<section aria-labelledby="h-magia" style="background: #fffdf9; border: 1px solid #e6ded2; border-radius: 28px; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span class="h2i" style="background: #f3e3c3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg></span>
+<h2 id="h-magia" style="margin: 0; font-size: 20px; font-weight: 500">Reglas del mundo</h2>
+</div>
+<p style="margin: 0; line-height: 1.6"><strong style="font-weight: 600">Magia Auralun:</strong> fragmentos de luna de las hadas caídas en la guerra de Cross. Pocos seres los poseen; los humanos los encuentran en piedras al minar.</p>
+<p style="margin: 0; line-height: 1.6"><strong style="font-weight: 600">Armas sagradas:</strong> los Bellmore sellan su poder en cuatro armas que pasan de generación en generación.</p>
+<a class="lnk" href="https://app.notion.com/p/12d70850fe924be7b9dbe1cbad832a5d" style="margin-top: 4px"><span class="h2i" style="width: 32px; height: 32px; background: #f7f2ea"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"></path></svg></span><span style="flex: 1">Abrir Auralun en Notion</span></a>
+</section>
+</aside>
+</div>
+</sc-if>
+
+<sc-if value="{{isTimeline}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; overflow-x: auto">
+<sc-for list="{{eras}}" as="e" hint-placeholder-count="4">
+<button class="erabtn" type="button" aria-pressed="{{e.sel}}" onClick="{{e.pick}}" style="{{e.style}}">
+<span style="font-weight: 300; font-size: 28px; line-height: 1">{{e.num}}</span>
+<span style="font-weight: 600; line-height: 1.25">{{e.name}}</span>
+<span style="font-size: 12px; opacity: .75">{{e.count}}</span>
+</button>
+</sc-for>
+</div>
+<section aria-labelledby="h-era" style="background: #fffdf9; border: 1px solid #e6ded2; border-radius: 28px; padding: 26px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: flex-start">
+<div style="display: flex; flex-direction: column; gap: 4px; max-width: 680px">
+<span style="font-size: 13px; color: #6b645b">Era {{cur.num}}</span>
+<h2 id="h-era" style="margin: 0; font-size: 26px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.2">{{cur.name}}</h2>
+<p style="margin: 0; color: #4a443d; font-size: 16px">{{cur.summary}}</p>
+</div>
+<sc-if value="{{cur.hasNote}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; gap: 8px; min-height: 32px; padding: 0 14px; border-radius: 999px; background: #f3e3c3; font-size: 13px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path></svg>Tu nota: {{cur.note}}</span></sc-if>
+</div>
+<ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column">
+<sc-for list="{{cur.events}}" as="v" hint-placeholder-count="5">
+<li style="display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 14px">
+<div style="display: flex; flex-direction: column; align-items: center">
+<span style="{{v.dot}}"></span>
+<span style="{{v.line}}"></span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px; padding-bottom: 20px">
+<span style="font-weight: 600; font-size: 16px">{{v.t}}</span>
+<span style="color: #4a443d; line-height: 1.6; max-width: 76ch">{{v.d}}</span>
+</div>
+</li>
+</sc-for>
+</ol>
+<sc-if value="{{cur.empty}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; align-items: center; gap: 14px; padding: 18px 20px; border-radius: 18px; background: #f7f2ea; color: #6b645b">
+<svg width="40" height="40" viewBox="0 0 40 40" fill="#fffdf9" stroke="#1f1c19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 29c-4.4.2-6.6-3-5.8-6.2.8-3 3.6-4.2 6-3.6.6-4.6 4.8-7.4 9-6.4 3.4.8 5.2 3.4 5.6 6 3.6-.8 7.6 1.6 7.6 5.4 0 3.4-2.6 5-5.6 5-5.6.2-11.2 0-16.8-.2z"></path></svg>
+<span>Esta era todavía no tiene eventos. Agrega el primero cuando tengas la idea clara.</span>
+</div>
+</sc-if>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{isRegiones}}" hint-placeholder-val="{{false}}">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px">
+<section aria-labelledby="h-vad" style="background: #fffdf9; border: 1px solid #e6ded2; border-radius: 28px; overflow: hidden; display: flex; flex-direction: column">
+<svg viewBox="0 0 600 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="width: 100%; height: 150px; display: block"><rect width="600" height="150" fill="#f3e3c3"></rect><circle cx="500" cy="48" r="26" fill="#fffdf9" stroke="#1f1c19" stroke-width="3"></circle><path d="M0 150l90-70 70 40 80-60 90 70 70-35 90 55H0z" fill="#e2c98f" stroke="#1f1c19" stroke-width="3" stroke-linejoin="round"></path><path d="M250 150v-46h16v-14h14v14h12v-20h16v20h12v-14h14v14h16v46z" fill="#1f1c19"></path><path d="M150 40c1 10 5 15 18 18-13 2-17 7-18.6 19.4C147.6 65 143 60 131 58.6c12-3.4 17-9 19-18.6z" fill="#cbc6f5" stroke="#1f1c19" stroke-width="2.5" stroke-linejoin="round"></path></svg>
+<div style="padding: 22px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 10px"><h2 id="h-vad" style="margin: 0; font-size: 26px; font-weight: 500; letter-spacing: -0.01em">Vadronia</h2><span style="font-size: 13px; color: #6b645b">Humanos vigilados por hadas</span></div>
+<p style="margin: 0; color: #4a443d; line-height: 1.6">Unificada bajo el rey Krandalf y dividida después en cuatro reinos por los hermanos Bellmore. Las pocas hadas que quedan se esconden en los bosques del este.</p>
+<h3 style="margin: 4px 0 0; font-size: 14px; font-weight: 600">Reinos</h3>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{kingdoms}}" as="k" hint-placeholder-count="4">
+<button class="cellbtn" type="button" onClick="{{k.go}}" style="background: #f7f2ea; justify-content: space-between; min-height: 48px; padding: 0 14px"><span style="font-weight: 500; font-size: 15px">{{k.name}}</span><span style="font-size: 12px; color: #6b645b; white-space: nowrap">{{k.count}}</span></button>
+</sc-for>
+</div>
+<div style="display: flex; gap: 6px; flex-wrap: wrap"><span style="display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; background: #e9e7fb; color: #3a3480; font-size: 13px">Humanos</span><span style="display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; background: #e9e7fb; color: #3a3480; font-size: 13px">Hadas</span></div>
+<a class="lnk" href="https://app.notion.com/p/2214aa5f773b80828892ce92b53d606a"><span class="h2i" style="width: 32px; height: 32px; background: #f7f2ea"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"></path></svg></span><span style="flex: 1">Abrir Vadronia en Notion</span></a>
+</div>
+</section>
+<section aria-labelledby="h-noc" style="background: #1f1c19; color: #f3eee6; border-radius: 28px; overflow: hidden; display: flex; flex-direction: column">
+<svg viewBox="0 0 600 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="width: 100%; height: 150px; display: block"><rect width="600" height="150" fill="#2a2622"></rect><g fill="#f3eee6" opacity=".6"><circle cx="60" cy="30" r="1.6"></circle><circle cx="180" cy="20" r="1.2"></circle><circle cx="300" cy="50" r="1.4"></circle><circle cx="420" cy="26" r="1.2"></circle></g><circle cx="110" cy="56" r="30" fill="#cbc6f5"></circle><circle cx="124" cy="48" r="28" fill="#2a2622"></circle><path d="M0 150v-40l20-30 16 30 18-46 18 46 16-30 20 30 18-40 18 40 22-36 18 36 20-28 18 28 22-44 20 44 18-30 20 30 22-40 18 40 20-34 18 34 22-46 20 46 18-30 18 30 20-36 18 36 22-30 20 30 18-40 18 40V150z" fill="#1f1c19" stroke="#3a3530" stroke-width="2"></path><circle cx="440" cy="98" r="3" fill="#f3e3c3"></circle><circle cx="452" cy="98" r="3" fill="#f3e3c3"></circle></svg>
+<div style="padding: 22px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 10px"><h2 id="h-noc" style="margin: 0; font-size: 26px; font-weight: 500; letter-spacing: -0.01em; color: #f3e3c3">Nocturnia</h2><span style="font-size: 13px; color: #b8b0a5">Vigilada por cambiaformas</span></div>
+<p style="margin: 0; color: #e9e3da; line-height: 1.6">Hogar de vampiros, hombres lobo y brujas, las hadas traidoras que probaron la magia Auralun. En el Bosque de los Susurros se escondieron los últimos cambiaformas.</p>
+<div style="display: flex; gap: 6px; flex-wrap: wrap"><span style="display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; background: #3a3530; font-size: 13px">Vampiros</span><span style="display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; background: #3a3530; font-size: 13px">Hombres lobo</span><span style="display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; background: #3a3530; font-size: 13px">Brujas</span><span style="display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; background: #3a3530; font-size: 13px">Cambiaformas</span></div>
+<div style="display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 18px; border: 1.5px dashed #4a443d; color: #d6cfc4">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+<span>Todavía no tiene página en tu base de Regiones. Créala cuando empieces su historia.</span>
+</div>
+</div>
+</section>
+<section aria-label="Mapa" style="grid-column: 1 / -1; min-height: 200px; border-radius: 28px; border: 2px dashed #d8cfc2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 24px; text-align: center; color: #6b645b">
+<svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#1f1c19" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"></path><path d="M9 4v14M15 6v14"></path></svg>
+<span style="font-size: 17px; font-weight: 500; color: #1f1c19">Aquí va tu mapa épico</span>
+<span>Súbelo y pon un pin en cada reino y bosque. Al picarlo se abre su ficha.</span>
+<button class="pill pill-dark" type="button" style="margin-top: 6px">Subir mapa</button>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{isHistorias}}" hint-placeholder-val="{{false}}">
+<div class="split">
+<section class="grow" aria-labelledby="h-cuento" style="background: #fffdf9; border: 1px solid #e6ded2; border-radius: 28px; padding: 26px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start">
+<div style="width: 96px; height: 132px; border-radius: 10px 18px 18px 10px; flex-shrink: 0; background: #1f1c19; color: #f3e3c3; display: flex; align-items: center; justify-content: center; box-shadow: inset 8px 0 0 rgba(0,0,0,.25), 0 18px 30px -18px rgba(31,28,25,.7); font-family: 'Gochi Hand', cursive; font-size: 44px">C</div>
+<div style="display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 240px">
+<div style="display: flex; gap: 6px; flex-wrap: wrap"><span style="display: inline-flex; align-items: center; min-height: 26px; padding: 0 10px; border-radius: 999px; background: #f3e3c3; font-size: 12px; font-weight: 500">Era III · Letargo Dorado</span><span style="display: inline-flex; align-items: center; min-height: 26px; padding: 0 10px; border-radius: 999px; background: #e9e7fb; color: #3a3480; font-size: 12px; font-weight: 500">Vadronia</span></div>
+<h2 id="h-cuento" style="margin: 0; font-size: 30px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.15">Un cuento de amores y dragones</h2>
+<p style="margin: 0; color: #4a443d">Historia de Jericó (Sudria) y Eleanor (Nordria) en los miles de años de paz tras la fundación de los cuatro reinos.</p>
+</div>
+</div>
+<div style="display: flex; flex-direction: column">
+<h3 style="margin: 0 0 6px; font-size: 15px; font-weight: 600">Capítulos</h3>
+<sc-for list="{{chapters}}" as="c" hint-placeholder-count="3">
+<a class="lnk" href="{{c.url}}" style="border-top: 1px solid #f3ede3; border-radius: 0; margin: 0; padding: 0; min-height: 52px">
+<span style="font-weight: 500; font-size: 15px; width: 30px; color: #6b645b">{{c.n}}</span>
+<span style="flex: 1; min-width: 0; font-weight: 500">{{c.name}}</span>
+<span style="{{c.statusStyle}}">{{c.status}}</span>
+</a>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h3 style="margin: 0; font-size: 15px; font-weight: 600">Protagonistas</h3>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<sc-for list="{{leads}}" as="p" hint-placeholder-count="2">
+<button class="char" type="button" onClick="{{p.go}}" style="background: #f7f2ea; padding: 6px 14px 6px 6px"><span style="{{p.avatar}}">{{p.initial}}</span><span style="display: flex; flex-direction: column; text-align: left"><span style="font-weight: 500">{{p.short}}</span><span style="font-size: 12px; color: #6b645b">{{p.place}}</span></span></button>
+</sc-for>
+</div>
+</div>
+</section>
+<aside class="side">
+<section aria-labelledby="h-rec" style="background: #fffdf9; border: 1px solid #e6ded2; border-radius: 28px; padding: 22px; display: flex; flex-direction: column; gap: 4px">
+<h2 id="h-rec" style="margin: 0 0 8px; font-size: 20px; font-weight: 500">Material de la historia</h2>
+<sc-for list="{{resources}}" as="r" hint-placeholder-count="5">
+<a class="lnk" href="{{r.url}}"><span class="h2i" style="{{r.iconStyle}}">{{r.icon}}</span><span style="flex: 1">{{r.name}}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6b645b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"></path></svg></a>
+</sc-for>
+</section>
+<section style="display: flex; flex-direction: column; gap: 8px; padding: 20px; border-radius: 28px; border: 2px dashed #d8cfc2">
+<span style="font-size: 13px; color: #6b645b">Próxima historia · Era IV</span>
+<span style="font-size: 20px; font-weight: 500">Historia de Nocturnia</span>
+<span style="color: #6b645b">El desastre mestizo y la crisis que afecta a todo Auralun.</span>
+<button class="pill" type="button" style="align-self: flex-start; background: #1f1c19; color: #f3eee6; min-height: 40px; margin-top: 4px">Empezar historia</button>
+</section>
+</aside>
+</div>
+</sc-if>
+
+<sc-if value="{{isPersonajes}}" hint-placeholder-val="{{false}}">
+<div class="split">
+<div class="grow" style="display: flex; flex-direction: column; gap: 14px">
+<div role="group" aria-label="Filtrar personajes" style="display: flex; gap: 8px; flex-wrap: wrap">
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="6">
+<button class="seg" type="button" aria-pressed="{{g.sel}}" onClick="{{g.pick}}" style="{{g.style}}">{{g.name}}<span style="font-size: 12px; opacity: .7">{{g.count}}</span></button>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px">
+<sc-for list="{{chars}}" as="c" hint-placeholder-count="8">
+<button class="char" type="button" aria-pressed="{{c.sel}}" onClick="{{c.pick}}" style="{{c.style}}">
+<span style="{{c.avatar}}">{{c.initial}}</span>
+<span style="display: flex; flex-direction: column; min-width: 0; text-align: left"><span style="font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{c.short}}</span><span style="font-size: 12px; color: #6b645b">{{c.place}}</span></span>
+</button>
+</sc-for>
+</div>
+</div>
+<aside class="side" aria-labelledby="h-ficha" style="position: relative; background: #1f1c19; color: #f3eee6; border-radius: 28px; padding: 24px; box-shadow: 0 24px 48px -28px rgba(31,28,25,.6)">
+<svg width="44" height="44" viewBox="0 0 40 40" fill="#f3e3c3" stroke="#1f1c19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: absolute; top: -14px; left: -8px; transform: rotate(-12deg)"><path d="M20 13.4c4.2-.4 6.8 2.6 6.6 6.6-.2 4-3.2 6.6-6.8 6.4-4-.2-6.4-3.2-6.2-6.8.2-3.6 2.8-5.8 6.4-6.2z"></path></svg>
+<div style="display: flex; align-items: center; gap: 14px">
+<span style="{{ch.avatarDark}}">{{ch.initial}}</span>
+<div style="display: flex; flex-direction: column; min-width: 0">
+<h2 id="h-ficha" style="margin: 0; font-size: 22px; font-weight: 500; line-height: 1.25">{{ch.name}}</h2>
+<span style="font-size: 14px; color: #b8b0a5">{{ch.meta}}</span>
+</div>
+</div>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{ch.tags}}" as="t" hint-placeholder-count="2"><span style="display: inline-flex; align-items: center; min-height: 28px; padding: 0 12px; border-radius: 999px; background: #3a3530; font-size: 13px">{{t}}</span></sc-for>
+</div>
+<p style="margin: 0; line-height: 1.6; color: #e9e3da">{{ch.desc}}</p>
+<sc-if value="{{ch.hasUrl}}" hint-placeholder-val="{{true}}">
+<a href="{{ch.url}}" style="display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; min-height: 40px; padding: 0 16px; border-radius: 999px; background: #f3eee6; color: #1f1c19; text-decoration: none; font-weight: 500">Abrir ficha en Notion<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"></path></svg></a>
+</sc-if>
+<sc-if value="{{ch.noUrl}}" hint-placeholder-val="{{false}}">
+<span style="font-size: 13px; color: #b8b0a5">Aparece en tu línea del tiempo; todavía no tiene ficha propia.</span>
+</sc-if>
+</aside>
+</div>
+</sc-if>
+
+<sc-if value="{{isEspecies}}" hint-placeholder-val="{{false}}">
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px">
+<sc-for list="{{species}}" as="s" hint-placeholder-count="7">
+<article style="{{s.style}}">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+<h3 style="margin: 0; font-size: 20px; font-weight: 500">{{s.name}}</h3>
+<span style="{{s.tagStyle}}">{{s.region}}</span>
+</div>
+<p style="margin: 0; line-height: 1.55; opacity: .9">{{s.desc}}</p>
+<sc-if value="{{s.hasUrl}}" hint-placeholder-val="{{false}}"><a href="{{s.url}}" style="{{s.linkStyle}}">Ver en Notion</a></sc-if>
+</article>
+</sc-for>
+</div>
+</sc-if>
+
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = { tab: 'resumen', era: 1, group: 'all', char: 'jerico', tick: 0 };
+  }
+  renderVals() {
+    var self = this;
+    var N = 'https://app.notion.com/p/';
+    var go = function (patch) { self.setState(Object.assign({ tick: (self.state.tick + 1) % 2 }, patch)); };
+    var ERAS = [
+      { num: 'I', name: 'Era Lunar', short: 'Lunar', summary: 'Origen de Auralun y división en Vadronia y Nocturnia.', note: 'quedará por encima hasta terminar la historia de Vadronia',
+        ev: [['Separación cósmica', 'La luna y el sol son separados, porque juntos creaban caos en el universo.'], ['Nacimiento de Auralun', 'La Luna encuentra Auralun y, desde su duelo, crea a todas las especies. Después deja de intervenir.'], ['Surge Cross', 'Nace Cross, hija de un cambiaformas y un hada. Su existencia provoca desequilibrio emocional.'], ['Corrupción de Cross', 'Discriminada por su naturaleza, encuentra refugio en la magia Auralun y es corrompida por el odio a las razas favoritas de la Luna.'], ['La era de Cross', 'El odio se expande por las razas; un mundo de paz se vuelve matar o morir.'], ['Años de guerra I', 'Hadas y cambiaformas se unen para acabar con Cross; ambas razas pierden a miles.'], ['Intervención de la Luna', 'Cross es derrotada pero su alma se esconde en el mundo. La Luna separa Auralun: nacen Vadronia y Nocturnia.'], ['Hadas y cambiaformas ocultos', 'Las hadas se esconden en los bosques del este de Vadronia; los cambiaformas, en el Bosque de los Susurros, hasta su extinción.']] },
+      { num: 'II', name: 'Era del Filo Interno / Herederos Caídos', short: 'Filo Interno', summary: 'Historia de Vadronia, guerras internas y fundación de los cuatro reinos.', note: 'corregir cuando haya ideas claras',
+        ev: [['El rey Krandalf', 'Los humanos unifican Vadronia bajo una monarquía y eligen a Krandalf como rey.'], ['Encuentro con el alma de Cross', 'En un viaje, Krandalf encuentra la cueva donde yace el alma de Cross, que se apodera de él.'], ['Guerra de los Tres Siglos', 'Oprimidos por su tiranía, los habitantes se alzan en una guerra larga y sin esperanza.'], ['Los humanos descubren la magia Auralun', 'Al minar encuentran piedras con fragmentos de luna. Krandalf confisca todos los avances para su ejército.'], ['Nacimiento de los Bellmore', 'En el bosque del este nacen Kain, Cain, Kori y Coil; las hadas los bendicen con un fragmento de luna partido en cuatro.'], ['La marcha hacia el sur', 'Los hermanos forman un ejército y marchan al castillo del rey; aparecen los dragones de Krandalf.'], ['Confrontación final', 'Kain lo hiere con el arma de la poción; Kori, al ver que no basta, le clava su espada.'], ['Muerte de Krandalf', 'El alma de Cross huye debilitada. El rey, libre, muere diciendo "Lo siento". Vadronia queda en ruinas.'], ['Fundación de los cuatro reinos', 'Coil propone dividir Vadronia: nacen Sudria, Ovestria, Estria y Nordria.'], ['Las armas sagradas', 'Los hermanos sellan su poder en cuatro armas que pasarán de generación en generación.']] },
+      { num: 'III', name: 'Era del Letargo Dorado', short: 'Letargo Dorado', summary: 'Miles de años de paz y desarrollo humano. Historia de Jericó y Eleanor; tal vez más historias humanas.', note: '', ev: [] },
+      { num: 'IV', name: 'Era de las Sombras Reconocidas', short: 'Sombras Reconocidas', summary: 'Desastre mestizo, historia de Nocturnia y crisis que afecta a todo Auralun.', note: 'nose', ev: [] }
+    ];
+    var CH = [
+      { k: 'jerico', name: 'Jericó Lucienne Bonaventure', short: 'Jericó', g: 'Sudria', role: 'Protagonista', era: 'Era III', url: N + '15c4aa5f773b8038a9d4f2c2df96754a', desc: 'Protagonista de Un cuento de amores y dragones, del reino de Sudria.' },
+      { k: 'eleanor', name: 'Eleanor Josephine Nicholson', short: 'Eleanor', g: 'Nordria', role: 'Protagonista', era: 'Era III', url: N + '15c4aa5f773b8005b4f3f5210c36e429', desc: 'Protagonista de Un cuento de amores y dragones, del reino de Nordria.' },
+      { k: 'lasyl', name: 'Lasyl', short: 'Lasyl', g: 'Sudria', era: 'Era III', url: N + '1104aa5f773b8097956ef7730e8abb92' },
+      { k: 'heinar', name: 'Rey Heinar', short: 'Rey Heinar', g: 'Sudria', era: 'Era III', url: N + '1104aa5f773b803eb8edf527082997e5' },
+      { k: 'ophelia', name: 'Reina Ophelia', short: 'Reina Ophelia', g: 'Sudria', era: 'Era III', url: N + '1104aa5f773b8029be38d833cc486f11' },
+      { k: 'lucas', name: 'Príncipe Lucas', short: 'Príncipe Lucas', g: 'Sudria', era: 'Era III', url: N + '1104aa5f773b80569803dfa5da115448' },
+      { k: 'averet', name: 'Lainus / Averet', short: 'Lainus / Averet', g: 'Sudria', era: 'Era III', url: N + '1104aa5f773b80b585f4ff88be1c1335' },
+      { k: 'gregor', name: 'Rey Gregor', short: 'Rey Gregor', g: 'Nordria', era: 'Era III', url: N + '1104aa5f773b8066ba86e88588325f59' },
+      { k: 'catherine', name: 'Reina Catherine', short: 'Reina Catherine', g: 'Nordria', era: 'Era III', url: N + '1104aa5f773b802bad6acc06317eb485' },
+      { k: 'kainp', name: 'Príncipe Kain', short: 'Príncipe Kain', g: 'Nordria', era: 'Era III', url: N + '1104aa5f773b8047b1d3dff39dc19ec2' },
+      { k: 'lonan', name: 'Príncipe Lonan', short: 'Príncipe Lonan', g: 'Nordria', era: 'Era III', url: N + '1104aa5f773b80e59005f6e0fe09a1dd' },
+      { k: 'orion', name: 'Príncipe Orion', short: 'Príncipe Orion', g: 'Ovestria', era: 'Era III', url: N + '1104aa5f773b804a819fe1fd0652f323' },
+      { k: 'kallias', name: 'Príncipe Kallias', short: 'Príncipe Kallias', g: 'Ovestria', era: 'Era III', url: N + '1104aa5f773b80e19059ecce3d649926' },
+      { k: 'azrael', name: 'Príncipe Azrael', short: 'Príncipe Azrael', g: 'Estria', era: 'Era III', url: N + '1114aa5f773b809ba2bec5ce133e71b8' },
+      { k: 'alaida', name: 'Princesa Alaida', short: 'Princesa Alaida', g: 'Estria', era: 'Era III', url: N + '1114aa5f773b8053a03fd9e9926c2a7e' },
+      { k: 'adeline', name: 'Princesa Adeline', short: 'Princesa Adeline', g: 'Estria', era: 'Era III', url: N + '1114aa5f773b8071828ccb2699e952c6' },
+      { k: 'luna', name: 'Luna (Luneryss)', short: 'Luna (Luneryss)', g: 'Históricos', role: 'Deidad', era: 'Era I', url: N + '21c4aa5f773b80ffa979d7e5fe31b6dd', desc: 'Encuentra Auralun y, desde su duelo, crea a todas las especies. Separa el mundo en Vadronia y Nocturnia para proteger a sus especies.' },
+      { k: 'cross', name: 'Cross', short: 'Cross', g: 'Históricos', role: 'Antagonista', era: 'Era I', url: N + '21c4aa5f773b80e6b8abfa9464dfe537', desc: 'Hija de un cambiaformas y un hada. Corrompida por el odio, su alma sobrevive escondida en el mundo y vuelve a través de Krandalf.' },
+      { k: 'krandalf', name: 'Rey Krandalf', short: 'Rey Krandalf', g: 'Históricos', role: 'Rey de Vadronia', era: 'Era II', desc: 'Primer rey de Vadronia unificada; poseído por el alma de Cross. Muere liberado diciendo "Lo siento".' },
+      { k: 'kain', name: 'Kain Bellmore', short: 'Kain Bellmore', g: 'Históricos', role: 'Hermano Bellmore', era: 'Era II', desc: 'Hiere a Krandalf con el arma que contenía la poción.' },
+      { k: 'cain', name: 'Cain Bellmore', short: 'Cain Bellmore', g: 'Históricos', role: 'Hermano Bellmore', era: 'Era II', desc: 'Uno de los cuatro hermanos bendecidos por las hadas con un fragmento de luna.' },
+      { k: 'kori', name: 'Kori Bellmore', short: 'Kori Bellmore', g: 'Históricos', role: 'Hermana Bellmore', era: 'Era II', desc: 'Duda de la poción y clava su espada en la espalda del rey.' },
+      { k: 'coil', name: 'Coil Bellmore', short: 'Coil Bellmore', g: 'Históricos', role: 'Hermano Bellmore', era: 'Era II', desc: 'Propone dividir Vadronia en cuatro reinos, uno para cada hermano.' }
+    ];
+    var TONE = { 'Sudria': '#f3e3c3', 'Nordria': '#e9e7fb', 'Ovestria': '#f0eadf', 'Estria': '#cbc6f5', 'Históricos': '#1f1c19' };
+    var avatar = function (c, size, ring) {
+      var bg = TONE[c.g], dark = bg === '#1f1c19';
+      return 'width: ' + size + 'px; height: ' + size + 'px; border-radius: 50%; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; font-weight: 500; font-size: ' + Math.round(size * .4) + 'px; line-height: 1; background: ' + bg + '; color: ' + (dark ? '#f3e3c3' : '#1f1c19') + '; border: 2px solid ' + (ring || '#1f1c19') + ';';
+    };
+    var initial = function (c) { return c.short.replace(/^(Rey|Reina|Príncipe|Principe|Princesa) /, '').charAt(0); };
+    var place = function (c) { return c.g === 'Históricos' ? (c.role + ' · ' + c.era) : (c.g + (c.role ? ' · ' + c.role : '')); };
+    var openChar = function (k) { return function () { go({ tab: 'personajes', char: k, group: 'all' }); }; };
+
+    var tab = this.state.tab;
+    var tabs = [['resumen', 'Resumen'], ['timeline', 'Línea del tiempo'], ['regiones', 'Regiones'], ['historias', 'Historias'], ['personajes', 'Personajes'], ['especies', 'Especies']].map(function (t) {
+      var on = tab === t[0];
+      return { name: t[1], sel: on, pick: function () { go({ tab: t[0] }); }, style: on ? 'background: #1f1c19; color: #f3eee6;' : 'color: #1f1c19;' };
+    });
+
+    var item = function (label, kind, fn) {
+      var st = kind === 'story' ? 'background: #1f1c19; color: #f3eee6;' : kind === 'lore' ? 'background: #cbc6f5; color: #1f1c19;' : 'background: transparent; color: #4a443d; border: 1.5px dashed #8a8278;';
+      return { label: label, go: fn, style: st };
+    };
+    var toEra = function (i) { return function () { go({ tab: 'timeline', era: i }); }; };
+    var toTab = function (t) { return function () { go({ tab: t }); }; };
+    var cellStyle = function (has) { return 'display: flex; flex-direction: column; gap: 6px; padding: 8px; border-radius: 14px; min-height: 64px; border-top: 1px solid #efe8dd; ' + (has ? 'background: #f7f2ea;' : 'background: repeating-linear-gradient(135deg, transparent 0 8px, rgba(216,207,194,.35) 8px 9px);'); };
+    var M = [
+      { name: 'Todo Auralun', sub: 'El mundo entero', cells: [[item('Origen y la era de Cross', 'lore', toEra(0))], [], [], [item('Crisis mestiza', 'idea', toEra(3))]] },
+      { name: 'Vadronia', sub: '4 reinos · humanos y hadas', cells: [[item('División del mundo', 'lore', toEra(0))], [item('Crónica del Gran Quiebre', 'lore', toEra(1)), item('Los Bellmore y Krandalf', 'lore', toEra(1))], [item('Un cuento de amores y dragones', 'story', toTab('historias'))], []] },
+      { name: 'Nocturnia', sub: 'Vampiros, lobos y brujas', cells: [[item('Nace Nocturnia', 'lore', toEra(0))], [], [], [item('Historia de Nocturnia', 'idea', toTab('historias'))]] }
+    ];
+    var rows = M.map(function (r) { return { name: r.name, sub: r.sub, cells: r.cells.map(function (c) { return { items: c, style: cellStyle(c.length > 0) }; }) }; });
+    var eraHeads = ERAS.map(function (e, i) { return { num: e.num, short: e.short, pick: toEra(i) }; });
+
+    var ei = this.state.era, ce = ERAS[ei];
+    var eras = ERAS.map(function (e, i) {
+      var on = i === ei;
+      return { num: e.num, name: e.name, count: e.ev.length ? e.ev.length + ' eventos' : 'Sin eventos aún', sel: on, pick: function () { self.setState({ era: i }); },
+        style: on ? 'background: #1f1c19; color: #f3eee6; box-shadow: 0 18px 30px -20px rgba(31,28,25,.7);' : 'background: #fffdf9; color: #1f1c19; box-shadow: inset 0 0 0 1px #e6ded2;' };
+    });
+    var cur = {
+      num: ce.num, name: ce.name, summary: ce.summary, note: ce.note, hasNote: !!ce.note, empty: ce.ev.length === 0,
+      events: ce.ev.map(function (v, i) {
+        var last = i === ce.ev.length - 1;
+        return { t: v[0], d: v[1],
+          dot: 'width: 14px; height: 14px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; ' + (i === 0 || last ? 'background: #1f1c19;' : 'background: #cbc6f5; border: 2px solid #1f1c19; box-sizing: border-box;'),
+          line: 'flex: 1; width: 2px; background: ' + (last ? 'transparent' : '#e6ded2') + '; margin-top: 4px;' };
+      })
+    };
+
+    var kingdoms = ['Sudria', 'Nordria', 'Ovestria', 'Estria'].map(function (k) {
+      var n = CH.filter(function (c) { return c.g === k; }).length;
+      return { name: k, count: n + ' personajes', go: function () { go({ tab: 'personajes', group: k }); } };
+    });
+
+    var grp = this.state.group;
+    var groups = ['all', 'Históricos', 'Sudria', 'Nordria', 'Ovestria', 'Estria'].map(function (g) {
+      var on = grp === g;
+      return { name: g === 'all' ? 'Todos' : g, sel: on, count: String(g === 'all' ? CH.length : CH.filter(function (c) { return c.g === g; }).length),
+        pick: function () { self.setState({ group: g }); },
+        style: on ? 'background: #1f1c19; color: #f3eee6;' : 'background: rgba(255,253,249,.7); color: #1f1c19; box-shadow: inset 0 0 0 1px #e6ded2;' };
+    });
+    var chars = CH.filter(function (c) { return grp === 'all' || c.g === grp; }).map(function (c) {
+      var on = self.state.char === c.k;
+      return { short: c.short, place: place(c), initial: initial(c), sel: on, avatar: avatar(c, 40),
+        pick: function () { self.setState({ char: c.k }); },
+        style: on ? 'background: #fffdf9; box-shadow: inset 0 0 0 2px #1f1c19;' : 'background: rgba(255,253,249,.55); box-shadow: inset 0 0 0 1px #e6ded2;' };
+    });
+    var cc = CH.filter(function (c) { return c.k === self.state.char; })[0] || CH[0];
+    var tags = [cc.g === 'Históricos' ? 'Histórico' : cc.g, cc.era];
+    if (cc.role) tags.unshift(cc.role);
+    var ch = {
+      name: cc.name, meta: cc.g === 'Históricos' ? 'Personaje histórico de Auralun' : 'Reino de ' + cc.g + ', Vadronia',
+      tags: tags, initial: initial(cc), avatarDark: avatar(cc, 64, '#f3eee6'),
+      desc: cc.desc || 'Todavía no hay descripción en el dashboard. Su ficha completa vive en Notion.',
+      url: cc.url || '', hasUrl: !!cc.url, noUrl: !cc.url
+    };
+    var leads = ['jerico', 'eleanor'].map(function (k) { var c = CH.filter(function (x) { return x.k === k; })[0]; return { short: c.short, place: c.g, initial: initial(c), avatar: avatar(c, 40), go: openChar(k) }; });
+
+    var stStyle = function (s) { return 'display: inline-flex; align-items: center; justify-content: center; min-height: 26px; padding: 0 12px; border-radius: 999px; font-size: 12px; font-weight: 500; ' + (s === 'En curso' ? 'background: #1f1c19; color: #f3eee6;' : s === 'Pendiente' ? 'background: #e9e7fb; color: #3a3480;' : 'background: #f0eadf; color: #6b645b;'); };
+    var chapters = [['0', '0.- Antecedentes de Vadronia', 'En curso', '6ba1dc934e3e480085bca1c1657ce49e'], ['I', 'I.- Jericó', 'Pendiente', '9ab00ae0e517457eb219dff014cb2252'], ['?', 'Una noche de constelaciones', 'Sin estado', '1584aa5f773b80a3add8ecb7fc0c7d78']].map(function (c) {
+      return { n: c[0], name: c[1].replace(/^[0-9IVX?]+\.-\s?/, ''), status: c[2], statusStyle: stStyle(c[2]), url: N + c[3] };
+    });
+    var ic = function (bg) { return 'width: 32px; height: 32px; font-size: 14px; font-weight: 600; background: ' + bg + ';'; };
+    var resources = [
+      { name: 'Página de la historia', url: N + 'a272e51c00e24f19951fbdc7e22fd99a', icon: 'C', iconStyle: ic('#f3e3c3') },
+      { name: 'Arcos (borrador)', url: N + '3024aa5f773b80848355d5941b0325df', icon: 'A', iconStyle: ic('#e9e7fb') },
+      { name: 'Crónica del Gran Quiebre', url: N + '2fc4aa5f773b8092ad18fbc31053e843', icon: 'Q', iconStyle: ic('#cbc6f5') },
+      { name: 'Timeline de la historia', url: N + 'ad57d66c7f4b467487479485e92e092c', icon: 'T', iconStyle: ic('#f0eadf') },
+      { name: 'Playlist en Spotify', url: 'https://open.spotify.com/playlist/02mKkeltAnjab76DWw7zR5', icon: '♪', iconStyle: ic('#1f1c19') + ' color: #cbc6f5;' }
+    ];
+
+    var SP = [
+      { name: 'Hadas', region: 'Vadronia', desc: 'Las criaturas más cercanas a la Luna. Vigilan Vadronia; las pocas que quedan se esconden en los bosques del este.', url: N + '2084aa5f773b80a5b8b5d6748bc50c15' },
+      { name: 'Humanos', region: 'Vadronia', desc: 'Unificaron Vadronia bajo Krandalf y hoy viven en los cuatro reinos.' },
+      { name: 'Cambiaformas', region: 'Nocturnia', desc: 'Vigilan Nocturnia. Llevados a la extinción por la unión de brujas, vampiros y hombres lobo.', url: N + '2214aa5f773b8086a423e9d7a58951ed' },
+      { name: 'Vampiros', region: 'Nocturnia', desc: 'Habitantes de Nocturnia.' },
+      { name: 'Hombres lobo', region: 'Nocturnia', desc: 'Habitantes de Nocturnia.' },
+      { name: 'Brujas', region: 'Nocturnia', desc: 'Hadas traidoras que probaron la magia Auralun.' },
+      { name: 'Dragones', region: 'Vadronia', desc: 'Aparecen del lado de Krandalf en la marcha hacia el sur.' }
+    ];
+    var species = SP.map(function (s) {
+      var dark = s.region === 'Nocturnia';
+      return { name: s.name, region: s.region, desc: s.desc, url: s.url || '', hasUrl: !!s.url,
+        style: 'display: flex; flex-direction: column; gap: 10px; padding: 20px; border-radius: 24px; ' + (dark ? 'background: #1f1c19; color: #f3eee6;' : 'background: #fffdf9; border: 1px solid #e6ded2;'),
+        tagStyle: 'display: inline-flex; align-items: center; min-height: 26px; padding: 0 10px; border-radius: 999px; font-size: 12px; font-weight: 500; ' + (dark ? 'background: #3a3530; color: #cbc6f5;' : 'background: #f3e3c3; color: #1f1c19;'),
+        linkStyle: 'font-size: 14px; color: ' + (dark ? '#cbc6f5' : '#3a3480') + ';' };
+    });
+
+    return {
+      tabs: tabs, anim: 'v' + this.state.tick,
+      isResumen: tab === 'resumen', isTimeline: tab === 'timeline', isRegiones: tab === 'regiones', isHistorias: tab === 'historias', isPersonajes: tab === 'personajes', isEspecies: tab === 'especies',
+      stats: [{ n: '4', label: 'eras' }, { n: '2', label: 'regiones' }, { n: '4', label: 'reinos' }, { n: '7', label: 'especies' }, { n: String(CH.length), label: 'personajes' }],
+      rows: rows, eraHeads: eraHeads, eras: eras, cur: cur, kingdoms: kingdoms,
+      groups: groups, chars: chars, ch: ch, leads: leads, chapters: chapters, resources: resources, species: species,
+      gaps: [
+        { t: 'Página de Nocturnia', d: 'Tu base de Regiones solo tiene Vadronia.' },
+        { t: 'Eventos de las Eras III y IV', d: 'Las dos están sin tabla de eventos todavía.' },
+        { t: 'Mapa épico', d: 'En Auralun dejaste "Insert mapa épico".' },
+        { t: 'Nordria o Nodria', d: 'La línea del tiempo dice Nordria y tus personajes dicen Nodria.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

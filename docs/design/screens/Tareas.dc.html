@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Tareas</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Outfit:wght@300;400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1f1c19}a:hover{color:#4a443d}
+.wrap{padding:26px 44px 56px;box-sizing:border-box}
+@media (max-width:720px){.wrap{padding:14px 12px 40px}.topnav{order:3;width:100%;overflow-x:auto}}
+.pill{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:inherit;font-weight:500;cursor:pointer;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease}
+.pill-dark{background:#1f1c19;color:#f3eee6;box-shadow:0 10px 22px -8px rgba(31,28,25,.45)}
+.pill-dark:hover{transform:translateY(-1px);color:#f3eee6}
+.navlink{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s ease}
+.navlink:hover{background:rgba(31,28,25,.06)}
+.seg{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 16px;border-radius:999px;cursor:pointer;font-weight:500;transition:background .25s ease,color .25s ease}
+.fpill{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:0 14px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:background .2s ease,color .2s ease,border-color .2s ease}
+.icon{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:999px;border:0;background:transparent;color:inherit;cursor:pointer;flex-shrink:0}
+.icon:hover{background:rgba(31,28,25,.07)}
+.chk{width:24px;height:24px;flex-shrink:0;border-radius:8px;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s ease,border-color .2s ease,transform .15s ease}
+.chk:active{transform:scale(.9)}
+.rowbtn{all:unset;box-sizing:border-box;flex:1;min-width:0;min-height:48px;display:grid;grid-template-columns:minmax(0,1fr) 200px 44px 64px 76px;align-items:center;gap:12px;cursor:pointer}
+@media (max-width:720px){.rowbtn{grid-template-columns:minmax(0,1fr) 56px 60px}}
+.trow{transition:background .2s ease}
+.trow:hover{background:#f7f2ea}
+.card{transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease;cursor:grab}
+.card:hover{transform:translateY(-2px);box-shadow:0 14px 28px -18px rgba(31,28,25,.5)}
+.col{transition:background .2s ease,box-shadow .2s ease}
+.drawer{transition:transform .38s cubic-bezier(.3,.7,.2,1),visibility .38s}
+.scrim{transition:opacity .3s ease}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:1080px){.board{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:720px){.board{grid-template-columns:1fr}.hide-sm{display:none!important}}
+.h2i{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:10px;flex-shrink:0}
+.squig{stroke-dasharray:320;animation:draw .9s .2s ease-out both}
+@keyframes draw{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+.v0{animation:fv0 .3s ease both}.v1{animation:fv1 .3s ease both}
+@keyframes fv0{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes fv1{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.pill:focus-visible,.navlink:focus-visible,.seg:focus-visible,.fpill:focus-visible,.icon:focus-visible,.chk:focus-visible,.rowbtn:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.squig,.v0,.v1{animation:none}.card,.col,.drawer,.scrim,.chk,.trow,.pill,.seg,.fpill{transition:none}.card:hover{transform:none}}
+@media (max-width:720px){.pfil{flex-wrap:nowrap!important;overflow-x:auto;margin:0 -12px;padding:0 12px 4px}}
+/*common*/
+@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#fffdf9!important;box-shadow:0 18px 40px -16px rgba(31,28,25,.45);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
+.chk{position:relative}.chk::after{content:"";position:absolute;inset:-10px}
+.dotbtn{position:relative}.dotbtn::after{content:"";position:absolute;inset:-4px}
+.bar{transition:none!important;transform-origin:left center;animation:barIn .7s cubic-bezier(.3,.7,.2,1) both}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wbar{transition:none!important;transform-origin:bottom center;animation:wbarIn .6s cubic-bezier(.3,.7,.2,1) both}
+@keyframes wbarIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.bar,.wbar{animation:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: radial-gradient(1200px 600px at 85% -10%, #fbf8f2 0%, rgba(251,248,242,0) 60%), #f3eee6; color: #1f1c19; font-family: 'Outfit', system-ui, sans-serif; font-size: 15px; line-height: 1.5; position: relative; overflow-x: hidden">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 22px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Gochi Hand', cursive; font-size: 28px; text-decoration: none; line-height: 1">
+<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#1f1c19" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#cbc6f5" stroke="#1f1c19" stroke-width="3.5"></circle></svg>
+kairo</a>
+<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,253,249,.7); border: 1px solid #e6ded2">
+<a class="navlink nb" href="Main.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
+<a class="navlink nb" href="Tareas.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
+<a class="navlink nx" href="Proyectos.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
+<a class="navlink nb" href="Agenda.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
+<a class="navlink nx" href="FinResumen.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
+<a class="navlink nx" href="EscritosInicio.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
+<a class="navlink nb" href="DiaADia.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
+<a class="navlink nmore" href="Mas.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
+</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #fffdf9; border: 1px solid #e6ded2; flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#1f1c19" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#cbc6f5"></path></svg></a><!--/AV-->
+<button class="pill pill-dark" type="button" style="gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Nueva tarea</button>
+</header>
+
+<section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; align-items: flex-start; gap: 10px">
+<h1 style="margin: 0; font-family: 'Gochi Hand', cursive; font-weight: 400; font-size: 64px; line-height: 1">Tareas</h1>
+<svg width="42" height="42" viewBox="0 0 40 40" fill="#f3e3c3" stroke="#1f1c19" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: rotate(10deg); flex-shrink: 0"><path d="M23 4L9.6 22.4h9.2L16 36l14.4-19.6h-9.4L23 4z"></path></svg>
+</div>
+<svg width="200" height="14" viewBox="0 0 300 16" fill="none" aria-hidden="true" style="margin: -2px 0 2px 2px; max-width: 100%"><path class="squig" d="M3 10c22-8 40 6 64-1s40-8 62 0 44 7 66-1 46-6 72 3 30-3 30-3" stroke="#cbc6f5" stroke-width="5" stroke-linecap="round"></path></svg>
+<p style="margin: 0; color: #6b645b; font-size: 17px">{{summary}}</p>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap">
+<button class="fpill" type="button" aria-pressed="{{showDone}}" onClick="{{toggleDone}}" style="{{doneBtnStyle}}">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Mostrar hechas</button>
+<div role="group" aria-label="Vista" style="display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,253,249,.7); border: 1px solid #e6ded2">
+<button class="seg" type="button" aria-pressed="{{isList}}" onClick="{{toList}}" style="{{listBtnStyle}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"></path></svg>Lista</button>
+<button class="seg" type="button" aria-pressed="{{isBoard}}" onClick="{{toBoard}}" style="{{boardBtnStyle}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="5" height="16" rx="1.5"></rect><rect x="10" y="4" width="5" height="10" rx="1.5"></rect><rect x="17" y="4" width="4" height="13" rx="1.5"></rect></svg>Tablero</button>
+</div>
+</div>
+</section>
+
+<div class="pfil" role="group" aria-label="Filtrar por proyecto" style="display: flex; gap: 8px; flex-wrap: wrap">
+<sc-for list="{{projFilters}}" as="p" hint-placeholder-count="6">
+<button class="fpill" type="button" aria-pressed="{{p.sel}}" onClick="{{p.pick}}" style="{{p.style}}">
+<span style="{{p.dot}}"></span>{{p.name}}<span style="{{p.countStyle}}">{{p.count}}</span>
+</button>
+</sc-for>
+</div>
+
+<div class="{{animClass}}">
+<sc-if value="{{isList}}" hint-placeholder-val="{{true}}">
+<section aria-label="Lista de tareas" style="background: #fffdf9; border: 1px solid #e6ded2; border-radius: 28px; padding: 10px 22px 22px">
+<form onSubmit="{{noop}}" style="display: flex; align-items: center; gap: 12px; min-height: 60px; border-bottom: 1px solid #efe8dd">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b645b" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+<label for="quick" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Agregar tarea</label>
+<input id="quick" type="text" placeholder="Agregar tarea… escribe y presiona Enter" style="flex: 1; min-width: 0; height: 44px; border: 0; background: transparent; font: inherit; color: #1f1c19; outline-offset: 4px">
+<span class="hide-sm" style="font-size: 13px; color: #6b645b">en {{quickProject}}</span>
+</form>
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; padding-top: 16px">
+<div style="display: flex; align-items: center; gap: 10px; padding: 0 0 6px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 600">{{g.name}}</h2>
+<span style="{{g.countStyle}}">{{g.count}}</span>
+</div>
+<sc-for list="{{g.items}}" as="t" hint-placeholder-count="3">
+<div class="trow" style="display: flex; align-items: center; gap: 12px; padding: 0 10px; margin: 0 -10px; border-radius: 14px; border-top: 1px solid #f3ede3">
+<button class="chk" type="button" aria-pressed="{{t.done}}" aria-label="{{t.chkLabel}}" onClick="{{t.toggle}}" style="{{t.boxStyle}}">
+<sc-if value="{{t.done}}" hint-placeholder-val="{{false}}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1f1c19" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></sc-if>
+</button>
+<button class="rowbtn" type="button" onClick="{{t.open}}" aria-label="{{t.openLabel}}">
+<span style="{{t.titleStyle}}">{{t.title}}</span>
+<span class="hide-sm" style="{{t.projStyle}}"><span style="{{t.projDot}}"></span>{{t.projName}}</span>
+<span class="hide-sm" style="font-size: 13px; color: #6b645b; text-align: right">{{t.subs}}</span>
+<span style="{{t.prioStyle}}">{{t.prio}}</span>
+<span style="{{t.dueStyle}}">{{t.dueLabel}}</span>
+</button>
+</div>
+</sc-for>
+</div>
+</sc-for>
+<sc-if value="{{empty}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; align-items: center; gap: 14px; margin-top: 16px; padding: 18px 20px; border-radius: 18px; background: #f7f2ea; color: #6b645b">
+<svg width="40" height="40" viewBox="0 0 40 40" fill="#cbc6f5" stroke="#1f1c19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 33C10.4 26.6 5.6 21 6.4 14.6c.8-5.4 7.8-7.6 13.4-1.4 5.2-6.4 13-4.4 13.8 1.2.8 6-4 12-13.6 18.6z"></path></svg>
+<span>Nada pendiente aquí. Agrega una tarea arriba o elige otro proyecto.</span>
+</div>
+</sc-if>
+</section>
+</sc-if>
+
+<sc-if value="{{isBoard}}" hint-placeholder-val="{{false}}">
+<div class="board">
+<sc-for list="{{cols}}" as="c" hint-placeholder-count="4">
+<section class="col" aria-label="{{c.name}}" onDragOver="{{c.over}}" onDrop="{{c.drop}}" style="{{c.style}}">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 4px 6px 6px">
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="h2i" style="{{c.iconBg}}">
+<sc-if value="{{c.isTodo}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8" stroke-dasharray="3 3"></circle></svg></sc-if>
+<sc-if value="{{c.isDoing}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"></path></svg></sc-if>
+<sc-if value="{{c.isReview}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></sc-if>
+<sc-if value="{{c.isDone}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></sc-if>
+</span>
+<h2 style="margin: 0; font-size: 16px; font-weight: 500">{{c.name}}</h2>
+</div>
+<span style="{{c.countStyle}}">{{c.count}}</span>
+</div>
+<sc-for list="{{c.cards}}" as="k" hint-placeholder-count="2">
+<article class="card" draggable="true" onDragStart="{{k.start}}" onDragEnd="{{k.end}}" style="{{k.style}}">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<span style="{{k.projStyle}}"><span style="{{k.projDot}}"></span>{{k.projName}}</span>
+<button class="icon" type="button" onClick="{{k.next}}" aria-label="{{k.nextLabel}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+</div>
+<h3 style="{{k.titleStyle}}">{{k.title}}</h3>
+<div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #6b645b">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8"></path><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"></path></svg>
+<span>{{k.subs}}</span>
+<span style="{{k.dueStyle}}">{{k.dueLabel}}</span>
+</div>
+</article>
+</sc-for>
+<sc-if value="{{c.empty}}" hint-placeholder-val="{{false}}">
+<p style="margin: 0; padding: 18px 12px; border-radius: 16px; border: 1.5px dashed #d8cfc2; color: #6b645b; text-align: center; font-size: 14px">Arrastra una tarjeta aquí</p>
+</sc-if>
+</section>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</div>
+
+<div class="scrim" onClick="{{close}}" style="position: fixed; inset: 0; background: rgba(31,28,25,.28); backdrop-filter: blur(3px); opacity: {{scrimOpacity}}; pointer-events: {{scrimEvents}}"></div>
+<aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="d-title" aria-hidden="{{drawerHidden}}" style="position: fixed; top: 12px; right: 12px; bottom: 12px; width: min(460px, calc(100% - 24px)); box-sizing: border-box; background: #fffdf9; border-radius: 28px; box-shadow: 0 30px 60px -20px rgba(31,28,25,.45); padding: 24px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; transform: {{drawerTransform}}; visibility: {{drawerVis}}">
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px">
+<a href="Proyecto.dc.html" style="{{cur.projStyle}}; text-decoration: none"><span style="{{cur.projDot}}"></span>{{cur.projName}}</a>
+<button class="icon" type="button" aria-label="Cerrar detalle" onClick="{{close}}" style="width: 44px; height: 44px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h2 id="d-title" style="margin: 0; font-size: 28px; font-weight: 500; line-height: 1.2">{{cur.title}}</h2>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<span style="{{cur.dueStyle}}">{{cur.dueLong}}</span>
+<span style="{{cur.prioStyle}}">Prioridad {{cur.prioLower}}</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-size: 15px; font-weight: 500">Estado</h3>
+<div role="group" aria-label="Estado" style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{cur.statusOpts}}" as="s" hint-placeholder-count="4">
+<button class="fpill" type="button" aria-pressed="{{s.sel}}" onClick="{{s.pick}}" style="{{s.style}}">{{s.name}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h3 style="margin: 0; font-size: 15px; font-weight: 500">Subtareas · {{cur.subs}}</h3>
+<sc-for list="{{cur.subList}}" as="s" hint-placeholder-count="3">
+<div style="display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 12px; border-radius: 12px; background: #f7f2ea">
+<span style="{{s.box}}"></span><span style="{{s.text}}">{{s.name}}</span>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="d-notas" style="font-size: 15px; font-weight: 500">Notas</label>
+<textarea id="d-notas" rows="4" placeholder="Escribe lo que necesites recordar…" style="font: inherit; padding: 12px 14px; border-radius: 14px; border: 1px solid #e6ded2; background: #f7f2ea; color: #1f1c19; resize: vertical"></textarea>
+</div>
+<div style="margin-top: auto; display: flex; gap: 10px; flex-wrap: wrap">
+<button class="pill pill-dark" type="button" onClick="{{cur.toggle}}" style="flex: 1; gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>{{cur.actionLabel}}</button>
+<button class="pill" type="button" style="background: transparent; border: 1px solid #e6ded2; color: #1f1c19; gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M10 9v6l5-3z" fill="currentColor"></path></svg>Pomodoro</button>
+</div>
+</aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1240}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = {
+      view: 'list', proj: 'all', showDone: false, open: null, drag: null, over: null, tick: 0,
+      st: { t1: 1, t2: 3, t3: 1, t4: 0, t5: 0, t6: 2, t7: 0, t8: 0, t9: 1, t10: 1, t11: 0, t12: 1, t13: 2, t14: 0, t15: 0, t16: 0, t17: 3 }
+    };
+  }
+  renderVals() {
+    var self = this;
+    var TODAY = '2026-10-07', WEEK_END = '2026-10-11';
+    var P = {
+      dash: { name: 'Dashboard personal', color: '#cbc6f5' },
+      bot: { name: 'Bot de marketing', color: '#1f1c19' },
+      vin: { name: 'VinculaPSI', color: '#3a3480' },
+      pel: { name: 'Juego de peluches', color: '#e2c98f' },
+      d67: { name: '67downloader', color: '#8a8278' },
+      web: { name: 'Web para foráneos', color: '#a59ee8' },
+      ing: { name: 'Ingeniería o maestría', color: '#d8cfc2' },
+      none: { name: 'Sin proyecto', color: 'transparent' }
+    };
+    var T = [
+      { id: 't1', title: 'Terminar el diseño del dashboard', p: 'dash', due: '2026-10-07', prio: 'Alta', subs: ['Galería de proyectos', 'Página de proyecto', 'Escritos y Personal'], sd: 2 },
+      { id: 't2', title: 'Comprar despensa del meal prep', p: 'none', due: '2026-10-07', prio: 'Media', subs: ['Revisar qué hay en casa', 'Armar lista'], sd: 2 },
+      { id: 't3', title: 'Revisar la arquitectura del bot', p: 'bot', due: '2026-10-07', prio: 'Alta', subs: ['Diagrama actual', 'Propuesta de módulos', 'Comentarlo con mi jefe'], sd: 1 },
+      { id: 't4', title: 'Responder invitaciones pendientes', p: 'vin', due: '2026-10-07', prio: 'Media', subs: ['Revisar el flujo de n8n', 'Responder'], sd: 0 },
+      { id: 't5', title: 'Escribir la escena del capítulo 3', p: 'none', due: '2026-10-07', prio: 'Baja', subs: ['Releer capítulo 2', 'Escribir 500 palabras'], sd: 0 },
+      { id: 't9', title: 'Sección de Escritos y personajes', p: 'dash', due: '2026-10-08', prio: 'Media', subs: ['Historias', 'Fichas de personajes', 'Textos sueltos', 'Relaciones'], sd: 1 },
+      { id: 't6', title: 'Propuesta de módulos', p: 'bot', due: '2026-10-09', prio: 'Alta', subs: ['Separar lógica', 'Documentar', 'Ejemplo'], sd: 3 },
+      { id: 't13', title: 'Pruebas con Tatalan', p: 'd67', due: '2026-10-09', prio: 'Baja', subs: ['Videos de prueba', 'Recoger comentarios'], sd: 1 },
+      { id: 't8', title: 'Elegir stack y estructura de carpetas', p: 'dash', due: '2026-10-10', prio: 'Media', subs: ['Comparar opciones', 'Estructura', 'Repositorio'], sd: 0 },
+      { id: 't10', title: 'Mecánica de peluches defectuosos', p: 'pel', due: '2026-10-12', prio: 'Alta', subs: ['Lista de defectos', 'Prototipo', 'Prueba', 'Ajustes', 'Documento'], sd: 2 },
+      { id: 't7', title: 'Plantilla base para nuevos bots', p: 'bot', due: '2026-10-13', prio: 'Media', subs: ['Estructura', 'Configuración', 'Guía'], sd: 0 },
+      { id: 't14', title: 'Revisar requisitos de inscripción', p: 'ing', due: '2026-10-14', prio: 'Alta', subs: ['Ingeniería', 'Maestría', 'Documentos'], sd: 0 },
+      { id: 't12', title: 'Soporte para más redes', p: 'd67', due: '2026-10-16', prio: 'Media', subs: ['TikTok', 'Instagram', 'X'], sd: 2 },
+      { id: 't11', title: 'Nivel del vertedero', p: 'pel', due: null, prio: 'Baja', subs: ['Boceto', 'Bloqueo', 'Arte', 'Prueba'], sd: 0 },
+      { id: 't15', title: 'Definir menú semanal automático', p: 'web', due: null, prio: 'Baja', subs: ['Fuentes de recetas', 'Reglas'], sd: 0 },
+      { id: 't16', title: 'Conexión con Notion', p: 'dash', due: null, prio: 'Baja', subs: ['Permisos', 'Sincronizar tareas'], sd: 0 },
+      { id: 't17', title: 'Mapa de secciones', p: 'dash', due: '2026-10-06', prio: 'Media', subs: ['Secciones', 'Modelo de datos', 'Documento'], sd: 3 }
+    ];
+    var COLS = ['Por hacer', 'En curso', 'Revisión', 'Hecho'];
+    var st = this.state.st;
+    var DOWS = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+    var MONTHS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    var dueLabel = function (d) {
+      if (!d) return 'Sin fecha';
+      if (d === TODAY) return 'Hoy';
+      if (d === '2026-10-08') return 'Mañana';
+      var dt = new Date(d + 'T12:00:00Z');
+      if (d < TODAY) return 'Ayer';
+      if (d <= WEEK_END) return DOWS[dt.getUTCDay()] + ' ' + dt.getUTCDate();
+      return dt.getUTCDate() + ' ' + MONTHS[dt.getUTCMonth()];
+    };
+    var setSt = function (id, v) { var n = Object.assign({}, self.state.st); n[id] = v; self.setState({ st: n, drag: null, over: null }); };
+    var prioStyle = function (p) {
+      return 'display: inline-flex; align-items: center; justify-self: start; min-height: 24px; padding: 0 10px; border-radius: 999px; font-size: 12px; font-weight: 500; white-space: nowrap; ' +
+        (p === 'Alta' ? 'background: #1f1c19; color: #f3eee6;' : p === 'Media' ? 'background: #e9e7fb; color: #3a3480;' : 'background: #f0eadf; color: #6b645b;');
+    };
+    var projStyle = 'display: inline-flex; align-items: center; gap: 6px; min-height: 26px; padding: 0 10px; border-radius: 999px; background: #f7f2ea; font-size: 12px; color: #4a443d; white-space: nowrap; max-width: 100%; justify-self: start; overflow: hidden; text-overflow: ellipsis; box-sizing: border-box';
+    var dot = function (c) { return 'width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: ' + c + ';' + (c === 'transparent' ? ' border: 1.5px dashed #8a8278; width: 6px; height: 6px;' : ''); };
+
+    var proj = this.state.proj;
+    var inProj = T.filter(function (t) { return proj === 'all' || t.p === proj; });
+    var decorate = function (t) {
+      var s = st[t.id], done = s === 3, pr = P[t.p];
+      var overdue = !done && t.due && t.due < TODAY;
+      return {
+        id: t.id, title: t.title, done: done, prio: t.prio, prioLower: t.prio.toLowerCase(), status: s,
+        projName: pr.name, projStyle: projStyle, projDot: dot(pr.color),
+        dueLabel: dueLabel(t.due), subs: (done ? t.subs.length : t.sd) + '/' + t.subs.length,
+        dueLong: t.due ? 'Vence: ' + dueLabel(t.due) : 'Sin fecha',
+        dueStyle: 'font-size: 13px; white-space: nowrap; text-align: right; ' + (t.due === TODAY && !done ? 'color: #3a3480; font-weight: 600;' : overdue ? 'color: #9a3412; font-weight: 600;' : 'color: #6b645b;'),
+        prioStyle: prioStyle(t.prio),
+        chkLabel: (done ? 'Desmarcar: ' : 'Marcar como hecha: ') + t.title,
+        openLabel: 'Ver detalle: ' + t.title,
+        toggle: function () { setSt(t.id, done ? 0 : 3); },
+        open: function () { self.setState({ open: t.id }); },
+        boxStyle: done ? 'background: #cbc6f5; border: 1.5px solid #cbc6f5;' : 'background: transparent; border: 1.5px solid #8a8278;',
+        titleStyle: 'flex: 1; min-width: 0; text-align: left; transition: color .2s ease; ' + (done ? 'color: #8a8278; text-decoration: line-through;' : ''),
+        actionLabel: done ? 'Marcar como pendiente' : 'Marcar como hecha',
+        subList: t.subs.map(function (n, i) { var ok = done || i < t.sd; return { name: n, box: 'width: 16px; height: 16px; border-radius: 5px; flex-shrink: 0; ' + (ok ? 'background: #cbc6f5; border: 1.5px solid #cbc6f5;' : 'border: 1.5px solid #6b645b;'), text: ok ? 'color: #6b645b; text-decoration: line-through;' : '' }; }),
+        statusOpts: COLS.map(function (c, ci) { var sel = ci === s; return { name: c, sel: sel, pick: function () { setSt(t.id, ci); }, style: sel ? 'background: #1f1c19; color: #f3eee6;' : 'background: #f7f2ea; color: #1f1c19;' }; }),
+        raw: t
+      };
+    };
+    var all = inProj.map(decorate);
+    var pending = all.filter(function (t) { return !t.done; });
+    var defs = [
+      { name: 'Hoy', f: function (t) { return t.raw.due && t.raw.due <= TODAY; } },
+      { name: 'Esta semana', f: function (t) { return t.raw.due && t.raw.due > TODAY && t.raw.due <= WEEK_END; } },
+      { name: 'Después', f: function (t) { return t.raw.due && t.raw.due > WEEK_END; } },
+      { name: 'Sin fecha', f: function (t) { return !t.raw.due; } }
+    ];
+    var countStyle = function (dark) { return 'min-width: 24px; height: 24px; padding: 0 8px; box-sizing: border-box; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; ' + (dark ? 'background: #1f1c19; color: #f3eee6;' : 'background: #f0eadf;'); };
+    var groups = defs.map(function (g, gi) { var items = pending.filter(g.f); return { name: g.name, items: items, count: String(items.length), countStyle: countStyle(gi === 0) }; }).filter(function (g) { return g.items.length > 0; });
+    if (this.state.showDone) {
+      var dn = all.filter(function (t) { return t.done; });
+      if (dn.length) groups.push({ name: 'Hechas', items: dn, count: String(dn.length), countStyle: countStyle(false) });
+    }
+
+    var cols = COLS.map(function (name, ci) {
+      var cards = all.filter(function (t) { return t.status === ci; }).map(function (t) {
+        return Object.assign({}, t, {
+          start: function (e) { try { e.dataTransfer.setData('text/plain', t.id); e.dataTransfer.effectAllowed = 'move'; } catch (err) {} self.setState({ drag: t.id }); },
+          end: function () { self.setState({ drag: null, over: null }); },
+          next: function () { setSt(t.id, (ci + 1) % 4); },
+          nextLabel: 'Mover "' + t.title + '" a ' + COLS[(ci + 1) % 4],
+          style: 'background: ' + (ci === 3 ? '#f7f2ea' : '#fffdf9') + '; border: 1px solid #e6ded2; border-radius: 18px; padding: 10px 10px 12px 14px; display: flex; flex-direction: column; gap: 6px; opacity: ' + (self.state.drag === t.id ? '.4' : '1') + ';',
+          titleStyle: 'margin: 0; font-size: 15px; font-weight: 500; line-height: 1.35; ' + (ci === 3 ? 'color: #6b645b; text-decoration: line-through;' : ''),
+          dueStyle: 'margin-left: auto; ' + (t.raw.due === TODAY && ci < 3 ? 'color: #3a3480; font-weight: 600;' : '')
+        });
+      });
+      var over = self.state.over === ci && self.state.drag !== null;
+      return {
+        name: name, cards: cards, count: String(cards.length), empty: cards.length === 0,
+        isTodo: ci === 0, isDoing: ci === 1, isReview: ci === 2, isDone: ci === 3,
+        iconBg: ['background: #f0eadf; color: #6b645b;', 'background: #1f1c19; color: #cbc6f5;', 'background: #e9e7fb; color: #3a3480;', 'background: #cbc6f5; color: #1f1c19;'][ci],
+        over: function (e) { e.preventDefault(); if (self.state.over !== ci) self.setState({ over: ci }); },
+        drop: function (e) { e.preventDefault(); var id = self.state.drag; try { id = e.dataTransfer.getData('text/plain') || id; } catch (err) {} if (id) setSt(id, ci); },
+        style: 'display: flex; flex-direction: column; gap: 10px; padding: 12px; border-radius: 24px; min-height: 460px; background: ' + (over ? '#e9e7fb' : 'rgba(255,253,249,.55)') + '; box-shadow: ' + (over ? 'inset 0 0 0 2px #cbc6f5' : 'inset 0 0 0 1px #e6ded2') + ';',
+        countStyle: countStyle(ci === 1)
+      };
+    });
+
+    var keys = ['all', 'dash', 'bot', 'vin', 'pel', 'd67', 'web', 'ing'];
+    var projFilters = keys.map(function (k) {
+      var sel = proj === k, n = T.filter(function (t) { return (k === 'all' || t.p === k) && st[t.id] !== 3; }).length;
+      return {
+        name: k === 'all' ? 'Todas' : P[k].name, sel: sel, count: String(n),
+        pick: function () { self.setState({ proj: k, tick: (self.state.tick + 1) % 2 }); },
+        dot: k === 'all' ? 'display: none' : dot(P[k].color),
+        style: sel ? 'background: #1f1c19; color: #f3eee6; border: 1px solid #1f1c19;' : 'background: rgba(255,253,249,.7); color: #1f1c19; border: 1px solid #e6ded2;',
+        countStyle: 'font-size: 12px; opacity: .7'
+      };
+    });
+
+    var curT = all.filter(function (t) { return t.id === self.state.open; })[0] || decorate(T[0]);
+    var isOpen = this.state.open !== null;
+    var pendAll = T.filter(function (t) { return st[t.id] !== 3; });
+    var weekDue = pendAll.filter(function (t) { return t.due && t.due <= WEEK_END; }).length;
+    var isList = this.state.view === 'list';
+    return {
+      summary: pendAll.length + ' pendientes en total, ' + weekDue + ' vencen esta semana.',
+      isList: isList, isBoard: !isList,
+      toList: function () { self.setState({ view: 'list', tick: (self.state.tick + 1) % 2 }); },
+      toBoard: function () { self.setState({ view: 'board', tick: (self.state.tick + 1) % 2 }); },
+      listBtnStyle: isList ? 'background: #1f1c19; color: #f3eee6;' : 'color: #1f1c19;',
+      boardBtnStyle: !isList ? 'background: #1f1c19; color: #f3eee6;' : 'color: #1f1c19;',
+      showDone: this.state.showDone,
+      toggleDone: function () { self.setState({ showDone: !self.state.showDone }); },
+      doneBtnStyle: this.state.showDone ? 'background: #e9e7fb; color: #3a3480; border: 1px solid #cbc6f5;' : 'background: rgba(255,253,249,.7); color: #1f1c19; border: 1px solid #e6ded2;',
+      projFilters: projFilters, groups: groups, empty: groups.length === 0, cols: cols,
+      quickProject: proj === 'all' ? 'Sin proyecto' : P[proj].name,
+      animClass: 'v' + this.state.tick,
+      cur: curT,
+      close: function () { self.setState({ open: null }); },
+      scrimOpacity: isOpen ? '1' : '0', scrimEvents: isOpen ? 'auto' : 'none',
+      drawerTransform: isOpen ? 'translateX(0)' : 'translateX(calc(100% + 24px))',
+      drawerVis: isOpen ? 'visible' : 'hidden', drawerHidden: isOpen ? 'false' : 'true',
+      noop: function (e) { if (e && e.preventDefault) e.preventDefault(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

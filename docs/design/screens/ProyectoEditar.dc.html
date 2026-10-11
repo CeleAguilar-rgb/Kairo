@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Nuevo proyecto</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Outfit:wght@300;400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1f1c19}a:hover{color:#4a443d}
+.wrap{padding:26px 44px 56px;box-sizing:border-box}
+@media (max-width:720px){.wrap{padding:14px 12px 40px}.topnav{order:3;width:100%}.hide-sm{display:none!important}}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:inherit;font-weight:500;cursor:pointer;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease}
+.pill-dark{background:#1f1c19;color:#f3eee6;box-shadow:0 10px 22px -8px rgba(31,28,25,.45)}
+.pill-dark:hover{transform:translateY(-1px);color:#f3eee6}
+.pill-ghost{background:transparent;border:1px solid #d8cfc2;color:#1f1c19}
+.pill-ghost:hover{background:#f0eadf}
+.pill-danger{background:#8c2f1b;color:#fffdf9}
+.pill-danger:hover{transform:translateY(-1px);color:#fffdf9}
+.navlink{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s ease}
+.navlink:hover{background:rgba(31,28,25,.06)}
+.icon{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;border:0;background:transparent;color:inherit;cursor:pointer;flex-shrink:0}
+.icon:hover{background:rgba(31,28,25,.07)}
+.h2i{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;flex-shrink:0}
+.card{background:#fffdf9;border:1px solid #e6ded2;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:6px}
+.lbl{font-weight:500;font-size:14px}
+.inp{box-sizing:border-box;width:100%;min-height:48px;padding:0 14px;border-radius:14px;border:1px solid #d8cfc2;background:#fffdf9;font:inherit;color:#1f1c19;transition:border-color .2s ease}
+.inp::placeholder{color:#8a8278}
+.inp:focus{outline:2px solid #6a62d6;outline-offset:1px}
+textarea.inp{padding:12px 14px;resize:vertical;line-height:1.55}
+.inp.bad{border-color:#8c2f1b}
+.hint{font-size:13px;color:#6b645b}
+.err{font-size:13px;color:#8c2f1b;display:flex;align-items:center;gap:6px}
+.seg{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .2s ease,color .2s ease}
+.squig{stroke-dasharray:320;animation:draw .9s .2s ease-out both}
+@keyframes draw{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+.pill:focus-visible,.navlink:focus-visible,.icon:focus-visible,.seg:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.squig{animation:none}.pill,.seg,.inp{transition:none}.pill:hover{transform:none}}
+/*common*/
+@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#fffdf9!important;box-shadow:0 18px 40px -16px rgba(31,28,25,.45);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
+.chk{position:relative}.chk::after{content:"";position:absolute;inset:-10px}
+.dotbtn{position:relative}.dotbtn::after{content:"";position:absolute;inset:-4px}
+.bar{transition:none!important;transform-origin:left center;animation:barIn .7s cubic-bezier(.3,.7,.2,1) both}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wbar{transition:none!important;transform-origin:bottom center;animation:wbarIn .6s cubic-bezier(.3,.7,.2,1) both}
+@keyframes wbarIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.bar,.wbar{animation:none}}
+
+.layout{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.main{flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:16px}
+.aside{flex:1 1 340px;max-width:420px;display:flex;flex-direction:column;gap:16px;position:sticky;top:16px}
+@media (max-width:1080px){.aside{max-width:none;position:static}}
+.typecard{all:unset;box-sizing:border-box;flex:1;min-width:140px;display:flex;flex-direction:column;gap:6px;padding:14px 16px;border-radius:18px;cursor:pointer;transition:background .2s ease,box-shadow .2s ease}
+.coverbtn{all:unset;box-sizing:border-box;border-radius:16px;overflow:hidden;cursor:pointer;height:72px;position:relative;transition:transform .2s ease,box-shadow .2s ease}
+.coverbtn:hover{transform:translateY(-2px)}
+.coverbtn svg,.pv svg{position:absolute;inset:0;width:100%;height:100%}
+.obj{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 6px 0 12px;border-radius:12px;background:#f7f2ea}
+.typecard:focus-visible,.coverbtn:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+.bar{transition:none}
+@media (prefers-reduced-motion:reduce){.typecard,.coverbtn{transition:none}.coverbtn:hover{transform:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: radial-gradient(1200px 600px at 85% -10%, #fbf8f2 0%, rgba(251,248,242,0) 60%), #f3eee6; color: #1f1c19; font-family: 'Outfit', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 20px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Gochi Hand', cursive; font-size: 28px; text-decoration: none; line-height: 1">
+<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#1f1c19" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#cbc6f5" stroke="#1f1c19" stroke-width="3.5"></circle></svg>
+kairo</a>
+<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,253,249,.7); border: 1px solid #e6ded2">
+<a class="navlink nb" href="Main.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
+<a class="navlink nb" href="Tareas.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
+<a class="navlink nx" href="Proyectos.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
+<a class="navlink nb" href="Agenda.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
+<a class="navlink nx" href="FinResumen.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
+<a class="navlink nx" href="EscritosInicio.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
+<a class="navlink nb" href="DiaADia.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
+<a class="navlink nmore" href="Mas.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
+</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #fffdf9; border: 1px solid #e6ded2; flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#1f1c19" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#cbc6f5"></path></svg></a><!--/AV-->
+<a class="pill pill-ghost" href="Proyectos.dc.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>Volver a proyectos</a>
+</header>
+
+<section style="display: flex; flex-direction: column; gap: 4px">
+<nav aria-label="Ruta" style="font-size: 14px; color: #6b645b"><a href="Proyectos.dc.html" style="color: #6b645b">Proyectos</a> / Nuevo proyecto</nav>
+<h1 style="margin: 0; font-family: 'Gochi Hand', cursive; font-weight: 400; font-size: 64px; line-height: 1">Nuevo proyecto</h1>
+<svg width="260" height="14" viewBox="0 0 300 16" fill="none" aria-hidden="true" style="margin: -2px 0 0 2px; max-width: 100%"><path class="squig" d="M3 10c22-8 40 6 64-1s40-8 62 0 44 7 66-1 46-6 72 3 30-3 30-3" stroke="#cbc6f5" stroke-width="5" stroke-linecap="round"></path></svg>
+</section>
+
+<form class="layout" onSubmit="{{submit}}" novalidate="novalidate">
+<div class="main">
+
+<section class="card" aria-labelledby="h-basico">
+<h2 id="h-basico" style="margin: 0; font-size: 20px; font-weight: 500">Lo básico</h2>
+<div class="field">
+<label class="lbl" for="p-nombre">Nombre</label>
+<input id="p-nombre" class="{{nameCls}}" type="text" value="{{name}}" onChange="{{setName}}" onBlur="{{blurName}}" onFocus="{{focusName}}" aria-invalid="{{nameInvalid}}" aria-describedby="p-nombre-msg" style="font-size: 18px; min-height: 52px">
+<sc-if value="{{showNameErr}}" hint-placeholder-val="{{false}}"><span id="p-nombre-msg" class="err"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5M12 16h.01"></path></svg>Ponle un nombre al proyecto para poder guardarlo.</span></sc-if>
+</div>
+<div class="field">
+<span class="lbl" id="l-tipo">Tipo</span>
+<div role="radiogroup" aria-labelledby="l-tipo" style="display: flex; gap: 10px; flex-wrap: wrap">
+<sc-for list="{{types}}" as="t" hint-placeholder-count="3">
+<button class="typecard" type="button" role="radio" aria-checked="{{t.sel}}" onClick="{{t.pick}}" style="{{t.style}}">
+<span style="display: flex; align-items: center; justify-content: space-between"><span style="font-weight: 600">{{t.name}}</span><span style="{{t.dot}}"></span></span>
+<span style="font-size: 13px; opacity: .8">{{t.hint}}</span>
+</button>
+</sc-for>
+</div>
+</div>
+<div class="field">
+<span class="lbl" id="l-estado">Estado</span>
+<div role="radiogroup" aria-labelledby="l-estado" style="display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: #f7f2ea; align-self: flex-start; flex-wrap: wrap">
+<sc-for list="{{states}}" as="s" hint-placeholder-count="4">
+<button class="seg" type="button" role="radio" aria-checked="{{s.sel}}" onClick="{{s.pick}}" style="{{s.style}}">{{s.name}}</button>
+</sc-for>
+</div>
+</div>
+<div class="field">
+<label class="lbl" for="p-desc">De qué trata</label>
+<textarea id="p-desc" class="inp" rows="4" onChange="{{setDesc}}" value="{{desc}}"></textarea>
+<span class="hint">Una o dos frases. Aparece en la tarjeta de la galería.</span>
+</div>
+</section>
+
+<section class="card" aria-labelledby="h-obj">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 10px">
+<h2 id="h-obj" style="margin: 0; font-size: 20px; font-weight: 500">Objetivos</h2>
+<span class="hint">{{objCount}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<sc-for list="{{objs}}" as="o" hint-placeholder-count="2">
+<div class="obj">
+<span style="width: 16px; height: 16px; border-radius: 5px; border: 1.5px solid #6b645b; flex-shrink: 0"></span>
+<span style="flex: 1; min-width: 0">{{o.text}}</span>
+<button class="icon" type="button" aria-label="{{o.delLabel}}" onClick="{{o.remove}}" style="width: 36px; height: 36px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; gap: 8px">
+<label for="p-obj" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Nuevo objetivo</label>
+<input id="p-obj" class="inp" type="text" placeholder="Escribe un objetivo y presiona Agregar" value="{{newObj}}" onChange="{{setNewObj}}" onKeyDown="{{objKey}}">
+<button class="pill pill-ghost" type="button" onClick="{{addObj}}" style="flex-shrink: 0">Agregar</button>
+</div>
+</section>
+
+<section class="card" aria-labelledby="h-fechas">
+<h2 id="h-fechas" style="margin: 0; font-size: 20px; font-weight: 500">Fechas y enlaces</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px">
+<div class="field"><label class="lbl" for="p-ini">Fecha de inicio</label><input id="p-ini" class="inp" type="date" value="2026-10-08" onChange="{{noopChange}}"></div>
+<div class="field"><label class="lbl" for="p-meta">Fecha meta <span style="font-weight: 400; color: #6b645b">(opcional)</span></label><input id="p-meta" class="inp" type="date" onChange="{{noopChange}}"></div>
+</div>
+<div class="field">
+<span class="lbl">Enlaces</span>
+<sc-for list="{{links}}" as="l" hint-placeholder-count="1">
+<div class="obj">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b645b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"></path><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span style="font-weight: 500">{{l.name}}</span><span style="font-size: 12px; color: #6b645b; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{l.url}}</span></span>
+<button class="icon" type="button" aria-label="{{l.delLabel}}" onClick="{{l.remove}}" style="width: 36px; height: 36px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+</sc-for>
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto; gap: 8px">
+<label for="p-lname" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Nombre del enlace</label>
+<input id="p-lname" class="inp" type="text" placeholder="Nombre, p. ej. Repositorio" value="{{lname}}" onChange="{{setLname}}">
+<label for="p-lurl" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Dirección del enlace</label>
+<input id="p-lurl" class="inp" type="url" placeholder="https://" value="{{lurl}}" onChange="{{setLurl}}">
+<button class="pill pill-ghost" type="button" onClick="{{addLink}}">Agregar</button>
+</div>
+</div>
+</section>
+</div>
+
+<aside class="aside">
+<section class="card" aria-labelledby="h-portada">
+<h2 id="h-portada" style="margin: 0; font-size: 20px; font-weight: 500">Portada</h2>
+<div role="radiogroup" aria-labelledby="h-portada" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{covers}}" as="c" hint-placeholder-count="4">
+<button class="coverbtn" type="button" role="radio" aria-checked="{{c.sel}}" aria-label="{{c.label}}" onClick="{{c.pick}}" style="{{c.style}}">
+<sc-if value="{{c.isLuna}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="200" fill="#1f1c19"></rect><circle cx="270" cy="96" r="58" fill="#f3e3c3"></circle><circle cx="296" cy="82" r="54" fill="#1f1c19"></circle><g fill="#f3eee6"><circle cx="80" cy="50" r="3"></circle><circle cx="150" cy="120" r="2"></circle><circle cx="350" cy="160" r="2.5"></circle></g></svg></sc-if>
+<sc-if value="{{c.isTablero}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="200" fill="#e9e7fb"></rect><rect x="90" y="40" width="100" height="74" rx="16" fill="#1f1c19"></rect><rect x="204" y="40" width="70" height="44" rx="14" fill="#fffdf9" stroke="#1f1c19" stroke-width="4"></rect><rect x="204" y="98" width="70" height="66" rx="14" fill="#cbc6f5" stroke="#1f1c19" stroke-width="4"></rect><rect x="90" y="128" width="100" height="36" rx="14" fill="#fffdf9" stroke="#1f1c19" stroke-width="4"></rect></svg></sc-if>
+<sc-if value="{{c.isOlas}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="200" fill="#f3e3c3"></rect><circle cx="300" cy="64" r="30" fill="#fffdf9" stroke="#1f1c19" stroke-width="4"></circle><path d="M0 130c40-20 80 20 120 0s80-20 120 0 80 20 120 0 40-10 40-10M0 166c40-20 80 20 120 0s80-20 120 0 80 20 120 0 40-10 40-10" fill="none" stroke="#1f1c19" stroke-width="5" stroke-linecap="round"></path></svg></sc-if>
+<sc-if value="{{c.isEstrella}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="200" fill="#fffdf9"></rect><path d="M200 26c3 32 16 48 56 60-40 6-52 22-57 62-6-40-20-54-56-58 36-10 52-28 57-64z" fill="#cbc6f5" stroke="#1f1c19" stroke-width="5" stroke-linejoin="round"></path><circle cx="90" cy="150" r="14" fill="#f3e3c3" stroke="#1f1c19" stroke-width="4"></circle><circle cx="320" cy="50" r="10" fill="#e9e7fb" stroke="#1f1c19" stroke-width="4"></circle></svg></sc-if>
+</button>
+</sc-for>
+</div>
+<button class="pill pill-ghost" type="button" style="align-self: flex-start"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"></path></svg>Subir mi imagen</button>
+</section>
+
+<section class="card" aria-labelledby="h-prev" style="gap: 12px">
+<h2 id="h-prev" style="margin: 0; font-size: 15px; font-weight: 600; color: #6b645b">Así se verá en la galería</h2>
+<div style="border-radius: 24px; overflow: hidden; border: 1px solid #e6ded2; background: #fffdf9">
+<div class="pv" style="position: relative; height: 140px">
+<sc-for list="{{preview}}" as="c" hint-placeholder-count="1">
+<sc-if value="{{c.isLuna}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="200" fill="#1f1c19"></rect><circle cx="270" cy="96" r="58" fill="#f3e3c3"></circle><circle cx="296" cy="82" r="54" fill="#1f1c19"></circle><g fill="#f3eee6"><circle cx="80" cy="50" r="3"></circle><circle cx="150" cy="120" r="2"></circle><circle cx="350" cy="160" r="2.5"></circle></g></svg></sc-if>
+<sc-if value="{{c.isTablero}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="200" fill="#e9e7fb"></rect><rect x="90" y="40" width="100" height="74" rx="16" fill="#1f1c19"></rect><rect x="204" y="40" width="70" height="44" rx="14" fill="#fffdf9" stroke="#1f1c19" stroke-width="4"></rect><rect x="204" y="98" width="70" height="66" rx="14" fill="#cbc6f5" stroke="#1f1c19" stroke-width="4"></rect><rect x="90" y="128" width="100" height="36" rx="14" fill="#fffdf9" stroke="#1f1c19" stroke-width="4"></rect></svg></sc-if>
+<sc-if value="{{c.isOlas}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="200" fill="#f3e3c3"></rect><circle cx="300" cy="64" r="30" fill="#fffdf9" stroke="#1f1c19" stroke-width="4"></circle><path d="M0 130c40-20 80 20 120 0s80-20 120 0 80 20 120 0 40-10 40-10M0 166c40-20 80 20 120 0s80-20 120 0 80 20 120 0 40-10 40-10" fill="none" stroke="#1f1c19" stroke-width="5" stroke-linecap="round"></path></svg></sc-if>
+<sc-if value="{{c.isEstrella}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="200" fill="#fffdf9"></rect><path d="M200 26c3 32 16 48 56 60-40 6-52 22-57 62-6-40-20-54-56-58 36-10 52-28 57-64z" fill="#cbc6f5" stroke="#1f1c19" stroke-width="5" stroke-linejoin="round"></path><circle cx="90" cy="150" r="14" fill="#f3e3c3" stroke="#1f1c19" stroke-width="4"></circle><circle cx="320" cy="50" r="10" fill="#e9e7fb" stroke="#1f1c19" stroke-width="4"></circle></svg></sc-if>
+</sc-for>
+<span style="position: absolute; top: 12px; left: 12px; {{typePill}}">{{typeName}}</span>
+</div>
+<div style="padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 19px; font-weight: 500">{{previewName}}</span>
+<span style="color: #6b645b; font-size: 14px">{{previewDesc}}</span>
+<div style="height: 8px; border-radius: 8px; background: #f0eadf"></div>
+<span style="font-size: 13px; color: #6b645b">0 tareas · {{stateName}}</span>
+</div>
+</div>
+</section>
+
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<a class="pill pill-ghost" href="Proyectos.dc.html">Cancelar</a>
+<button class="pill pill-dark" type="submit" style="flex: 1"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Crear proyecto</button>
+</div>
+<sc-if value="{{created}}" hint-placeholder-val="{{false}}">
+<div role="status" style="display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 18px; background: #1f1c19; color: #f3eee6">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#cbc6f5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>
+<span style="flex: 1">Proyecto creado: {{name}}</span>
+<a href="Proyecto.dc.html" style="color: #cbc6f5">Abrir</a>
+</div>
+</sc-if>
+</aside>
+</form>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1240}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = {
+      name: 'Día a día', touched: false, focus: false, tipo: 'Personal', estado: 'Activo',
+      desc: 'Rutina por horarios con avisos, menú semanal y reporte de cumplimiento.',
+      objs: ['Tener mi rutina diaria con recordatorios', 'Ligar la rutina con mis tareas'], newObj: '',
+      links: [{ name: 'Documento de diseño', url: 'claude.ai/code/artifact/9eaa47b1…' }], lname: '', lurl: '',
+      cover: 'olas', created: false
+    };
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var val = function (e) { return e && e.target ? e.target.value : ''; };
+    var nameEmpty = !st.name.trim();
+    var showErr = nameEmpty && st.touched && !st.focus;
+    var TYPES = [['Trabajo', 'Lo de mi empleo y clientes', '#1f1c19'], ['Personal', 'Mis ideas y proyectos propios', '#cbc6f5'], ['Escuela', 'Materias, entregas y trámites', '#f3e3c3']];
+    var types = TYPES.map(function (t) {
+      var on = st.tipo === t[0];
+      return { name: t[0], hint: t[1], sel: on, pick: function () { self.setState({ tipo: t[0] }); },
+        dot: 'width: 14px; height: 14px; border-radius: 50%; background: ' + t[2] + '; border: 1.5px solid ' + (on ? '#f3eee6' : '#1f1c19') + ';',
+        style: on ? 'background: #1f1c19; color: #f3eee6;' : 'background: #f7f2ea; color: #1f1c19; box-shadow: inset 0 0 0 1px #e6ded2;' };
+    });
+    var states = ['Activo', 'En pausa', 'Terminado', 'Archivado'].map(function (s) {
+      var on = st.estado === s;
+      return { name: s, sel: on, pick: function () { self.setState({ estado: s }); }, style: on ? 'background: #1f1c19; color: #f3eee6;' : 'color: #1f1c19;' };
+    });
+    var objs = st.objs.map(function (o, i) {
+      return { text: o, delLabel: 'Quitar objetivo: ' + o, remove: function () { var n = self.state.objs.slice(); n.splice(i, 1); self.setState({ objs: n }); } };
+    });
+    var addObj = function () { var v = self.state.newObj.trim(); if (!v) return; self.setState({ objs: self.state.objs.concat([v]), newObj: '' }); };
+    var links = st.links.map(function (l, i) {
+      return { name: l.name, url: l.url, delLabel: 'Quitar enlace: ' + l.name, remove: function () { var n = self.state.links.slice(); n.splice(i, 1); self.setState({ links: n }); } };
+    });
+    var COV = [['luna', 'Luna'], ['tablero', 'Tablero'], ['olas', 'Olas'], ['estrella', 'Estrella']];
+    var flags = function (k) { return { isLuna: k === 'luna', isTablero: k === 'tablero', isOlas: k === 'olas', isEstrella: k === 'estrella' }; };
+    var covers = COV.map(function (c) {
+      var on = st.cover === c[0];
+      return Object.assign({ label: 'Portada ' + c[1], sel: on, pick: function () { self.setState({ cover: c[0] }); },
+        style: on ? 'box-shadow: 0 0 0 3px #fffdf9, 0 0 0 5px #1f1c19;' : 'box-shadow: inset 0 0 0 1px #e6ded2;' }, flags(c[0]));
+    });
+    var tc = { Trabajo: 'background: #f3eee6; color: #1f1c19; border: 1.5px solid #1f1c19;', Personal: 'background: #1f1c19; color: #f3eee6;', Escuela: 'background: #cbc6f5; color: #1f1c19; border: 1.5px solid #1f1c19;' };
+    return {
+      name: st.name, desc: st.desc, newObj: st.newObj, lname: st.lname, lurl: st.lurl, created: st.created,
+      nameCls: showErr ? 'inp bad' : 'inp', nameInvalid: showErr ? 'true' : 'false', showNameErr: showErr,
+      setName: function (e) { self.setState({ name: val(e), created: false }); },
+      blurName: function () { self.setState({ touched: true, focus: false }); },
+      focusName: function () { self.setState({ focus: true }); },
+      setDesc: function (e) { self.setState({ desc: val(e) }); },
+      setNewObj: function (e) { self.setState({ newObj: val(e) }); },
+      objKey: function (e) { if (e.key === 'Enter') { e.preventDefault(); addObj(); } },
+      addObj: addObj,
+      setLname: function (e) { self.setState({ lname: val(e) }); },
+      setLurl: function (e) { self.setState({ lurl: val(e) }); },
+      addLink: function () { var n = self.state.lname.trim(), u = self.state.lurl.trim(); if (!n || !u) return; self.setState({ links: self.state.links.concat([{ name: n, url: u }]), lname: '', lurl: '' }); },
+      noopChange: function () {},
+      types: types, states: states, objs: objs, links: links, covers: covers,
+      objCount: st.objs.length === 1 ? '1 objetivo' : st.objs.length + ' objetivos',
+      preview: [flags(st.cover)],
+      typePill: 'display: inline-flex; align-items: center; min-height: 26px; padding: 0 12px; border-radius: 999px; font-size: 12px; font-weight: 500; ' + tc[st.tipo],
+      typeName: st.tipo, stateName: st.estado,
+      previewName: st.name.trim() || 'Sin nombre todavía',
+      previewDesc: st.desc.trim() || 'Agrega de qué trata.',
+      submit: function (e) { if (e && e.preventDefault) e.preventDefault(); if (!self.state.name.trim()) { self.setState({ touched: true, focus: false }); var el = document.getElementById('p-nombre'); if (el) el.focus(); return; } self.setState({ created: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

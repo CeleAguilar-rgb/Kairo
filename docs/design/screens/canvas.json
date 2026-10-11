@@ -1,0 +1,670 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "Agenda.dc.html": {
+      "expand": "fill",
+      "h": 1294,
+      "is_interactive": true,
+      "title": "Agenda · día, semana y mes",
+      "w": 1440,
+      "x": 0,
+      "y": 1420
+    },
+    "Atajos.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "is_interactive": true,
+      "title": "Buscar, avisos y captura rápida",
+      "w": 1440,
+      "x": 1520,
+      "y": 12680
+    },
+    "BaseDatos.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "title": "Escritos · Base de datos",
+      "w": 1440,
+      "x": 3040,
+      "y": 10920
+    },
+    "Bienvenida.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "Bienvenida · ¿Qué quieres agregar?",
+      "w": 1440,
+      "x": 0,
+      "y": 7480
+    },
+    "Borrar.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "is_interactive": true,
+      "title": "Borrar proyecto",
+      "w": 1440,
+      "x": 3040,
+      "y": 2960
+    },
+    "DiaADia.dc.html": {
+      "expand": "fill",
+      "h": 1180,
+      "is_interactive": true,
+      "title": "Día a día · Hoy",
+      "w": 1440,
+      "x": 4640,
+      "y": 1724
+    },
+    "Diario.dc.html": {
+      "expand": "fill",
+      "h": 1240,
+      "is_interactive": true,
+      "title": "Día a día · Diario",
+      "w": 1440,
+      "x": 4560,
+      "y": 5980
+    },
+    "Entrar.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "is_interactive": true,
+      "title": "Entrar · crear cuenta · enlace por correo",
+      "w": 1440,
+      "x": 3040,
+      "y": 7480
+    },
+    "Escritos.dc.html": {
+      "expand": "fill",
+      "h": 1200,
+      "is_interactive": true,
+      "title": "Escritos · espacio Auralun",
+      "w": 1440,
+      "x": 3040,
+      "y": 1420
+    },
+    "EscritosInicio.dc.html": {
+      "expand": "fill",
+      "h": 1200,
+      "is_interactive": true,
+      "title": "Escritos · Inicio (historias, notas, personajes, mundos)",
+      "w": 1440,
+      "x": 0,
+      "y": 10920
+    },
+    "Escuela.dc.html": {
+      "expand": "fill",
+      "h": 1040,
+      "is_interactive": true,
+      "title": "Escuela",
+      "w": 1440,
+      "x": 4560,
+      "y": 10920
+    },
+    "EventoDetalle.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "is_interactive": true,
+      "title": "Detalle y borrar evento",
+      "w": 1440,
+      "x": 1520,
+      "y": 4720
+    },
+    "EventoNuevo.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "title": "Nuevo evento",
+      "w": 1440,
+      "x": 0,
+      "y": 4720
+    },
+    "FinAhorros.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "title": "Finanzas · Ahorros y deudas",
+      "w": 1440,
+      "x": 3040,
+      "y": 8900
+    },
+    "FinMembresia.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "title": "Finanzas · Nueva membresía o tarjeta",
+      "w": 1440,
+      "x": 4560,
+      "y": 8900
+    },
+    "FinMovimientos.dc.html": {
+      "expand": "fill",
+      "h": 1100,
+      "is_interactive": true,
+      "title": "Finanzas · Movimientos",
+      "w": 1440,
+      "x": 1520,
+      "y": 8900
+    },
+    "FinPresupuesto.dc.html": {
+      "expand": "fill",
+      "h": 1040,
+      "is_interactive": true,
+      "title": "Finanzas · Presupuesto",
+      "w": 1440,
+      "x": 6080,
+      "y": 8900
+    },
+    "FinResumen.dc.html": {
+      "expand": "fill",
+      "h": 1500,
+      "is_interactive": true,
+      "title": "Finanzas · Resumen",
+      "w": 1440,
+      "x": 0,
+      "y": 8900
+    },
+    "Finanzas.dc.html": {
+      "expand": "fill",
+      "h": 1240,
+      "is_interactive": true,
+      "title": "Finanzas · Membresías",
+      "w": 1440,
+      "x": 1520,
+      "y": 1420
+    },
+    "Main.dc.html": {
+      "expand": "fill",
+      "h": 1640,
+      "is_interactive": true,
+      "title": "Inicio (se arma con tus secciones)",
+      "w": 1440,
+      "x": 0,
+      "y": -520
+    },
+    "Mas.dc.html": {
+      "expand": "fill",
+      "h": 844,
+      "is_interactive": true,
+      "title": "Teléfono · Más",
+      "w": 390,
+      "x": 4560,
+      "y": 7480
+    },
+    "MenuSemanal.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "title": "Día a día · Menú semanal",
+      "w": 1440,
+      "x": 3040,
+      "y": 5980
+    },
+    "Metas.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "title": "Día a día · Metas",
+      "w": 1440,
+      "x": 6080,
+      "y": 5980
+    },
+    "Pagina.dc.html": {
+      "expand": "fill",
+      "h": 1900,
+      "is_interactive": true,
+      "title": "Escritos · Página con imágenes",
+      "w": 1440,
+      "x": 1520,
+      "y": 10920
+    },
+    "Papelera.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "is_interactive": true,
+      "title": "Papelera",
+      "w": 1440,
+      "x": 4560,
+      "y": 3086
+    },
+    "Perfil.dc.html": {
+      "expand": "fill",
+      "h": 1100,
+      "is_interactive": true,
+      "title": "Perfil y menú del avatar",
+      "w": 1440,
+      "x": 1520,
+      "y": 7480
+    },
+    "Proyecto.dc.html": {
+      "expand": "fill",
+      "h": 1541,
+      "is_interactive": true,
+      "title": "Página de proyecto",
+      "w": 1440,
+      "x": 4560,
+      "y": 0
+    },
+    "ProyectoEditar.dc.html": {
+      "expand": "fill",
+      "h": 1446,
+      "is_interactive": true,
+      "title": "Crear proyecto",
+      "w": 1440,
+      "x": 0,
+      "y": 2960
+    },
+    "Proyectos.dc.html": {
+      "expand": "fill",
+      "h": 1120,
+      "is_interactive": true,
+      "title": "Proyectos",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "Recordatorios.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "title": "Recordatorios",
+      "w": 1440,
+      "x": 3040,
+      "y": 4720
+    },
+    "Reporte.dc.html": {
+      "expand": "fill",
+      "h": 1236,
+      "is_interactive": true,
+      "title": "Día a día · Reporte",
+      "w": 1440,
+      "x": 0,
+      "y": 5980
+    },
+    "Reproductor.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "is_interactive": true,
+      "title": "Música y enfoque (Spotify + pomodoro)",
+      "w": 1440,
+      "x": 0,
+      "y": 12680
+    },
+    "RutinaEditar.dc.html": {
+      "expand": "fill",
+      "h": 1100,
+      "is_interactive": true,
+      "title": "Editar rutina",
+      "w": 1440,
+      "x": 1520,
+      "y": 5980
+    },
+    "TareaNueva.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "title": "Nueva tarea",
+      "w": 1440,
+      "x": 1520,
+      "y": 2960
+    },
+    "Tareas.dc.html": {
+      "expand": "fill",
+      "h": 1355,
+      "is_interactive": true,
+      "title": "Tareas",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "TelAgenda.dc.html": {
+      "expand": "fill",
+      "h": 844,
+      "is_interactive": true,
+      "title": "Teléfono · Agenda (abre en el día)",
+      "w": 390,
+      "x": 900,
+      "y": 14100
+    },
+    "TelDiaADia.dc.html": {
+      "expand": "fill",
+      "h": 844,
+      "is_interactive": true,
+      "title": "Teléfono · Día a día",
+      "w": 390,
+      "x": 1350,
+      "y": 14100
+    },
+    "TelEscritosInicio.dc.html": {
+      "expand": "fill",
+      "h": 844,
+      "is_interactive": true,
+      "title": "Teléfono · Escritos",
+      "w": 390,
+      "x": 2250,
+      "y": 14100
+    },
+    "TelEscuela.dc.html": {
+      "expand": "fill",
+      "h": 844,
+      "is_interactive": true,
+      "title": "Teléfono · Escuela",
+      "w": 390,
+      "x": 2700,
+      "y": 14100
+    },
+    "TelFinResumen.dc.html": {
+      "expand": "fill",
+      "h": 844,
+      "is_interactive": true,
+      "title": "Teléfono · Finanzas",
+      "w": 390,
+      "x": 1800,
+      "y": 14100
+    },
+    "TelMain.dc.html": {
+      "expand": "fill",
+      "h": 844,
+      "is_interactive": true,
+      "title": "Teléfono · Inicio",
+      "w": 390,
+      "x": 0,
+      "y": 14100
+    },
+    "TelReproductor.dc.html": {
+      "expand": "fill",
+      "h": 844,
+      "is_interactive": true,
+      "title": "Teléfono · Música y enfoque",
+      "w": 390,
+      "x": 3150,
+      "y": 14100
+    },
+    "TelTareas.dc.html": {
+      "expand": "fill",
+      "h": 844,
+      "is_interactive": true,
+      "title": "Teléfono · Tareas",
+      "w": 390,
+      "x": 450,
+      "y": 14100
+    },
+    "Vacios.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "title": "Estados vacíos",
+      "w": 1440,
+      "x": 6206,
+      "y": 3086
+    },
+    "ProyectoSprints.dc.html": {
+      "expand": "fill",
+      "h": 1200,
+      "is_interactive": true,
+      "title": "Proyecto · Sprints (tablero, backlog, cerrar sprint)",
+      "w": 1440,
+      "x": 0,
+      "y": 15500
+    },
+    "ProyectoArchivos.dc.html": {
+      "expand": "fill",
+      "h": 1060,
+      "is_interactive": true,
+      "title": "Proyecto · Archivos y enlaces",
+      "w": 1440,
+      "x": 1520,
+      "y": 15500
+    },
+    "Estados.dc.html": {
+      "expand": "fill",
+      "h": 1560,
+      "is_interactive": true,
+      "title": "Cargando, guardando, sin conexión y errores",
+      "w": 1440,
+      "x": 3040,
+      "y": 15500
+    },
+    "Respaldo.dc.html": {
+      "expand": "fill",
+      "h": 1140,
+      "is_interactive": true,
+      "title": "Respaldo y exportar",
+      "w": 1440,
+      "x": 4560,
+      "y": 15500
+    },
+    "Temporadas.dc.html": {
+      "expand": "fill",
+      "h": 1360,
+      "is_interactive": true,
+      "title": "Decoraciones · una festividad por mes",
+      "w": 1440,
+      "x": 0,
+      "y": 17560
+    },
+    "ModoOscuro.dc.html": {
+      "expand": "fill",
+      "h": 1180,
+      "is_interactive": true,
+      "title": "Modo oscuro · paleta y reglas",
+      "w": 1440,
+      "x": 1520,
+      "y": 17560
+    },
+    "OscuroMain.dc.html": {
+      "expand": "fill",
+      "h": 1640,
+      "is_interactive": true,
+      "title": "Oscuro · Inicio",
+      "w": 1440,
+      "x": 3040,
+      "y": 17560
+    },
+    "OscuroTareas.dc.html": {
+      "expand": "fill",
+      "h": 1355,
+      "is_interactive": true,
+      "title": "Oscuro · Tareas",
+      "w": 1440,
+      "x": 4560,
+      "y": 17560
+    },
+    "OscuroAgenda.dc.html": {
+      "expand": "fill",
+      "h": 1294,
+      "is_interactive": true,
+      "title": "Oscuro · Agenda",
+      "w": 1440,
+      "x": 6080,
+      "y": 17560
+    },
+    "OscuroFinResumen.dc.html": {
+      "expand": "fill",
+      "h": 1500,
+      "is_interactive": true,
+      "title": "Oscuro · Finanzas",
+      "w": 1440,
+      "x": 7600,
+      "y": 17560
+    },
+    "OscuroEscritosInicio.dc.html": {
+      "expand": "fill",
+      "h": 1200,
+      "is_interactive": true,
+      "title": "Oscuro · Escritos",
+      "w": 1440,
+      "x": 9120,
+      "y": 17560
+    },
+    "OscuroTemporadas.dc.html": {
+      "expand": "fill",
+      "h": 1360,
+      "is_interactive": true,
+      "title": "Oscuro · Temporadas",
+      "w": 1440,
+      "x": 10640,
+      "y": 17560
+    },
+    "OscuroTelMain.dc.html": {
+      "expand": "fill",
+      "h": 844,
+      "is_interactive": true,
+      "title": "Oscuro · Teléfono · Inicio",
+      "w": 390,
+      "x": 12160,
+      "y": 17560
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-10-07T13:58:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "notes": {
+    "flujo-cuentas": {
+      "kind": "title1",
+      "maxW": 4480,
+      "text": "Cuentas: entrar, bienvenida y perfil",
+      "w": 240,
+      "x": 0,
+      "y": 7220
+    },
+    "flujo-er": {
+      "kind": "title1",
+      "maxW": 4480,
+      "text": "Evento y Recordatorio: crear, detalle, borrar, avisos y vacíos",
+      "w": 240,
+      "x": 0,
+      "y": 4460
+    },
+    "flujo-esc": {
+      "kind": "title1",
+      "maxW": 7520,
+      "text": "Escritos (estilo de antes, con imágenes en notas y páginas) y Escuela",
+      "w": 240,
+      "x": 0,
+      "y": 10660
+    },
+    "flujo-fin": {
+      "kind": "title1",
+      "maxW": 7520,
+      "text": "Finanzas: resumen, movimientos, ahorros y deudas, tarjetas y presupuesto",
+      "w": 240,
+      "x": 0,
+      "y": 8640
+    },
+    "flujo-glob": {
+      "kind": "title1",
+      "maxW": 4480,
+      "text": "Siempre a la mano: música y enfoque, buscar, avisos y +",
+      "w": 240,
+      "x": 0,
+      "y": 12420
+    },
+    "flujo-pt": {
+      "kind": "title1",
+      "maxW": 7520,
+      "text": "Proyecto y Tarea: crear, borrar, papelera y vacíos",
+      "w": 240,
+      "x": 0,
+      "y": 2700
+    },
+    "flujo-rut": {
+      "kind": "title1",
+      "maxW": 7520,
+      "text": "Día a día: reporte, rutina, menú, diario y metas",
+      "w": 240,
+      "x": 0,
+      "y": 5720
+    },
+    "flujo-tel": {
+      "kind": "title1",
+      "maxW": 4480,
+      "text": "Teléfono: menú abajo con 4 secciones + Más",
+      "w": 240,
+      "x": 0,
+      "y": 13840
+    },
+    "flujo-faltaba": {
+      "kind": "title1",
+      "maxW": 6000,
+      "text": "Lo que faltaba: sprints y archivos de proyecto, cargas y errores, respaldo",
+      "w": 240,
+      "x": 0,
+      "y": 15240
+    },
+    "flujo-temp": {
+      "kind": "title1",
+      "maxW": 12560,
+      "text": "Temporadas (una por mes) y modo oscuro",
+      "w": 240,
+      "x": 0,
+      "y": 17300
+    }
+  },
+  "order": [
+    "Main.dc.html",
+    "Tareas.dc.html",
+    "Proyectos.dc.html",
+    "Proyecto.dc.html",
+    "Agenda.dc.html",
+    "Finanzas.dc.html",
+    "Escritos.dc.html",
+    "DiaADia.dc.html",
+    "ProyectoEditar.dc.html",
+    "TareaNueva.dc.html",
+    "Borrar.dc.html",
+    "Papelera.dc.html",
+    "Vacios.dc.html",
+    "EventoNuevo.dc.html",
+    "EventoDetalle.dc.html",
+    "Recordatorios.dc.html",
+    "Reporte.dc.html",
+    "RutinaEditar.dc.html",
+    "MenuSemanal.dc.html",
+    "Diario.dc.html",
+    "Metas.dc.html",
+    "Bienvenida.dc.html",
+    "Perfil.dc.html",
+    "Entrar.dc.html",
+    "Mas.dc.html",
+    "FinResumen.dc.html",
+    "FinMovimientos.dc.html",
+    "FinAhorros.dc.html",
+    "FinMembresia.dc.html",
+    "FinPresupuesto.dc.html",
+    "EscritosInicio.dc.html",
+    "Pagina.dc.html",
+    "BaseDatos.dc.html",
+    "Escuela.dc.html",
+    "Reproductor.dc.html",
+    "Atajos.dc.html",
+    "TelMain.dc.html",
+    "TelTareas.dc.html",
+    "TelAgenda.dc.html",
+    "TelDiaADia.dc.html",
+    "TelFinResumen.dc.html",
+    "TelEscritosInicio.dc.html",
+    "TelEscuela.dc.html",
+    "TelReproductor.dc.html",
+    "ProyectoSprints.dc.html",
+    "ProyectoArchivos.dc.html",
+    "Estados.dc.html",
+    "Respaldo.dc.html",
+    "Temporadas.dc.html",
+    "ModoOscuro.dc.html",
+    "OscuroMain.dc.html",
+    "OscuroTareas.dc.html",
+    "OscuroAgenda.dc.html",
+    "OscuroFinResumen.dc.html",
+    "OscuroEscritosInicio.dc.html",
+    "OscuroTemporadas.dc.html",
+    "OscuroTelMain.dc.html"
+  ],
+  "pages": [],
+  "title": "Kairo"
+}

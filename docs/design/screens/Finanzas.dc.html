@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Finanzas</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Outfit:wght@300;400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1f1c19}a:hover{color:#4a443d}
+.wrap{padding:26px 44px 56px;box-sizing:border-box}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.c4{grid-column:span 4}.c8{grid-column:span 8}
+@media (max-width:1080px){.c4,.c8{grid-column:span 12}}
+.squig{stroke-dasharray:320;animation:draw .9s .2s ease-out both}
+@keyframes draw{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+.h2i{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;flex-shrink:0}
+@media (prefers-reduced-motion:reduce){.squig{animation:none}}
+@media (max-width:720px){.wrap{padding:14px 12px 40px}.topnav{order:3;width:100%;overflow-x:auto}}
+.pill{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:inherit;font-weight:500;cursor:pointer;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease}
+.pill-dark{background:#1f1c19;color:#f3eee6;box-shadow:0 10px 22px -8px rgba(31,28,25,.45)}
+.pill-dark:hover{transform:translateY(-1px);color:#f3eee6}
+.navlink{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s ease}
+.navlink:hover{background:rgba(31,28,25,.06)}
+.cardbtn{all:unset;box-sizing:border-box;cursor:pointer;transition:transform .25s cubic-bezier(.3,.7,.2,1),box-shadow .25s ease}
+.cardbtn:hover{transform:translateY(-3px)}
+.pill:focus-visible,.navlink:focus-visible,.cardbtn:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+.mrow{transition:opacity .25s ease,background .25s ease}
+.bar{transition:width .6s cubic-bezier(.3,.7,.2,1)}
+.tbl{overflow-x:auto}
+@media (prefers-reduced-motion:reduce){.cardbtn,.mrow,.bar,.pill{transition:none}.cardbtn:hover{transform:none}}
+.ftabs{display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(255,253,249,.7);border:1px solid #e6ded2;align-self:flex-start;overflow-x:auto;max-width:100%;box-sizing:border-box}.ftab{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border-radius:999px;text-decoration:none;white-space:nowrap;font-weight:500}.ftab:focus-visible{outline:2px solid #6a62d6;outline-offset:2px}
+/*common*/
+@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#fffdf9!important;box-shadow:0 18px 40px -16px rgba(31,28,25,.45);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
+.chk{position:relative}.chk::after{content:"";position:absolute;inset:-10px}
+.dotbtn{position:relative}.dotbtn::after{content:"";position:absolute;inset:-4px}
+.bar{transition:none!important;transform-origin:left center;animation:barIn .7s cubic-bezier(.3,.7,.2,1) both}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wbar{transition:none!important;transform-origin:bottom center;animation:wbarIn .6s cubic-bezier(.3,.7,.2,1) both}
+@keyframes wbarIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.bar,.wbar{animation:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: radial-gradient(1200px 600px at 85% -10%, #fbf8f2 0%, rgba(251,248,242,0) 60%), #f3eee6; color: #1f1c19; font-family: 'Outfit', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 28px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Gochi Hand', cursive; font-size: 28px; text-decoration: none; line-height: 1">
+<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#1f1c19" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#cbc6f5" stroke="#1f1c19" stroke-width="3.5"></circle></svg>
+kairo</a>
+<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,253,249,.7); border: 1px solid #e6ded2">
+<a class="navlink nb" href="Main.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
+<a class="navlink nb" href="Tareas.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
+<a class="navlink nx" href="Proyectos.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
+<a class="navlink nb" href="Agenda.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
+<a class="navlink nx" href="FinResumen.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
+<a class="navlink nx" href="EscritosInicio.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
+<a class="navlink nb" href="DiaADia.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
+<a class="navlink nmore" href="Mas.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
+</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #fffdf9; border: 1px solid #e6ded2; flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#1f1c19" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#cbc6f5"></path></svg></a><!--/AV-->
+<a class="pill pill-dark" href="FinMovimientos.dc.html" style="gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Movimiento</a>
+</header>
+
+<section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; align-items: flex-start; gap: 10px">
+<h1 style="margin: 0; font-family: 'Gochi Hand', cursive; font-weight: 400; font-size: clamp(48px, 12vw, 64px); line-height: 1">Finanzas</h1>
+<svg width="46" height="46" viewBox="0 0 40 40" fill="none" stroke="#1f1c19" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: rotate(-10deg); flex-shrink: 0"><path d="M20 6.4c7.4-.4 13.2 5 13.4 13.2.2 7.6-5.4 13.6-13.2 13.8C12.4 33.6 6.6 28 6.6 20.2 6.4 12.6 12 6.8 20 6.4z" fill="#f3e3c3"></path><path d="M23.4 15.4c-1-1.4-2.6-2-4.2-1.8-2 .2-3.2 1.6-3 3.2.4 3.4 7.6 2 7.8 5.8.2 2-1.6 3.4-3.8 3.4-1.8 0-3.4-.8-4.2-2.2M19.6 11.4v2M19.8 26v2.2"></path></svg>
+</div>
+<svg width="200" height="14" viewBox="0 0 300 16" fill="none" aria-hidden="true" style="margin: -2px 0 2px 2px; max-width: 100%"><path class="squig" d="M3 10c22-8 40 6 64-1s40-8 62 0 44 7 66-1 46-6 72 3 30-3 30-3" stroke="#cbc6f5" stroke-width="5" stroke-linecap="round"></path></svg>
+<p style="margin: 0; color: #6b645b; font-size: 17px">Membresías y tarjetas · lo que se cobra solo cada mes.</p>
+</div>
+<nav class="ftabs" aria-label="Finanzas"><a class="ftab" href="FinResumen.dc.html" style="color: #1f1c19">Resumen</a><a class="ftab" href="FinMovimientos.dc.html" style="color: #1f1c19">Movimientos</a><a class="ftab" href="FinAhorros.dc.html" style="color: #1f1c19">Ahorros y deudas</a><a class="ftab" href="Finanzas.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6">Membresías</a><a class="ftab" href="FinPresupuesto.dc.html" style="color: #1f1c19">Presupuesto</a></nav>
+<div style="display: flex; gap: 28px">
+<div style="display: flex; flex-direction: column"><span style="font-size: 32px; font-weight: 300; line-height: 1">{{monthlyTotal}}</span><span style="font-size: 13px; color: #6b645b">en membresías al mes</span></div>
+<div style="display: flex; flex-direction: column"><span style="font-size: 32px; font-weight: 300; line-height: 1">{{activeCount}}</span><span style="font-size: 13px; color: #6b645b">membresías activas</span></div>
+</div>
+</section>
+
+<div class="grid">
+
+<section class="c4" aria-labelledby="h-tarj" style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; justify-content: space-between">
+<div style="display: flex; align-items: center; gap: 12px"><span class="h2i" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"></rect><path d="M3 10h18M7 15h3"></path></svg></span><h2 id="h-tarj" style="margin: 0; font-size: 20px; font-weight: 500">Tarjetas</h2></div>
+<span style="font-size: 13px; color: #6b645b">Toca una para filtrar</span>
+</div>
+<sc-for list="{{cards}}" as="c" hint-placeholder-count="2">
+<button class="cardbtn" type="button" aria-pressed="{{c.sel}}" onClick="{{c.pick}}" style="{{c.style}}">
+<div style="display: flex; justify-content: space-between; align-items: flex-start">
+<span style="font-size: 15px; font-weight: 500">{{c.nick}}</span>
+<svg width="34" height="24" viewBox="0 0 34 24" aria-hidden="true"><rect x="0.75" y="0.75" width="32.5" height="22.5" rx="5" fill="none" stroke="currentColor" stroke-opacity=".4" stroke-width="1.5"></rect><path d="M0.75 8h32.5" stroke="currentColor" stroke-opacity=".4" stroke-width="1.5"></path></svg>
+</div>
+<span style="font-size: 22px; letter-spacing: .12em; font-weight: 300">•••• {{c.last4}}</span>
+<div style="display: flex; justify-content: space-between; font-size: 13px; opacity: .8; margin-top: auto"><span>{{c.count}} membresías</span><span>{{c.total}} al mes</span></div>
+</button>
+</sc-for>
+<sc-if value="{{filtered}}" hint-placeholder-val="{{false}}">
+<button class="pill" type="button" onClick="{{clear}}" style="background: transparent; border: 1px solid #d8cfc2; color: #1f1c19; align-self: flex-start">Ver todas</button>
+</sc-if>
+</section>
+
+<section class="c8" aria-labelledby="h-memb" style="background: #fffdf9; border: 1px solid #e6ded2; border-radius: 28px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px"><span class="h2i" style="background: #e9e7fb; color: #3a3480"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7"></path><path d="M20 4v4h-4"></path></svg></span><h2 id="h-memb" style="margin: 0; font-size: 20px; font-weight: 500">Membresías</h2></div>
+<a class="pill" href="FinMembresia.dc.html" style="background: #f0eadf; color: #1f1c19; min-height: 40px; gap: 6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Agregar membresía</a>
+</div>
+<div class="tbl">
+<table style="width: 100%; min-width: 620px; border-collapse: collapse">
+<thead>
+<tr style="text-align: left; font-size: 13px; color: #6b645b">
+<th scope="col" style="font-weight: 500; padding: 8px 12px">Servicio</th>
+<th scope="col" style="font-weight: 500; padding: 8px 12px">Próximo cobro</th>
+<th scope="col" style="font-weight: 500; padding: 8px 12px">Tarjeta</th>
+<th scope="col" style="font-weight: 500; padding: 8px 12px">Estado</th>
+<th scope="col" style="font-weight: 500; padding: 8px 12px; text-align: right">Monto</th>
+</tr>
+</thead>
+<tbody>
+<sc-for list="{{subs}}" as="s" hint-placeholder-count="6">
+<tr class="mrow" style="{{s.rowStyle}}">
+<td style="padding: 12px; border-top: 1px solid #efe8dd">
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="width: 36px; height: 36px; border-radius: 12px; background: #f0eadf; display: inline-flex; align-items: center; justify-content: center; font-weight: 600">{{s.initial}}</span>
+<div style="display: flex; flex-direction: column"><span style="font-weight: 500">{{s.name}}</span><span style="font-size: 13px; color: #6b645b">{{s.cycle}}</span></div>
+</div>
+</td>
+<td style="padding: 12px; border-top: 1px solid #efe8dd"><span style="{{s.dateStyle}}">{{s.next}}</span></td>
+<td style="padding: 12px; border-top: 1px solid #efe8dd; color: #4a443d">{{s.cardLabel}}</td>
+<td style="padding: 12px; border-top: 1px solid #efe8dd"><span style="{{s.statusStyle}}">{{s.status}}</span></td>
+<td style="padding: 12px; border-top: 1px solid #efe8dd; text-align: right; font-weight: 500">{{s.amount}}</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+
+
+
+
+
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1060}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = { card: null };
+  }
+  renderVals() {
+    var self = this;
+    var fmt = function (n) { return '$' + n.toLocaleString('es-MX'); };
+    var cardsBase = [
+      { id: 'deb', nick: 'Débito', last4: '4417', dark: false },
+      { id: 'cred', nick: 'Crédito', last4: '0921', dark: true }
+    ];
+    var subsBase = [
+      { name: 'Spotify', cycle: 'Mensual', next: '9 oct', soon: true, card: 'deb', status: 'Activa', amount: 129 },
+      { name: 'Netflix', cycle: 'Mensual', next: '10 oct', soon: true, card: 'cred', status: 'Activa', amount: 299 },
+      { name: 'Claude Pro', cycle: 'Mensual', next: '11 oct', soon: true, card: 'cred', status: 'Activa', amount: 199 },
+      { name: 'Gimnasio', cycle: 'Mensual', next: '18 oct', soon: false, card: 'deb', status: 'Activa', amount: 450 },
+      { name: 'Dominio web', cycle: 'Anual', next: '15 oct', soon: false, card: 'cred', status: 'Activa', amount: 260 },
+      { name: 'Xbox Game Pass', cycle: 'Mensual', next: '—', soon: false, card: 'deb', status: 'Pausada', amount: 229 }
+    ];
+    var sel = this.state.card;
+    var monthly = Math.round(subsBase.filter(function (s) { return s.status === 'Activa'; }).reduce(function (a, s) { return a + (s.cycle === 'Anual' ? s.amount / 12 : s.amount); }, 0));
+    var cards = cardsBase.map(function (c) {
+      var mine = subsBase.filter(function (s) { return s.card === c.id && s.status === 'Activa'; });
+      var isSel = sel === c.id;
+      var dim = sel !== null && !isSel;
+      return {
+        nick: c.nick, last4: c.last4, sel: isSel,
+        count: String(mine.length),
+        total: fmt(mine.filter(function (s) { return s.cycle === 'Mensual'; }).reduce(function (a, s) { return a + s.amount; }, 0)),
+        pick: function () { self.setState({ card: isSel ? null : c.id }); },
+        style: 'display: flex; flex-direction: column; gap: 18px; padding: 20px 22px; border-radius: 24px; min-height: 156px; width: 100%; opacity: ' + (dim ? '.45' : '1') + '; ' + (c.dark ? 'background: #1f1c19; color: #f3eee6;' : 'background: #cbc6f5; color: #1f1c19;') + ' box-shadow: ' + (isSel ? '0 0 0 3px #f3eee6, 0 0 0 5px #1f1c19, 0 22px 40px -22px rgba(31,28,25,.6)' : '0 22px 40px -26px rgba(31,28,25,.55)') + ';'
+      };
+    });
+    var cardName = { deb: 'Débito ••4417', cred: 'Crédito ••0921' };
+    var subs = subsBase.map(function (s) {
+      var hidden = sel !== null && s.card !== sel;
+      var active = s.status === 'Activa';
+      return {
+        name: s.name, initial: s.name.charAt(0), cycle: s.cycle, next: s.next, status: s.status, amount: fmt(s.amount), cardLabel: cardName[s.card],
+        rowStyle: 'opacity: ' + (hidden ? '.25' : (active ? '1' : '.6')) + ';',
+        dateStyle: 'display: inline-flex; align-items: center; min-height: 28px; padding: 0 10px; border-radius: 999px; font-size: 14px; ' + (s.soon ? 'background: #1f1c19; color: #f3eee6;' : 'background: transparent;'),
+        statusStyle: 'display: inline-flex; align-items: center; gap: 6px; min-height: 26px; padding: 0 10px; border-radius: 999px; font-size: 13px; font-weight: 500; ' + (active ? 'background: #e9e7fb; color: #3a3480;' : 'background: #f0eadf; color: #6b645b;')
+      };
+    });
+    var cats = [
+      { name: 'Comida', amount: 1640 }, { name: 'Membresías', amount: monthly }, { name: 'Transporte', amount: 800 }, { name: 'Salidas', amount: 620 }, { name: 'Otros', amount: 300 }
+    ];
+    var max = Math.max.apply(null, cats.map(function (c) { return c.amount; }));
+    return {
+      cards: cards, subs: subs,
+      filtered: sel !== null,
+      clear: function () { self.setState({ card: null }); },
+      monthlyTotal: fmt(monthly),
+      activeCount: String(subsBase.filter(function (s) { return s.status === 'Activa'; }).length),
+      cats: cats.map(function (c) { return { name: c.name, amount: fmt(c.amount), pct: Math.round(c.amount / max * 100) + '%' }; }),
+      moves: [
+        { what: 'Supermercado', when: 'Hoy', cat: 'Comida', amount: '$640' },
+        { what: 'Gasolina', when: 'Ayer', cat: 'Transporte', amount: '$500' },
+        { what: 'Tacos con amigos', when: 'Sábado', cat: 'Salidas', amount: '$320' },
+        { what: 'Despensa del meal prep', when: 'Domingo', cat: 'Comida', amount: '$1,000' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

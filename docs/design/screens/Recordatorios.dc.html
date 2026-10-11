@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Recordatorios</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Outfit:wght@300;400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1f1c19}a:hover{color:#4a443d}
+.wrap{padding:26px 44px 56px;box-sizing:border-box}
+@media (max-width:720px){.wrap{padding:14px 12px 40px}.topnav{order:3;width:100%}.hide-sm{display:none!important}}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:inherit;font-weight:500;cursor:pointer;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease}
+.pill-dark{background:#1f1c19;color:#f3eee6;box-shadow:0 10px 22px -8px rgba(31,28,25,.45)}
+.pill-dark:hover{transform:translateY(-1px);color:#f3eee6}
+.pill-ghost{background:transparent;border:1px solid #d8cfc2;color:#1f1c19}
+.pill-ghost:hover{background:#f0eadf}
+.pill-danger{background:#8c2f1b;color:#fffdf9}
+.pill-danger:hover{transform:translateY(-1px);color:#fffdf9}
+.navlink{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s ease}
+.navlink:hover{background:rgba(31,28,25,.06)}
+.icon{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;border:0;background:transparent;color:inherit;cursor:pointer;flex-shrink:0}
+.icon:hover{background:rgba(31,28,25,.07)}
+.h2i{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;flex-shrink:0}
+.card{background:#fffdf9;border:1px solid #e6ded2;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:6px}
+.lbl{font-weight:500;font-size:14px}
+.inp{box-sizing:border-box;width:100%;min-height:48px;padding:0 14px;border-radius:14px;border:1px solid #d8cfc2;background:#fffdf9;font:inherit;color:#1f1c19;transition:border-color .2s ease}
+.inp::placeholder{color:#8a8278}
+.inp:focus{outline:2px solid #6a62d6;outline-offset:1px}
+textarea.inp{padding:12px 14px;resize:vertical;line-height:1.55}
+.inp.bad{border-color:#8c2f1b}
+.hint{font-size:13px;color:#6b645b}
+.err{font-size:13px;color:#8c2f1b;display:flex;align-items:center;gap:6px}
+.seg{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .2s ease,color .2s ease}
+.squig{stroke-dasharray:320;animation:draw .9s .2s ease-out both}
+@keyframes draw{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+.pill:focus-visible,.navlink:focus-visible,.icon:focus-visible,.seg:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.squig{animation:none}.pill,.seg,.inp{transition:none}.pill:hover{transform:none}}
+/*common*/
+@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#fffdf9!important;box-shadow:0 18px 40px -16px rgba(31,28,25,.45);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
+.chk{position:relative}.chk::after{content:"";position:absolute;inset:-10px}
+.dotbtn{position:relative}.dotbtn::after{content:"";position:absolute;inset:-4px}
+.bar{transition:none!important;transform-origin:left center;animation:barIn .7s cubic-bezier(.3,.7,.2,1) both}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wbar{transition:none!important;transform-origin:bottom center;animation:wbarIn .6s cubic-bezier(.3,.7,.2,1) both}
+@keyframes wbarIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.bar,.wbar{animation:none}}
+
+.grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:20px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+.rem{display:flex;gap:12px;align-items:center;padding:10px 8px 10px 14px;border-radius:18px;background:rgba(255,253,249,.8);transition:opacity .3s ease,transform .3s ease}
+.rem.gone{opacity:0;transform:translateX(24px)}
+.chkbtn{all:unset;position:relative;box-sizing:border-box;width:26px;height:26px;border-radius:9px;border:1.5px solid #3a3480;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .2s ease}
+.chkbtn:hover{background:#cbc6f5}
+.chkbtn:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+.src{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;padding:2px 9px;border-radius:999px;background:#fffdf9;color:#3a3480;border:1px solid #cbc6f5;white-space:nowrap}
+.snz{transition:opacity .16s ease,transform .16s ease}
+.mi{all:unset;box-sizing:border-box;display:flex;align-items:center;width:100%;min-height:40px;padding:0 12px;border-radius:10px;cursor:pointer;font-size:14px}
+.mi:hover{background:#f0eadf}
+.mi:focus-visible{outline:2px solid #6a62d6}
+.notif{animation:nIn .45s cubic-bezier(.3,.7,.2,1) both}
+@keyframes nIn{from{opacity:0;transform:translateY(-14px) scale(.97)}to{opacity:1;transform:none}}
+.ring{transform-origin:12px 3px;animation:ring 1.2s .3s ease-in-out 2}
+@keyframes ring{0%,100%{transform:rotate(0)}20%{transform:rotate(14deg)}40%{transform:rotate(-12deg)}60%{transform:rotate(8deg)}80%{transform:rotate(-4deg)}}
+.cap{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6b645b}
+@media (prefers-reduced-motion:reduce){.rem,.snz,.chkbtn{transition:none}.notif,.ring{animation:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: radial-gradient(1200px 600px at 85% -10%, #fbf8f2 0%, rgba(251,248,242,0) 60%), #f3eee6; color: #1f1c19; font-family: 'Outfit', system-ui, sans-serif; font-size: 15px; line-height: 1.5; position: relative; overflow-x: hidden">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 20px">
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Gochi Hand', cursive; font-size: 28px; text-decoration: none; line-height: 1">
+<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#1f1c19" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#cbc6f5" stroke="#1f1c19" stroke-width="3.5"></circle></svg>
+kairo</a>
+<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,253,249,.7); border: 1px solid #e6ded2">
+<a class="navlink nb" href="Main.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
+<a class="navlink nb" href="Tareas.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
+<a class="navlink nx" href="Proyectos.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
+<a class="navlink nb" href="Agenda.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
+<a class="navlink nx" href="FinResumen.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
+<a class="navlink nx" href="EscritosInicio.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
+<a class="navlink nb" href="DiaADia.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
+<a class="navlink nmore" href="Mas.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
+</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #fffdf9; border: 1px solid #e6ded2; flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#1f1c19" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#cbc6f5"></path></svg></a><!--/AV-->
+<button class="icon" type="button" aria-label="Simular un aviso" onClick="{{ping}}" style="background: #fffdf9; border: 1px solid #e6ded2"><svg class="ring" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></button>
+</header>
+<h1 style="margin: 0; font-family: 'Gochi Hand', cursive; font-weight: 400; font-size: clamp(44px, 12vw, 64px); line-height: 1">Recordatorios</h1>
+
+<div class="grid">
+<section aria-labelledby="h-rec" style="position: relative; background: #e9e7fb; border-radius: 28px; padding: 22px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span class="h2i" style="background: #fffdf9; color: #3a3480"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></span>
+<h2 id="h-rec" style="margin: 0; font-size: 20px; font-weight: 500; flex: 1">Para hoy <span style="color: #3a3480; font-weight: 400">{{countText}}</span></h2>
+<button class="pill" type="button" onClick="{{toggleForm}}" aria-expanded="{{formOpen}}" style="background: #fffdf9; color: #1f1c19; min-height: 40px; padding: 0 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Nuevo</button>
+</div>
+
+<sc-if value="{{formOpen}}" hint-placeholder-val="{{false}}">
+<form onSubmit="{{addRem}}" novalidate="novalidate" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 20px; background: #fffdf9">
+<div class="field">
+<label class="lbl" for="r-msg">Mensaje</label>
+<input id="r-msg" class="{{msgCls}}" type="text" value="{{msg}}" onChange="{{setMsg}}" onBlur="{{blurMsg}}" onFocus="{{focusMsg}}" aria-invalid="{{msgInvalid}}">
+<sc-if value="{{msgErr}}" hint-placeholder-val="{{false}}"><span class="err">Escribe qué quieres que te recuerde.</span></sc-if>
+</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<div class="field" style="flex: 1; min-width: 150px"><label class="lbl" for="r-dia">Día</label><input id="r-dia" class="inp" type="date" value="2026-10-08"></div>
+<div class="field" style="width: 130px"><label class="lbl" for="r-hora">Hora</label><input id="r-hora" class="inp" type="time" value="{{msgTime}}" onChange="{{setMsgTime}}"></div>
+</div>
+<div class="field">
+<span class="lbl" id="l-rep">Repetir</span>
+<div role="radiogroup" aria-labelledby="l-rep" style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{reps}}" as="r" hint-placeholder-count="3"><button class="seg" type="button" role="radio" aria-checked="{{r.sel}}" onClick="{{r.pick}}" style="{{r.style}}">{{r.name}}</button></sc-for>
+</div>
+</div>
+<div style="display: flex; gap: 8px; justify-content: flex-end">
+<button class="pill pill-ghost" type="button" onClick="{{toggleForm}}">Cancelar</button>
+<button class="pill pill-dark" type="submit">Guardar recordatorio</button>
+</div>
+</form>
+</sc-if>
+
+<sc-for list="{{items}}" as="r" hint-placeholder-count="5">
+<div class="{{r.cls}}">
+<button class="chkbtn chk" type="button" aria-label="{{r.doneLabel}}" onClick="{{r.done}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3a3480" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="{{r.tickStyle}}"><path d="M5 12l5 5L20 7"></path></svg></button>
+<div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font-weight: 500">{{r.text}}</span>
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<span style="{{r.whenStyle}}">{{r.when}}</span>
+<span class="src">{{r.src}}</span>
+</div>
+</div>
+<div style="position: relative">
+<button class="icon" type="button" aria-label="{{r.snzLabel}}" aria-haspopup="menu" aria-expanded="{{r.menuOpen}}" onClick="{{r.toggle}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3a3480" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v4l2 2M5 3L2 6M19 3l3 3"></path></svg></button>
+<div class="snz" role="menu" style="{{r.menuStyle}}">
+<span class="cap" style="padding: 6px 12px 4px; display: block">Posponer</span>
+<sc-for list="{{r.opts}}" as="o" hint-placeholder-count="3"><button class="mi" role="menuitem" type="button" onClick="{{o.go}}">{{o.name}}</button></sc-for>
+</div>
+</div>
+</div>
+</sc-for>
+
+<sc-if value="{{allDone}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 28px 12px 18px">
+<svg width="86" height="70" viewBox="0 0 86 70" fill="none" stroke="#3a3480" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="squig" d="M14 40c6 8 12 12 18 12 12 0 16-26 40-40"></path><path d="M66 50l4 4M72 44l6 1M60 58l1 6" stroke-width="2"></path></svg>
+<span style="font-family: 'Gochi Hand', cursive; font-size: 30px; line-height: 1">Todo al día</span>
+<span style="color: #3a3480; max-width: 300px">No hay nada pendiente por recordar. El siguiente aviso es a las 14:00: comer.</span>
+<button class="pill" type="button" onClick="{{reset}}" style="background: #fffdf9; color: #1f1c19; margin-top: 6px">Ver los de hoy otra vez</button>
+</div>
+</sc-if>
+</section>
+
+<div style="display: flex; flex-direction: column; gap: 20px">
+<section class="card" aria-labelledby="h-av" style="gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span class="cap">Cuando llega la hora</span>
+<h2 id="h-av" style="margin: 0; font-size: 20px; font-weight: 500">Aviso emergente</h2>
+</div>
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 16px; border-radius: 22px; background: #1f1c19; color: #f3eee6; box-shadow: 0 18px 36px -18px rgba(31,28,25,.7)">
+<span class="h2i" style="background: #cbc6f5; color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="5"></rect><path d="M7 12h10"></path></svg></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; flex-direction: column"><span style="font-weight: 500">No has tomado tus vitaminas</span><span style="font-size: 13px; color: #cfc8bd">9:00 · Rutina de mañana</span></div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<button type="button" style="all: unset; min-height: 40px; padding: 0 16px; border-radius: 999px; background: #cbc6f5; color: #1f1c19; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center">Ya las tomé</button>
+<button type="button" style="all: unset; min-height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #4a443d; color: #f3eee6; cursor: pointer; display: inline-flex; align-items: center">Posponer 10 min</button>
+</div>
+</div>
+</div>
+<p class="hint" style="margin: 0">Sale arriba a la derecha en cualquier pantalla. Si no respondes, queda en la tarjeta de Inicio con la hora en rojo.</p>
+</section>
+
+<section class="card" aria-labelledby="h-vac" style="gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span class="cap">Agenda vacía</span>
+<h2 id="h-vac" style="margin: 0; font-size: 20px; font-weight: 500">Semana sin eventos</h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px" aria-hidden="true">
+<sc-for list="{{wk}}" as="d" hint-placeholder-count="7"><div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="font-size: 12px; color: #6b645b">{{d.dow}}</span><span style="width: 100%; height: 56px; border-radius: 12px; border: 1.5px dashed #d8cfc2"></span></div></sc-for>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px">
+<span style="font-family: 'Gochi Hand', cursive; font-size: 26px; line-height: 1">Semana libre</span>
+<span style="color: #4a443d">No hay eventos del 19 al 25 de octubre. Tus tareas con fecha siguen en Tareas.</span>
+<a class="pill pill-dark" href="EventoNuevo.dc.html" style="margin-top: 4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Agregar evento</a>
+</div>
+</section>
+</div>
+</div>
+</div>
+
+<sc-if value="{{notif}}" hint-placeholder-val="{{false}}">
+<div class="notif" role="alert" style="position: fixed; top: 20px; right: 20px; width: min(380px, calc(100% - 40px)); display: flex; gap: 14px; align-items: flex-start; padding: 16px; border-radius: 22px; background: #1f1c19; color: #f3eee6; box-shadow: 0 24px 50px -16px rgba(31,28,25,.7); box-sizing: border-box; z-index: 5">
+<span class="h2i" style="background: #cbc6f5; color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10l-1 16H8L7 4z"></path><path d="M7.5 9h9"></path></svg></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; flex-direction: column"><span style="font-weight: 500">Hora de tomar agua</span><span style="font-size: 13px; color: #cfc8bd">11:00 · Rutina</span></div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<button type="button" onClick="{{notifDone}}" style="all: unset; min-height: 40px; padding: 0 16px; border-radius: 999px; background: #cbc6f5; color: #1f1c19; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center">Listo</button>
+<button type="button" onClick="{{notifClose}}" style="all: unset; min-height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid #4a443d; color: #f3eee6; cursor: pointer; display: inline-flex; align-items: center">Posponer 10 min</button>
+</div>
+</div>
+<button class="icon" type="button" aria-label="Cerrar aviso" onClick="{{notifClose}}" style="width: 36px; height: 36px; color: #f3eee6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = { done: {}, snooze: {}, menu: null, form: false, msg: '', msgTime: '19:00', touched: false, focus: false, rep: 'no', extra: [], notif: false };
+  }
+  initial() {
+    return [
+      { id: 'vit', text: 'No has tomado tus vitaminas', when: '9:00 · hace 40 min', late: true, src: 'Rutina de mañana' },
+      { id: 'daily', text: 'Daily en 10 minutos', when: '10:20', src: 'Evento · Daily' },
+      { id: 'agua', text: 'Tomar agua', when: '11:00', src: 'Rutina' },
+      { id: 'spot', text: 'Mañana se cobra Spotify $129', when: 'Todo el día', src: 'Membresía · ••4417' },
+      { id: 'uni', text: 'Llamar a la universidad', when: '12:00', src: 'Tarea · Ingeniería o maestría' }
+    ];
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var val = function (e) { return e && e.target ? e.target.value : ''; };
+    var all = this.initial().concat(st.extra);
+    var pending = all.filter(function (r) { return !st.done[r.id]; });
+    pending.sort(function (a, b) { return (st.snooze[a.id] ? 1 : 0) - (st.snooze[b.id] ? 1 : 0); });
+    var items = pending.map(function (r) {
+      var sz = st.snooze[r.id], open = st.menu === r.id;
+      var mk = function (label, txt) { return { name: label, go: function () { var s = Object.assign({}, self.state.snooze); s[r.id] = txt; self.setState({ snooze: s, menu: null }); } }; };
+      return {
+        cls: 'rem', text: r.text, src: r.src,
+        when: sz ? 'Pospuesto · ' + sz : r.when,
+        whenStyle: 'font-size: 13px; ' + (r.late && !sz ? 'color: #8c2f1b; font-weight: 500;' : 'color: #3a3480;'),
+        doneLabel: 'Marcar como hecho: ' + r.text, snzLabel: 'Posponer: ' + r.text,
+        tickStyle: 'opacity: 0;',
+        done: function () { var d = Object.assign({}, self.state.done); d[r.id] = true; self.setState({ done: d, menu: null }); },
+        menuOpen: open ? 'true' : 'false',
+        toggle: function () { self.setState({ menu: self.state.menu === r.id ? null : r.id }); },
+        menuStyle: 'position: absolute; right: 0; top: 46px; width: 180px; background: #fffdf9; border: 1px solid #e6ded2; border-radius: 16px; padding: 4px; box-shadow: 0 18px 36px -16px rgba(31,28,25,.35); z-index: 3; ' + (open ? 'opacity: 1; transform: none; visibility: visible;' : 'opacity: 0; transform: translateY(-6px); visibility: hidden; pointer-events: none;'),
+        opts: [mk('10 minutos', '10:30'), mk('1 hora', '11:20'), mk('Mañana', 'mañana')]
+      };
+    });
+    var empty = !st.msg.trim(), msgErr = empty && st.touched && !st.focus;
+    var reps = [['no', 'Una vez'], ['dia', 'Cada día'], ['lav', 'Lunes a viernes']].map(function (r) {
+      var on = st.rep === r[0];
+      return { name: r[1], sel: on, pick: function () { self.setState({ rep: r[0] }); }, style: on ? 'background: #1f1c19; color: #f3eee6;' : 'background: #f7f2ea; color: #1f1c19;' };
+    });
+    var n = pending.length;
+    return {
+      items: items, allDone: n === 0,
+      countText: n === 0 ? '' : '· ' + n + (n === 1 ? ' pendiente' : ' pendientes'),
+      reset: function () { self.setState({ done: {}, snooze: {} }); },
+      formOpen: st.form,
+      toggleForm: function () { self.setState({ form: !self.state.form, touched: false }); },
+      msg: st.msg, msgTime: st.msgTime, msgErr: msgErr, msgCls: msgErr ? 'inp bad' : 'inp', msgInvalid: msgErr ? 'true' : 'false',
+      setMsg: function (e) { self.setState({ msg: val(e) }); },
+      setMsgTime: function (e) { self.setState({ msgTime: val(e) }); },
+      blurMsg: function () { self.setState({ touched: true, focus: false }); },
+      focusMsg: function () { self.setState({ focus: true }); },
+      reps: reps,
+      addRem: function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        var s = self.state;
+        if (!s.msg.trim()) { self.setState({ touched: true, focus: false }); var el = document.getElementById('r-msg'); if (el) el.focus(); return; }
+        var RL = { no: 'Manual', dia: 'Manual · cada día', lav: 'Manual · lun a vie' };
+        self.setState({ extra: s.extra.concat([{ id: 'x' + s.extra.length, text: s.msg.trim(), when: s.msgTime, src: RL[s.rep] }]), msg: '', form: false, touched: false });
+      },
+      wk: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'].map(function (d) { return { dow: d }; }),
+      notif: st.notif,
+      ping: function () { self.setState({ notif: false }); setTimeout(function () { self.setState({ notif: true }); }, 30); },
+      notifDone: function () { var d = Object.assign({}, self.state.done); d.agua = true; self.setState({ notif: false, done: d }); },
+      notifClose: function () { self.setState({ notif: false }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

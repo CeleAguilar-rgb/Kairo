@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Editar rutina</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Outfit:wght@300;400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1f1c19}a:hover{color:#4a443d}
+.wrap{padding:26px 44px 56px;box-sizing:border-box}
+@media (max-width:720px){.wrap{padding:14px 12px 40px}.topnav{order:3;width:100%}.hide-sm{display:none!important}}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:inherit;font-weight:500;cursor:pointer;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease}
+.pill-dark{background:#1f1c19;color:#f3eee6;box-shadow:0 10px 22px -8px rgba(31,28,25,.45)}
+.pill-dark:hover{transform:translateY(-1px);color:#f3eee6}
+.pill-ghost{background:transparent;border:1px solid #d8cfc2;color:#1f1c19}
+.pill-ghost:hover{background:#f0eadf}
+.pill-danger{background:#8c2f1b;color:#fffdf9}
+.pill-danger:hover{transform:translateY(-1px);color:#fffdf9}
+.navlink{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s ease}
+.navlink:hover{background:rgba(31,28,25,.06)}
+.icon{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;border:0;background:transparent;color:inherit;cursor:pointer;flex-shrink:0}
+.icon:hover{background:rgba(31,28,25,.07)}
+.h2i{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;flex-shrink:0}
+.card{background:#fffdf9;border:1px solid #e6ded2;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:6px}
+.lbl{font-weight:500;font-size:14px}
+.inp{box-sizing:border-box;width:100%;min-height:48px;padding:0 14px;border-radius:14px;border:1px solid #d8cfc2;background:#fffdf9;font:inherit;color:#1f1c19;transition:border-color .2s ease}
+.inp::placeholder{color:#8a8278}
+.inp:focus{outline:2px solid #6a62d6;outline-offset:1px}
+textarea.inp{padding:12px 14px;resize:vertical;line-height:1.55}
+.inp.bad{border-color:#8c2f1b}
+.hint{font-size:13px;color:#6b645b}
+.err{font-size:13px;color:#8c2f1b;display:flex;align-items:center;gap:6px}
+.seg{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .2s ease,color .2s ease}
+.squig{stroke-dasharray:320;animation:draw .9s .2s ease-out both}
+@keyframes draw{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+.pill:focus-visible,.navlink:focus-visible,.icon:focus-visible,.seg:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.squig{animation:none}.pill,.seg,.inp{transition:none}.pill:hover{transform:none}}
+/*common*/
+@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#fffdf9!important;box-shadow:0 18px 40px -16px rgba(31,28,25,.45);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
+.chk{position:relative}.chk::after{content:"";position:absolute;inset:-10px}
+.dotbtn{position:relative}.dotbtn::after{content:"";position:absolute;inset:-4px}
+.bar{transition:none!important;transform-origin:left center;animation:barIn .7s cubic-bezier(.3,.7,.2,1) both}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wbar{transition:none!important;transform-origin:bottom center;animation:wbarIn .6s cubic-bezier(.3,.7,.2,1) both}
+@keyframes wbarIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.bar,.wbar{animation:none}}
+
+.drawer{transition:transform .38s cubic-bezier(.3,.7,.2,1),visibility .38s}
+.scrim{transition:opacity .3s ease}
+.sel{appearance:none;-webkit-appearance:none;padding-right:40px}
+.toggle{all:unset;box-sizing:border-box;width:44px;height:26px;border-radius:999px;position:relative;cursor:pointer;transition:background .2s ease;flex-shrink:0}
+.toggle span{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fffdf9;transition:transform .2s ease;box-shadow:0 1px 3px rgba(31,28,25,.3)}
+.toggle:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+.rt{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .2s ease}
+.rt:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+.day{all:unset;box-sizing:border-box;width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;font-weight:500;transition:background .2s ease,color .2s ease}
+.day:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+.brow{display:grid;grid-template-columns:72px 40px minmax(0,1fr) auto 44px;gap:12px;align-items:center;min-height:60px;border-top:1px solid #f3ede3;padding:4px 0}
+.brow.sel-row{background:#f7f2ea;margin:0 -12px;padding:4px 12px;border-radius:16px;border-top-color:transparent}
+.bic{width:40px;height:40px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;background:#f7f2ea}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;padding:2px 10px;border-radius:999px;white-space:nowrap}
+.icp{all:unset;box-sizing:border-box;width:44px;height:44px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s ease}
+.icp:focus-visible{outline:2px solid #6a62d6;outline-offset:2px}
+.dlg{animation:dlgIn .28s cubic-bezier(.3,.7,.2,1) both}
+@keyframes dlgIn{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
+@media (max-width:720px){.brow{grid-template-columns:52px 36px minmax(0,1fr) 44px}.brow .hide-sm{display:none}}
+@media (prefers-reduced-motion:reduce){.drawer,.scrim,.toggle,.toggle span,.rt,.day,.icp{transition:none}.dlg{animation:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: radial-gradient(1200px 600px at 85% -10%, #fbf8f2 0%, rgba(251,248,242,0) 60%), #f3eee6; color: #1f1c19; font-family: 'Outfit', system-ui, sans-serif; font-size: 15px; line-height: 1.5; position: relative; overflow-x: hidden">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 20px">
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Gochi Hand', cursive; font-size: 28px; text-decoration: none; line-height: 1">
+<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#1f1c19" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#cbc6f5" stroke="#1f1c19" stroke-width="3.5"></circle></svg>
+kairo</a>
+<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,253,249,.7); border: 1px solid #e6ded2">
+<a class="navlink nb" href="Main.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
+<a class="navlink nb" href="Tareas.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
+<a class="navlink nx" href="Proyectos.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
+<a class="navlink nb" href="Agenda.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
+<a class="navlink nx" href="FinResumen.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
+<a class="navlink nx" href="EscritosInicio.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
+<a class="navlink nb" href="DiaADia.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
+<a class="navlink nmore" href="Mas.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
+</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #fffdf9; border: 1px solid #e6ded2; flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#1f1c19" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#cbc6f5"></path></svg></a><!--/AV-->
+<a class="pill pill-dark" href="DiaADia.dc.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Listo</a>
+</header>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<a href="DiaADia.dc.html" style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: #6b645b; text-decoration: none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>Día a día</a>
+<h1 style="margin: 0; font-family: 'Gochi Hand', cursive; font-weight: 400; font-size: clamp(48px, 12vw, 64px); line-height: 1">Mis rutinas</h1>
+</div>
+
+<div role="tablist" aria-label="Rutinas" style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{routines}}" as="r" hint-placeholder-count="2"><button class="rt" role="tab" type="button" aria-selected="{{r.sel}}" onClick="{{r.pick}}" style="{{r.style}}">{{r.name}}<span style="font-weight: 400; opacity: .75">{{r.days}}</span></button></sc-for>
+<button class="rt" type="button" style="border: 1.5px dashed #d8cfc2; color: #4a443d"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Nueva rutina</button>
+</div>
+
+<section class="card" aria-label="Rutina" style="gap: 18px">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; gap: 20px; justify-content: space-between">
+<div class="field" style="min-width: 240px; flex: 1; max-width: 360px">
+<label class="lbl" for="r-nombre">Nombre</label>
+<input id="r-nombre" class="inp" type="text" value="{{rName}}">
+</div>
+<div class="field">
+<span class="lbl" id="l-dias">Días</span>
+<div role="group" aria-labelledby="l-dias" style="display: flex; gap: 4px">
+<sc-for list="{{days}}" as="d" hint-placeholder-count="7"><button class="day" type="button" aria-pressed="{{d.on}}" aria-label="{{d.full}}" onClick="{{d.toggle}}" style="{{d.style}}">{{d.l}}</button></sc-for>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; min-height: 48px">
+<button class="toggle" type="button" role="switch" aria-checked="true" aria-label="Rutina activa" style="background: #1f1c19"><span style="transform: translateX(18px)"></span></button>
+<span style="font-size: 14px">Activa</span>
+</div>
+<button class="pill pill-ghost" type="button" onClick="{{askDelete}}" style="color: #8c2f1b; border-color: #e6c9bf"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"></path></svg>Borrar rutina</button>
+</div>
+
+<sc-if value="{{hasBlocks}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{blocks}}" as="b" hint-placeholder-count="10">
+<div class="{{b.cls}}">
+<span style="font-weight: 600; font-size: 14px">{{b.time}}</span>
+<span class="bic" style="{{b.icStyle}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{b.icon}}"></path></svg></span>
+<div style="min-width: 0; display: flex; flex-direction: column">
+<span style="font-weight: 500">{{b.title}}</span>
+<span class="hint">{{b.sub}}</span>
+</div>
+<span class="chip hide-sm" style="{{b.chipStyle}}">{{b.kind}}</span>
+<button class="icon" type="button" aria-label="{{b.editLabel}}" onClick="{{b.edit}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path></svg></button>
+</div>
+</sc-for>
+<button type="button" style="all: unset; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; margin-top: 8px; border-radius: 16px; border: 1.5px dashed #d8cfc2; cursor: pointer; font-weight: 500; color: #4a443d"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Agregar bloque</button>
+</div>
+</sc-if>
+<sc-if value="{{noBlocks}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 36px 16px 28px; border-radius: 22px; background: #f7f2ea">
+<svg width="72" height="72" viewBox="0 0 72 72" fill="none" stroke="#1f1c19" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="36" cy="38" r="14" fill="#f3e3c3"></circle><path d="M36 12v6M36 58v6M12 38h6M54 38h6M19 21l4 4M49 51l4 4M19 55l4-4M49 25l4-4"></path></svg>
+<span style="font-family: 'Gochi Hand', cursive; font-size: 28px; line-height: 1">Tu fin de semana está en blanco</span>
+<span style="color: #4a443d; max-width: 380px">Agrega bloques como despertar, comidas o un rato para escribir. Puedes copiar los de Entre semana y ajustar las horas.</span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 6px">
+<button class="pill pill-dark" type="button" onClick="{{openNew}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Agregar primer bloque</button>
+<button class="pill pill-ghost" type="button">Copiar de Entre semana</button>
+</div>
+</div>
+</sc-if>
+</section>
+</div>
+
+<div class="scrim" onClick="{{close}}" style="position: fixed; inset: 0; background: rgba(31,28,25,.28); backdrop-filter: blur(3px); opacity: {{scrimOpacity}}; pointer-events: {{scrimEvents}}"></div>
+<form class="drawer" role="dialog" aria-modal="true" aria-labelledby="b-head" aria-hidden="{{hidden}}" onSubmit="{{save}}" novalidate="novalidate" style="position: fixed; top: 12px; right: 12px; bottom: 12px; width: min(480px, calc(100% - 24px)); box-sizing: border-box; background: #fffdf9; border-radius: 28px; box-shadow: 0 30px 60px -20px rgba(31,28,25,.45); display: flex; flex-direction: column; transform: {{transform}}; visibility: {{vis}}">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 24px 8px">
+<h2 id="b-head" style="margin: 0; font-size: 22px; font-weight: 500">{{drawerTitle}}</h2>
+<button class="icon" type="button" aria-label="Cerrar sin guardar" onClick="{{close}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<div style="flex: 1; overflow-y: auto; padding: 8px 24px 20px; display: flex; flex-direction: column; gap: 18px">
+<div class="field">
+<label class="lbl" for="b-titulo">Título</label>
+<input id="b-titulo" class="{{titleCls}}" type="text" value="{{title}}" onChange="{{setTitle}}" onBlur="{{blurTitle}}" onFocus="{{focusTitle}}" aria-invalid="{{titleInvalid}}" style="font-size: 18px; min-height: 52px">
+<sc-if value="{{showErr}}" hint-placeholder-val="{{false}}"><span class="err">Ponle un nombre al bloque, como "Tomar agua".</span></sc-if>
+</div>
+<div style="display: flex; gap: 8px; align-items: flex-end">
+<div class="field" style="flex: 1"><label class="lbl" for="b-ini">Hora</label><input id="b-ini" class="inp" type="time" value="{{start}}"></div>
+<span style="padding-bottom: 12px; color: #6b645b" aria-hidden="true">–</span>
+<div class="field" style="flex: 1"><label class="lbl" for="b-fin">Termina <span style="font-weight: 400; color: #6b645b">(opcional)</span></label><input id="b-fin" class="inp" type="time" value="{{end}}"></div>
+</div>
+<div class="field">
+<span class="lbl" id="l-clase">Clase</span>
+<div role="radiogroup" aria-labelledby="l-clase" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: #f7f2ea; align-self: flex-start; flex-wrap: wrap">
+<sc-for list="{{kinds}}" as="k" hint-placeholder-count="4"><button class="seg" type="button" role="radio" aria-checked="{{k.sel}}" onClick="{{k.pick}}" style="{{k.style}}">{{k.name}}</button></sc-for>
+</div>
+<span class="hint">{{kindHint}}</span>
+</div>
+<sc-if value="{{isFocus}}" hint-placeholder-val="{{true}}">
+<div class="field">
+<label class="lbl" for="b-lig">Ligado a</label>
+<div style="position: relative">
+<select id="b-lig" class="inp sel" value="{{link}}" onChange="{{setLink}}">
+<option value="Escuela">Todo lo de Escuela</option>
+<option value="Trabajo">Todo lo de Trabajo</option>
+<option value="Personal">Todo lo Personal</option>
+<option value="dash">Proyecto: Dashboard personal</option>
+<option value="ing">Proyecto: Ingeniería o maestría</option>
+</select>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1f1c19" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); pointer-events: none"><path d="M6 9l6 6 6-6"></path></svg>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 14px; background: #e9e7fb; color: #3a3480; font-size: 14px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg><span>Hoy mostraría: <b style="font-weight: 600">{{linkPreview}}</b></span></div>
+</div>
+</sc-if>
+<div class="field">
+<span class="lbl" id="l-ic">Ícono</span>
+<div role="radiogroup" aria-labelledby="l-ic" style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{icons}}" as="i" hint-placeholder-count="8"><button class="icp" type="button" role="radio" aria-checked="{{i.sel}}" aria-label="{{i.name}}" onClick="{{i.pick}}" style="{{i.style}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{i.d}}"></path></svg></button></sc-for>
+</div>
+</div>
+<div class="field" style="gap: 12px">
+<span class="lbl">Avisos</span>
+<div style="display: flex; align-items: center; gap: 10px">
+<button class="toggle" type="button" role="switch" aria-checked="{{alert}}" aria-label="Avisarme a la hora" onClick="{{toggleAlert}}" style="{{alertBg}}"><span style="{{alertKnob}}"></span></button>
+<span style="font-size: 14px">Avisarme a la hora del bloque</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 14px" id="l-ins">Si no lo marco, insistir</span>
+<div role="radiogroup" aria-labelledby="l-ins" style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{nags}}" as="n" hint-placeholder-count="4"><button class="seg" type="button" role="radio" aria-checked="{{n.sel}}" onClick="{{n.pick}}" style="{{n.style}}">{{n.name}}</button></sc-for>
+</div>
+<sc-if value="{{hasNag}}" hint-placeholder-val="{{true}}"><span class="hint">Te llegará: "{{nagText}}"</span></sc-if>
+</div>
+<div style="display: flex; align-items: center; gap: 10px">
+<button class="toggle" type="button" role="switch" aria-checked="{{counts}}" aria-label="Cuenta para el reporte" onClick="{{toggleCounts}}" style="{{countsBg}}"><span style="{{countsKnob}}"></span></button>
+<span style="font-size: 14px">Cuenta para el reporte</span>
+</div>
+</div>
+</div>
+<div style="display: flex; gap: 10px; padding: 16px 24px 20px; border-top: 1px solid #efe8dd">
+<button class="icon" type="button" aria-label="Borrar este bloque" style="border: 1px solid #e6c9bf; color: #8c2f1b"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"></path></svg></button>
+<button class="pill pill-ghost" type="button" onClick="{{close}}">Cancelar</button>
+<button class="pill pill-dark" type="submit" style="flex: 1">Guardar bloque</button>
+</div>
+</form>
+
+<sc-if value="{{confirm}}" hint-placeholder-val="{{false}}">
+<div style="position: fixed; inset: 0; background: rgba(31,28,25,.4); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 5">
+<div class="dlg" role="alertdialog" aria-modal="true" aria-labelledby="c-title" aria-describedby="c-desc" style="width: min(460px, 100%); background: #fffdf9; border-radius: 28px; padding: 26px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 30px 70px -20px rgba(31,28,25,.55)">
+<h2 id="c-title" style="margin: 0; font-size: 22px; font-weight: 500; line-height: 1.25">¿Borrar la rutina Entre semana y sus 13 bloques?</h2>
+<p id="c-desc" style="margin: 0; color: #4a443d">También se quitan sus avisos de agua, vitaminas y comidas. Va a la papelera 30 días.</p>
+<div style="display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 16px; background: #e9e7fb; color: #3a3480; font-size: 14px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 2px"><path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6"></path></svg><span>Tu historial del reporte se conserva: lo que ya cumpliste no se borra.</span></div>
+<div style="display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; margin-top: 4px">
+<button class="pill pill-ghost" type="button" onClick="{{cancel}}">Cancelar</button>
+<button class="pill pill-danger" type="button" onClick="{{cancel}}">Borrar rutina y 13 bloques</button>
+</div>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = { routine: 'sem', open: true, editing: 'esc', title: 'Avanzar escuela', touched: false, focus: false, start: '17:00', end: '18:30', kind: 'enf', link: 'Escuela', icon: 'cap', alert: true, nag: '15', counts: true, confirm: false, days: { sem: [1, 1, 1, 1, 1, 0, 0], fin: [0, 0, 0, 0, 0, 1, 1] } };
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var val = function (e) { return e && e.target ? e.target.value : ''; };
+    var IC = {
+      sun: ['Sol', 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4'],
+      drop: ['Gota', 'M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z'],
+      pill: ['Pastilla', 'M8.5 3.5a5 5 0 0 1 7 7l-5 5a5 5 0 0 1-7-7l5-5zM6 11l7 7'],
+      food: ['Cubiertos', 'M4 3v8a3 3 0 0 0 3 3v7M7 3v5M10 3v8a3 3 0 0 1-3 3M17 21V3c-2 1-3 4-3 8h3'],
+      cap: ['Birrete', 'M3 9l9-5 9 5-9 5-9-5zM7 11.5V16c0 1.5 2.2 3 5 3s5-1.5 5-3v-4.5'],
+      code: ['Código', 'M8 8l-4 4 4 4M16 8l4 4-4 4'],
+      pen: ['Pluma', 'M14 4l6 6L9 21H3v-6L14 4z'],
+      work: ['Maletín', 'M4 8h16v11H4zM9 8V5h6v3'],
+      moon: ['Luna', 'M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z']
+    };
+    var KN = { hab: 'Hábito', com: 'Comida', enf: 'Enfoque', libre: 'Libre' };
+    var KC = { hab: 'background: #f0eadf; color: #4a443d;', com: 'background: #f3e3c3; color: #1f1c19;', enf: 'background: #1f1c19; color: #f3eee6;', libre: 'background: transparent; color: #6b645b; border: 1px dashed #d8cfc2;' };
+    var B = [
+      ['wake', '7:00', 'Despertar', 'hab', 'sun', 'Aviso a la hora'],
+      ['w1', '7:15', 'Tomar agua', 'hab', 'drop', 'Insiste a los 30 min'],
+      ['des', '7:30', 'Desayunar', 'com', 'food', 'Muestra el menú del día'],
+      ['vit', '8:00', 'Vitaminas', 'hab', 'pill', 'Insiste a los 15 min'],
+      ['job', '9:00 – 17:00', 'Trabajo', 'libre', 'work', 'No cuenta para el reporte'],
+      ['w2', '11:00', 'Tomar agua', 'hab', 'drop', 'Insiste a los 30 min'],
+      ['com', '14:00', 'Comer', 'com', 'food', 'Muestra el menú · insiste a los 30 min'],
+      ['w3', '16:00', 'Tomar agua', 'hab', 'drop', 'Insiste a los 30 min'],
+      ['esc', '17:00 – 18:30', 'Avanzar escuela', 'enf', 'cap', 'Siguiente tarea de Escuela'],
+      ['dash', '19:00 – 20:00', 'Proyecto personal', 'enf', 'code', 'Siguiente tarea de Dashboard personal'],
+      ['cen', '20:30', 'Cenar', 'com', 'food', 'Muestra el menú del día'],
+      ['esr', '21:30', 'Escribir', 'hab', 'pen', 'Aviso a la hora'],
+      ['zz', '23:00', 'Dormir', 'hab', 'moon', 'Aviso a las 22:30']
+    ];
+    var isSem = st.routine === 'sem';
+    var blocks = B.map(function (b) {
+      var on = st.open && st.editing === b[0];
+      var title = on ? (st.title || 'Sin título') : b[2];
+      var k = on ? st.kind : b[3];
+      return {
+        cls: on ? 'brow sel-row' : 'brow', time: b[1], title: title, sub: b[5], kind: KN[k], chipStyle: KC[k],
+        icon: IC[on ? st.icon : b[4]][1], icStyle: k === 'enf' ? 'background: #cbc6f5; color: #1f1c19' : 'background: #f7f2ea; color: #1f1c19',
+        editLabel: 'Editar bloque: ' + b[2] + ' ' + b[1],
+        edit: function () { var p = b[1].split(' – '); self.setState({ open: true, editing: b[0], title: b[2], kind: b[3], icon: b[4], start: (p[0].length < 5 ? '0' : '') + p[0], end: p[1] || '', touched: false }); }
+      };
+    });
+    var DL = ['L', 'M', 'M', 'J', 'V', 'S', 'D'], DF = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+    var cur = st.days[st.routine];
+    var days = DL.map(function (l, i) {
+      var on = !!cur[i];
+      return { l: l, full: DF[i], on: on ? 'true' : 'false', style: on ? 'background: #1f1c19; color: #f3eee6;' : 'background: #f7f2ea; color: #4a443d;',
+        toggle: function () { var d = JSON.parse(JSON.stringify(self.state.days)); d[self.state.routine][i] = d[self.state.routine][i] ? 0 : 1; self.setState({ days: d }); } };
+    });
+    var routines = [['sem', 'Entre semana', 'lun – vie'], ['fin', 'Fin de semana', 'sáb – dom']].map(function (r) {
+      var on = st.routine === r[0];
+      return { name: r[1], days: r[2], sel: on ? 'true' : 'false', pick: function () { self.setState({ routine: r[0], open: false }); },
+        style: on ? 'background: #1f1c19; color: #f3eee6;' : 'background: #fffdf9; color: #1f1c19; border: 1px solid #e6ded2;' };
+    });
+    var kinds = ['hab', 'com', 'enf', 'libre'].map(function (k) {
+      var on = st.kind === k;
+      return { name: KN[k], sel: on, pick: function () { self.setState({ kind: k }); }, style: on ? 'background: #1f1c19; color: #f3eee6;' : 'color: #1f1c19;' };
+    });
+    var KH = { hab: 'Se marca con un check, como agua o vitaminas.', com: 'Muestra el platillo que toca hoy según tu menú semanal.', enf: 'Muestra tu siguiente tarea pendiente de lo que elijas.', libre: 'Solo ocupa su espacio en el día; no se marca.' };
+    var LP = { Escuela: 'Revisar requisitos de inscripción', Trabajo: 'Propuesta de módulos', Personal: 'Diseñar la rutina de Día a día', dash: 'Diseñar la rutina de Día a día', ing: 'Revisar requisitos de inscripción' };
+    var icons = Object.keys(IC).map(function (k) {
+      var on = st.icon === k;
+      return { name: IC[k][0], d: IC[k][1], sel: on, pick: function () { self.setState({ icon: k }); }, style: on ? 'background: #1f1c19; color: #f3eee6;' : 'background: #f7f2ea; color: #1f1c19;' };
+    });
+    var nags = [['no', 'No'], ['15', '15 min'], ['30', '30 min'], ['60', '1 hora']].map(function (n) {
+      var on = st.nag === n[0];
+      return { name: n[1], sel: on, pick: function () { self.setState({ nag: n[0] }); }, style: on ? 'background: #1f1c19; color: #f3eee6;' : 'background: #f7f2ea; color: #1f1c19;' };
+    });
+    var t = (st.title || '').trim(), tl = t.charAt(0).toLowerCase() + t.slice(1);
+    var nagText = st.kind === 'com' ? 'No has comido' : (st.kind === 'enf' ? 'No has empezado: ' + t : 'No has hecho: ' + tl);
+    if (/vitamina/i.test(t)) nagText = 'No has tomado tus vitaminas';
+    if (/agua/i.test(t)) nagText = 'No has tomado agua';
+    var empty = !t, showErr = empty && st.touched && !st.focus;
+    var sw = function (on) { return ['background: ' + (on ? '#1f1c19' : '#d8cfc2') + ';', 'transform: translateX(' + (on ? '18px' : '0') + ');']; };
+    var a = sw(st.alert), c = sw(st.counts);
+    var open = st.open;
+    return {
+      routines: routines, rName: isSem ? 'Entre semana' : 'Fin de semana', days: days,
+      hasBlocks: isSem, noBlocks: !isSem, blocks: blocks,
+      openNew: function () { self.setState({ open: true, editing: 'new', title: '', kind: 'hab', icon: 'sun', start: '09:00', end: '', touched: false }); },
+      drawerTitle: st.editing === 'new' ? 'Nuevo bloque' : 'Editar bloque',
+      title: st.title, start: st.start, end: st.end, link: st.link,
+      titleCls: showErr ? 'inp bad' : 'inp', titleInvalid: showErr ? 'true' : 'false', showErr: showErr,
+      setTitle: function (e) { self.setState({ title: val(e) }); },
+      blurTitle: function () { self.setState({ touched: true, focus: false }); },
+      focusTitle: function () { self.setState({ focus: true }); },
+      setLink: function (e) { self.setState({ link: val(e) }); },
+      kinds: kinds, kindHint: KH[st.kind], isFocus: st.kind === 'enf', linkPreview: LP[st.link],
+      icons: icons, nags: nags, hasNag: st.nag !== 'no', nagText: nagText,
+      alert: st.alert ? 'true' : 'false', alertBg: a[0], alertKnob: a[1], toggleAlert: function () { self.setState({ alert: !self.state.alert }); },
+      counts: st.counts ? 'true' : 'false', countsBg: c[0], countsKnob: c[1], toggleCounts: function () { self.setState({ counts: !self.state.counts }); },
+      save: function (e) { if (e && e.preventDefault) e.preventDefault(); if (!self.state.title.trim()) { self.setState({ touched: true, focus: false }); var el = document.getElementById('b-titulo'); if (el) el.focus(); return; } self.setState({ open: false }); },
+      close: function () { self.setState({ open: false }); },
+      askDelete: function () { self.setState({ confirm: true, open: false }); },
+      cancel: function () { self.setState({ confirm: false }); },
+      confirm: st.confirm,
+      scrimOpacity: open ? '1' : '0', scrimEvents: open ? 'auto' : 'none',
+      transform: open ? 'translateX(0)' : 'translateX(calc(100% + 24px))', vis: open ? 'visible' : 'hidden', hidden: open ? 'false' : 'true'
+    };
+  }
+}
+</script>
+</body>
+</html>

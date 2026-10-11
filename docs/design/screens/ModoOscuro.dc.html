@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Modo oscuro</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Outfit:wght@300;400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#f1ebe2}a:hover{color:#cfc6ba}
+.wrap{padding:26px 44px 56px;box-sizing:border-box}
+@media (max-width:720px){.wrap{padding:14px 12px 40px}.topnav{order:3;width:100%}.hide-sm{display:none!important}}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:inherit;font-weight:500;cursor:pointer;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease}
+.pill-dark{background:#352e28;color:#f1ebe2;box-shadow:0 10px 22px -8px rgba(0,0,0,0.60)}
+.pill-dark:hover{transform:translateY(-1px);color:#f1ebe2}
+.pill-ghost{background:transparent;border:1px solid #5a5149;color:#f1ebe2}
+.pill-ghost:hover{background:#322b26}
+.pill-danger{background:#c4573f;color:#231e1b}
+.pill-danger:hover{transform:translateY(-1px);color:#231e1b}
+.navlink{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s ease}
+.navlink:hover{background:rgba(241,235,226,0.06)}
+.icon{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;border:0;background:transparent;color:inherit;cursor:pointer;flex-shrink:0}
+.icon:hover{background:rgba(241,235,226,0.07)}
+.h2i{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;flex-shrink:0}
+.card{background:#231e1b;border:1px solid #463e36;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:6px}
+.lbl{font-weight:500;font-size:14px}
+.inp{box-sizing:border-box;width:100%;min-height:48px;padding:0 14px;border-radius:14px;border:1px solid #5a5149;background:#231e1b;font:inherit;color:#f1ebe2;transition:border-color .2s ease}
+.inp::placeholder{color:#a39a8e}
+.inp:focus{outline:2px solid #a59ff0;outline-offset:1px}
+textarea.inp{padding:12px 14px;resize:vertical;line-height:1.55}
+.inp.bad{border-color:#f0a08c}
+.hint{font-size:13px;color:#b0a69a}
+.err{font-size:13px;color:#f0a08c;display:flex;align-items:center;gap:6px}
+.seg{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .2s ease,color .2s ease}
+.squig{stroke-dasharray:320;animation:draw .9s .2s ease-out both}
+@keyframes draw{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+.pill:focus-visible,.navlink:focus-visible,.icon:focus-visible,.seg:focus-visible{outline:2px solid #a59ff0;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.squig{animation:none}.pill,.seg,.inp{transition:none}.pill:hover{transform:none}}
+/*common*/
+@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#231e1b!important;box-shadow:0 18px 40px -16px rgba(0,0,0,0.60);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #a59ff0;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
+.chk{position:relative}.chk::after{content:"";position:absolute;inset:-10px}
+.dotbtn{position:relative}.dotbtn::after{content:"";position:absolute;inset:-4px}
+.bar{transition:none!important;transform-origin:left center;animation:barIn .7s cubic-bezier(.3,.7,.2,1) both}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wbar{transition:none!important;transform-origin:bottom center;animation:wbarIn .6s cubic-bezier(.3,.7,.2,1) both}
+@keyframes wbarIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.bar,.wbar{animation:none}}
+
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;align-items:start}
+.c8{grid-column:span 8;display:flex;flex-direction:column;gap:16px;min-width:0}.c4{grid-column:span 4;display:flex;flex-direction:column;gap:16px;min-width:0}
+@media (max-width:1080px){.c8,.c4{grid-column:span 12}}
+.prow{display:grid;grid-template-columns:minmax(0,1.2fr) 64px 64px minmax(0,2fr);gap:12px;align-items:center;min-height:52px;border-top:1px solid #3a332d}
+@media (max-width:600px){.prow{grid-template-columns:minmax(0,1fr) 48px 48px}.prow .u{display:none}}
+.sw{height:36px;border-radius:12px;border:1px solid #3a342e}
+.lrow{display:flex;align-items:center;gap:12px;min-height:48px;padding:0 10px;margin:0 -10px;border-radius:14px;text-decoration:none;transition:background .2s ease}
+.lrow:hover{background:#2d2723}
+.lrow:focus-visible{outline:2px solid #a59ff0;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: radial-gradient(1200px 600px at 85% -10%, #1b1815 0%, rgba(31,27,24,0.0) 60%), #131110; color: #f1ebe2; font-family: 'Outfit', system-ui, sans-serif; color-scheme: dark; font-size: 15px; line-height: 1.5">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 20px">
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Gochi Hand', cursive; font-size: 28px; text-decoration: none; line-height: 1">
+<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#f1ebe2" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#a59ff0" stroke="#f1ebe2" stroke-width="3.5"></circle></svg>
+kairo</a>
+<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(34,30,27,0.7); border: 1px solid #463e36">
+<a class="navlink nb" href="Main.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
+<a class="navlink nb" href="Tareas.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
+<a class="navlink nx" href="Proyectos.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
+<a class="navlink nb" href="Agenda.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
+<a class="navlink nx" href="FinResumen.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
+<a class="navlink nx" href="EscritosInicio.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
+<a class="navlink nb" href="DiaADia.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
+<a class="navlink nmore" href="Mas.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
+</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #231e1b; border: 1px solid #463e36; flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#f1ebe2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#a59ff0"></path></svg></a><!--/AV-->
+<a class="pill pill-ghost" href="Perfil.dc.html" style="padding: 0 18px">Ajustar en Perfil</a>
+</header>
+<section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; align-items: flex-start; gap: 10px">
+<h1 style="margin: 0; font-family: 'Gochi Hand', cursive; font-weight: 400; font-size: clamp(44px, 11vw, 64px); line-height: 1">Modo oscuro</h1>
+<svg width="46" height="46" viewBox="0 0 40 40" fill="#a59ff0" stroke="#f1ebe2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: rotate(-10deg); flex-shrink: 0"><path d="M26 6a14 14 0 1 0 8 22A11 11 0 0 1 26 6z"></path><path d="M31 9l1 2 2 1-2 1-1 2-1-2-2-1 2-1z" fill="#231e1b"></path></svg>
+</div>
+<svg width="220" height="14" viewBox="0 0 300 16" fill="none" aria-hidden="true" style="margin: -2px 0 2px 2px; max-width: 100%"><path class="squig" d="M3 10c22-8 40 6 64-1s40-8 62 0 44 7 66-1 46-6 72 3 30-3 30-3" stroke="#a59ff0" stroke-width="5" stroke-linecap="round"></path></svg>
+<p style="margin: 0; color: #b0a69a; font-size: 17px">La misma casa con la luz apagada: tonos café cálidos y la lavanda solo de acento.</p>
+</div>
+<div role="radiogroup" aria-label="Apariencia" style="display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(34,30,27,0.7); border: 1px solid #463e36">
+<button class="seg" type="button" role="radio" aria-checked="false" style="color: #f1ebe2">Claro</button>
+<button class="seg" type="button" role="radio" aria-checked="true" style="background: #352e28; color: #f1ebe2">Oscuro</button>
+<button class="seg" type="button" role="radio" aria-checked="false" style="color: #f1ebe2">Como el sistema</button>
+</div>
+</section>
+<div class="grid">
+<div class="c8">
+<section class="card" aria-labelledby="h-pal" style="gap: 4px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px"><h2 id="h-pal" style="margin: 0; font-size: 20px; font-weight: 500">Paleta</h2><span class="hint">Claro · Oscuro</span></div>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="14">
+<div class="prow"><span style="font-weight: 500">{{r.name}}</span><span class="sw" style="{{r.l}}" title="{{r.lhex}}"></span><span class="sw" style="{{r.d}}" title="{{r.dhex}}"></span><span class="u hint" style="font-size: 14px">{{r.use}}</span></div>
+</sc-for>
+</section>
+</div>
+<div class="c4">
+<section class="card" aria-labelledby="h-que" style="gap: 10px">
+<h2 id="h-que" style="margin: 0; font-size: 20px; font-weight: 500">Qué cambia</h2>
+<ul style="margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 14px">
+<li>El fondo no es negro: es tinta cálida, para no cansar la vista de noche.</li>
+<li>La tarjeta destacada es un café un poco más claro que las demás, como si estuviera encima; la lavanda solo en su ícono, anillo y barras.</li>
+<li>Texto y trazos de doodles e íconos van en crema.</li>
+<li>Las sombras se vuelven más hondas; las tarjetas claras siguen con borde.</li>
+<li>La lavanda no pasa del 10% de la pantalla: checks, barras, anillos, menú activo, subrayado y foco. Los fondos grandes nunca van morados.</li>
+<li>Los colores de temporada se quedan igual: resaltan más en oscuro.</li>
+<li>Se elige en Perfil: claro, oscuro o como el sistema.</li>
+</ul>
+</section>
+<section class="card" aria-labelledby="h-pan" style="gap: 2px">
+<h2 id="h-pan" style="margin: 0 0 6px; font-size: 20px; font-weight: 500">Pantallas en oscuro</h2>
+<a class="lrow" href="OscuroMain.dc.html"><span style="flex: 1; font-weight: 500">Inicio</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></a><a class="lrow" href="OscuroTareas.dc.html"><span style="flex: 1; font-weight: 500">Tareas</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></a><a class="lrow" href="OscuroAgenda.dc.html"><span style="flex: 1; font-weight: 500">Agenda</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></a><a class="lrow" href="OscuroFinResumen.dc.html"><span style="flex: 1; font-weight: 500">Finanzas</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></a><a class="lrow" href="OscuroEscritosInicio.dc.html"><span style="flex: 1; font-weight: 500">Escritos</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></a><a class="lrow" href="OscuroTelMain.dc.html"><span style="flex: 1; font-weight: 500">Inicio en el celular</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></a>
+</section>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1040}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var R = [
+      ['crema', 'f3eee6', '131110', 'Fondo de la página'],
+      ['superficie', 'fffdf9', '231e1b', 'Tarjetas claras y paneles'],
+      ['superficie-2', 'f7f2ea', '2d2723', 'Filas, días, campos'],
+      ['linea', 'e6ded2', '463e36', 'Bordes y separadores'],
+      ['tinta · texto', '1f1c19', 'f1ebe2', 'Texto principal, trazo de doodles e íconos'],
+      ['tinta · tarjeta', '1f1c19', '352e28', 'Tarjeta destacada, botón principal, menú activo; la lavanda va en sus detalles'],
+      ['texto-2', '6b645b', 'b0a69a', 'Texto secundario'],
+      ['lavanda', 'cbc6f5', 'a59ff0', 'Anillos, barras, subrayado, doodles'],
+      ['lavanda · fondo', 'cbc6f5', '5b53b8', 'Checks marcados y etiquetas'],
+      ['lavanda-suave', 'e9e7fb', '2c2628', 'Recordatorios y eventos personales: fondo neutro, borde y textos lavanda'],
+      ['lavanda-tinta', '3a3480', 'c9c4f7', 'Texto sobre lavanda'],
+      ['arena', 'f3e3c3', '3a322c', 'Fondo de íconos chicos'],
+      ['peligro', '8c2f1b', 'f0a08c', 'Borrar y errores'],
+      ['foco', '6a62d6', 'a59ff0', 'Anillo de foco']
+    ];
+    var H = String.fromCharCode(35);
+    return { rows: R.map(function (r) { return { name: r[0], lhex: H + r[1], dhex: H + r[2], use: r[3], l: 'background: ' + H + r[1] + ';', d: 'background: ' + H + r[2] + ';' }; }) };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Dashboard personal · Sprints</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Outfit:wght@300;400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1f1c19}a:hover{color:#4a443d}
+.wrap{padding:26px 44px 56px;box-sizing:border-box}
+@media (max-width:720px){.wrap{padding:14px 12px 40px}.topnav{order:3;width:100%}.hide-sm{display:none!important}}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:inherit;font-weight:500;cursor:pointer;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease}
+.pill-dark{background:#1f1c19;color:#f3eee6;box-shadow:0 10px 22px -8px rgba(31,28,25,.45)}
+.pill-dark:hover{transform:translateY(-1px);color:#f3eee6}
+.pill-ghost{background:transparent;border:1px solid #d8cfc2;color:#1f1c19}
+.pill-ghost:hover{background:#f0eadf}
+.pill-danger{background:#8c2f1b;color:#fffdf9}
+.pill-danger:hover{transform:translateY(-1px);color:#fffdf9}
+.navlink{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s ease}
+.navlink:hover{background:rgba(31,28,25,.06)}
+.icon{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;border:0;background:transparent;color:inherit;cursor:pointer;flex-shrink:0}
+.icon:hover{background:rgba(31,28,25,.07)}
+.h2i{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;flex-shrink:0}
+.card{background:#fffdf9;border:1px solid #e6ded2;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:6px}
+.lbl{font-weight:500;font-size:14px}
+.inp{box-sizing:border-box;width:100%;min-height:48px;padding:0 14px;border-radius:14px;border:1px solid #d8cfc2;background:#fffdf9;font:inherit;color:#1f1c19;transition:border-color .2s ease}
+.inp::placeholder{color:#8a8278}
+.inp:focus{outline:2px solid #6a62d6;outline-offset:1px}
+textarea.inp{padding:12px 14px;resize:vertical;line-height:1.55}
+.inp.bad{border-color:#8c2f1b}
+.hint{font-size:13px;color:#6b645b}
+.err{font-size:13px;color:#8c2f1b;display:flex;align-items:center;gap:6px}
+.seg{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .2s ease,color .2s ease}
+.squig{stroke-dasharray:320;animation:draw .9s .2s ease-out both}
+@keyframes draw{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+.pill:focus-visible,.navlink:focus-visible,.icon:focus-visible,.seg:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.squig{animation:none}.pill,.seg,.inp{transition:none}.pill:hover{transform:none}}
+/*common*/
+@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#fffdf9!important;box-shadow:0 18px 40px -16px rgba(31,28,25,.45);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
+.chk{position:relative}.chk::after{content:"";position:absolute;inset:-10px}
+.dotbtn{position:relative}.dotbtn::after{content:"";position:absolute;inset:-4px}
+.bar{transition:none!important;transform-origin:left center;animation:barIn .7s cubic-bezier(.3,.7,.2,1) both}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wbar{transition:none!important;transform-origin:bottom center;animation:wbarIn .6s cubic-bezier(.3,.7,.2,1) both}
+@keyframes wbarIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.bar,.wbar{animation:none}}
+
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;align-items:start}
+.c8{grid-column:span 8;display:flex;flex-direction:column;gap:16px;min-width:0}.c4{grid-column:span 4;display:flex;flex-direction:column;gap:16px;min-width:0}
+@media (max-width:1080px){.c8,.c4{grid-column:span 12}}
+.ptab{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;text-decoration:none;font-weight:500;white-space:nowrap;transition:background .2s ease}
+.ptab:hover{background:rgba(31,28,25,.06)}
+.ptab:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+.toast{transition:opacity .25s ease,transform .25s ease}
+@media (prefers-reduced-motion:reduce){.toast,.ptab{transition:none}}
+.col{background:#f7f2ea;border-radius:22px;padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.kcols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:720px){.kcols{grid-template-columns:1fr}}
+.kc{background:#fffdf9;border:1px solid #e6ded2;border-radius:16px;padding:10px 10px 10px 14px;display:flex;flex-direction:column;gap:6px;animation:kin .3s ease both}
+@keyframes kin{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.mv{all:unset;box-sizing:border-box;position:relative;width:32px;height:32px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:#6b645b;transition:background .2s ease,color .2s ease}
+.mv::after{content:"";position:absolute;inset:-6px}
+.mv:hover{background:#f0eadf;color:#1f1c19}
+.mv:focus-visible,.addb:focus-visible,.opt:focus-visible{outline:2px solid #6a62d6;outline-offset:2px}
+.addb{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:999px;border:1px solid #d8cfc2;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;transition:background .2s ease}
+.addb:hover{background:#f0eadf}
+.row{display:flex;align-items:center;gap:12px;min-height:52px;border-top:1px solid #f3ede3}
+.opt{all:unset;box-sizing:border-box;display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:16px;border:1.5px solid #e6ded2;cursor:pointer;transition:border-color .2s ease,background .2s ease}
+.drawer{transition:transform .38s cubic-bezier(.3,.7,.2,1),visibility .38s}
+.scrim{transition:opacity .3s ease}
+@media (prefers-reduced-motion:reduce){.kc{animation:none}.drawer,.scrim,.mv,.addb,.opt{transition:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: radial-gradient(1200px 600px at 85% -10%, #fbf8f2 0%, rgba(251,248,242,0) 60%), #f3eee6; color: #1f1c19; font-family: 'Outfit', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 20px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Gochi Hand', cursive; font-size: 28px; text-decoration: none; line-height: 1">
+<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#1f1c19" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#cbc6f5" stroke="#1f1c19" stroke-width="3.5"></circle></svg>
+kairo</a>
+<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,253,249,.7); border: 1px solid #e6ded2">
+<a class="navlink nb" href="Main.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
+<a class="navlink nb" href="Tareas.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
+<a class="navlink nx" href="Proyectos.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
+<a class="navlink nb" href="Agenda.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
+<a class="navlink nx" href="FinResumen.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
+<a class="navlink nx" href="EscritosInicio.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
+<a class="navlink nb" href="DiaADia.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
+<a class="navlink nmore" href="Mas.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
+</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #fffdf9; border: 1px solid #e6ded2; flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#1f1c19" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#cbc6f5"></path></svg></a><!--/AV-->
+<a class="pill pill-ghost" href="Proyectos.dc.html" style="padding: 0 18px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>Todos los proyectos</a>
+</header>
+
+<section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<h1 style="margin: 0; font-family: 'Gochi Hand', cursive; font-weight: 400; font-size: clamp(44px, 11vw, 64px); line-height: 1">Dashboard personal</h1>
+<svg width="280" height="14" viewBox="0 0 300 16" fill="none" aria-hidden="true" style="margin: -4px 0 0 2px; max-width: 100%"><path class="squig" d="M3 10c22-8 40 6 64-1s40-8 62 0 44 7 66-1 46-6 72 3 30-3 30-3" stroke="#cbc6f5" stroke-width="5" stroke-linecap="round"></path></svg>
+<span style="color: #6b645b; font-size: 17px">Sprints de dos semanas · uno activo a la vez</span>
+</div>
+<button class="pill pill-dark" type="button" onClick="{{openClose}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>{{closeBtn}}</button>
+</section>
+
+<nav aria-label="Partes del proyecto" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,253,249,.7); border: 1px solid #e6ded2; align-self: flex-start; max-width: 100%; overflow-x: auto; box-sizing: border-box">
+<a class="ptab" href="Proyecto.dc.html" style="color: #1f1c19"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16M4 10h16M4 15h10M4 20h7"></path></svg>Resumen</a>
+<a class="ptab" href="ProyectoSprints.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3 6.2"></path><path d="M4 19v-5h5"></path></svg>Sprints</a>
+<a class="ptab" href="ProyectoArchivos.dc.html" style="color: #1f1c19"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"></path><path d="M14 3v4h4"></path></svg>Archivos</a>
+</nav>
+
+<div class="grid">
+<div class="c8">
+
+<section aria-labelledby="h-act" style="position: relative; background: #1f1c19; color: #f3eee6; border-radius: 28px; padding: 24px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 24px 48px -28px rgba(31,28,25,.6)">
+<svg width="46" height="46" viewBox="0 0 40 40" fill="#cbc6f5" stroke="#1f1c19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: absolute; top: -14px; right: 22px; transform: rotate(12deg)"><path d="M22 4L9 23h9l-2 13 15-20h-9l0-12z"></path></svg>
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
+<span style="font-size: 13px; color: #b8b0a5">Sprint activo</span>
+<h2 id="h-act" style="margin: 0; font-size: 28px; font-weight: 500; line-height: 1.15">{{sp.name}}</h2>
+<span style="color: #d6cfc4">{{sp.range}}</span>
+</div>
+<span style="display: inline-flex; align-items: center; min-height: 30px; padding: 0 14px; border-radius: 999px; background: #cbc6f5; color: #1f1c19; font-size: 14px; font-weight: 500">{{sp.left}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 13px; color: #b8b0a5">Meta</span>
+<p style="margin: 0; font-size: 17px">{{sp.goal}}</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span>{{doneLabel}}</span><span style="color: #b8b0a5">{{pct}}</span></div>
+<div style="height: 8px; border-radius: 8px; background: #3a3530; overflow: hidden"><div style="height: 100%; border-radius: 8px; background: #cbc6f5; width: {{pct}}; transition: width .6s cubic-bezier(.3,.7,.2,1)"></div></div>
+<div aria-label="{{daysAria}}" role="img" style="display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: 4px; margin-top: 4px">
+<sc-for list="{{days}}" as="d" hint-placeholder-count="14"><span style="{{d.style}}"></span></sc-for>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="h-tab" class="card" style="gap: 14px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span class="h2i" style="background: #e9e7fb; color: #3a3480"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="5" height="16" rx="1.5"></rect><rect x="10" y="4" width="5" height="10" rx="1.5"></rect><rect x="17" y="4" width="4" height="13" rx="1.5"></rect></svg></span>
+<h2 id="h-tab" style="margin: 0; font-size: 20px; font-weight: 500">Tablero del sprint</h2>
+</div>
+<span class="hint">Mueve cada tarea con las flechas.</span>
+</div>
+<div class="kcols">
+<sc-for list="{{cols}}" as="c" hint-placeholder-count="3">
+<div class="col" aria-label="{{c.aria}}" role="group">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 2px 4px 4px"><span style="font-weight: 500">{{c.label}}</span><span style="{{c.countStyle}}">{{c.count}}</span></div>
+<sc-for list="{{c.items}}" as="t" hint-placeholder-count="2">
+<div class="kc">
+<span style="{{t.titleStyle}}">{{t.title}}</span>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 6px">
+<span style="font-size: 12px; color: #6b645b">{{t.meta}}</span>
+<span style="display: inline-flex; gap: 2px">
+<sc-if value="{{t.canBack}}" hint-placeholder-val="{{true}}"><button class="mv" type="button" onClick="{{t.back}}" aria-label="{{t.backLabel}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button></sc-if>
+<sc-if value="{{t.canFwd}}" hint-placeholder-val="{{true}}"><button class="mv" type="button" onClick="{{t.fwd}}" aria-label="{{t.fwdLabel}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button></sc-if>
+</span>
+</div>
+</div>
+</sc-for>
+<sc-if value="{{c.empty}}" hint-placeholder-val="{{false}}"><p style="margin: 0; padding: 14px 10px; border-radius: 14px; border: 1.5px dashed #d8cfc2; color: #6b645b; font-size: 13px; text-align: center">{{c.emptyText}}</p></sc-if>
+</div>
+</sc-for>
+</div>
+</section>
+
+</div>
+<div class="c4">
+
+<section aria-labelledby="h-back" class="card" style="gap: 6px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 4px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span class="h2i" style="background: #f3e3c3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"></path></svg></span>
+<h2 id="h-back" style="margin: 0; font-size: 20px; font-weight: 500">Backlog</h2>
+</div>
+<span class="hint">{{backCount}}</span>
+</div>
+<span class="hint" style="margin-bottom: 4px">Lo que todavía no entra a ningún sprint.</span>
+<sc-for list="{{backlog}}" as="b" hint-placeholder-count="4">
+<div class="row">
+<span style="flex: 1; min-width: 0">{{b.title}}</span>
+<button class="addb" type="button" onClick="{{b.add}}" aria-label="{{b.aria}}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Al sprint</button>
+</div>
+</sc-for>
+<sc-if value="{{backEmpty}}" hint-placeholder-val="{{false}}"><p style="margin: 0; padding: 14px; border-radius: 14px; background: #f7f2ea; color: #6b645b; font-size: 14px">Backlog vacío. Todo lo pendiente ya está en un sprint.</p></sc-if>
+</section>
+
+<section aria-labelledby="h-hist" class="card" style="gap: 6px">
+<div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px">
+<span class="h2i" style="background: #e9e7fb; color: #3a3480"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></span>
+<h2 id="h-hist" style="margin: 0; font-size: 20px; font-weight: 500">Sprints cerrados</h2>
+</div>
+<sc-for list="{{history}}" as="h" hint-placeholder-count="1">
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 12px 0; border-top: 1px solid #f3ede3">
+<div style="display: flex; justify-content: space-between; gap: 10px"><span style="font-weight: 500">{{h.name}}</span><span style="font-size: 13px; color: #6b645b; white-space: nowrap">{{h.score}}</span></div>
+<span style="font-size: 13px; color: #6b645b">{{h.range}}</span>
+<sc-if value="{{h.hasRetro}}" hint-placeholder-val="{{true}}"><p style="margin: 4px 0 0; padding: 10px 12px; border-radius: 14px; background: #f7f2ea; font-size: 14px">{{h.retro}}</p></sc-if>
+</div>
+</sc-for>
+</section>
+
+</div>
+</div>
+
+<div class="scrim" onClick="{{cancel}}" style="position: fixed; inset: 0; background: rgba(31,28,25,.28); backdrop-filter: blur(3px); opacity: {{scrimOpacity}}; pointer-events: {{scrimEvents}}; z-index: 65"></div>
+<form class="drawer" role="dialog" aria-modal="true" aria-labelledby="cl-t" aria-hidden="{{hidden}}" onSubmit="{{confirmClose}}" style="position: fixed; top: 12px; right: 12px; bottom: 12px; width: min(460px, calc(100% - 24px)); box-sizing: border-box; background: #fffdf9; border-radius: 28px; box-shadow: 0 30px 60px -20px rgba(31,28,25,.45); display: flex; flex-direction: column; transform: {{transform}}; visibility: {{vis}}; z-index: 70">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 20px 20px 8px 24px">
+<h2 id="cl-t" style="margin: 0; font-size: 24px; font-weight: 500">{{closeTitle}}</h2>
+<button class="icon" type="button" onClick="{{cancel}}" aria-label="Cerrar panel"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<div style="flex: 1; overflow-y: auto; padding: 8px 24px 20px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">
+<div style="padding: 14px; border-radius: 18px; background: #e9e7fb"><span style="display: block; font-size: 32px; font-weight: 300; line-height: 1">{{nDone}}</span><span style="font-size: 13px; color: #3a3480">hechas</span></div>
+<div style="padding: 14px; border-radius: 18px; background: #f7f2ea"><span style="display: block; font-size: 32px; font-weight: 300; line-height: 1">{{nOpen}}</span><span style="font-size: 13px; color: #6b645b">sin terminar</span></div>
+</div>
+<sc-if value="{{hasOpen}}" hint-placeholder-val="{{true}}">
+<fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px">
+<legend class="lbl" style="margin-bottom: 8px">¿Qué hago con las que faltan?</legend>
+<sc-for list="{{moveOpts}}" as="o" hint-placeholder-count="2">
+<button class="opt" type="button" role="radio" aria-checked="{{o.on}}" onClick="{{o.pick}}" style="{{o.style}}">
+<span style="{{o.dot}}"></span>
+<span style="display: flex; flex-direction: column"><span style="font-weight: 500">{{o.label}}</span><span class="hint">{{o.hint}}</span></span>
+</button>
+</sc-for>
+</fieldset>
+</sc-if>
+<div class="field">
+<span class="lbl" id="dur-l">Duración del siguiente</span>
+<div role="group" aria-labelledby="dur-l" style="display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: #f7f2ea; align-self: flex-start">
+<button class="seg" type="button" aria-pressed="{{w1}}" onClick="{{toW1}}" style="{{w1Style}}">1 semana</button>
+<button class="seg" type="button" aria-pressed="{{w2}}" onClick="{{toW2}}" style="{{w2Style}}">2 semanas</button>
+</div>
+</div>
+<div class="field">
+<label class="lbl" for="retro">Notas del sprint</label>
+<textarea id="retro" class="inp" rows="4" placeholder="Qué salió bien y qué cambiarías" onInput="{{onRetro}}" value="{{retro}}"></textarea>
+<span class="hint">Opcional. Se guarda en Sprints cerrados.</span>
+</div>
+</div>
+<div style="display: flex; gap: 10px; padding: 16px 24px 24px; border-top: 1px solid #f0eadf; flex-wrap: wrap">
+<button class="pill pill-dark" type="submit" style="flex: 1">{{confirmLabel}}</button>
+<button class="pill pill-ghost" type="button" onClick="{{cancel}}">Cancelar</button>
+</div>
+</form>
+
+<div class="toast" role="status" aria-live="polite" style="position: fixed; left: 50%; bottom: 24px; transform: {{toastT}}; opacity: {{toastO}}; visibility: {{toastV}}; padding: 12px 20px; border-radius: 999px; background: #1f1c19; color: #f3eee6; z-index: 60; max-width: calc(100% - 32px); box-sizing: border-box; text-align: center">{{toast}}</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1200}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = {
+      col: { s1: 2, s2: 1, s3: 1, s4: 2, s5: 0, s6: 0 },
+      order: ['s1', 's2', 's3', 's4', 's5', 's6'],
+      back: ['b1', 'b2', 'b3', 'b4'],
+      open: false, closed: false, move: 'next', weeks: 2, retro: '', toast: ''
+    };
+  }
+  flash(t) {
+    var self = this;
+    this.setState({ toast: t });
+    clearTimeout(this._t);
+    this._t = setTimeout(function () { self.setState({ toast: '' }); }, 3200);
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var T = {
+      s1: { t: 'Pantalla de Inicio', m: '5 subtareas' }, s2: { t: 'Terminar el diseño del dashboard', m: 'Vence hoy' },
+      s3: { t: 'Sección de Escritos y personajes', m: '1 de 4' }, s4: { t: 'Elegir stack y estructura de carpetas', m: 'Next.js + Supabase' },
+      s5: { t: 'Esquema de base de datos en Supabase', m: 'Sáb 10' }, s6: { t: 'Login con correo', m: 'Sin fecha' },
+      b1: { t: 'Pomodoro y barra de Spotify', m: 'Del backlog' }, b2: { t: 'Conexión con Notion', m: 'Del backlog' },
+      b3: { t: 'Instalar en el celular (PWA)', m: 'Del backlog' }, b4: { t: 'Recordatorios de pagos automáticos', m: 'Del backlog' }
+    };
+    var LAB = ['Por hacer', 'En curso', 'Hecho'];
+    var setCol = function (id, c) { var n = Object.assign({}, st.col); n[id] = c; self.setState({ col: n }); };
+    var cols = LAB.map(function (label, ci) {
+      var items = st.order.filter(function (id) { return st.col[id] === ci; }).map(function (id) {
+        return {
+          title: T[id].t, meta: ci === 2 ? 'Hecha' : T[id].m,
+          titleStyle: 'font-weight: 500; line-height: 1.35; ' + (ci === 2 ? 'color: #6b645b;' : ''),
+          canBack: ci > 0, canFwd: ci < 2,
+          back: function () { setCol(id, ci - 1); }, fwd: function () { setCol(id, ci + 1); },
+          backLabel: 'Mover "' + T[id].t + '" a ' + LAB[Math.max(ci - 1, 0)],
+          fwdLabel: 'Mover "' + T[id].t + '" a ' + LAB[Math.min(ci + 1, 2)]
+        };
+      });
+      return {
+        label: label, aria: label + ', ' + items.length + ' tareas', count: String(items.length), items: items, empty: items.length === 0,
+        emptyText: ci === 0 ? 'Nada por hacer. Agrega desde el backlog.' : (ci === 1 ? 'Nada en curso.' : 'Aún nada hecho.'),
+        countStyle: 'min-width: 26px; height: 26px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; ' + (ci === 2 ? 'background: #cbc6f5;' : 'background: #fffdf9; border: 1px solid #e6ded2;')
+      };
+    });
+    var total = st.order.length;
+    var nDone = st.order.filter(function (id) { return st.col[id] === 2; }).length;
+    var nOpen = total - nDone;
+    var sp = st.closed
+      ? { name: 'Sprint 3', range: st.weeks === 2 ? '20 de octubre al 2 de noviembre' : '20 al 26 de octubre', left: st.weeks === 2 ? 'Quedan 14 días' : 'Quedan 7 días', goal: 'Base del código: Supabase, login y primeras secciones.' }
+      : { name: 'Sprint 2', range: '7 al 19 de octubre', left: 'Quedan 12 días', goal: 'Cerrar el diseño y dejar listo el arranque del código.' };
+    var nDays = st.closed ? st.weeks * 7 : 13, passed = st.closed ? 0 : 1;
+    var days = [];
+    for (var i = 0; i < 14; i++) {
+      days.push({ style: 'height: 10px; border-radius: 4px; ' + (i >= nDays ? 'background: transparent;' : (i < passed ? 'background: #cbc6f5;' : (i === passed ? 'background: #f3eee6;' : 'background: #3a3530;'))) });
+    }
+    var backlog = st.back.map(function (id) {
+      return { title: T[id].t, aria: 'Agregar "' + T[id].t + '" al sprint',
+        add: function () {
+          var n = Object.assign({}, st.col); n[id] = 0;
+          self.setState({ col: n, order: st.order.concat([id]), back: st.back.filter(function (x) { return x !== id; }) });
+          self.flash('"' + T[id].t + '" entró al ' + sp.name);
+        } };
+    });
+    var H = [{ name: 'Sprint 1', range: '30 de septiembre al 6 de octubre', score: '4 de 5 hechas', retro: 'Escritos no alcanzó; pasó al sprint 2.' }];
+    if (st.closed) H.unshift({ name: 'Sprint 2', range: '7 al 19 de octubre', score: st.closedScore, retro: st.closedRetro });
+    var history = H.map(function (h) { return { name: h.name, range: h.range, score: h.score, retro: h.retro, hasRetro: !!h.retro }; });
+    var open = st.open;
+    var opt = function (k, label, hint) {
+      var on = st.move === k;
+      return { label: label, hint: hint, on: on ? 'true' : 'false', pick: function () { self.setState({ move: k }); },
+        style: on ? 'border-color: #1f1c19; background: #f7f2ea;' : '',
+        dot: 'width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; border-radius: 50%; box-sizing: border-box; ' + (on ? 'border: 6px solid #1f1c19;' : 'border: 1.5px solid #8a8278;') };
+    };
+    var seg = function (on) { return on ? 'background: #1f1c19; color: #f3eee6;' : 'color: #1f1c19;'; };
+    var ts = !!st.toast;
+    return {
+      sp: sp, days: days, daysAria: 'Día ' + (passed + 1) + ' de ' + nDays,
+      doneLabel: nDone + ' de ' + total + ' tareas hechas', pct: (total ? Math.round(nDone / total * 100) : 0) + '%',
+      cols: cols, backlog: backlog, backEmpty: backlog.length === 0, backCount: backlog.length + (backlog.length === 1 ? ' tarea' : ' tareas'),
+      history: history,
+      closeBtn: 'Cerrar ' + sp.name,
+      openClose: function () { self.setState({ open: true }); },
+      cancel: function () { self.setState({ open: false }); },
+      closeTitle: 'Cerrar ' + sp.name, nDone: String(nDone), nOpen: String(nOpen), hasOpen: nOpen > 0,
+      moveOpts: [opt('next', 'Pasarlas al siguiente sprint', 'Empiezan en Por hacer.'), opt('back', 'Regresarlas al backlog', 'Las eliges después con calma.')],
+      w1: st.weeks === 1, w2: st.weeks === 2, w1Style: seg(st.weeks === 1), w2Style: seg(st.weeks === 2),
+      toW1: function () { self.setState({ weeks: 1 }); }, toW2: function () { self.setState({ weeks: 2 }); },
+      retro: st.retro, onRetro: function (e) { self.setState({ retro: e.target.value }); },
+      confirmLabel: 'Cerrar y empezar el ' + (st.closed ? 'Sprint 4' : 'Sprint 3'),
+      confirmClose: function (e) {
+        if (e && e.preventDefault) e.preventDefault();
+        var openIds = st.order.filter(function (id) { return st.col[id] !== 2; });
+        var col = {}; openIds.forEach(function (id) { col[id] = 0; });
+        var keep = st.move === 'next' ? openIds : [];
+        var back = st.move === 'next' ? st.back : openIds.concat(st.back);
+        self.setState({ open: false, closed: true, col: col, order: keep, back: back, closedScore: nDone + ' de ' + total + ' hechas', closedRetro: st.retro.trim(), retro: '' });
+        self.flash(sp.name + ' cerrado · ' + (nOpen ? nOpen + (st.move === 'next' ? ' pasaron al siguiente' : ' regresaron al backlog') : 'todo quedó hecho'));
+      },
+      scrimOpacity: open ? '1' : '0', scrimEvents: open ? 'auto' : 'none', hidden: open ? 'false' : 'true',
+      transform: open ? 'none' : 'translateX(110%)', vis: open ? 'visible' : 'hidden',
+      toast: st.toast, toastO: ts ? '1' : '0', toastV: ts ? 'visible' : 'hidden', toastT: ts ? 'translateX(-50%)' : 'translate(-50%, 8px)'
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Tel · Música y enfoque</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Outfit:wght@300;400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1f1c19}a:hover{color:#4a443d}
+.wrap{padding:26px 44px 56px;box-sizing:border-box}
+@media (max-width:720px){.wrap{padding:14px 12px 40px}.topnav{order:3;width:100%}.hide-sm{display:none!important}}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:inherit;font-weight:500;cursor:pointer;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease}
+.pill-dark{background:#1f1c19;color:#f3eee6;box-shadow:0 10px 22px -8px rgba(31,28,25,.45)}
+.pill-dark:hover{transform:translateY(-1px);color:#f3eee6}
+.pill-ghost{background:transparent;border:1px solid #d8cfc2;color:#1f1c19}
+.pill-ghost:hover{background:#f0eadf}
+.pill-danger{background:#8c2f1b;color:#fffdf9}
+.pill-danger:hover{transform:translateY(-1px);color:#fffdf9}
+.navlink{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s ease}
+.navlink:hover{background:rgba(31,28,25,.06)}
+.icon{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;border:0;background:transparent;color:inherit;cursor:pointer;flex-shrink:0}
+.icon:hover{background:rgba(31,28,25,.07)}
+.h2i{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;flex-shrink:0}
+.card{background:#fffdf9;border:1px solid #e6ded2;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:6px}
+.lbl{font-weight:500;font-size:14px}
+.inp{box-sizing:border-box;width:100%;min-height:48px;padding:0 14px;border-radius:14px;border:1px solid #d8cfc2;background:#fffdf9;font:inherit;color:#1f1c19;transition:border-color .2s ease}
+.inp::placeholder{color:#8a8278}
+.inp:focus{outline:2px solid #6a62d6;outline-offset:1px}
+textarea.inp{padding:12px 14px;resize:vertical;line-height:1.55}
+.inp.bad{border-color:#8c2f1b}
+.hint{font-size:13px;color:#6b645b}
+.err{font-size:13px;color:#8c2f1b;display:flex;align-items:center;gap:6px}
+.seg{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .2s ease,color .2s ease}
+.squig{stroke-dasharray:320;animation:draw .9s .2s ease-out both}
+@keyframes draw{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+.pill:focus-visible,.navlink:focus-visible,.icon:focus-visible,.seg:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.squig{animation:none}.pill,.seg,.inp{transition:none}.pill:hover{transform:none}}
+/*common*/
+@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#fffdf9!important;box-shadow:0 18px 40px -16px rgba(31,28,25,.45);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
+.chk{position:relative}.chk::after{content:"";position:absolute;inset:-10px}
+.dotbtn{position:relative}.dotbtn::after{content:"";position:absolute;inset:-4px}
+.bar{transition:none!important;transform-origin:left center;animation:barIn .7s cubic-bezier(.3,.7,.2,1) both}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wbar{transition:none!important;transform-origin:bottom center;animation:wbarIn .6s cubic-bezier(.3,.7,.2,1) both}
+@keyframes wbarIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.bar,.wbar{animation:none}}
+
+.dock{position:fixed;right:20px;bottom:20px;z-index:55;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.pillp{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:12px;padding:8px 8px 8px 8px;border-radius:999px;background:#1f1c19;color:#f3eee6;box-shadow:0 20px 40px -16px rgba(31,28,25,.7);cursor:pointer;min-width:320px;max-width:min(420px,calc(100vw - 40px))}
+.pillp:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+.art{width:44px;height:44px;border-radius:50%;flex-shrink:0;background:conic-gradient(from 200deg,#6a62d6,#cbc6f5,#f3e3c3,#6a62d6);position:relative}
+.art::after{content:"";position:absolute;inset:16px;border-radius:50%;background:#1f1c19}
+.spin{animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cb{all:unset;box-sizing:border-box;width:44px;height:44px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.cb:focus-visible{outline:2px solid #6a62d6;outline-offset:2px}
+.panel{width:min(380px,calc(100vw - 40px));background:#1f1c19;color:#f3eee6;border-radius:30px;padding:18px;box-sizing:border-box;box-shadow:0 30px 60px -20px rgba(31,28,25,.75);display:flex;flex-direction:column;gap:16px;animation:pIn .35s cubic-bezier(.3,.7,.2,1) both;transform-origin:bottom right}
+@keyframes pIn{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+.mt{all:unset;box-sizing:border-box;flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;border-radius:999px;cursor:pointer;font-weight:500;font-size:14px}
+.mt:focus-visible{outline:2px solid #6a62d6}
+.ring{transition:stroke-dashoffset 1s linear}
+.pre{all:unset;box-sizing:border-box;flex:1;display:flex;flex-direction:column;align-items:center;padding:8px;border-radius:14px;cursor:pointer;font-size:13px}
+.pre:focus-visible{outline:2px solid #6a62d6}
+.pl{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:10px;padding:8px;border-radius:14px;cursor:pointer;width:100%}
+.pl:hover{background:rgba(243,238,230,.06)}
+.pl:focus-visible{outline:2px solid #6a62d6}
+.toggle{all:unset;box-sizing:border-box;width:44px;height:26px;border-radius:999px;position:relative;cursor:pointer;flex-shrink:0}
+.toggle span{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fffdf9;transition:transform .2s ease}
+.toggle:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+.bg{opacity:.55;pointer-events:none}
+@media (max-width:720px){.dock{left:10px;right:10px;bottom:84px;align-items:stretch}.pillp{min-width:0;max-width:none;width:100%}.panel{width:100%}}
+@media (prefers-reduced-motion:reduce){.spin,.panel{animation:none}.ring{transition:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: radial-gradient(1200px 600px at 85% -10%, #fbf8f2 0%, rgba(251,248,242,0) 60%), #f3eee6; color: #1f1c19; font-family: 'Outfit', system-ui, sans-serif; font-size: 15px; line-height: 1.5; position: relative; overflow-x: hidden">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 20px">
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Gochi Hand', cursive; font-size: 28px; text-decoration: none; line-height: 1">
+<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#1f1c19" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#cbc6f5" stroke="#1f1c19" stroke-width="3.5"></circle></svg>
+kairo</a>
+<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,253,249,.7); border: 1px solid #e6ded2">
+<a class="navlink nb" href="Main.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
+<a class="navlink nb" href="Tareas.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
+<a class="navlink nx" href="Proyectos.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
+<a class="navlink nb" href="Agenda.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
+<a class="navlink nx" href="FinResumen.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
+<a class="navlink nx" href="EscritosInicio.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
+<a class="navlink nb" href="DiaADia.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
+<a class="navlink nmore" href="Mas.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
+</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #fffdf9; border: 1px solid #e6ded2; flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#1f1c19" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#cbc6f5"></path></svg></a><!--/AV-->
+<a class="pill pill-dark" href="TareaNueva.dc.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Nueva tarea</a>
+</header>
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 640px">
+<h1 style="margin: 0; font-family: 'Gochi Hand', cursive; font-weight: 400; font-size: clamp(48px, 12vw, 64px); line-height: 1">Música y enfoque</h1>
+<span style="color: #4a443d">Un solo reproductor flotante en todas las pantallas. Tiene dos modos: música (Spotify) y enfoque (pomodoro). Cuando el pomodoro corre, la píldora muestra el tiempo y la canción a la vez.</span>
+</div>
+<section class="card bg" aria-hidden="true" style="gap: 0; max-width: 820px">
+<sc-for list="{{bgRows}}" as="r" hint-placeholder-count="6"><div style="display: flex; align-items: center; gap: 12px; min-height: 56px; border-top: 1px solid #f3ede3"><span style="width: 22px; height: 22px; border-radius: 8px; border: 1.5px solid #8a8278"></span><span style="flex: 1">{{r.t}}</span><span class="hint">{{r.d}}</span></div></sc-for>
+</section>
+</div>
+
+<div class="dock">
+<sc-if value="{{expanded}}" hint-placeholder-val="{{true}}">
+<section class="panel" role="dialog" aria-label="Música y enfoque">
+<div style="display: flex; align-items: center; gap: 8px">
+<div role="tablist" aria-label="Modo" style="flex: 1; display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: #2c2824">
+<sc-for list="{{modes}}" as="m" hint-placeholder-count="2"><button class="mt" role="tab" type="button" aria-selected="{{m.sel}}" onClick="{{m.pick}}" style="{{m.style}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{m.icon}}"></path></svg>{{m.name}}</button></sc-for>
+</div>
+<button class="cb" type="button" aria-label="Minimizar" onClick="{{collapse}}" style="color: #cfc8bd"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+</div>
+
+<sc-if value="{{isFocus}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 12px">
+<div style="position: relative; width: 200px; height: 200px">
+<svg width="200" height="200" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="88" fill="none" stroke="#2c2824" stroke-width="12"></circle><circle class="ring" cx="100" cy="100" r="88" fill="none" stroke="{{ringColor}}" stroke-width="12" stroke-linecap="round" stroke-dasharray="552.9" stroke-dashoffset="{{ringOff}}" transform="rotate(-90 100 100)"></circle></svg>
+<div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px"><span role="timer" aria-live="off" style="font-size: 46px; font-weight: 300; letter-spacing: .02em">{{clock}}</span><span style="font-size: 13px; color: #cfc8bd">{{phaseText}}</span></div>
+</div>
+<div style="display: flex; gap: 6px" aria-label="{{dotsLabel}}"><sc-for list="{{dots}}" as="d" hint-placeholder-count="4"><span style="{{d}}"></span></sc-for></div>
+</div>
+<button type="button" onClick="{{cycleTask}}" style="all: unset; box-sizing: border-box; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 16px; background: #2c2824; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#cbc6f5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 12px; color: #cfc8bd">Enfocado en</span><span style="font-weight: 500">{{task}}</span></span><span style="font-size: 12px; color: #cbc6f5">Cambiar</span></button>
+<div role="radiogroup" aria-label="Duración" style="display: flex; gap: 6px"><sc-for list="{{presets}}" as="p" hint-placeholder-count="3"><button class="pre" type="button" role="radio" aria-checked="{{p.sel}}" onClick="{{p.pick}}" style="{{p.style}}"><span style="font-weight: 600; font-size: 15px">{{p.a}}</span><span style="opacity: .7">{{p.b}}</span></button></sc-for></div>
+<div style="display: flex; align-items: center; justify-content: center; gap: 14px">
+<button class="cb" type="button" aria-label="Reiniciar" onClick="{{reset}}" style="background: #2c2824; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.7M4 4v4h4"></path></svg></button>
+<button class="cb" type="button" aria-label="{{runLabel}}" onClick="{{toggleRun}}" style="width: 64px; height: 64px; background: #cbc6f5; color: #1f1c19"><sc-if value="{{running}}" hint-placeholder-val="{{false}}"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.5"></rect><rect x="14" y="5" width="4" height="14" rx="1.5"></rect></svg></sc-if><sc-if value="{{paused}}" hint-placeholder-val="{{true}}"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.7l-10-6.5A1 1 0 0 0 8 5.5z"></path></svg></sc-if></button>
+<button class="cb" type="button" aria-label="Saltar al descanso" onClick="{{skip}}" style="background: #2c2824; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5l9 7-9 7zM18 5v14"></path></svg></button>
+</div>
+<div style="display: flex; align-items: center; gap: 10px; font-size: 14px"><button class="toggle" type="button" role="switch" aria-checked="{{withMusic}}" aria-label="Poner música al empezar" onClick="{{toggleMusic}}" style="{{musicBg}}"><span style="{{musicKnob}}"></span></button><span style="flex: 1">Poner "Para enfocarme" al empezar</span></div>
+</sc-if>
+
+<sc-if value="{{isMusic}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; gap: 14px; align-items: center">
+<div style="width: 96px; height: 96px; border-radius: 22px; background: conic-gradient(from 200deg, #6a62d6, #cbc6f5, #f3e3c3, #6a62d6); flex-shrink: 0"></div>
+<div style="display: flex; flex-direction: column; min-width: 0"><span style="font-size: 12px; color: #cfc8bd">{{device}}</span><span style="font-size: 18px; font-weight: 500">{{song}}</span><span style="color: #cfc8bd">{{artist}}</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px"><div style="height: 6px; border-radius: 999px; background: #2c2824; overflow: hidden"><div style="{{songW}}"></div></div><div style="display: flex; justify-content: space-between; font-size: 12px; color: #cfc8bd"><span>1:24</span><span>3:10</span></div></div>
+<div style="display: flex; align-items: center; justify-content: center; gap: 14px">
+<button class="cb" type="button" aria-label="Canción anterior" onClick="{{prevSong}}" style="background: #2c2824; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 5v14l-10-7zM6 5h2v14H6z"></path></svg></button>
+<button class="cb" type="button" aria-label="{{playLabel}}" onClick="{{togglePlay}}" style="width: 64px; height: 64px; background: #cbc6f5; color: #1f1c19"><sc-if value="{{playing}}" hint-placeholder-val="{{true}}"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.5"></rect><rect x="14" y="5" width="4" height="14" rx="1.5"></rect></svg></sc-if><sc-if value="{{notPlaying}}" hint-placeholder-val="{{false}}"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.7l-10-6.5A1 1 0 0 0 8 5.5z"></path></svg></sc-if></button>
+<button class="cb" type="button" aria-label="Siguiente canción" onClick="{{nextSong}}" style="background: #2c2824; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5v14l10-7zM16 5h2v14h-2z"></path></svg></button>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 12px; color: #cfc8bd; padding: 0 8px 4px">Tus listas</span><sc-for list="{{lists}}" as="l" hint-placeholder-count="3"><button class="pl" type="button" onClick="{{l.pick}}"><span style="{{l.cover}}"></span><span style="flex: 1; display: flex; flex-direction: column"><span style="font-weight: 500; font-size: 14px">{{l.n}}</span><span style="font-size: 12px; color: #cfc8bd">{{l.d}}</span></span></button></sc-for></div>
+<span style="font-size: 12px; color: #8a8278">Controla Spotify en tu celular o compu. Requiere Spotify Premium.</span>
+</sc-if>
+</section>
+</sc-if>
+
+<button class="pillp" type="button" onClick="{{expand}}" aria-expanded="{{expandedA}}" aria-label="{{pillLabel}}">
+<sc-if value="{{pillFocus}}" hint-placeholder-val="{{false}}"><span style="position: relative; width: 44px; height: 44px; flex-shrink: 0"><svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" fill="none" stroke="#3a3530" stroke-width="5"></circle><circle class="ring" cx="22" cy="22" r="18" fill="none" stroke="#cbc6f5" stroke-width="5" stroke-linecap="round" stroke-dasharray="113.1" stroke-dashoffset="{{miniOff}}" transform="rotate(-90 22 22)"></circle></svg></span></sc-if>
+<sc-if value="{{pillMusic}}" hint-placeholder-val="{{true}}"><span class="{{artPill}}"></span></sc-if>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; text-align: left"><span style="font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{pillTitle}}</span><span style="font-size: 12px; color: #cfc8bd; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{pillSub}}</span></span>
+<span class="cb" style="background: #cbc6f5; color: #1f1c19" aria-hidden="true"><sc-if value="{{pillActive}}" hint-placeholder-val="{{true}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.5"></rect><rect x="14" y="5" width="4" height="14" rx="1.5"></rect></svg></sc-if><sc-if value="{{pillIdle}}" hint-placeholder-val="{{false}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.7l-10-6.5A1 1 0 0 0 8 5.5z"></path></svg></sc-if></span>
+</button>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = { expanded: false, mode: 'focus', preset: 0, left: 25 * 60 - 362, running: false, phase: 'work', done: 1, task: 0, playing: true, song: 0, withMusic: true };
+  }
+  tick() {
+    var self = this;
+    clearInterval(this._t);
+    this._t = setInterval(function () {
+      var s = self.state; if (!s.running) { clearInterval(self._t); return; }
+      if (s.left <= 1) { clearInterval(self._t); self.setState({ running: false, left: 0, done: s.phase === 'work' ? Math.min(4, s.done + 1) : s.done }); return; }
+      self.setState({ left: s.left - 1 });
+    }, 1000);
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var PRE = [[25, 5], [50, 10], [15, 3]];
+    var total = (st.phase === 'work' ? PRE[st.preset][0] : PRE[st.preset][1]) * 60;
+    var mm = Math.floor(st.left / 60), ss = st.left % 60, clock = (mm < 10 ? '0' : '') + mm + ':' + (ss < 10 ? '0' : '') + ss;
+    var frac = 1 - st.left / total;
+    var TASKS = ['Revisar requisitos de inscripción', 'Terminar el diseño del dashboard', 'Escribir la escena 2'];
+    var SONGS = [['Canción de ejemplo', 'Lista: Para enfocarme'], ['Otra canción', 'Lista: Para enfocarme'], ['Tercera canción', 'Lista: Para enfocarme']];
+    var M = [['music', 'Música', 'M9 18V5l12-2v13M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM21 16a3 3 0 1 1-6 0 3 3 0 0 1 6 0z'], ['focus', 'Enfoque', 'M12 13a8 8 0 1 0 0-.1M12 9v4l2 2M10 2h4']];
+    var modes = M.map(function (m) { var on = st.mode === m[0]; return { name: m[1], icon: m[2], sel: on ? 'true' : 'false', pick: function () { self.setState({ mode: m[0] }); }, style: on ? 'background: #f3eee6; color: #1f1c19;' : 'color: #cfc8bd;' }; });
+    var presets = PRE.map(function (p, i) { var on = st.preset === i; return { a: p[0] + ' min', b: p[1] + ' de descanso', sel: on ? 'true' : 'false', pick: function () { self.setState({ preset: i, left: p[0] * 60, running: false, phase: 'work' }); }, style: on ? 'background: #f3eee6; color: #1f1c19;' : 'background: #2c2824; color: #f3eee6;' }; });
+    var dots = [0, 1, 2, 3].map(function (i) { return 'width: ' + (i === st.done ? '22px' : '10px') + '; height: 10px; border-radius: 999px; background: ' + (i < st.done ? '#cbc6f5' : i === st.done ? '#6a62d6' : '#3a3530') + ';'; });
+    var song = SONGS[st.song];
+    var focusActive = st.running || st.left < total;
+    var pillFocus = st.mode === 'focus' || (focusActive && st.running);
+    var LISTS = [['Para enfocarme', '42 canciones · instrumental', '#cbc6f5'], ['Lofi para estudiar', 'De Spotify', '#f3e3c3'], ['Tus favoritas', '318 canciones', '#6a62d6']];
+    return {
+      bgRows: [{ t: 'Terminar el diseño del dashboard', d: 'Hoy' }, { t: 'Revisar la arquitectura del bot', d: 'Hoy' }, { t: 'Revisar requisitos de inscripción', d: 'Hoy' }, { t: 'Propuesta de módulos', d: 'Vie 9' }, { t: 'Elegir stack y estructura', d: 'Sáb 10' }, { t: 'Escribir la escena 2', d: 'Dom 11' }],
+      expanded: st.expanded, expandedA: st.expanded ? 'true' : 'false',
+      expand: function () { self.setState({ expanded: !self.state.expanded }); }, collapse: function () { self.setState({ expanded: false }); },
+      modes: modes, isFocus: st.mode === 'focus', isMusic: st.mode === 'music',
+      clock: clock, ringOff: String(552.9 * (1 - frac)), ringColor: st.phase === 'work' ? '#cbc6f5' : '#f3e3c3',
+      phaseText: st.phase === 'work' ? (st.running ? 'Enfoque · ' + (st.done + 1) + ' de 4' : (st.left === 0 ? '¡Listo! Toca para descansar' : 'En pausa')) : 'Descanso',
+      dots: dots, dotsLabel: st.done + ' de 4 sesiones hechas hoy',
+      task: TASKS[st.task], cycleTask: function () { self.setState({ task: (self.state.task + 1) % TASKS.length }); },
+      presets: presets, running: st.running, paused: !st.running, runLabel: st.running ? 'Pausar' : 'Empezar',
+      toggleRun: function () { var r = !self.state.running; var patch = { running: r }; if (r && self.state.left === 0) { patch.phase = self.state.phase === 'work' ? 'break' : 'work'; patch.left = (patch.phase === 'work' ? PRE[self.state.preset][0] : PRE[self.state.preset][1]) * 60; } if (r && self.state.withMusic) patch.playing = true; self.setState(patch); if (r) setTimeout(function () { self.tick(); }, 0); },
+      reset: function () { self.setState({ running: false, left: PRE[self.state.preset][0] * 60, phase: 'work' }); },
+      skip: function () { self.setState({ running: false, phase: 'break', left: PRE[self.state.preset][1] * 60 }); },
+      withMusic: st.withMusic ? 'true' : 'false', musicBg: 'background: ' + (st.withMusic ? '#cbc6f5' : '#3a3530') + ';', musicKnob: 'transform: translateX(' + (st.withMusic ? '18px' : '0') + '); background: ' + (st.withMusic ? '#1f1c19' : '#fffdf9') + ';', toggleMusic: function () { self.setState({ withMusic: !self.state.withMusic }); },
+      song: song[0], artist: song[1], device: st.playing ? 'Sonando en tu celular' : 'En pausa · tu celular',
+      artPill: st.playing ? 'art spin' : 'art',
+      songW: 'height: 100%; width: 44%; background: #cbc6f5; border-radius: 999px;',
+      playing: st.playing, notPlaying: !st.playing, playLabel: st.playing ? 'Pausar música' : 'Reproducir música',
+      togglePlay: function () { self.setState({ playing: !self.state.playing }); },
+      prevSong: function () { self.setState({ song: (self.state.song + SONGS.length - 1) % SONGS.length }); },
+      nextSong: function () { self.setState({ song: (self.state.song + 1) % SONGS.length }); },
+      lists: LISTS.map(function (l) { return { n: l[0], d: l[1], cover: 'width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0; background: ' + l[2] + ';', pick: function () { self.setState({ playing: true, song: 0 }); } }; }),
+      pillFocus: pillFocus, pillMusic: !pillFocus, miniOff: String(113.1 * (1 - frac)),
+      pillTitle: pillFocus ? clock + ' · ' + TASKS[st.task] : song[0],
+      pillSub: pillFocus ? (st.playing ? '♪ ' + song[0] + ' · ' + song[1] : (st.running ? 'Enfoque' : 'Enfoque en pausa')) : song[1] + ' · Spotify',
+      pillLabel: (st.expanded ? 'Ocultar' : 'Abrir') + ' música y enfoque',
+      pillActive: pillFocus ? st.running : st.playing, pillIdle: pillFocus ? !st.running : !st.playing
+    };
+  }
+}
+</script>
+</body>
+</html>

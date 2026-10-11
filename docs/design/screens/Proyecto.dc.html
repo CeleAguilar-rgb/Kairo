@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Dashboard personal · Proyecto</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Outfit:wght@300;400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1f1c19}a:hover{color:#4a443d}
+.wrap{padding:26px 44px 56px;box-sizing:border-box}
+@media (max-width:720px){.wrap{padding:14px 12px 40px}.topnav{order:3;width:100%;overflow-x:auto}}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;align-items:start}
+.c8{grid-column:span 8;display:flex;flex-direction:column;gap:16px}.c4{grid-column:span 4;display:flex;flex-direction:column;gap:16px}
+@media (max-width:1080px){.c8,.c4{grid-column:span 12}}
+.pill{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:inherit;font-weight:500;cursor:pointer;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease}
+.pill-dark{background:#1f1c19;color:#f3eee6;box-shadow:0 10px 22px -8px rgba(31,28,25,.45)}
+.pill-dark:hover{transform:translateY(-1px);color:#f3eee6}
+.navlink{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s ease}
+.navlink:hover{background:rgba(31,28,25,.06)}
+.seg{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;min-height:34px;padding:0 14px;border-radius:999px;cursor:pointer;font-weight:500;font-size:14px;transition:background .25s ease,color .25s ease}
+.chk{width:24px;height:24px;flex-shrink:0;border-radius:8px;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s ease,border-color .2s ease,transform .15s ease}
+.chk:active{transform:scale(.9)}
+.h2i{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;flex-shrink:0}
+.lnk{display:flex;align-items:center;gap:12px;min-height:48px;padding:0 12px;margin:0 -12px;border-radius:14px;text-decoration:none;transition:background .2s ease}
+.lnk:hover{background:#f7f2ea}
+.ptab{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;text-decoration:none;font-weight:500;white-space:nowrap;transition:background .2s ease}
+.ptab:hover{background:rgba(31,28,25,.06)}
+.ptab:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+.ring{transition:stroke-dashoffset .6s cubic-bezier(.3,.7,.2,1)}
+.bar{transition:width .6s cubic-bezier(.3,.7,.2,1)}
+.banner svg{transition:transform 1.2s cubic-bezier(.3,.7,.2,1)}
+.banner:hover svg.art{transform:scale(1.03)}
+.squig{stroke-dasharray:320;animation:draw .9s .2s ease-out both}
+@keyframes draw{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+.pill:focus-visible,.navlink:focus-visible,.seg:focus-visible,.chk:focus-visible,.lnk:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.squig{animation:none}.ring,.bar,.banner svg,.chk,.pill,.seg,.lnk{transition:none}.banner:hover svg.art{transform:none}}
+/*common*/
+@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#fffdf9!important;box-shadow:0 18px 40px -16px rgba(31,28,25,.45);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
+.chk{position:relative}.chk::after{content:"";position:absolute;inset:-10px}
+.dotbtn{position:relative}.dotbtn::after{content:"";position:absolute;inset:-4px}
+.bar{transition:none!important;transform-origin:left center;animation:barIn .7s cubic-bezier(.3,.7,.2,1) both}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wbar{transition:none!important;transform-origin:bottom center;animation:wbarIn .6s cubic-bezier(.3,.7,.2,1) both}
+@keyframes wbarIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.bar,.wbar{animation:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: radial-gradient(1200px 600px at 85% -10%, #fbf8f2 0%, rgba(251,248,242,0) 60%), #f3eee6; color: #1f1c19; font-family: 'Outfit', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 20px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Gochi Hand', cursive; font-size: 28px; text-decoration: none; line-height: 1">
+<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#1f1c19" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#cbc6f5" stroke="#1f1c19" stroke-width="3.5"></circle></svg>
+kairo</a>
+<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,253,249,.7); border: 1px solid #e6ded2">
+<a class="navlink nb" href="Main.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
+<a class="navlink nb" href="Tareas.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
+<a class="navlink nx" href="Proyectos.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
+<a class="navlink nb" href="Agenda.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
+<a class="navlink nx" href="FinResumen.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
+<a class="navlink nx" href="EscritosInicio.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
+<a class="navlink nb" href="DiaADia.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
+<a class="navlink nmore" href="Mas.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
+</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #fffdf9; border: 1px solid #e6ded2; flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#1f1c19" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#cbc6f5"></path></svg></a><!--/AV-->
+<a class="pill" href="Proyectos.dc.html" style="background: #fffdf9; border: 1px solid #e6ded2; color: #1f1c19; gap: 8px; padding: 0 18px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>Todos los proyectos</a>
+</header>
+
+<div class="banner" style="position: relative; height: 240px; border-radius: 28px; overflow: hidden; background: #e9e7fb; border: 1px solid #e6ded2">
+<svg class="art" viewBox="200 0 1200 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%"><rect width="1200" height="240" fill="#e9e7fb"></rect><rect x="640" y="40" width="150" height="110" rx="22" fill="#1f1c19"></rect><rect x="808" y="40" width="100" height="66" rx="20" fill="#fffdf9" stroke="#1f1c19" stroke-width="3.5"></rect><rect x="808" y="122" width="100" height="98" rx="20" fill="#cbc6f5" stroke="#1f1c19" stroke-width="3.5"></rect><rect x="640" y="168" width="150" height="52" rx="20" fill="#fffdf9" stroke="#1f1c19" stroke-width="3.5"></rect><rect x="926" y="40" width="150" height="180" rx="22" fill="#fffdf9" stroke="#1f1c19" stroke-width="3.5"></rect><path d="M950 80h100M950 110h70M950 140h90M950 170h60" stroke="#e6ded2" stroke-width="10" stroke-linecap="round"></path><path d="M1130 30c2 18 9 27 32 33-22.6 3.4-30 12-33 35-3.4-22.4-11.6-31-32.2-33.4 21-6 29.6-15.4 33.2-34.6z" fill="#fffdf9" stroke="#1f1c19" stroke-width="3.5" stroke-linejoin="round"></path><circle cx="560" cy="60" r="22" fill="#f3e3c3" stroke="#1f1c19" stroke-width="3.5"></circle><path d="M560 26v8M560 86v8M526 60h8M586 60h8" stroke="#1f1c19" stroke-width="3.5" stroke-linecap="round"></path><path d="M470 196c22-12 40 9 64-1s40-9 62 2" fill="none" stroke="#1f1c19" stroke-width="4.5" stroke-linecap="round"></path></svg>
+<button class="pill" type="button" style="position: absolute; left: 16px; bottom: 16px; background: #fffdf9; color: #1f1c19; min-height: 40px; gap: 8px; border: 1px solid #e6ded2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg>Cambiar portada</button>
+</div>
+
+<section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<h1 style="margin: 0; font-family: 'Gochi Hand', cursive; font-weight: 400; font-size: 64px; line-height: 1">Dashboard personal</h1>
+<svg width="280" height="14" viewBox="0 0 300 16" fill="none" aria-hidden="true" style="margin: -4px 0 0 2px; max-width: 100%"><path class="squig" d="M3 10c22-8 40 6 64-1s40-8 62 0 44 7 66-1 46-6 72 3 30-3 30-3" stroke="#cbc6f5" stroke-width="5" stroke-linecap="round"></path></svg>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<span style="display: inline-flex; align-items: center; min-height: 30px; padding: 0 14px; border-radius: 999px; background: #1f1c19; color: #f3eee6; font-size: 14px; font-weight: 500">Personal</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; min-height: 30px; padding: 0 14px; border-radius: 999px; background: #e9e7fb; color: #3a3480; font-size: 14px; font-weight: 500"><span style="width: 8px; height: 8px; border-radius: 50%; background: #3a3480"></span>Activo</span>
+<span style="display: inline-flex; align-items: center; min-height: 30px; padding: 0 14px; border-radius: 999px; background: #fffdf9; border: 1px solid #e6ded2; font-size: 14px">Desde el 7 de octubre</span>
+</div>
+</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap">
+<a class="pill" href="Tareas.dc.html" style="background: #fffdf9; border: 1px solid #e6ded2; color: #1f1c19; gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="5" height="16" rx="1.5"></rect><rect x="10" y="4" width="5" height="10" rx="1.5"></rect><rect x="17" y="4" width="4" height="13" rx="1.5"></rect></svg>Ver en el tablero</a>
+<button class="pill pill-dark" type="button" style="gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path></svg>Editar proyecto</button>
+</div>
+</section>
+
+<nav aria-label="Partes del proyecto" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,253,249,.7); border: 1px solid #e6ded2; align-self: flex-start; max-width: 100%; overflow-x: auto; box-sizing: border-box">
+<a class="ptab" href="Proyecto.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16M4 10h16M4 15h10M4 20h7"></path></svg>Resumen</a>
+<a class="ptab" href="ProyectoSprints.dc.html" style="color: #1f1c19"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3 6.2"></path><path d="M4 19v-5h5"></path></svg>Sprints</a>
+<a class="ptab" href="ProyectoArchivos.dc.html" style="color: #1f1c19"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"></path><path d="M14 3v4h4"></path></svg>Archivos</a>
+</nav>
+
+<div class="grid">
+<div class="c8">
+
+<section aria-labelledby="h-trata" style="background: #fffdf9; border: 1px solid #e6ded2; border-radius: 28px; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span class="h2i" style="background: #f3e3c3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16M4 10h16M4 15h10M4 20h7"></path></svg></span>
+<h2 id="h-trata" style="margin: 0; font-size: 20px; font-weight: 500">De qué trata</h2>
+</div>
+<p style="margin: 0; font-size: 16px; line-height: 1.65; max-width: 72ch">Un solo lugar para organizar mi vida: tareas, proyectos, agenda, gastos y membresías, escritos y lo personal. Quiero que se sienta cálido y mío, con letra a mano y doodles, y que más adelante se conecte con Notion, Canva, Spotify y Claude.</p>
+</section>
+
+<section aria-labelledby="h-obj" style="background: #fffdf9; border: 1px solid #e6ded2; border-radius: 28px; padding: 22px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span class="h2i" style="background: #e9e7fb; color: #3a3480"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.5" fill="currentColor"></circle></svg></span>
+<h2 id="h-obj" style="margin: 0; font-size: 20px; font-weight: 500">Objetivos</h2>
+</div>
+<span style="font-size: 14px; color: #6b645b">{{objDone}} de {{objTotal}}</span>
+</div>
+<div style="height: 8px; border-radius: 8px; background: #f0eadf; overflow: hidden"><div style="height: 100%; width: 100%; border-radius: 8px; background: #cbc6f5; transform-origin: left center; transform: scaleX({{objFrac}}); transition: transform .6s cubic-bezier(.3,.7,.2,1)"></div></div>
+<sc-for list="{{objectives}}" as="o" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 12px; min-height: 48px; border-top: 1px solid #f3ede3">
+<button class="chk" type="button" aria-pressed="{{o.done}}" aria-label="{{o.label}}" onClick="{{o.toggle}}" style="{{o.box}}">
+<sc-if value="{{o.done}}" hint-placeholder-val="{{false}}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1f1c19" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></sc-if>
+</button>
+<span style="{{o.textStyle}}">{{o.text}}</span>
+</div>
+</sc-for>
+</section>
+
+<section aria-labelledby="h-tar" style="background: #fffdf9; border: 1px solid #e6ded2; border-radius: 28px; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+<div style="display: flex; align-items: center; gap: 12px">
+<span class="h2i" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg></span>
+<h2 id="h-tar" style="margin: 0; font-size: 20px; font-weight: 500">Tareas del proyecto</h2>
+</div>
+<div role="group" aria-label="Mostrar" style="display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: #f7f2ea">
+<button class="seg" type="button" aria-pressed="{{tabPend}}" onClick="{{toPend}}" style="{{pendStyle}}">Pendientes<span style="font-size: 12px; opacity: .7; margin-left: 6px">{{pendCount}}</span></button>
+<button class="seg" type="button" aria-pressed="{{tabDone}}" onClick="{{toDone}}" style="{{doneStyle}}">Hechas<span style="font-size: 12px; opacity: .7; margin-left: 6px">{{doneCount}}</span></button>
+</div>
+</div>
+<sc-for list="{{tasks}}" as="t" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 12px; min-height: 52px; border-top: 1px solid #f3ede3">
+<button class="chk" type="button" aria-pressed="{{t.done}}" aria-label="{{t.label}}" onClick="{{t.toggle}}" style="{{t.box}}">
+<sc-if value="{{t.done}}" hint-placeholder-val="{{false}}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1f1c19" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></sc-if>
+</button>
+<div style="display: flex; flex-direction: column; flex: 1; min-width: 0">
+<span style="{{t.textStyle}}">{{t.title}}</span>
+<span style="font-size: 13px; color: #6b645b">{{t.status}} · {{t.subs}} subtareas</span>
+</div>
+<span style="{{t.dueStyle}}">{{t.due}}</span>
+</div>
+</sc-for>
+<sc-if value="{{noTasks}}" hint-placeholder-val="{{false}}"><p style="margin: 0; padding: 16px; border-radius: 16px; background: #f7f2ea; color: #6b645b">Todavía no hay tareas hechas en este proyecto.</p></sc-if>
+<form onSubmit="{{noop}}" style="display: flex; align-items: center; gap: 12px; min-height: 52px; border-top: 1px solid #f3ede3">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b645b" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+<label for="addt" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Agregar tarea al proyecto</label>
+<input id="addt" type="text" placeholder="Agregar tarea a este proyecto…" style="flex: 1; min-width: 0; height: 44px; border: 0; background: transparent; font: inherit; color: #1f1c19">
+</form>
+</section>
+</div>
+
+<div class="c4">
+<section aria-labelledby="h-av" style="position: relative; background: #1f1c19; color: #f3eee6; border-radius: 28px; padding: 22px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 24px 48px -28px rgba(31,28,25,.6)">
+<svg width="44" height="44" viewBox="0 0 40 40" fill="#cbc6f5" stroke="#1f1c19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: absolute; top: -14px; right: 18px; transform: rotate(14deg)"><path d="M20 33C10.4 26.6 5.6 21 6.4 14.6c.8-5.4 7.8-7.6 13.4-1.4 5.2-6.4 13-4.4 13.8 1.2.8 6-4 12-13.6 18.6z"></path></svg>
+<h2 id="h-av" style="margin: 0; font-size: 20px; font-weight: 500">Avance</h2>
+<div style="display: flex; align-items: center; gap: 20px">
+<div style="position: relative; width: 112px; height: 112px; flex-shrink: 0">
+<svg width="112" height="112" viewBox="0 0 112 112" aria-hidden="true" style="transform: rotate(-90deg)"><circle cx="56" cy="56" r="48" fill="none" stroke="#3a3530" stroke-width="10"></circle><circle class="ring" cx="56" cy="56" r="48" fill="none" stroke="#cbc6f5" stroke-width="10" stroke-linecap="round" stroke-dasharray="301.6" stroke-dashoffset="{{ringOffset}}"></circle></svg>
+<span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 300">{{pct}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; flex-direction: column"><span style="font-size: 22px; font-weight: 300; line-height: 1.1">{{doneCount}} de {{total}}</span><span style="font-size: 13px; color: #b8b0a5">tareas hechas</span></div>
+<div style="display: flex; flex-direction: column"><span style="font-size: 22px; font-weight: 300; line-height: 1.1">6 h 40 min</span><span style="font-size: 13px; color: #b8b0a5">con pomodoro esta semana</span></div>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="h-det" style="background: #fffdf9; border: 1px solid #e6ded2; border-radius: 28px; padding: 22px; display: flex; flex-direction: column; gap: 6px">
+<h2 id="h-det" style="margin: 0 0 6px; font-size: 20px; font-weight: 500">Detalles</h2>
+<div style="display: flex; justify-content: space-between; gap: 12px; min-height: 40px; align-items: center; border-bottom: 1px solid #f3ede3"><span style="color: #6b645b">Inicio</span><span>7 de octubre de 2026</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; min-height: 40px; align-items: center; border-bottom: 1px solid #f3ede3"><span style="color: #6b645b">Fecha meta</span><button class="seg" type="button" style="color: #3a3480; padding: 0 8px">Elegir fecha</button></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; min-height: 40px; align-items: center"><span style="color: #6b645b">Sprint actual</span><a href="ProyectoSprints.dc.html" style="color: #3a3480; font-weight: 500">Sprint 2, hasta el 19 oct</a></div>
+<h3 style="margin: 12px 0 2px; font-size: 15px; font-weight: 500">Enlaces</h3>
+<a class="lnk" href="https://claude.ai/artifact/4bUuw6JPtK1D3dV1AhYbXG"><span class="h2i" style="background: #e9e7fb; color: #3a3480; width: 32px; height: 32px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg></span><span style="flex: 1">Canvas de diseño</span></a>
+<a class="lnk" href="https://claude.ai/code/artifact/9eaa47b1-9497-4de4-bd1a-2f6e1243f7f2"><span class="h2i" style="background: #f3e3c3; width: 32px; height: 32px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"></path><path d="M9 12h7M9 16h5"></path></svg></span><span style="flex: 1">Documento de diseño</span></a>
+<a class="lnk" href="https://claude.ai/artifact/9JXBLNnGQCXXv3cGbZMLk1"><span class="h2i" style="background: #1f1c19; color: #cbc6f5; width: 32px; height: 32px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="4"></circle><rect x="13" y="4" width="8" height="8" rx="2"></rect><path d="M4 20l4-6 4 6zM13 16h8M13 20h6"></path></svg></span><span style="flex: 1">Sistema de diseño</span></a>
+</section>
+
+<section aria-labelledby="h-notas" style="background: #e9e7fb; border-radius: 28px; padding: 22px; display: flex; flex-direction: column; gap: 10px">
+<label id="h-notas" for="pnotas" style="font-size: 20px; font-weight: 500">Notas</label>
+<textarea id="pnotas" rows="5" style="font: inherit; padding: 12px 14px; border-radius: 16px; border: 0; background: rgba(255,253,249,.75); color: #1f1c19; resize: vertical; line-height: 1.55">Ideas: barra flotante de Spotify y pomodoro juntos en una esquina. Revisar el modo oscuro más adelante.</textarea>
+</section>
+</div>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = { obj: { 0: true }, done: { a1: true, a2: true }, tab: 'pend' };
+  }
+  renderVals() {
+    var self = this;
+    var OBJ = ['Ver tareas, agenda y pagos de un vistazo al abrirlo', 'Diseñar todas las pantallas con mi estilo', 'Programarlo con buena estructura y buenas prácticas', 'Conectarlo con Notion, Canva, Spotify y Claude'];
+    var TK = [
+      { id: 'a1', title: 'Mapa de secciones', status: 'Hecho', subs: '3/3', due: '6 oct' },
+      { id: 'a2', title: 'Pantalla de Inicio', status: 'Hecho', subs: '5/5', due: '7 oct' },
+      { id: 'a3', title: 'Terminar el diseño del dashboard', status: 'En curso', subs: '2/3', due: 'Hoy', today: true },
+      { id: 'a4', title: 'Sección de Escritos y personajes', status: 'En curso', subs: '1/4', due: 'Mañana' },
+      { id: 'a5', title: 'Elegir stack y estructura de carpetas', status: 'Por hacer', subs: '0/3', due: 'Sáb 10' },
+      { id: 'a6', title: 'Pomodoro y barra de Spotify', status: 'Por hacer', subs: '0/4', due: 'Sin fecha' },
+      { id: 'a7', title: 'Conexión con Notion', status: 'Por hacer', subs: '0/2', due: 'Sin fecha' }
+    ];
+    var box = function (on) { return on ? 'background: #cbc6f5; border: 1.5px solid #cbc6f5;' : 'background: transparent; border: 1.5px solid #8a8278;'; };
+    var text = function (on) { return 'flex: 1; transition: color .2s ease; ' + (on ? 'color: #8a8278; text-decoration: line-through;' : ''); };
+    var objectives = OBJ.map(function (o, i) {
+      var on = !!self.state.obj[i];
+      return { text: o, done: on, box: box(on), textStyle: text(on), label: (on ? 'Desmarcar: ' : 'Marcar como cumplido: ') + o,
+        toggle: function () { var n = Object.assign({}, self.state.obj); n[i] = !on; self.setState({ obj: n }); } };
+    });
+    var objDone = objectives.filter(function (o) { return o.done; }).length;
+    var all = TK.map(function (t) {
+      var on = !!self.state.done[t.id];
+      return { title: t.title, done: on, status: on ? 'Hecho' : (t.status === 'Hecho' ? 'Por hacer' : t.status), subs: t.subs, due: t.due, box: box(on), textStyle: text(on),
+        dueStyle: 'font-size: 13px; white-space: nowrap; ' + (t.today && !on ? 'color: #3a3480; font-weight: 600;' : 'color: #6b645b;'),
+        label: (on ? 'Desmarcar: ' : 'Marcar como hecha: ') + t.title,
+        toggle: function () { var n = Object.assign({}, self.state.done); n[t.id] = !on; self.setState({ done: n }); } };
+    });
+    var doneN = all.filter(function (t) { return t.done; }).length;
+    var tabPend = this.state.tab === 'pend';
+    var tasks = all.filter(function (t) { return tabPend ? !t.done : t.done; });
+    var frac = doneN / all.length;
+    return {
+      objectives: objectives, objDone: String(objDone), objTotal: String(OBJ.length), objPct: Math.round(objDone / OBJ.length * 100) + '%', objFrac: String(objDone / OBJ.length),
+      tasks: tasks, noTasks: tasks.length === 0,
+      tabPend: tabPend, tabDone: !tabPend,
+      toPend: function () { self.setState({ tab: 'pend' }); }, toDone: function () { self.setState({ tab: 'done' }); },
+      pendStyle: tabPend ? 'background: #1f1c19; color: #f3eee6;' : 'color: #1f1c19;',
+      doneStyle: !tabPend ? 'background: #1f1c19; color: #f3eee6;' : 'color: #1f1c19;',
+      pendCount: String(all.length - doneN), doneCount: String(doneN), total: String(all.length),
+      pct: Math.round(frac * 100) + '%', ringOffset: String(301.6 * (1 - frac)),
+      noop: function (e) { if (e && e.preventDefault) e.preventDefault(); }
+    };
+  }
+}
+</script>
+</body>
+</html>

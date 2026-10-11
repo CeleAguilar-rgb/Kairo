@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Página</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Outfit:wght@300;400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#1f1c19}a:hover{color:#4a443d}
+.wrap{padding:26px 44px 56px;box-sizing:border-box}
+@media (max-width:720px){.wrap{padding:14px 12px 40px}.topnav{order:3;width:100%}.hide-sm{display:none!important}}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:inherit;font-weight:500;cursor:pointer;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease}
+.pill-dark{background:#1f1c19;color:#f3eee6;box-shadow:0 10px 22px -8px rgba(31,28,25,.45)}
+.pill-dark:hover{transform:translateY(-1px);color:#f3eee6}
+.pill-ghost{background:transparent;border:1px solid #d8cfc2;color:#1f1c19}
+.pill-ghost:hover{background:#f0eadf}
+.pill-danger{background:#8c2f1b;color:#fffdf9}
+.pill-danger:hover{transform:translateY(-1px);color:#fffdf9}
+.navlink{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s ease}
+.navlink:hover{background:rgba(31,28,25,.06)}
+.icon{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;border:0;background:transparent;color:inherit;cursor:pointer;flex-shrink:0}
+.icon:hover{background:rgba(31,28,25,.07)}
+.h2i{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;flex-shrink:0}
+.card{background:#fffdf9;border:1px solid #e6ded2;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:6px}
+.lbl{font-weight:500;font-size:14px}
+.inp{box-sizing:border-box;width:100%;min-height:48px;padding:0 14px;border-radius:14px;border:1px solid #d8cfc2;background:#fffdf9;font:inherit;color:#1f1c19;transition:border-color .2s ease}
+.inp::placeholder{color:#8a8278}
+.inp:focus{outline:2px solid #6a62d6;outline-offset:1px}
+textarea.inp{padding:12px 14px;resize:vertical;line-height:1.55}
+.inp.bad{border-color:#8c2f1b}
+.hint{font-size:13px;color:#6b645b}
+.err{font-size:13px;color:#8c2f1b;display:flex;align-items:center;gap:6px}
+.seg{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .2s ease,color .2s ease}
+.squig{stroke-dasharray:320;animation:draw .9s .2s ease-out both}
+@keyframes draw{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
+.pill:focus-visible,.navlink:focus-visible,.icon:focus-visible,.seg:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.squig{animation:none}.pill,.seg,.inp{transition:none}.pill:hover{transform:none}}
+/*common*/
+@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#fffdf9!important;box-shadow:0 18px 40px -16px rgba(31,28,25,.45);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #6a62d6;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
+.chk{position:relative}.chk::after{content:"";position:absolute;inset:-10px}
+.dotbtn{position:relative}.dotbtn::after{content:"";position:absolute;inset:-4px}
+.bar{transition:none!important;transform-origin:left center;animation:barIn .7s cubic-bezier(.3,.7,.2,1) both}
+@keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wbar{transition:none!important;transform-origin:bottom center;animation:wbarIn .6s cubic-bezier(.3,.7,.2,1) both}
+@keyframes wbarIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){.bar,.wbar{animation:none}}
+
+.paper{width:min(780px,100%);margin:0 auto;display:flex;flex-direction:column;gap:6px}
+.blk{position:relative;display:flex;align-items:flex-start;gap:6px;border-radius:10px;animation:bIn .3s ease both}
+@keyframes bIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.hd{width:28px;flex-shrink:0;display:flex;gap:0;opacity:0;transition:opacity .15s ease;padding-top:4px}
+.blk:hover .hd,.blk:focus-within .hd{opacity:1}
+.hb{all:unset;width:24px;height:28px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px;color:#8a8278;cursor:pointer}
+.hb:hover{background:#f0eadf}
+.hb:focus-visible{outline:2px solid #6a62d6;opacity:1}
+.bc{flex:1;min-width:0;font-size:17px;line-height:1.75;color:#2a2622}
+.imgb{border-radius:20px;overflow:hidden;border:1px solid #e6ded2;background:#fffdf9}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.gal>*{border-radius:14px;overflow:hidden;aspect-ratio:1}
+.upz{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:170px;border-radius:20px;border:2px dashed #d8cfc2;background:#fbf8f2;font-size:14px;color:#4a443d;text-align:center;padding:16px}
+.cap{font-size:13px;color:#6b645b;padding:8px 4px 0}
+.hd{opacity:.35!important}
+.blk:hover .hd,.blk:focus-within .hd{opacity:1!important}
+.cmd{all:unset;box-sizing:border-box;width:100%;font-size:17px;line-height:1.7;padding:2px 0}
+.cmd::placeholder{color:#b5ada2}
+.slash{position:absolute;left:34px;top:40px;width:300px;background:#fffdf9;border:1px solid #e6ded2;border-radius:18px;box-shadow:0 24px 44px -20px rgba(31,28,25,.45);padding:6px;z-index:20;max-height:360px;overflow-y:auto;animation:sIn .18s ease both}
+@keyframes sIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.si{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:12px;width:100%;min-height:48px;padding:4px 8px;border-radius:12px;cursor:pointer}
+.si:hover,.si.on{background:#f7f2ea}
+.si:focus-visible{outline:2px solid #6a62d6}
+.sic{width:36px;height:36px;border-radius:10px;border:1px solid #e6ded2;display:inline-flex;align-items:center;justify-content:center;background:#fffdf9;flex-shrink:0}
+.prop{display:grid;grid-template-columns:140px 1fr;gap:10px;align-items:center;min-height:36px;font-size:14px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:500;padding:2px 10px;border-radius:999px;white-space:nowrap}
+.tg{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-weight:500}
+.tg:focus-visible{outline:2px solid #6a62d6}
+.menu{position:absolute;right:0;top:48px;width:230px;background:#fffdf9;border:1px solid #e6ded2;border-radius:18px;box-shadow:0 24px 44px -20px rgba(31,28,25,.45);padding:6px;z-index:30}
+.mi{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:10px;width:100%;min-height:42px;padding:0 10px;border-radius:10px;cursor:pointer;font-size:14px}
+.mi:hover{background:#f7f2ea}
+.mi:focus-visible{outline:2px solid #6a62d6}
+@media (max-width:720px){.hd{display:none}.slash{left:0;width:100%}.prop{grid-template-columns:110px 1fr}}
+@media (prefers-reduced-motion:reduce){.blk,.slash{animation:none}.hd{transition:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #fbf8f2; color: #1f1c19; font-family: 'Outfit', system-ui, sans-serif; font-size: 15px; line-height: 1.5; position: relative; overflow-x: hidden">
+<div class="wrap" style="display: flex; flex-direction: column; gap: 14px">
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Gochi Hand', cursive; font-size: 28px; text-decoration: none; line-height: 1">
+<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#1f1c19" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#cbc6f5" stroke="#1f1c19" stroke-width="3.5"></circle></svg>
+kairo</a>
+<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,253,249,.7); border: 1px solid #e6ded2">
+<a class="navlink nb" href="Main.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
+<a class="navlink nb" href="Tareas.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
+<a class="navlink nx" href="Proyectos.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
+<a class="navlink nb" href="Agenda.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
+<a class="navlink nx" href="FinResumen.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
+<a class="navlink nx" href="EscritosInicio.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
+<a class="navlink nb" href="DiaADia.dc.html" style="color: #1f1c19"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
+<a class="navlink nmore" href="Mas.dc.html" aria-current="page" style="background: #1f1c19; color: #f3eee6"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
+</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #fffdf9; border: 1px solid #e6ded2; flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#1f1c19" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#cbc6f5"></path></svg></a><!--/AV-->
+<div style="position: relative; display: flex; align-items: center; gap: 6px">
+<button class="icon" type="button" aria-label="Opciones de la página" aria-haspopup="menu" aria-expanded="{{menuOpen}}" onClick="{{toggleMenu}}" style="border: 1px solid #e6ded2; background: #fffdf9"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+<sc-if value="{{menu}}" hint-placeholder-val="{{false}}"><div class="menu" role="menu">
+<button class="mi" role="menuitem" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>Convertir en plantilla</button>
+<button class="mi" role="menuitem" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>Mover a otro espacio</button>
+<button class="mi" role="menuitem" type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path></svg>Descargar como texto</button>
+<button class="mi" role="menuitem" type="button" onClick="{{askDel}}" style="color: #8c2f1b"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"></path></svg>Borrar página</button>
+</div></sc-if>
+</div>
+</header>
+
+<nav aria-label="Ruta" style="display: flex; align-items: center; gap: 6px; font-size: 14px; color: #6b645b; flex-wrap: wrap">
+<a href="EscritosInicio.dc.html" style="color: #6b645b">Escritos</a><span aria-hidden="true">/</span><a href="Escritos.dc.html" style="color: #6b645b">Auralun</a><span aria-hidden="true">/</span><a href="EscritosInicio.dc.html" style="color: #6b645b">Un cuento de amores y dragones</a><span aria-hidden="true">/</span><span style="color: #1f1c19">Antecedentes de Vadronia</span><span style="flex: 1"></span><span class="hint" style="display: inline-flex; align-items: center; gap: 6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg>{{savedText}}</span>
+</nav>
+
+<div style="height: 150px; border-radius: 24px; background: linear-gradient(120deg, #1f1c19 0%, #3a3480 70%, #6a62d6 100%); position: relative; overflow: hidden"><button class="pill" type="button" style="position: absolute; right: 14px; bottom: 14px; min-height: 36px; padding: 0 14px; background: rgba(255,253,249,.92); color: #1f1c19; font-size: 13px; z-index: 1"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M3 16l5-5 4 4 3-3 6 6"></path></svg>Cambiar portada</button>
+<svg width="100%" height="150" viewBox="0 0 800 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><circle cx="640" cy="60" r="34" fill="#f3eee6" opacity=".9"></circle><circle cx="626" cy="52" r="34" fill="#3a3480"></circle><g fill="#f3eee6"><circle cx="120" cy="40" r="2"></circle><circle cx="220" cy="90" r="1.5"></circle><circle cx="380" cy="30" r="2"></circle><circle cx="470" cy="110" r="1.5"></circle><circle cx="720" cy="120" r="2"></circle></g></svg>
+</div>
+
+<article class="paper" aria-labelledby="pg-t" style="margin-top: -44px; position: relative">
+<span style="width: 72px; height: 72px; border-radius: 20px; background: #fffdf9; border: 1px solid #e6ded2; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 10px 22px -14px rgba(31,28,25,.5)"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1f1c19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M30 24A11 11 0 0 1 16 10a11 11 0 1 0 14 14z" fill="#cbc6f5"></path></svg></span>
+<label for="pg-t" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Título de la página</label>
+<input id="pg-t" class="cmd" type="text" value="{{title}}" onChange="{{setTitle}}" style="font-family: 'Gochi Hand', cursive; font-size: 48px; line-height: 1.15; margin-top: 10px">
+<div style="display: flex; flex-direction: column; padding: 8px 0 14px; border-bottom: 1px solid #efe8dd; margin-bottom: 10px">
+<div class="prop"><span class="hint">Historia</span><a href="Escritos.dc.html" class="chip" style="background: #e9e7fb; color: #3a3480; text-decoration: none; justify-self: start">Un cuento de amores y dragones</a></div>
+<div class="prop"><span class="hint">Estado</span><span class="chip" style="background: #f3e3c3; color: #1f1c19; justify-self: start">Borrador</span></div>
+<div class="prop"><span class="hint">Personajes</span><div style="display: flex; gap: 6px; flex-wrap: wrap"><a href="BaseDatos.dc.html" class="chip" style="background: #f0eadf; color: #1f1c19; text-decoration: none">Jericó</a><a href="BaseDatos.dc.html" class="chip" style="background: #f0eadf; color: #1f1c19; text-decoration: none">Eleanor</a></div></div>
+<div class="prop"><span class="hint">Palabras</span><span style="font-weight: 500">{{words}} <span class="hint" style="font-weight: 400">· cuentan para tu meta de Auralun</span></span></div>
+</div>
+
+<sc-for list="{{blocks}}" as="b" hint-placeholder-count="8">
+<div class="blk">
+<div class="hd"><button class="hb" type="button" aria-label="{{b.delLabel}}" onClick="{{b.del}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button></div>
+<div class="bc">
+<sc-if value="{{b.isH}}" hint-placeholder-val="{{false}}"><h2 style="margin: 14px 0 2px; font-size: 26px; font-weight: 500; line-height: 1.3">{{b.text}}</h2></sc-if>
+<sc-if value="{{b.isP}}" hint-placeholder-val="{{false}}"><p style="margin: 0">{{b.text}}</p></sc-if>
+<sc-if value="{{b.isQuote}}" hint-placeholder-val="{{false}}"><blockquote style="margin: 4px 0; padding: 2px 0 2px 16px; border-left: 3px solid #1f1c19; font-style: italic; color: #4a443d">{{b.text}}</blockquote></sc-if>
+<sc-if value="{{b.isCallout}}" hint-placeholder-val="{{false}}"><div style="display: flex; gap: 12px; padding: 14px 16px; border-radius: 16px; background: #e9e7fb; color: #3a3480; font-size: 16px"><svg width="20" height="20" viewBox="0 0 40 40" fill="#cbc6f5" stroke="#3a3480" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0; margin-top: 3px"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z"></path></svg><span>{{b.text}}</span></div></sc-if>
+<sc-if value="{{b.isTodo}}" hint-placeholder-val="{{false}}"><button type="button" role="checkbox" aria-checked="{{b.checked}}" onClick="{{b.toggle}}" style="all: unset; display: flex; gap: 10px; align-items: flex-start; cursor: pointer"><span style="{{b.box}}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1f1c19" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="{{b.tick}}"><path d="M5 12l5 5L20 7"></path></svg></span><span style="{{b.txt}}">{{b.text}}</span></button></sc-if>
+<sc-if value="{{b.isToggle}}" hint-placeholder-val="{{false}}"><div><button class="tg" type="button" aria-expanded="{{b.open}}" onClick="{{b.toggle}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="{{b.tw}}"><path d="M9 6l6 6-6 6"></path></svg>{{b.text}}</button><sc-if value="{{b.openB}}" hint-placeholder-val="{{false}}"><p style="margin: 4px 0 0 20px; color: #4a443d">{{b.inner}}</p></sc-if></div></sc-if>
+<sc-if value="{{b.isLink}}" hint-placeholder-val="{{false}}"><a href="BaseDatos.dc.html" style="display: inline-flex; align-items: center; gap: 8px; color: #1f1c19; text-decoration-color: #cbc6f5; text-underline-offset: 4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18v14H3zM3 10h18M9 10v9"></path></svg>{{b.text}}</a></sc-if>
+<sc-if value="{{b.isImg}}" hint-placeholder-val="{{false}}"><figure style="margin: 6px 0"><div class="imgb"><svg viewBox="0 0 600 300" width="100%" aria-label="{{b.text}}" style="display: block; background: #f3e3c3"><path d="M60 200c40-80 120-120 180-100s80 80 140 60 100-100 160-80" fill="none" stroke="#1f1c19" stroke-width="3" stroke-dasharray="8 8"></path><path d="M60 112c36-36 110-40 146-10 24 20 8 54-30 60-50 8-132-14-116-50zM340 196c42-28 120-20 144 16 16 24-10 52-54 52-64 0-122-38-90-68z" fill="#cbc6f5" stroke="#1f1c19" stroke-width="3"></path><text x="132" y="136" text-anchor="middle" font-family="Gochi Hand, cursive" font-size="24" fill="#1f1c19">Vadronia</text><text x="414" y="228" text-anchor="middle" font-family="Gochi Hand, cursive" font-size="24" fill="#1f1c19">Nocturnia</text></svg></div><figcaption class="cap">{{b.text}}</figcaption></figure></sc-if>
+<sc-if value="{{b.isGal}}" hint-placeholder-val="{{false}}"><figure style="margin: 6px 0"><div class="gal" aria-label="{{b.text}}"><span style="background: linear-gradient(160deg, #1f1c19, #3a3480 70%, #6a62d6)"></span><span style="background: #f3e3c3"></span><span style="background: linear-gradient(135deg, #cbc6f5, #e9e7fb)"></span></div><figcaption class="cap">{{b.text}}</figcaption></figure></sc-if>
+<sc-if value="{{b.isUp}}" hint-placeholder-val="{{false}}"><div class="upz"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#1f1c19" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="9" width="30" height="24" rx="5" fill="#e9e7fb"></rect><path d="M5 27l9-8 7 6 5-4 9 7"></path><circle cx="26" cy="16" r="2.5"></circle></svg><span style="font-weight: 500; color: #1f1c19">Arrastra una imagen o elige un archivo</span><span>JPG, PNG o GIF · también puedes pegarla con Ctrl V</span><span style="display: flex; gap: 8px; margin-top: 4px"><button class="pill pill-dark" type="button" style="min-height: 40px">Elegir archivo</button><button class="pill pill-ghost" type="button" style="min-height: 40px">Pegar enlace</button></span></div></sc-if>
+<sc-if value="{{b.isDiv}}" hint-placeholder-val="{{false}}"><hr style="border: 0; border-top: 1px solid #e6ded2; margin: 14px 0"></sc-if>
+</div>
+</div>
+</sc-for>
+
+<div class="blk" style="position: relative">
+<div class="hd" style="opacity: 1"><span class="hb" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></span></div>
+<div class="bc"><label for="pg-cmd" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Nuevo bloque</label><input id="pg-cmd" class="cmd" type="text" value="{{cmd}}" onChange="{{setCmd}}" onKeyDown="{{cmdKey}}" placeholder="Escribe, o usa / para insertar un bloque" aria-expanded="{{slashOpen}}" aria-controls="slash"></div>
+<sc-if value="{{slashOpen}}" hint-placeholder-val="{{true}}">
+<div class="slash" id="slash" role="listbox" aria-label="Tipos de bloque">
+<span class="hint" style="display: block; padding: 6px 8px; font-size: 12px; font-weight: 500">Bloques</span>
+<sc-for list="{{items}}" as="i" hint-placeholder-count="9"><button class="{{i.cls}}" type="button" role="option" aria-selected="{{i.on}}" onClick="{{i.pick}}"><span class="sic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{i.icon}}"></path></svg></span><span style="display: flex; flex-direction: column"><span style="font-weight: 500; font-size: 14px">{{i.name}}</span><span class="hint" style="font-size: 12px">{{i.desc}}</span></span></button></sc-for>
+<sc-if value="{{noItems}}" hint-placeholder-val="{{false}}"><span class="hint" style="display: block; padding: 10px">Ningún bloque se llama así.</span></sc-if>
+</div>
+</sc-if>
+</div>
+</article>
+</div>
+
+<sc-if value="{{confirm}}" hint-placeholder-val="{{false}}">
+<div style="position: fixed; inset: 0; background: rgba(31,28,25,.4); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 80">
+<div role="alertdialog" aria-modal="true" aria-labelledby="dp-t" style="width: min(440px, 100%); background: #fffdf9; border-radius: 28px; padding: 26px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<h2 id="dp-t" style="margin: 0; font-size: 22px; font-weight: 500">¿Borrar "{{title}}"?</h2>
+<span style="color: #4a443d">Va a la papelera 30 días con sus {{blockCount}} bloques e imágenes. Las bases de datos enlazadas no se borran.</span>
+<div style="display: flex; gap: 10px; justify-content: flex-end"><button class="pill pill-ghost" type="button" onClick="{{cancelDel}}">Cancelar</button><button class="pill pill-danger" type="button" onClick="{{cancelDel}}">Borrar página</button></div>
+</div>
+</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1240}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    this.state = {
+      title: '0.- Antecedentes de Vadronia', cmd: '', sel: 0, menu: false, confirm: false, n: 20,
+      blocks: [
+        { id: 1, t: 'callout', text: 'Era III · Letargo Dorado. Ejemplo de cómo se ven los bloques; aquí va tu texto.' },
+        { id: 2, t: 'h', text: 'Escena 1' },
+        { id: 3, t: 'p', text: 'Párrafo de ejemplo: escribes directo, se guarda solo y puedes cambiar cualquier bloque de tipo.' },
+        { id: 4, t: 'img', kind: 'map', text: 'Boceto del mapa · Vadronia y Nocturnia' },
+        { id: 5, t: 'quote', text: 'Una cita o diálogo se ve así.' },
+        { id: 6, t: 'gallery', text: 'Referencias de Nordria · 3 imágenes' },
+        { id: 7, t: 'toggle', text: 'Notas de continuidad', inner: 'Pendiente de tu Notion: decidir entre Nordria y Nodria.', open: false },
+        { id: 8, t: 'todo', text: 'Revisar nombres de los reinos', checked: true },
+        { id: 9, t: 'todo', text: 'Escribir la escena 2', checked: false }
+      ]
+    };
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var val = function (e) { return e && e.target ? e.target.value : ''; };
+    var upd = function (id, patch) { self.setState({ blocks: self.state.blocks.map(function (b) { return b.id === id ? Object.assign({}, b, patch) : b; }) }); };
+    var blocks = st.blocks.map(function (b) {
+      return { text: b.text, inner: b.inner || '', isH: b.t === 'h', isP: b.t === 'p', isQuote: b.t === 'quote', isCallout: b.t === 'callout', isTodo: b.t === 'todo', isToggle: b.t === 'toggle', isLink: b.t === 'link', isDiv: b.t === 'div', isImg: b.t === 'img', isMap: b.kind === 'map', isUp: b.t === 'up', isGal: b.t === 'gallery',
+        checked: b.checked ? 'true' : 'false', box: 'width: 20px; height: 20px; border-radius: 6px; flex-shrink: 0; margin-top: 5px; display: inline-flex; align-items: center; justify-content: center; ' + (b.checked ? 'background: #cbc6f5;' : 'border: 1.5px solid #8a8278;'),
+        tick: b.checked ? '' : 'opacity: 0;', txt: b.checked ? 'color: #8a8278; text-decoration: line-through;' : '',
+        open: b.open ? 'true' : 'false', openB: !!b.open, tw: b.open ? 'transform: rotate(90deg); transition: transform .2s ease;' : 'transition: transform .2s ease;',
+        toggle: function () { if (b.t === 'todo') upd(b.id, { checked: !b.checked }); else upd(b.id, { open: !b.open }); },
+        delLabel: 'Quitar bloque: ' + (b.text || 'divisor').slice(0, 30),
+        del: function () { self.setState({ blocks: self.state.blocks.filter(function (x) { return x.id !== b.id; }) }); } };
+    });
+    var ITEMS = [
+      ['p', 'Texto', 'Escribe normal', 'M4 6h16M4 12h16M4 18h10', 'Escribe aquí…'],
+      ['h', 'Título', 'Un encabezado de sección', 'M6 4v16M18 4v16M6 12h12', 'Nueva sección'],
+      ['todo', 'Casilla', 'Algo que se marca', 'M4 4h16v16H4zM8 12l3 3 5-6', 'Pendiente nuevo'],
+      ['toggle', 'Desplegable', 'Se abre y se cierra', 'M9 6l6 6-6 6', 'Desplegable'],
+      ['quote', 'Cita', 'Un diálogo o frase', 'M7 7h4v4c0 3-2 5-4 6M15 7h4v4c0 3-2 5-4 6', 'Una frase…'],
+      ['callout', 'Aviso', 'Resalta una nota', 'M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z', 'Algo importante'],
+      ['div', 'Divisor', 'Una línea para separar', 'M4 12h16', ''],
+      ['link', 'Base de datos', 'Inserta o enlaza una tabla', 'M3 5h18v14H3zM3 10h18M9 10v9', 'Nueva base de datos'],
+      ['up', 'Imagen', 'Sube una foto, dibujo o captura', 'M3 5h18v14H3zM3 16l5-5 4 4 3-3 6 6M15 9h.01', ''],
+      ['gallery', 'Galería', 'Varias imágenes juntas', 'M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z', 'Galería nueva · 3 imágenes']
+    ];
+    var c = st.cmd, slashOpen = c.charAt(0) === '/';
+    var q = slashOpen ? c.slice(1).toLowerCase().trim() : '';
+    var filtered = ITEMS.filter(function (i) { return !q || i[1].toLowerCase().indexOf(q) === 0 || i[2].toLowerCase().indexOf(q) >= 0; });
+    var add = function (t, text) { var id = self.state.n + 1; var b = { id: id, t: t, text: text }; if (t === 'toggle') { b.inner = 'Escribe adentro…'; b.open = true; } self.setState({ blocks: self.state.blocks.concat([b]), cmd: '', n: id, sel: 0 }); };
+    var items = filtered.map(function (i, k) { var on = k === Math.min(st.sel, filtered.length - 1); return { name: i[1], desc: i[2], icon: i[3], on: on ? 'true' : 'false', cls: on ? 'si on' : 'si', pick: function () { add(i[0], i[4]); } }; });
+    var words = 0;
+    st.blocks.forEach(function (b) { if (b.text && ['link', 'img', 'gallery', 'up'].indexOf(b.t) < 0) words += b.text.split(/\s+/).filter(Boolean).length; });
+    return {
+      title: st.title, setTitle: function (e) { self.setState({ title: val(e) }); },
+      blocks: blocks, blockCount: st.blocks.length, words: (1180 + words).toLocaleString('es-MX'),
+      cmd: c, setCmd: function (e) { self.setState({ cmd: val(e), sel: 0 }); },
+      cmdKey: function (e) {
+        var s = self.state;
+        if (s.cmd.charAt(0) === '/') {
+          if (e.key === 'ArrowDown') { e.preventDefault(); self.setState({ sel: Math.min(s.sel + 1, filtered.length - 1) }); }
+          else if (e.key === 'ArrowUp') { e.preventDefault(); self.setState({ sel: Math.max(0, s.sel - 1) }); }
+          else if (e.key === 'Enter') { e.preventDefault(); var it = filtered[Math.min(s.sel, filtered.length - 1)]; if (it) add(it[0], it[4]); }
+          else if (e.key === 'Escape') { self.setState({ cmd: '' }); }
+        } else if (e.key === 'Enter' && s.cmd.trim()) { e.preventDefault(); add('p', s.cmd.trim()); }
+      },
+      slashOpen: slashOpen, items: items, noItems: slashOpen && !filtered.length,
+      savedText: 'Guardado hace un momento',
+      menu: st.menu, menuOpen: st.menu ? 'true' : 'false', toggleMenu: function () { self.setState({ menu: !self.state.menu }); },
+      confirm: st.confirm, askDel: function () { self.setState({ confirm: true, menu: false }); }, cancelDel: function () { self.setState({ confirm: false }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
