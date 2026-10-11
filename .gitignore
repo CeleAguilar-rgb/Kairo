@@ -1,0 +1,38 @@
+# Dependencias
+node_modules/
+
+# Build
+dist/
+build/
+.next/
+.turbo/
+out/
+
+# Nest
+apps/api/dist/
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing
+coverage/
+
+# Notas de aprendizaje: personales, no se suben (la plantilla sí)
+docs/learning/*.md
+!docs/learning/README.md

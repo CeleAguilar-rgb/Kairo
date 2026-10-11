@@ -28,6 +28,25 @@ kairo/
 └── CLAUDE.md
 ```
 
+## Desarrollo local
+
+Todos los comandos se corren desde la raíz del repo; `turbo` reparte cada tarea al paquete (o paquetes) que corresponda.
+
+| Comando | Qué hace |
+|---|---|
+| `pnpm install` | Instala las dependencias de todo el workspace. |
+| `pnpm dev` | Levanta `apps/web` (`localhost:3000`) y `apps/api` (`localhost:3001`) juntos, en paralelo. |
+| `pnpm --filter web dev` | Levanta solo el front. |
+| `pnpm --filter api dev` | Levanta solo la API (no tiene nada visual: es JSON). |
+| `pnpm build` | Build de producción de todos los paquetes. |
+| `pnpm lint` | ESLint en todos los paquetes. |
+| `pnpm typecheck` | `tsc --noEmit` en todos los paquetes. |
+| `pnpm format` | Prettier sobre todo el repo. |
+| `pnpm --filter <paquete> add <dependencia>` | Agrega una dependencia solo a ese paquete (`web`, `api` o `@kairo/shared`). |
+| `pnpm add -D -w <dependencia>` | Agrega una dependencia de desarrollo compartida, a la raíz del workspace. |
+
+Parar un servidor de `dev`: `Ctrl+C` en la terminal donde está corriendo.
+
 ## Frontend: `apps/web`
 
 ```

@@ -30,4 +30,4 @@ Una nota corta por concepto, **escrita por mí, con mis palabras**. Sirve para r
 
 | Concepto | Nota |
 |---|---|
-| | |
+| pnpm y workspaces | [pnpm.md](pnpm.md) |
