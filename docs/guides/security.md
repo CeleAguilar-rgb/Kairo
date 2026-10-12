@@ -22,7 +22,7 @@ Reglas del código:
 - Se guarda hasheado, nunca en claro. Comparación en tiempo constante.
 - Límite de envíos por usuario (por ejemplo, 3 cada 15 minutos) para que no se use para llenar el correo.
 
-> Supabase no trae "código por correo como segundo paso" listo para usar; esta parte se construye en `apps/api/src/auth/email-code/`. Enviar correos requiere un proveedor (SMTP propio de Supabase o un servicio como Resend). **Pregunta al usuario antes de elegirlo.** Verifica en la documentación actual de Supabase cualquier detalle de su API de Auth antes de implementarlo.
+> Supabase no trae "código por correo como segundo paso" listo para usar; esta parte se construye en `apps/api/src/auth/email-code/`. Enviar correos usa el SMTP propio de Supabase (decisión #24 en `docs/guides/decisions.md`). Verifica en la documentación actual de Supabase cualquier detalle de su API de Auth antes de implementarlo.
 
 Otros:
 - "Olvidé mi contraseña" con el flujo de recuperación de Supabase. Después de cambiarla, se cierran las demás sesiones.

@@ -13,7 +13,7 @@ Fuente: el documento "Mi tablero · Funcionalidades y base de datos" del usuario
   - `deleted_at` timestamptz nulo (papelera)
 - **Dinero:** enteros en centavos (`*_cents`) y columna `currency` (por ahora siempre `'MXN'`). Nunca decimales.
 - **Fechas:** momentos en `timestamptz`; días sueltos en `date`.
-- **Enums:** como enums de Postgres o `text` con check; los valores en inglés (`todo`, `in_progress`, `done`), las etiquetas en español en la UI.
+- **Enums:** enums nativos de Postgres (`pgEnum` de Drizzle, ver decisión #23); los valores en inglés (`todo`, `in_progress`, `done`), las etiquetas en español en la UI.
 - Las columnas listadas abajo son las propias de cada tabla; las comunes no se repiten.
 
 ## Cuenta
@@ -107,6 +107,6 @@ Fuente: el documento "Mi tablero · Funcionalidades y base de datos" del usuario
 
 ## Por definir (preguntar al usuario cuando toque)
 
-- Pascua: fija todo abril o según la fecha real.
+- Pascua: por ahora, fecha real (no fija en abril); revisar si hace falta otra regla cuando se construyan las temporadas.
 - Tareas que se repiten (pagar renta cada mes) o si eso vive solo en Recordatorios.
 - Agenda: mostrar la rutina detrás de los eventos y arrastrar eventos para moverlos.
