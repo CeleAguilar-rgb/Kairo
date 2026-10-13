@@ -1,0 +1,44 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1;
+}
+
+.subtitle {
+  color: var(--text-muted);
+}
+
+.alert {
+  display: flex;
+  gap: var(--space-5);
+  align-items: flex-start;
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-14);
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: 14px;
+  overflow: hidden;
+}
+
+.alertIcon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.submit {
+  width: 100%;
+}

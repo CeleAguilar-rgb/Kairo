@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes } from 'react'
+import type { InputHTMLAttributes, ReactNode } from 'react'
 
 import styles from './Input.module.css'
 
@@ -7,9 +7,10 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string
   hint?: string
   error?: string
+  trailing?: ReactNode
 }
 
-export function Input({ id, label, hint, error, className, ...rest }: InputProps) {
+export function Input({ id, label, hint, error, trailing, className, ...rest }: InputProps) {
   const describedBy = error ? `${id}-error` : hint ? `${id}-hint` : undefined
 
   return (
@@ -17,13 +18,18 @@ export function Input({ id, label, hint, error, className, ...rest }: InputProps
       <label htmlFor={id} className={styles.label}>
         {label}
       </label>
-      <input
-        id={id}
-        className={[styles.input, error ? styles.invalid : null, className].filter(Boolean).join(' ')}
-        aria-invalid={Boolean(error)}
-        aria-describedby={describedBy}
-        {...rest}
-      />
+      <div className={styles.inputWrap}>
+        <input
+          id={id}
+          className={[styles.input, trailing ? styles.hasTrailing : null, error ? styles.invalid : null, className]
+            .filter(Boolean)
+            .join(' ')}
+          aria-invalid={Boolean(error)}
+          aria-describedby={describedBy}
+          {...rest}
+        />
+        {trailing ? <div className={styles.trailing}>{trailing}</div> : null}
+      </div>
       {error ? (
         <span id={`${id}-error`} className={styles.error}>
           {error}

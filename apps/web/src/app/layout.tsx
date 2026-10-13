@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Gochi_Hand, Outfit } from 'next/font/google'
+import { MotionConfig } from 'motion/react'
 import './globals.css'
 
 const outfit = Outfit({
@@ -24,7 +25,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="es" data-mode="light" className={`${outfit.variable} ${gochiHand.variable}`}>
-      <body>{children}</body>
+      <body>
+        {/* reducedMotion="user" respeta prefers-reduced-motion para toda animación de Motion, sin repetirlo en cada media query */}
+        <MotionConfig reducedMotion="user">{children}</MotionConfig>
+      </body>
     </html>
   )
 }

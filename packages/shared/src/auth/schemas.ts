@@ -11,3 +11,10 @@ export const setPasswordSchema = z
   })
 
 export type SetPasswordInput = z.infer<typeof setPasswordSchema>
+
+export const loginSchema = z.object({
+  email: z.string().email('Escribe un correo válido.'),
+  password: z.string().min(1, 'Escribe tu contraseña.'),
+})
+
+export type LoginInput = z.infer<typeof loginSchema>

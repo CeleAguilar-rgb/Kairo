@@ -30,6 +30,21 @@
   border-color: var(--danger);
 }
 
+.inputWrap {
+  position: relative;
+}
+
+.input.hasTrailing {
+  padding-right: 52px;
+}
+
+.trailing {
+  position: absolute;
+  right: var(--space-2);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .hint {
   font-size: 13px;
   color: var(--text-muted);

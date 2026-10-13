@@ -88,10 +88,10 @@ src/
 ├── main.ts                      # helmet, CORS, prefijo /v1, ValidationPipe global
 ├── app.module.ts
 ├── auth/
-│   ├── jwt.guard.ts             # Guard global: verifica JWT de Supabase y que el código de correo se haya verificado
+│   ├── jwt.guard.ts             # Guard global: verifica JWT de Supabase (código de correo en pausa, decisión #26)
 │   ├── current-user.decorator.ts
 │   ├── public.decorator.ts      # Marca explícita de rutas públicas
-│   ├── email-code/              # Segundo paso de login: generar, enviar y verificar el código
+│   ├── email-code/              # (en pausa, decisión #26) Segundo paso de login: generar, enviar y verificar el código
 │   └── invitations/             # Crear y aceptar invitaciones
 ├── common/
 │   ├── filters/                 # Formato uniforme de errores

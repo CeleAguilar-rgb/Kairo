@@ -5,7 +5,7 @@
 1. Monorepo: pnpm workspaces, Turborepo, `apps/web`, `apps/api`, `packages/shared`, TypeScript estricto, ESLint y Prettier.
 2. Estilos: `tokens.css` y `semantic.css` extraídos del diseño, fuentes, `globals.css`, componentes base de `components/ui/`.
 3. Base de datos: proyecto de Supabase, esquema `app`, rol de la API, Drizzle conectado, tablas de **Cuenta** (`docs/guides/data-model.md`).
-4. Auth completa: invitación, contraseña, código por correo, guard global de la API, sesiones de 30 días, cerrar todas las sesiones, recuperar contraseña.
+4. Auth completa: invitación, contraseña, guard global de la API, sesiones de 30 días, cerrar todas las sesiones, recuperar contraseña. (Código por correo pasó a "Después" — decisión #26.)
 5. Shell: layout del dashboard, sidebar desde el registro de módulos, perfil básico, bienvenida.
 6. Tests críticos de auth y aislamiento.
 
@@ -37,3 +37,4 @@ El orden puede cambiar; la arquitectura de módulos existe para eso.
 | Integraciones: Notion, Canva, Spotify, Claude | Tabla `connections`, tokens cifrados, siempre desde el servidor |
 | Otras monedas | Columna `currency` junto a cada monto |
 | Compartir entre cuentas (agenda en común) | Nada; requiere decisión nueva |
+| Código por correo como segundo factor de login | `login_codes` y `verified_sessions` ya existen en la base sin usarse; el guard (`auth/jwt.guard.ts`) ya tiene la estructura (`@Public()`) para agregar la excepción cuando toque. Falta sobre todo infraestructura de correo propio en la API (SMTP o Resend) — decisión #26. |

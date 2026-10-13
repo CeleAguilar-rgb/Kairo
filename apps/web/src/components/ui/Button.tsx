@@ -1,10 +1,20 @@
+'use client'
+
+import { motion } from 'motion/react'
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
 
 import styles from './Button.module.css'
 
 type ButtonVariant = 'solid' | 'secondary' | 'ghost' | 'danger' | 'plain'
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+// Omit: motion.button tipa estos eventos distinto al <button> nativo (conflicto
+// conocido de framer-motion con los tipos de React).
+type NativeButtonProps = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'onDrag' | 'onDragStart' | 'onDragEnd' | 'onAnimationStart' | 'onAnimationEnd' | 'onAnimationIteration'
+>
+
+type ButtonProps = NativeButtonProps & {
   variant?: ButtonVariant
   iconOnly?: boolean
   children: ReactNode
@@ -31,8 +41,8 @@ export function Button({
     .join(' ')
 
   return (
-    <button type={type} className={classes} {...rest}>
+    <motion.button type={type} className={classes} whileTap={{ scale: 0.97 }} {...rest}>
       {children}
-    </button>
+    </motion.button>
   )
 }

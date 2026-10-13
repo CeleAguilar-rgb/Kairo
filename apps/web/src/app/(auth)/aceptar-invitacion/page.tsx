@@ -11,11 +11,7 @@ export default async function AceptarInvitacionPage() {
     <main className={styles.main}>
       <Card className={styles.card}>
         {data ? (
-          <>
-            <h1 className={styles.title}>Crea tu contraseña</h1>
-            <p className={styles.subtitle}>La vas a usar junto con tu correo para entrar a Kairo.</p>
-            <SetPasswordForm />
-          </>
+          <SetPasswordForm />
         ) : (
           <>
             <h1 className={styles.title}>Este enlace ya no es válido</h1>

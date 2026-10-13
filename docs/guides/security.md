@@ -11,6 +11,8 @@ Kairo guarda finanzas, un diario, escritos y la vida diaria de cada persona. La 
 
 ## 2. Inicio de sesión: contraseña + código al correo
 
+> **En pausa (decisión #26):** por ahora el login es solo correo + contraseña, sin este segundo paso — falta infraestructura de correo propia en la API. El diseño de abajo queda para cuando se retome; el guard global (sección 4) hoy **no** hace el paso 4 de este flujo.
+
 Flujo:
 1. La persona escribe correo y contraseña → `signInWithPassword` de Supabase.
 2. Con esa sesión recién creada, el front pide a la API un código. La API genera un **código de 6 dígitos**, guarda solo su hash, y lo envía al correo.
@@ -37,7 +39,7 @@ Otros:
 
 ## 4. Autorización en la API (lo más importante)
 
-- **Guard global** en NestJS: verifica en cada petición la firma del JWT con las llaves públicas de Supabase (JWKS), su expiración y audiencia, y que la sesión esté verificada con el código. Las rutas son privadas por defecto; las públicas se marcan con `@Public()` y son la excepción.
+- **Guard global** en NestJS: verifica en cada petición la firma del JWT con las llaves públicas de Supabase (JWKS), su expiración y audiencia (hoy con `getClaims()`, decisión #25). La revisión de "sesión verificada con el código" queda en pausa junto con la sección 2 (decisión #26). Las rutas son privadas por defecto; las públicas se marcan con `@Public()` y son la excepción.
 - El `userId` **siempre** sale del token. Nunca del body, query ni params.
 - Los repositorios filtran por `userId` en **cada** consulta. Editar y borrar usan `where: { id, userId }`; si no hay fila, responde 404 (no 403, para no revelar que existe).
 - Al recibir ids de otras entidades (por ejemplo, `projectId` al crear una tarea), verifica que también pertenezcan al usuario.
