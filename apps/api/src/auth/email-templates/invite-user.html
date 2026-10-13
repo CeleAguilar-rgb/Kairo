@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Te invitaron a Kairo</title>
+    <!--[if mso]>
+    <noscript>
+      <xml>
+        <o:OfficeDocumentSettings>
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+    </noscript>
+    <![endif]-->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap"
+    />
+    <style>
+      body,
+      table,
+      td {
+        font-family: 'Outfit', -apple-system, 'Segoe UI', Roboto, system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body style="margin: 0; padding: 0; background-color: #f3eee6">
+    <!-- Texto de vista previa, oculto -->
+    <div style="display: none; max-height: 0; overflow: hidden; opacity: 0">
+      Alguien te invitó a Kairo. Define tu contraseña para entrar.
+    </div>
+
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f3eee6">
+      <tr>
+        <td align="center" style="padding: 44px 16px">
+          <table
+            role="presentation"
+            width="100%"
+            cellpadding="0"
+            cellspacing="0"
+            style="max-width: 480px; background-color: #fffdf9; border: 1px solid #e6ded2; border-radius: 20px"
+          >
+            <tr>
+              <td style="padding: 40px 36px 0; text-align: center">
+                <span style="font-size: 22px; font-weight: 600; color: #1f1c19; letter-spacing: -0.01em">
+                  Kairo
+                </span>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding: 24px 36px 0; text-align: center">
+                <h1 style="margin: 0; font-size: 20px; font-weight: 600; color: #1f1c19">
+                  Te invitaron a Kairo
+                </h1>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding: 14px 36px 0; text-align: center">
+                <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #6b645b">
+                  Alguien te invitó a unirte a Kairo, un espacio privado para organizar tareas, agenda,
+                  finanzas y más. Para entrar, define tu contraseña.
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding: 28px 36px 8px; text-align: center">
+                <!--[if mso]>
+                <v:roundrect
+                  xmlns:v="urn:schemas-microsoft-com:vml"
+                  xmlns:w="urn:schemas-microsoft-com:office:word"
+                  href="{{ .ConfirmationURL }}"
+                  style="height:48px;v-text-anchor:middle;width:220px;"
+                  arcsize="50%"
+                  fillcolor="#1f1c19"
+                  stroke="f"
+                >
+                  <w:anchorlock />
+                  <center style="color:#f3eee6;font-family:sans-serif;font-size:15px;font-weight:600;">
+                    Aceptar invitación
+                  </center>
+                </v:roundrect>
+                <![endif]-->
+                <!--[if !mso]><!-->
+                <a
+                  href="{{ .ConfirmationURL }}"
+                  style="
+                    display: inline-block;
+                    background-color: #1f1c19;
+                    color: #f3eee6;
+                    font-size: 15px;
+                    font-weight: 600;
+                    text-decoration: none;
+                    padding: 14px 32px;
+                    border-radius: 999px;
+                  "
+                >
+                  Aceptar invitación
+                </a>
+                <!--<![endif]-->
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding: 20px 36px 40px; text-align: center">
+                <p style="margin: 0; font-size: 12px; line-height: 1.6; color: #8a8278">
+                  Si el botón no funciona, copia y pega este enlace:<br />
+                  <a href="{{ .ConfirmationURL }}" style="color: #6a62d6; word-break: break-all">
+                    {{ .ConfirmationURL }}
+                  </a>
+                </p>
+              </td>
+            </tr>
+          </table>
+
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width: 480px">
+            <tr>
+              <td style="padding: 20px 36px; text-align: center">
+                <p style="margin: 0; font-size: 12px; color: #8a8278">
+                  Si no esperabas esta invitación, puedes ignorar este correo.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

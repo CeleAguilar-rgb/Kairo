@@ -1,0 +1,23 @@
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--space-14);
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+}
+
+.title {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+}
+
+.subtitle {
+  color: var(--text-muted);
+}
