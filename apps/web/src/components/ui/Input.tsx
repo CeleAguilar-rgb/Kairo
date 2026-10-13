@@ -5,19 +5,29 @@ import styles from './Input.module.css'
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   id: string
   label: string
+  labelExtra?: ReactNode
   hint?: string
   error?: string
   trailing?: ReactNode
 }
 
-export function Input({ id, label, hint, error, trailing, className, ...rest }: InputProps) {
+export function Input({ id, label, labelExtra, hint, error, trailing, className, ...rest }: InputProps) {
   const describedBy = error ? `${id}-error` : hint ? `${id}-hint` : undefined
 
   return (
     <div className={styles.field}>
-      <label htmlFor={id} className={styles.label}>
-        {label}
-      </label>
+      {labelExtra ? (
+        <div className={styles.labelRow}>
+          <label htmlFor={id} className={styles.label}>
+            {label}
+          </label>
+          {labelExtra}
+        </div>
+      ) : (
+        <label htmlFor={id} className={styles.label}>
+          {label}
+        </label>
+      )}
       <div className={styles.inputWrap}>
         <input
           id={id}

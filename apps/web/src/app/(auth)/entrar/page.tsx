@@ -1,6 +1,6 @@
-import { BrandPanel } from './BrandPanel'
+import { BrandPanel } from '../BrandPanel'
+import styles from '../split-layout.module.css'
 import { LoginForm } from './LoginForm'
-import styles from './page.module.css'
 
 export default function EntrarPage() {
   return (

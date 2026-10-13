@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'motion/react'
-import styles from './page.module.css'
+import styles from './BrandPanel.module.css'
 
 const EASE = [0.3, 0.7, 0.2, 1] as const
 

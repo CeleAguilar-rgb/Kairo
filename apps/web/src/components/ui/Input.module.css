@@ -9,6 +9,12 @@
   font-size: 14px;
 }
 
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
 .input {
   box-sizing: border-box;
   width: 100%;

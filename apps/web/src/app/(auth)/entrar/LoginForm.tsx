@@ -2,6 +2,7 @@
 
 import { loginSchema } from '@kairo/shared'
 import { AnimatePresence, motion } from 'motion/react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 import { Button } from '@/components/ui/Button'
@@ -143,6 +144,11 @@ export function LoginForm() {
         <PasswordInput
           id="password"
           label="Contraseña"
+          labelExtra={
+            <Link href="/recuperar" className={styles.forgotLink}>
+              La olvidé
+            </Link>
+          }
           value={password}
           onChange={(event) => {
             const value = event.target.value

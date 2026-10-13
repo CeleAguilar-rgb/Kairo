@@ -1,12 +1,13 @@
 'use client'
 
-import { useState, type InputHTMLAttributes } from 'react'
+import { useState, type InputHTMLAttributes, type ReactNode } from 'react'
 import { Input } from './Input'
 import styles from './PasswordInput.module.css'
 
 type PasswordInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> & {
   id: string
   label: string
+  labelExtra?: ReactNode
   hint?: string
   error?: string
 }

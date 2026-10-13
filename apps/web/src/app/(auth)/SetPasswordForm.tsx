@@ -11,6 +11,16 @@ import styles from './SetPasswordForm.module.css'
 
 type FieldErrors = { password?: string; confirmPassword?: string }
 
+type SetPasswordFormProps = {
+  title: string
+  subtitle: string
+  submitLabel: string
+  savingLabel: string
+  // 'recovery' cierra las demás sesiones al guardar (docs/guides/security.md,
+  // sección 2: "después de cambiarla, se cierran las demás sesiones").
+  kind: 'invite' | 'recovery'
+}
+
 const EASE = [0.3, 0.7, 0.2, 1] as const
 
 const container = {
@@ -35,7 +45,7 @@ function validate(password: string, confirmPassword: string): FieldErrors {
   return errors
 }
 
-export function SetPasswordForm() {
+export function SetPasswordForm({ title, subtitle, submitLabel, savingLabel, kind }: SetPasswordFormProps) {
   const router = useRouter()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -77,6 +87,10 @@ export function SetPasswordForm() {
       return
     }
 
+    if (kind === 'recovery') {
+      await supabase.auth.signOut({ scope: 'others' })
+    }
+
     router.push('/')
     router.refresh()
   }
@@ -84,8 +98,8 @@ export function SetPasswordForm() {
   return (
     <motion.form className={styles.form} onSubmit={handleSubmit} variants={container} initial="hidden" animate="show">
       <motion.div variants={item} className={styles.heading}>
-        <h1 className={styles.title}>Crea tu contraseña</h1>
-        <p className={styles.subtitle}>La vas a usar junto con tu correo para entrar a Kairo.</p>
+        <h1 className={styles.title}>{title}</h1>
+        <p className={styles.subtitle}>{subtitle}</p>
       </motion.div>
 
       <motion.div variants={item}>
@@ -139,7 +153,7 @@ export function SetPasswordForm() {
 
       <motion.div variants={item}>
         <Button type="submit" disabled={submitting} className={styles.submit}>
-          {submitting ? 'Guardando…' : 'Guardar y entrar'}
+          {submitting ? savingLabel : submitLabel}
         </Button>
       </motion.div>
     </motion.form>

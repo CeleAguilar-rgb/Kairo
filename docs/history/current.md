@@ -2,25 +2,22 @@
 
 > Léelo al empezar cada sesión. Actualízalo al terminar. Máximo ~60 líneas: es un resumen, no un diario. El detalle va en `sessions/`.
 
-**Última actualización:** 2026-10-13 · sesión `2026-10-13-guard-global-y-aceptar-invitacion-3.md`
+**Última actualización:** 2026-10-13 · sesión `2026-10-13-guard-global-y-aceptar-invitacion-4.md`
 
 ## Fase actual
 
-Fase 0 (base), **en progreso**. Dentro del paso 4 de 6 (Auth completa).
+Fase 0 (base), **en progreso**. Paso 4 de 6 (Auth) casi listo.
 
 ## Lo último que se hizo
 
-- Infraestructura de Supabase Auth: cliente admin en la API (`common/supabase/`), script para invitar al primer usuario, clientes de `@supabase/ssr` y middleware de refresco de sesión en el front.
-- Guard global de la API (`auth/jwt.guard.ts`): verifica el JWT de Supabase (`getClaims()`, local por JWKS) y pone `userId` en el request. Registrado en `app.module.ts`. Decisión #25.
-- **Decisión #26: código por correo pasa a "Después"** (reemplaza la #7). Construirlo exigía infraestructura de correo propia en la API que no existe todavía, más una pantalla nueva y cambios al guard. Por ahora el login es solo correo + contraseña — razonable para una cuenta de un solo usuario invitado. Las tablas `login_codes` y `verified_sessions` quedan listas sin usarse. Actualizado en `security.md`, `architecture.md` y `roadmap.md`.
-- Pantalla de aceptar invitación en el front (`app/(auth)/confirmar/` + `app/(auth)/aceptar-invitacion/`): cambia el código del correo por una sesión y deja poner la contraseña. Primer uso de `packages/shared` (esquema de contraseña).
-- Probado de punta a punta con una invitación real: funciona. En el camino se encontró y arregló un bug real — la plantilla de correo usaba `{{ .ConfirmationURL }}`, que pierde el token en el fragmento de la URL (nunca llega al servidor). Ahora usa `{{ .TokenHash }}` + `verifyOtp()`. La plantilla del dashboard de Supabase se actualiza pegando el HTML a mano; no hay sincronización automática todavía. Detalle en la sesión `-2`.
-- `SetPasswordForm` ahora valida al salir del campo y quita el error en cuanto se corrige (regla de `docs/guides/conventions.md` que la primera versión no cumplía).
-- `/entrar` (login) construido y luego **rehecho** para seguir `docs/design/screens/Entrar.dc.html` (se había armado sin revisar el canvas primero). Nuevo componente reusable `components/ui/PasswordInput.tsx` (ojo de mostrar/ocultar). Se integró `Motion` por primera vez en el proyecto (ya estaba en el stack, no se había usado): entrada escalonada en los formularios de auth, banners de error animados, y `whileTap` en el `Button` compartido (aplica a toda la app). Detalle en la sesión `-3`.
+- Login completo: invitación (`/aceptar-invitacion`), entrar (`/entrar`), recuperar contraseña (`/recuperar` + `/restablecer-contrasena`), guard global de la API (`auth/jwt.guard.ts`, `getClaims()` por JWKS). Las tres pantallas comparten layout y piezas en `app/(auth)/` (`BrandPanel`, `SetPasswordForm`, los `.module.css` de layout). Detalle de cada una en las sesiones `-1` a `-4` de hoy.
+- **Decisión #26 (reemplaza la #7): código por correo pasa a "Después".** Exigía correo propio en la API, que no existe. Por ahora el login es solo correo + contraseña. `login_codes`/`verified_sessions` quedan listas sin usarse.
+- Se integró `Motion` por primera vez en el proyecto (ya estaba en el stack): entrada escalonada en los formularios de auth, banners de error animados, `whileTap` en el `Button` compartido (toda la app).
+- Bug real encontrado y arreglado: las plantillas de correo no pueden usar `{{ .ConfirmationURL }}` (pierde el token en el fragmento de la URL) — van con `{{ .TokenHash }}` + `verifyOtp()`. Ambas plantillas (`invite-user.html`, `recover-password.html`) se pegan a mano en el dashboard de Supabase; no hay sincronización automática.
 
 ## Siguiente paso
 
-Seguir en Fase 0, punto 4 de `docs/guides/roadmap.md`: **recuperar contraseña** — mismo patrón que aceptar invitación (`/confirmar` con `type=recovery` + `verifyOtp()`, una pantalla para poner la contraseña nueva). "Cerrar todas las sesiones" queda para cuando exista Perfil (punto 5, necesita una pantalla). También falta confirmar en el dashboard de Supabase que la sesión dura 30 días (decisión #8) — es configuración, no código.
+Verificar en el navegador el envío del formulario de `/restablecer-contrasena` (solo se probó el lado del servidor) y pegar `recover-password.html` en el dashboard de Supabase. Después, del paso 4 de Auth solo queda: confirmar que la sesión dura 30 días en el dashboard de Supabase (configuración, no código), y "cerrar todas las sesiones" (espera a que exista Perfil, punto 5). Con eso, Fase 0 pasa al punto 5: Shell del dashboard.
 
 ## Pendientes de decidir con el usuario
 
