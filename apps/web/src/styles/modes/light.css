@@ -26,6 +26,7 @@
   --accent: var(--lavender-300);
   --accent-soft: var(--lavender-100);
   --accent-ink: var(--lavender-ink);
+  --accent-warm: var(--amber-200);
   --focus-ring: var(--lavender-600);
 
   --danger: var(--danger-700);

@@ -2,7 +2,7 @@
 
 > Léelo al empezar cada sesión. Actualízalo al terminar. Máximo ~60 líneas: es un resumen, no un diario. El detalle va en `sessions/`.
 
-**Última actualización:** 2026-10-13 · sesión `2026-10-13-guard-global-y-aceptar-invitacion-4.md`
+**Última actualización:** 2026-10-13 · sesión `2026-10-13-guard-global-y-aceptar-invitacion-5.md`
 
 ## Fase actual
 
@@ -10,18 +10,22 @@ Fase 0 (base), **en progreso**. Paso 4 de 6 (Auth) casi listo.
 
 ## Lo último que se hizo
 
-- Login completo: invitación (`/aceptar-invitacion`), entrar (`/entrar`), recuperar contraseña (`/recuperar` + `/restablecer-contrasena`), guard global de la API (`auth/jwt.guard.ts`, `getClaims()` por JWKS). Las tres pantallas comparten layout y piezas en `app/(auth)/` (`BrandPanel`, `SetPasswordForm`, los `.module.css` de layout). Detalle de cada una en las sesiones `-1` a `-4` de hoy.
+- Login completo: invitación (`/aceptar-invitacion`), entrar (`/entrar`), recuperar contraseña (`/recuperar` + `/restablecer-contrasena`), guard global de la API (`auth/jwt.guard.ts`, `getClaims()` por JWKS). Las tres pantallas comparten layout y piezas en `app/(auth)/` (`BrandPanel`, `SetPasswordForm`, los `.module.css` de layout). Detalle de cada una en las sesiones `-1` a `-5` de hoy.
 - **Decisión #26 (reemplaza la #7): código por correo pasa a "Después".** Exigía correo propio en la API, que no existe. Por ahora el login es solo correo + contraseña. `login_codes`/`verified_sessions` quedan listas sin usarse.
 - Se integró `Motion` por primera vez en el proyecto (ya estaba en el stack): entrada escalonada en los formularios de auth, banners de error animados, `whileTap` en el `Button` compartido (toda la app).
 - Bug real encontrado y arreglado: las plantillas de correo no pueden usar `{{ .ConfirmationURL }}` (pierde el token en el fragmento de la URL) — van con `{{ .TokenHash }}` + `verifyOtp()`. Ambas plantillas (`invite-user.html`, `recover-password.html`) se pegan a mano en el dashboard de Supabase; no hay sincronización automática.
+- Las cuatro pantallas de auth (`entrar`, `recuperar`, `aceptar-invitacion`, `restablecer-contrasena`) ahora comparten el mismo panel de marca (logo + doodles animados) — las dos últimas antes eran una tarjeta simple y sin eso. Probado de punta a punta en el navegador: invitación, login y recuperar/restablecer contraseña funcionan de verdad.
 
 ## Siguiente paso
 
-Verificar en el navegador el envío del formulario de `/restablecer-contrasena` (solo se probó el lado del servidor) y pegar `recover-password.html` en el dashboard de Supabase. Después, del paso 4 de Auth solo queda: confirmar que la sesión dura 30 días en el dashboard de Supabase (configuración, no código), y "cerrar todas las sesiones" (espera a que exista Perfil, punto 5). Con eso, Fase 0 pasa al punto 5: Shell del dashboard.
+El paso 4 de Auth está prácticamente terminado. Falta, del lado del usuario (no código):
+- Pegar `recover-password.html` en el dashboard de Supabase (Authentication → Email Templates → Reset Password) — la de invitación ya se pegó, esta todavía no se confirmó.
+- Confirmar que la sesión dura 30 días en el dashboard de Supabase (decisión #8).
+
+"Cerrar todas las sesiones" espera a que exista Perfil (punto 5). Con eso, Fase 0 pasa al punto 5: Shell del dashboard (layout, sidebar desde el registro de módulos, perfil básico, bienvenida).
 
 ## Pendientes de decidir con el usuario
 
-- `/entrar`: el usuario pidió animar también "el fondo" y no quedó claro qué quería decir (¿doodles del lado del formulario también? ¿un degradado como el de `Bienvenida.dc.html`? ¿el color no se veía bien?). Preguntar antes de tocarlo — `Entrar.dc.html` no trae nada ahí, así que cualquier cosa que se agregue sería una extensión, no algo que ya esté en el canvas.
 - Correo para enviar invitaciones a otras personas: por ahora SMTP de Resend sin dominio propio (`onboarding@resend.dev`, solo entrega al correo con el que te registraste en Resend — sirve para probar, no para invitar a nadie más todavía). Más adelante: crear un Gmail dedicado a Kairo (decidir si se usa como SMTP o solo como cuenta de Resend) o comprar un dominio.
 - Tareas que se repiten, o si eso vive solo en Recordatorios.
 - Agenda: mostrar la rutina detrás de los eventos y arrastrar eventos.

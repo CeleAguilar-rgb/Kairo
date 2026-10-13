@@ -13,6 +13,7 @@
     "invite:initial": "tsx --env-file=.env src/auth/invite-initial-user.ts"
   },
   "dependencies": {
+    "@kairo/shared": "workspace:*",
     "@nestjs/common": "^12.1.2",
     "@nestjs/core": "^12.1.2",
     "@nestjs/platform-express": "^12.1.2",

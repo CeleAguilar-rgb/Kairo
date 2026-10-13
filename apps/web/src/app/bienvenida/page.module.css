@@ -1,0 +1,57 @@
+.shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-12) var(--space-7) var(--space-13);
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      1000px 600px at 80% -10%,
+      var(--surface) 0%,
+      transparent 60%
+    ),
+    var(--bg);
+  color: var(--text);
+}
+
+.fdoodA,
+.fdoodB,
+.fdoodC,
+.fdoodD {
+  position: absolute;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.fdoodA {
+  left: 8%;
+  top: 18%;
+  transform: rotate(-12deg);
+}
+
+.fdoodB {
+  right: 9%;
+  top: 26%;
+}
+
+.fdoodC {
+  left: 11%;
+  bottom: 14%;
+}
+
+.fdoodD {
+  right: 12%;
+  bottom: 18%;
+}
+
+@media (max-width: 720px) {
+  .fdoodA,
+  .fdoodB,
+  .fdoodC,
+  .fdoodD {
+    display: none;
+  }
+}

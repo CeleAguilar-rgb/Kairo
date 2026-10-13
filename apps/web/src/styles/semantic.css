@@ -27,6 +27,7 @@
  * --accent                  lo hecho, lo elegido, el avance: checks, anillo, barras, subrayado, doodles (lavanda)
  * --accent-soft              fondo suave de acento: recordatorios, eventos, chips (lavanda-suave)
  * --accent-ink               texto sobre --accent-soft (lavanda-tinta)
+ * --accent-warm              fondo del cálido de apoyo: algunos doodles e íconos puntuales (no está en el PDF como variable propia, aunque el color sí aparece ahí — mismo caso que --border-soft)
  * --focus-ring               anillo de foco de teclado, 2px — nunca para otra cosa (foco)
  * --danger                   error / acción destructiva, siempre sobre --surface (peligro)
  * --danger-soft               fondo de confirmaciones de borrar (peligro-suave)
