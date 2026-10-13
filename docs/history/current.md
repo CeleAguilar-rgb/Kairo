@@ -2,7 +2,7 @@
 
 > Léelo al empezar cada sesión. Actualízalo al terminar. Máximo ~60 líneas: es un resumen, no un diario. El detalle va en `sessions/`.
 
-**Última actualización:** 2026-10-13 · sesión `2026-10-13-guard-global-y-aceptar-invitacion.md`
+**Última actualización:** 2026-10-13 · sesión `2026-10-13-guard-global-y-aceptar-invitacion-2.md`
 
 ## Fase actual
 
@@ -13,7 +13,8 @@ Fase 0 (base), **en progreso**. Dentro del paso 4 de 6 (Auth completa).
 - Infraestructura de Supabase Auth: cliente admin en la API (`common/supabase/`), script para invitar al primer usuario, clientes de `@supabase/ssr` y middleware de refresco de sesión en el front.
 - Guard global de la API (`auth/jwt.guard.ts`): verifica el JWT de Supabase (`getClaims()`, local por JWKS) y pone `userId` en el request. Registrado en `app.module.ts`. Todavía no revisa `verified_sessions` (eso llega con código por correo). Decisión #25.
 - Pantalla de aceptar invitación en el front (`app/(auth)/confirmar/` + `app/(auth)/aceptar-invitacion/`): cambia el código del correo por una sesión y deja poner la contraseña. Primer uso de `packages/shared` (esquema de contraseña).
-- Probado con ambos servidores corriendo: la API bootea bien y la pantalla responde sin sesión ("enlace inválido"). Falta probar con una invitación real de punta a punta.
+- Probado de punta a punta con una invitación real: funciona. En el camino se encontró y arregló un bug real — la plantilla de correo usaba `{{ .ConfirmationURL }}`, que pierde el token en el fragmento de la URL (nunca llega al servidor). Ahora usa `{{ .TokenHash }}` + `verifyOtp()`. La plantilla del dashboard de Supabase se actualiza pegando el HTML a mano; no hay sincronización automática todavía. Detalle en la sesión `-2`.
+- `SetPasswordForm` ahora valida al salir del campo y quita el error en cuanto se corrige (regla de `docs/guides/conventions.md` que la primera versión no cumplía).
 
 ## Siguiente paso
 

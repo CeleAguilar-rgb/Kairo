@@ -1,7 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
 import { env } from '../common/env'
 
-const email = process.argv[2]
+// pnpm deja el "--" de "pnpm run invite:initial -- correo@ejemplo.com" en argv; se filtra.
+const email = process.argv.slice(2).find((arg) => arg !== '--')
 
 if (!email) {
   console.error('Uso: pnpm run invite:initial -- tu-correo@ejemplo.com')

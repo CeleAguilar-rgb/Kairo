@@ -26,6 +26,13 @@
     </style>
   </head>
   <body style="margin: 0; padding: 0; background-color: #f3eee6">
+    <!--
+      {{ .ConfirmationURL }} NO sirve aquí: pasa por el verify de Supabase y
+      redirige con los tokens en el fragmento de la URL (#access_token=...), que
+      nunca llega al servidor. Se arma el enlace a mano con {{ .TokenHash }} para
+      que apps/web/src/app/(auth)/confirmar/route.ts pueda leerlo del lado del
+      servidor con verifyOtp(). Localhost por ahora (fase 0, antes de desplegar).
+    -->
     <!-- Texto de vista previa, oculto -->
     <div style="display: none; max-height: 0; overflow: hidden; opacity: 0">
       Alguien te invitó a Kairo. Define tu contraseña para entrar.
@@ -72,7 +79,7 @@
                 <v:roundrect
                   xmlns:v="urn:schemas-microsoft-com:vml"
                   xmlns:w="urn:schemas-microsoft-com:office:word"
-                  href="{{ .ConfirmationURL }}"
+                  href="http://localhost:3000/confirmar?token_hash={{ .TokenHash }}&type=invite&next=/aceptar-invitacion"
                   style="height:48px;v-text-anchor:middle;width:220px;"
                   arcsize="50%"
                   fillcolor="#1f1c19"
@@ -86,7 +93,7 @@
                 <![endif]-->
                 <!--[if !mso]><!-->
                 <a
-                  href="{{ .ConfirmationURL }}"
+                  href="http://localhost:3000/confirmar?token_hash={{ .TokenHash }}&type=invite&next=/aceptar-invitacion"
                   style="
                     display: inline-block;
                     background-color: #1f1c19;
@@ -108,8 +115,11 @@
               <td style="padding: 20px 36px 40px; text-align: center">
                 <p style="margin: 0; font-size: 12px; line-height: 1.6; color: #8a8278">
                   Si el botón no funciona, copia y pega este enlace:<br />
-                  <a href="{{ .ConfirmationURL }}" style="color: #6a62d6; word-break: break-all">
-                    {{ .ConfirmationURL }}
+                  <a
+                    href="http://localhost:3000/confirmar?token_hash={{ .TokenHash }}&type=invite&next=/aceptar-invitacion"
+                    style="color: #6a62d6; word-break: break-all"
+                  >
+                    http://localhost:3000/confirmar?token_hash={{ .TokenHash }}&type=invite&next=/aceptar-invitacion
                   </a>
                 </p>
               </td>
