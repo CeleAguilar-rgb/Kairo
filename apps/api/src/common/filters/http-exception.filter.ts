@@ -42,8 +42,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
         : 'Algo salió mal. Intenta de nuevo.'
 
     // Nunca datos personales, montos, contenidos, contraseñas, códigos ni tokens (conventions.md).
+    // El stack sí se loguea: es nuestro propio código, no dato del usuario,
+    // y es lo único que permite diagnosticar un 500 sin adivinar.
     if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
       console.error(JSON.stringify({ level: 'error', code, status }))
+      console.error(exception instanceof Error ? exception.stack : exception)
     }
 
     response.status(status).json({ error: { code, message } })

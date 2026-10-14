@@ -1,0 +1,137 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-7) var(--space-11);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-script);
+  font-size: 28px;
+  line-height: 1;
+  color: var(--text);
+}
+
+.nav {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 40px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  color: var(--text);
+  white-space: nowrap;
+  transition: background var(--duration-base) ease;
+}
+
+.navLink:hover {
+  background: var(--surface-hover);
+}
+
+.navLink:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.menuWrap {
+  position: relative;
+}
+
+.avatarButton {
+  all: unset;
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.avatarButton:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.menu {
+  position: absolute;
+  top: 54px;
+  right: 0;
+  z-index: 10;
+  width: 220px;
+  box-sizing: border-box;
+  padding: var(--space-3);
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.menuHeader {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  border-bottom: 1px solid var(--border-soft);
+  margin-bottom: var(--space-2);
+}
+
+.menuName {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.menuItem,
+.menuItemDanger {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-12);
+  cursor: pointer;
+}
+
+.menuItem {
+  color: var(--text);
+}
+
+.menuItemDanger {
+  color: var(--danger);
+}
+
+.menuItem:hover,
+.menuItemDanger:hover {
+  background: var(--surface-hover);
+}
+
+.menuItem:focus-visible,
+.menuItemDanger:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.menuDivider {
+  border-top: 1px solid var(--border-soft);
+  margin: var(--space-2) 0;
+}

@@ -7,93 +7,12 @@ import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { Input } from '@/components/ui/Input'
 import { completeOnboarding } from '@/lib/account/actions'
+import { AVATARS } from '@/lib/account/avatars'
+import { MODULE_CATALOG } from '@/lib/modules/catalog'
 import styles from './BienvenidaWizard.module.css'
 
 const TOTAL_STEPS = 3
 const EASE = [0.3, 0.7, 0.2, 1] as const
-
-const AVATARS = [
-  {
-    id: 'star',
-    name: 'Estrella',
-    path: 'M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z',
-    fill: 'var(--accent)',
-  },
-  {
-    id: 'heart',
-    name: 'Corazón',
-    path: 'M20 32s-11-7-11-15a6 6 0 0 1 11-3.4A6 6 0 0 1 31 17c0 8-11 15-11 15z',
-    fill: 'var(--accent-soft)',
-  },
-  {
-    id: 'sun',
-    name: 'Sol',
-    path: 'M20 13a7 7 0 1 0 0 14 7 7 0 0 0 0-14z',
-    fill: 'var(--accent-warm)',
-  },
-  {
-    id: 'bolt',
-    name: 'Rayo',
-    path: 'M22 4L10 22h9l-2 14 12-18h-9l2-14z',
-    fill: 'var(--accent-warm)',
-  },
-  {
-    id: 'moon',
-    name: 'Luna',
-    path: 'M30 24A11 11 0 0 1 16 10a11 11 0 1 0 14 14z',
-    fill: 'var(--accent)',
-  },
-] as const
-
-const SECTIONS: {
-  id: ModuleId
-  name: string
-  description: string
-  icon: string
-}[] = [
-  {
-    id: 'tasks',
-    name: 'Tareas',
-    description: 'Pendientes que se marcan, en lista o tablero',
-    icon: 'M4 4h16v16H4zM8.5 12l2.5 2.5 4.5-5',
-  },
-  {
-    id: 'projects',
-    name: 'Proyectos',
-    description: 'Galería con portada, objetivos y sus tareas',
-    icon: 'M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z',
-  },
-  {
-    id: 'agenda',
-    name: 'Agenda',
-    description: 'Eventos por semana y mes, con avisos',
-    icon: 'M3 5h18v16H3zM3 10h18M8 3v4M16 3v4',
-  },
-  {
-    id: 'finance',
-    name: 'Finanzas',
-    description: 'Ingresos, gastos, ahorros, deudas y membresías',
-    icon: 'M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7zM4 7l11-3v3',
-  },
-  {
-    id: 'daily',
-    name: 'Día a día',
-    description: 'Rutina por horarios, menú, diario y metas',
-    icon: 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4',
-  },
-  {
-    id: 'writings',
-    name: 'Escritos',
-    description: 'Páginas y bases de datos, como un cuaderno',
-    icon: 'M14 4l6 6L9 21H3v-6L14 4zM12 6l6 6',
-  },
-  {
-    id: 'school',
-    name: 'Escuela',
-    description: 'Horario de clases, materias, entregas y calificaciones',
-    icon: 'M3 9l9-5 9 5-9 5-9-5zM7 11.5V16c0 1.5 2.2 3 5 3s5-1.5 5-3v-4.5',
-  },
-]
 
 export function BienvenidaWizard() {
   const [step, setStep] = useState(1)
@@ -110,7 +29,7 @@ export function BienvenidaWizard() {
       ? 'Escribe tu nombre o un apodo para seguir.'
       : undefined
   const firstName = name.trim().split(' ')[0] ?? ''
-  const chosenNames = SECTIONS.filter((section) =>
+  const chosenNames = MODULE_CATALOG.filter((section) =>
     selected.has(section.id),
   ).map((section) => section.name)
 
@@ -307,7 +226,7 @@ export function BienvenidaWizard() {
               role="group"
               aria-label="Secciones"
             >
-              {SECTIONS.map((section) => {
+              {MODULE_CATALOG.map((section) => {
                 const isOn = selected.has(section.id)
                 return (
                   <button

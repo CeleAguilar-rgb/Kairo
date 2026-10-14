@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Patch, Post } from '@nestjs/common'
+import { Body, Controller, Get, Inject, Patch, Post } from '@nestjs/common'
 import {
   type CompleteOnboardingInput,
   completeOnboardingSchema,
@@ -13,7 +13,10 @@ import { AccountService } from './account.service'
 
 @Controller('me')
 export class AccountController {
-  constructor(private readonly accountService: AccountService) {}
+  // @Inject() explícito: tsx/esbuild no siempre emite la metadata de tipos
+  // que Nest usa para inyectar por tipo solo (docs/history/current.md,
+  // Bloqueos; mismo caso que Reflector en auth/jwt.guard.ts).
+  constructor(@Inject(AccountService) private readonly accountService: AccountService) {}
 
   @Get()
   getMe(@CurrentUser() userId: string) {

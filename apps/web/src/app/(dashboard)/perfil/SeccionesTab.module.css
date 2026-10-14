@@ -1,0 +1,85 @@
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  min-height: 64px;
+  padding: var(--space-2) 0;
+  border-top: 1px solid var(--border-soft);
+}
+
+.orderButtons {
+  display: flex;
+  flex-direction: column;
+}
+
+.iconOff,
+.iconOn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-14);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.iconOff {
+  background: var(--surface-raised);
+  color: var(--text-subtle);
+}
+
+.iconOn {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.nameOff {
+  font-weight: 500;
+  color: var(--text-subtle);
+}
+
+.description {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.error {
+  font-size: 13px;
+  color: var(--danger);
+}

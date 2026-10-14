@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import {
   type CompleteOnboardingInput,
   MODULE_IDS,
@@ -15,7 +15,8 @@ const ALWAYS_ENABLED = new Set(['home', 'reminders', 'focus'])
 
 @Injectable()
 export class AccountService {
-  constructor(private readonly repository: AccountRepository) {}
+  // @Inject() explícito, mismo motivo que en AccountController.
+  constructor(@Inject(AccountRepository) private readonly repository: AccountRepository) {}
 
   // 404 cuando no hay perfil: antes de la bienvenida, profiles.id para este
   // usuario todavía no existe (se crea recién en completeOnboarding). El

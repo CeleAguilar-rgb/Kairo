@@ -1,5 +1,6 @@
 import 'server-only'
 import type { ModuleId } from '@kairo/shared'
+import { cache } from 'react'
 import { api, ApiError } from '@/lib/api-client'
 
 export type Profile = {
@@ -25,7 +26,9 @@ export type Me = { profile: Profile; sections: UserSection[] }
 
 // null cuando todavía no hay perfil (antes de terminar la bienvenida):
 // apps/api/src/account/account.service.ts responde 404 PROFILE_NOT_FOUND.
-export async function getMe(): Promise<Me | null> {
+// cache(): el layout del dashboard y la página que renderiza pueden pedirlo
+// en el mismo request; React lo deduplica en vez de llamar a la API dos veces.
+export const getMe = cache(async (): Promise<Me | null> => {
   try {
     return await api.get<Me>('/me')
   } catch (error) {
@@ -33,4 +36,4 @@ export async function getMe(): Promise<Me | null> {
       return null
     throw error
   }
-}
+})

@@ -1,0 +1,105 @@
+.title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  margin-top: var(--space-8);
+  max-width: 420px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.avatars {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.avatar,
+.avatarSelected {
+  all: unset;
+  box-sizing: border-box;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: var(--surface-raised);
+  transition:
+    transform var(--duration-base) ease,
+    box-shadow var(--duration-base) ease;
+}
+
+.avatarSelected {
+  background: var(--surface);
+  box-shadow:
+    0 0 0 2px var(--surface),
+    0 0 0 4px var(--text);
+}
+
+.avatar:focus-visible,
+.avatarSelected:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.error {
+  font-size: 13px;
+  color: var(--danger);
+}
+
+.saved {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.submit {
+  align-self: flex-start;
+}
+
+.security {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-top: var(--space-9);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--border-soft);
+}
+
+.securityText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.securityHint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar,
+  .avatarSelected {
+    transition: none;
+  }
+}
