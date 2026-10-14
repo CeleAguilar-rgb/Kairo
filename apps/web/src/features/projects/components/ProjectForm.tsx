@@ -26,7 +26,7 @@ import { useToast } from '@/components/ui/Toast'
 import { EASE_OUT } from '@/lib/motion'
 
 import { createProjectAction, updateProjectAction } from '../actions'
-import { fieldErrors } from '../form-errors'
+import { fieldErrors } from '@/lib/form-errors'
 import { PROJECT_KIND_LABEL, PROJECT_STATUS_LABEL } from '../types'
 
 import { ProjectCover } from './ProjectCover'

@@ -173,3 +173,41 @@ export function wallTimeToMinutes(time: string): number {
   const [h, m] = time.split(':').map(Number)
   return h * 60 + m
 }
+
+// 1050 → '17:30' (el inverso de wallTimeToMinutes)
+export function minutesToWallTime(minutes: number): string {
+  const h = Math.floor(minutes / 60)
+  const m = minutes % 60
+  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`
+}
+
+// Cuántos días tiene el mes de un día (28 a 31).
+export function daysInMonth(date: IsoDate): number {
+  const [y, m] = date.split('-').map(Number)
+  return new Date(Date.UTC(y, m, 0)).getUTCDate()
+}
+
+// El primer día del mes de un día.
+export function startOfMonth(date: IsoDate): IsoDate {
+  return `${date.slice(0, 7)}-01`
+}
+
+// Suma meses a un día y ajusta el día si el mes nuevo es más corto (31 de enero + 1 mes = 28 de febrero).
+export function addMonths(date: IsoDate, months: number): IsoDate {
+  const [y, m, d] = date.split('-').map(Number)
+  const index = y * 12 + (m - 1) + months
+  const year = Math.floor(index / 12)
+  const month = (index % 12 + 12) % 12
+  const last = new Date(Date.UTC(year, month + 1, 0)).getUTCDate()
+  return new Date(Date.UTC(year, month, Math.min(d, last))).toISOString().slice(0, 10)
+}
+
+// "Octubre de 2026"
+export function formatMonthYear(date: IsoDate): string {
+  return capitalize(new Intl.DateTimeFormat(LOCALE, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(toUtcMs(date)))
+}
+
+// "Jueves"
+export function formatWeekdayLong(date: IsoDate): string {
+  return capitalize(new Intl.DateTimeFormat(LOCALE, { weekday: 'long', timeZone: 'UTC' }).format(toUtcMs(date)))
+}

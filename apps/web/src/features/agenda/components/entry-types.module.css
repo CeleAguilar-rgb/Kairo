@@ -1,0 +1,31 @@
+/* Los colores de cada tipo de entrada (Trabajo, Personal, Escuela, Pagos, Tareas), en un solo lugar:
+   los usan los bloques del calendario, los chips, el mes, "Próximos" y el panel "Mostrar". */
+.work {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+  border-color: var(--surface-inverted);
+}
+
+.personal {
+  background: var(--accent-soft);
+  color: var(--text);
+  border-color: var(--accent-soft);
+}
+
+.school {
+  background: var(--surface);
+  color: var(--accent-ink);
+  border-color: var(--accent-strong);
+}
+
+.payment {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border-control);
+}
+
+.task {
+  background: var(--accent);
+  color: var(--text);
+  border-color: var(--accent);
+}

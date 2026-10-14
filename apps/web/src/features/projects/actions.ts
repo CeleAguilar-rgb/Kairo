@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache'
 
 import { getMockContext, mockDelay } from '@/lib/mock/context'
 
-import { fieldErrors } from './form-errors'
+import { fieldErrors } from '@/lib/form-errors'
 import { buildProjectDetails } from './mock'
 import { createStoredProject, updateStoredProject } from './mock-store'
 

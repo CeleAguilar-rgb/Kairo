@@ -1,0 +1,103 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+  /* 20px bajo el header y 44px a los lados: el mismo ritmo que el resto de las pantallas */
+  padding: var(--space-9) var(--space-14) var(--space-15);
+}
+
+@media (max-width: 720px) {
+  .main {
+    padding: var(--space-6) var(--space-5) var(--space-14);
+  }
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-7);
+}
+
+.range {
+  color: var(--text-muted);
+  font-size: 17px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Anterior, Hoy y Siguiente van juntos: si la barra se envuelve, no se separan */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.iconButton {
+  all: unset;
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: background var(--duration-base) ease;
+}
+
+.iconButton:hover {
+  background: var(--surface-muted);
+}
+
+.iconButton:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* El calendario a la izquierda (ancho) y el panel a la derecha */
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-7);
+  align-items: flex-start;
+}
+
+.calendarWrap {
+  flex: 999 1 640px;
+  min-width: 0;
+}
+
+.sideWrap {
+  flex: 1 1 300px;
+  max-width: 380px;
+  min-width: 0;
+}
+
+@media (max-width: 1080px) {
+  .sideWrap {
+    max-width: none;
+  }
+}
+
+.calendar {
+  padding: var(--space-7);
+  gap: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+@media (max-width: 720px) {
+  .controls,
+  .nav {
+    gap: var(--space-2);
+  }
+}
