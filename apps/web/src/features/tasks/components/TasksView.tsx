@@ -39,6 +39,8 @@ type TasksViewProps = {
   weekEnd: IsoDate
   // Viene de /tareas?nueva=1 (el "+" de la tarjeta de Inicio).
   startWithCreate: boolean
+  // Viene de /tareas?proyecto=<id> ("Ver en el tablero" de un proyecto): el filtro con el que abre.
+  initialProjectId?: string
 }
 
 // Pantalla Tareas (Tareas.dc.html + TareaNueva.dc.html). Todo vive en memoria
@@ -50,11 +52,12 @@ export function TasksView({
   today,
   weekEnd,
   startWithCreate,
+  initialProjectId,
 }: TasksViewProps) {
   const toast = useToast()
   const [tasks, setTasks] = useState(initialTasks)
   const [view, setView] = useState<View>('list')
-  const [projectFilter, setProjectFilter] = useState<string>('all')
+  const [projectFilter, setProjectFilter] = useState<string>(initialProjectId ?? 'all')
   const [showDone, setShowDone] = useState(false)
   const [openId, setOpenId] = useState<string | null>(null)
   const [createOpen, setCreateOpen] = useState(startWithCreate)

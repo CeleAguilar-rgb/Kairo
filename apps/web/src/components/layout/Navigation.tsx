@@ -30,6 +30,16 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const [pending, setPending] = useState<PendingNavigation | null>(null)
   const [loaderShown, setLoaderShown] = useState(false)
+  // Cuando la ruta cambia, la navegación en curso (si la había) ya terminó: se borra aquí, en el
+  // render, con el patrón de "guardar lo del render anterior" de React. Sin esto, el estado
+  // quedaba guardado y, al volver con el botón "atrás" a la ruta de origen, se reactivaba solo:
+  // la pantalla de carga se quedaba encima de la página y el menú marcaba la sección equivocada.
+  const [lastPathname, setLastPathname] = useState(pathname)
+  if (lastPathname !== pathname) {
+    setLastPathname(pathname)
+    setPending(null)
+    setLoaderShown(false)
+  }
   const giveUp = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const loaderTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 

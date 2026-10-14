@@ -82,6 +82,18 @@ export function formatRelativeDay(date: IsoDate, today: IsoDate): string {
   return formatDayMonth(date)
 }
 
+// La fecha límite de una tarea como en el canvas: "Hoy", "Mañana", "Ayer", "Vie 16" (dentro de la
+// semana) o "6 oct". Sin fecha: "Sin fecha". La usan Tareas y Proyectos, por eso vive aquí.
+export function formatDueLabel(dueOn: IsoDate | null, today: IsoDate, weekEnd: IsoDate): string {
+  if (!dueOn) return 'Sin fecha'
+  const diff = diffDays(today, dueOn)
+  if (diff === 0) return 'Hoy'
+  if (diff === 1) return 'Mañana'
+  if (diff === -1) return 'Ayer'
+  if (diff > 0 && dueOn <= weekEnd) return `${WEEKDAYS_SHORT[weekdayOf(dueOn)]} ${dayOfMonth(dueOn)}`
+  return `${dayOfMonth(dueOn)} ${formatMonthShort(dueOn)}`
+}
+
 // La hora de un momento en la zona del perfil: "17:00" o "5:00 p. m." según profiles.hour_format.
 export function formatTime(iso: string, timeZone: string, hourFormat: '12h' | '24h' = '24h'): string {
   return new Intl.DateTimeFormat(LOCALE, {

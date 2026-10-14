@@ -1,0 +1,35 @@
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.title {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 1;
+}
+
+.doodle {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.squiggle {
+  margin: -2px 0 2px 2px;
+  max-width: 100%;
+}
+
+@media (max-width: 720px) {
+  .title {
+    font-size: 48px;
+  }
+}

@@ -1,0 +1,460 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+  /* 20px bajo el header y 44px a los lados: el mismo ritmo que el resto de las pantallas */
+  padding: var(--space-9) var(--space-14) var(--space-15);
+}
+
+@media (max-width: 720px) {
+  .main {
+    padding: var(--space-6) var(--space-5) var(--space-14);
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.breadcrumb {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.breadcrumb a {
+  color: var(--text-muted);
+}
+
+/* Una columna ancha con las secciones y, al lado, la portada y la vista previa */
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-7);
+  align-items: flex-start;
+}
+
+.column {
+  flex: 999 1 560px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.aside {
+  flex: 1 1 340px;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  position: sticky;
+  top: var(--space-7);
+}
+
+@media (max-width: 1080px) {
+  .aside {
+    max-width: none;
+    position: static;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-11);
+  border-radius: var(--radius-28);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.cardTitle {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.cardHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.count {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.optional {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* El nombre es el campo principal: un poco más grande */
+.nameInput {
+  font-size: 18px;
+  min-height: 52px;
+}
+
+/* Tipo: tres tarjetas elegibles */
+.kinds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.kindCard {
+  all: unset;
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6) var(--space-7);
+  border-radius: var(--radius-18);
+  cursor: pointer;
+  background: var(--surface-raised);
+  box-shadow: inset 0 0 0 1px var(--border);
+  transition:
+    background 200ms ease,
+    box-shadow 200ms ease,
+    color 200ms ease;
+}
+
+.kindCard:hover {
+  box-shadow: inset 0 0 0 1px var(--border-control);
+}
+
+.kindCard:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.kindSelected,
+.kindSelected:hover {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+  box-shadow: none;
+}
+
+.kindTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kindName {
+  font-weight: 600;
+}
+
+.kindHint {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--text);
+}
+
+.kindSelected .dot {
+  border-color: var(--text-on-inverted);
+}
+
+.dotWork {
+  background: var(--surface-inverted);
+}
+
+.dotPersonal {
+  background: var(--accent);
+}
+
+.dotSchool {
+  background: var(--accent-warm);
+}
+
+.statusWrap {
+  display: flex;
+  align-self: flex-start;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* Objetivos y enlaces ya agregados */
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 44px;
+  padding: 0 var(--space-2) 0 var(--space-5);
+  border-radius: var(--radius-12);
+  background: var(--surface-raised);
+}
+
+.itemDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.itemText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.linkTitle {
+  font-weight: 500;
+}
+
+.linkUrl {
+  font-size: 13px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.removeButton {
+  all: unset;
+  box-sizing: border-box;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition:
+    background 200ms ease,
+    color 200ms ease;
+}
+
+.removeButton:hover {
+  background: var(--surface-hover);
+  color: var(--danger);
+}
+
+.removeButton:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Un campo con su botón "Agregar" al lado */
+.addRow {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.addRow > :first-child {
+  flex: 1;
+  min-width: 220px;
+}
+
+.dates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-7);
+}
+
+.linkInputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) auto;
+  align-items: end;
+  gap: var(--space-4);
+}
+
+@media (max-width: 720px) {
+  .linkInputs {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Portada */
+.covers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.coverButton {
+  all: unset;
+  box-sizing: border-box;
+  position: relative;
+  height: 72px;
+  border-radius: var(--radius-16);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px var(--border);
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.coverButton:hover {
+  transform: translateY(-2px);
+}
+
+.coverButton:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.coverSelected,
+.coverSelected:hover {
+  box-shadow:
+    0 0 0 3px var(--surface),
+    0 0 0 5px var(--text);
+}
+
+.coverArt {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Vista previa de la tarjeta */
+.previewTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.preview {
+  border-radius: var(--radius-22);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.previewCover {
+  position: relative;
+  height: 140px;
+  background: var(--surface-muted);
+}
+
+.previewKind {
+  position: absolute;
+  top: var(--space-5);
+  left: var(--space-5);
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.previewKind_work {
+  background: var(--bg);
+  color: var(--text);
+  border: 1.5px solid var(--text);
+}
+
+.previewKind_personal {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.previewKind_school {
+  background: var(--accent);
+  color: var(--text);
+  border: 1.5px solid var(--text);
+}
+
+.previewBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-7) var(--space-8) var(--space-8);
+}
+
+.previewName {
+  font-size: 19px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.previewDescription {
+  color: var(--text-muted);
+  font-size: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.previewMeta {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Cancelar y guardar */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 var(--space-9);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--border-control);
+  color: var(--text);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 200ms ease;
+}
+
+.cancel:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.cancel:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.submit {
+  flex: 1;
+}

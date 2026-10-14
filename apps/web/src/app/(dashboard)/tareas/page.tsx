@@ -7,7 +7,7 @@ import { listTasks } from '@/features/tasks/api'
 import { getMe } from '@/lib/account/api'
 import { addDays, startOfWeek, todayIn } from '@/lib/dates'
 
-type TareasPageProps = { searchParams: Promise<{ nueva?: string }> }
+type TareasPageProps = { searchParams: Promise<{ nueva?: string; proyecto?: string }> }
 
 // Tareas: la lista y el tablero. Esta página solo junta datos (los de ejemplo
 // por ahora) y la fecha de hoy en la zona del perfil; la pantalla es TasksView.
@@ -15,7 +15,7 @@ export default async function TareasPage({ searchParams }: TareasPageProps) {
   const me = await getMe()
   if (!me) redirect('/bienvenida')
 
-  const [tasks, projects, { nueva }] = await Promise.all([
+  const [tasks, projects, { nueva, proyecto }] = await Promise.all([
     listTasks(),
     listProjects(),
     searchParams,
@@ -32,6 +32,8 @@ export default async function TareasPage({ searchParams }: TareasPageProps) {
         today={today}
         weekEnd={weekEnd}
         startWithCreate={nueva === '1'}
+        // Solo se acepta un id de proyecto que exista: cualquier otro valor del enlace se ignora.
+        initialProjectId={projects.find((project) => project.id === proyecto)?.id}
       />
     </PageEnter>
   )

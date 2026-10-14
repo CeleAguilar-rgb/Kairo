@@ -25,9 +25,10 @@
 
 .header {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-5);
+  gap: var(--space-4) var(--space-5);
 }
 
 .heading {
@@ -93,6 +94,7 @@
   align-items: center;
   gap: var(--space-4);
   flex-shrink: 0;
+  max-width: 100%;
 }
 
 .link {
@@ -139,4 +141,9 @@
 .link:focus-visible .linkArrow {
   opacity: 1;
   transform: translateX(0);
+}
+
+.iconDark {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
 }

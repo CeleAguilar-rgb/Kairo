@@ -1,4 +1,4 @@
-import { dayOfMonth, diffDays, formatMonthShort, WEEKDAYS_SHORT, weekdayOf, type IsoDate } from '@/lib/dates'
+import type { IsoDate } from '@/lib/dates'
 
 import type { Task } from './types'
 
@@ -36,17 +36,8 @@ export function groupTasks(tasks: Task[], today: IsoDate, weekEnd: IsoDate, show
     .filter((group) => group.items.length > 0)
 }
 
-// Etiqueta corta de la fecha límite: "Hoy", "Mañana", "Ayer", "Vie 9" (esta
-// semana) o "12 oct" (más adelante).
-export function dueLabel(dueOn: IsoDate | null, today: IsoDate, weekEnd: IsoDate): string {
-  if (!dueOn) return 'Sin fecha'
-  const diff = diffDays(today, dueOn)
-  if (diff === 0) return 'Hoy'
-  if (diff === 1) return 'Mañana'
-  if (diff === -1) return 'Ayer'
-  if (diff > 0 && dueOn <= weekEnd) return `${WEEKDAYS_SHORT[weekdayOf(dueOn)]} ${dayOfMonth(dueOn)}`
-  return `${dayOfMonth(dueOn)} ${formatMonthShort(dueOn)}`
-}
+// La misma etiqueta de fecha que usa Proyectos (lógica compartida en lib/dates).
+export { formatDueLabel as dueLabel } from '@/lib/dates'
 
 // 'today' (lavanda, negrita), 'overdue' (rojo) o 'normal', como en el canvas.
 export function dueTone(task: Task, today: IsoDate): 'today' | 'overdue' | 'normal' {

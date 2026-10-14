@@ -53,3 +53,7 @@
   font-size: 14px;
   font-weight: 500;
 }
+
+.soft {
+  background: var(--accent);
+}

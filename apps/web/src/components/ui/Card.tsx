@@ -29,14 +29,15 @@ export function Card({ tone = 'surface', as: Tag = 'div', className, children, .
 }
 
 // Fondo del cuadrito del ícono: 'inverted' (tinta-2 dentro de la tarjeta oscura),
-// 'accent' (lavanda suave), 'warm' (cálido de apoyo), 'surface' (crema, dentro de --accent-soft).
-type IconTone = 'inverted' | 'accent' | 'warm' | 'surface'
+// 'accent' (lavanda suave), 'warm' (cálido de apoyo), 'surface' (crema, dentro de --accent-soft), 'dark' (tinta sólida sobre una tarjeta clara).
+type IconTone = 'inverted' | 'accent' | 'warm' | 'surface' | 'dark'
 
 const ICON_TONE_CLASS: Record<IconTone, string> = {
   inverted: styles.iconInverted,
   accent: styles.iconAccent,
   warm: styles.iconWarm,
   surface: styles.iconSurface,
+  dark: styles.iconDark,
 }
 
 type CardHeaderProps = {
