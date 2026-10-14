@@ -1,0 +1,160 @@
+.card {
+  position: relative;
+  padding: var(--space-10);
+  gap: var(--space-6);
+  height: 100%;
+}
+
+.star {
+  position: absolute;
+  top: -14px;
+  left: -10px;
+  display: inline-flex;
+  cursor: default;
+}
+
+.add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted-muted);
+  color: var(--text-on-inverted);
+}
+
+.add:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.ringText {
+  font-variant-numeric: tabular-nums;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-14);
+  transition: background var(--duration-base) ease;
+}
+
+.row:hover,
+.rowOpen {
+  background: var(--accent-glow);
+}
+
+.rowButton {
+  all: unset;
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: var(--radius-12);
+}
+
+.rowButton:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.title {
+  position: relative;
+  align-self: flex-start;
+  max-width: 100%;
+  color: var(--text-on-inverted);
+  transition: color var(--duration-base) ease;
+}
+
+/* Tachado que se dibuja de izquierda a derecha al marcar */
+.title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 55%;
+  height: 1.5px;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.titleDone {
+  color: var(--text-subtle);
+}
+
+.titleDone::after {
+  transform: scaleX(1);
+}
+
+.meta {
+  font-size: 12px;
+  color: var(--text-on-inverted-muted);
+}
+
+.chevron {
+  flex-shrink: 0;
+  color: var(--text-subtle);
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    color var(--duration-base) ease;
+}
+
+.row:hover .chevron {
+  transform: translateX(3px);
+  color: var(--accent);
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-7) var(--space-9);
+  border-radius: var(--radius-16);
+  background: var(--surface-inverted-glass);
+  color: var(--text-on-inverted-soft);
+}
+
+.more {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  align-self: flex-start;
+  min-height: 40px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted-muted);
+  color: var(--text-on-inverted);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.more svg {
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.more:hover svg {
+  transform: translateX(3px);
+}
+
+.more:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}

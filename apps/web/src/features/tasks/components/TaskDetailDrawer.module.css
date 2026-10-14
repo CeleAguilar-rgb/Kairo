@@ -1,0 +1,219 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+  flex: 1;
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 28px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.close {
+  all: unset;
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    background var(--duration-base) ease,
+    transform var(--duration-base) var(--ease-spring);
+}
+
+.close:hover {
+  background: var(--surface-hover);
+  transform: rotate(90deg);
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.title {
+  position: relative;
+  align-self: flex-start;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+  transition: color var(--duration-base) ease;
+}
+
+/* Tachado que se dibuja de izquierda a derecha (no text-decoration: esa no se anima) */
+.title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 55%;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.titleDone {
+  color: var(--text-subtle);
+}
+
+.titleDone::after {
+  transform: scaleX(1);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+  color: var(--text-muted);
+}
+
+.metaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.priority {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.high {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.medium {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.low {
+  background: var(--surface-muted);
+  color: var(--text-muted);
+}
+
+.notes {
+  line-height: 1.6;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.sectionTitle {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.count {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.subs {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.sub {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-12);
+  background: var(--surface-raised);
+}
+
+.subTitle {
+  transition: color var(--duration-base) ease;
+}
+
+.subDone {
+  color: var(--text-subtle);
+  text-decoration: line-through;
+}
+
+.textarea {
+  font: inherit;
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-14);
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  color: var(--text);
+  resize: vertical;
+  transition:
+    border-color var(--duration-base) ease,
+    background var(--duration-base) ease;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--focus-ring);
+  background: var(--surface);
+}
+
+.actions {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.primary {
+  flex: 1;
+  overflow: hidden;
+}
+
+.actionLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}

@@ -7,11 +7,13 @@
 
 :root[data-mode='light'] {
   --bg: var(--cream-200);
+  --bg-glow: var(--cream-25);
   --surface: var(--cream-50);
   --surface-raised: var(--cream-100);
   --surface-muted: var(--cream-300);
   --surface-inverted: var(--ink-900);
   --surface-inverted-muted: var(--ink-800);
+  --surface-inverted-sunken: var(--ink-850);
 
   --border: var(--sand-200);
   --border-soft: var(--sand-100);
@@ -22,10 +24,13 @@
   --text-subtle: var(--ink-500);
   --text-on-inverted: var(--cream-200);
   --text-on-inverted-muted: var(--ink-on-dark-muted);
+  --text-on-inverted-soft: var(--ink-on-dark-soft);
+  --border-inverted: var(--ink-700);
 
   --accent: var(--lavender-300);
   --accent-soft: var(--lavender-100);
   --accent-ink: var(--lavender-ink);
+  --accent-strong: var(--lavender-600);
   --accent-warm: var(--amber-200);
   --focus-ring: var(--lavender-600);
 
@@ -34,4 +39,8 @@
   --danger-on-inverted: var(--danger-on-dark);
 
   --surface-hover: var(--tint-ink-06);
+  --surface-glass: var(--tint-cream-70);
+  --surface-inverted-glass: var(--tint-cream-08);
+  --accent-glow: var(--tint-lavender-14);
+  --scrim: var(--tint-ink-28);
 }

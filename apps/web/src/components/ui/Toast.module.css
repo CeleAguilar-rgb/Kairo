@@ -1,0 +1,72 @@
+.region {
+  position: fixed;
+  left: 50%;
+  bottom: var(--space-11);
+  z-index: var(--z-toast);
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - var(--space-13));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  pointer-events: none;
+}
+
+.toast {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-5) var(--space-5) var(--space-5) var(--space-8);
+  overflow: hidden;
+  border-radius: var(--radius-18);
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+  box-shadow: var(--shadow-toast);
+  pointer-events: auto;
+}
+
+.icon {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.message {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.undo {
+  all: unset;
+  box-sizing: border-box;
+  min-height: 38px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted-muted);
+  color: var(--text-on-inverted);
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform var(--duration-fast) ease;
+}
+
+.undo:active {
+  transform: scale(0.96);
+}
+
+.undo:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.timer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--accent);
+  opacity: 0.6;
+  transform-origin: left center;
+}

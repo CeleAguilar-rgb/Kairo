@@ -1,7 +1,11 @@
 .shell {
+  position: relative;
   min-height: 100vh;
-  background: var(--bg);
+  background:
+    radial-gradient(1200px 600px at 85% -10%, var(--bg-glow) 0%, transparent 60%),
+    var(--bg);
   color: var(--text);
+  overflow-x: clip;
 }
 
 .content {

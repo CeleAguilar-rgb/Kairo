@@ -1,0 +1,124 @@
+.card {
+  padding: var(--space-10);
+  gap: var(--space-6);
+  height: 100%;
+}
+
+.now {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-6) var(--space-7);
+  border-radius: var(--radius-18);
+  background: var(--surface-inverted-glass);
+  border: 1px solid var(--border-inverted);
+  overflow: hidden;
+}
+
+.nowMeta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 13px;
+  color: var(--text-on-inverted-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Punto "en vivo": un círculo fijo y una onda que se expande detrás */
+.live {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.livePulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 1.8s var(--ease-out) infinite;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.nextTag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted-muted);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.nowTitle {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.nowNote {
+  font-size: 14px;
+  color: var(--accent);
+}
+
+.elapsedTrack {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--surface-inverted-muted);
+}
+
+.elapsedFill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform-origin: left center;
+}
+
+.lines {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: 14px;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  color: var(--text-on-inverted-soft);
+}
+
+.lineMissed {
+  color: var(--danger-on-inverted);
+}
+
+.lineTime {
+  min-width: 44px;
+  white-space: nowrap;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .livePulse {
+    animation: none;
+  }
+}

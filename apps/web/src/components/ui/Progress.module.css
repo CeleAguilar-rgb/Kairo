@@ -1,0 +1,55 @@
+.track {
+  height: 8px;
+  border-radius: var(--radius-8);
+  background: var(--surface-muted);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: var(--radius-8);
+  transform-origin: left center;
+}
+
+.accent {
+  background: var(--accent-strong);
+}
+
+.ink {
+  background: var(--surface-inverted);
+}
+
+.danger {
+  background: var(--danger);
+}
+
+.ring {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.ringSvg {
+  transform: rotate(-90deg);
+}
+
+.ringTrack {
+  stroke: var(--surface-muted);
+}
+
+.ringTrackInverted {
+  stroke: var(--surface-inverted-muted);
+}
+
+.ringFill {
+  stroke: var(--accent);
+}
+
+.ringLabel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+}

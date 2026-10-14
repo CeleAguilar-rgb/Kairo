@@ -1,0 +1,200 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+  /* 20px bajo el header y 44px a los lados: el mismo ritmo que el .wrap del canvas */
+  padding: var(--space-9) var(--space-14) var(--space-15);
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-7);
+}
+
+.cell {
+  min-width: 0;
+}
+
+.span4 {
+  grid-column: span 4;
+}
+
+.span5 {
+  grid-column: span 5;
+}
+
+.span7 {
+  grid-column: span 7;
+}
+
+@media (max-width: 1080px) {
+  .span4,
+  .span5,
+  .span7 {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 720px) {
+  .main {
+    padding: var(--space-6) var(--space-5) var(--space-14);
+  }
+}
+
+.allHidden {
+  text-align: center;
+  color: var(--text-muted);
+  padding: var(--space-11) 0;
+}
+
+.adjustRow {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-1);
+}
+
+.adjustButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: 0 var(--space-9);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-control);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--duration-base) ease;
+}
+
+.adjustButton:hover {
+  background: var(--surface-muted);
+}
+
+.adjustButton:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.adjustIcon {
+  display: inline-flex;
+}
+
+.adjust {
+  align-self: center;
+  width: 100%;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-11);
+  border-radius: var(--radius-28);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.adjustHead {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.adjustTitle {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.adjustHint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 40px;
+  padding: 0 var(--space-7);
+  border-radius: var(--radius-pill);
+  border: 0;
+  background: var(--surface-raised);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background var(--duration-base) ease,
+    color var(--duration-base) ease;
+}
+
+.chip:hover:not(.chipOn) {
+  background: var(--surface-muted);
+}
+
+.chipOn {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.chipIcon {
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
+}
+
+.chipIconInner {
+  display: inline-flex;
+}
+
+.chipOn .chipIcon {
+  color: var(--accent);
+}
+
+.adjustLink {
+  align-self: flex-start;
+  font-size: 14px;
+}
+
+.cardError {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-10);
+  border-radius: var(--radius-28);
+  border: 1px dashed var(--border-control);
+  color: var(--text-muted);
+}
+
+.cardErrorTitle {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.retry {
+  align-self: flex-start;
+  min-height: 40px;
+  padding: 0 var(--space-7);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-control);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}

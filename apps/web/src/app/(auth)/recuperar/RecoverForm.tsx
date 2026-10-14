@@ -2,6 +2,7 @@
 
 import { requestPasswordResetSchema } from '@kairo/shared'
 import { motion } from 'motion/react'
+import { EASE_OUT } from '@/lib/motion'
 import Link from 'next/link'
 import { useState, type FormEvent } from 'react'
 import { Button } from '@/components/ui/Button'
@@ -9,7 +10,6 @@ import { Input } from '@/components/ui/Input'
 import { createClient } from '@/lib/supabase/client'
 import styles from './RecoverForm.module.css'
 
-const EASE = [0.3, 0.7, 0.2, 1] as const
 
 const container = {
   hidden: {},
@@ -18,7 +18,7 @@ const container = {
 
 const item = {
   hidden: { opacity: 0, y: 10 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: EASE } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: EASE_OUT } },
 }
 
 const RESEND_COOLDOWN_MS = 60_000

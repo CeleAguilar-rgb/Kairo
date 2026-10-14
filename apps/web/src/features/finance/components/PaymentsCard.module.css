@@ -1,0 +1,75 @@
+.card {
+  padding: var(--space-10);
+  gap: var(--space-6);
+  height: 100%;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.date {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-14);
+  background: var(--surface-raised);
+  color: var(--text);
+}
+
+.dateSoon {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.dateDay {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.dateMonth {
+  font-size: 11px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-weight: 500;
+}
+
+.cardInfo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.amount {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty {
+  color: var(--text-muted);
+}

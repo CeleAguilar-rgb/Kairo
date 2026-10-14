@@ -1,0 +1,152 @@
+/* Saludo a la izquierda (se puede partir en dos líneas), estadísticas a la
+   derecha y alineadas abajo: nunca bajan de fila salvo en pantallas angostas. */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: var(--space-11);
+  padding: var(--space-5) 0 var(--space-1);
+}
+
+.helloBlock {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-right: 64px;
+}
+
+.helloRow {
+  position: relative;
+  display: inline-flex;
+  align-self: flex-start;
+}
+
+/* El saludo "se escribe" de izquierda a derecha (animación del canvas) */
+.hello {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(56px, 7vw, 96px);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  /* La letra a mano se sale un poco de su caja (la s final): este margen la
+     incluye en la caja, así el sol no la tapa */
+  padding-right: 0.12em;
+  animation: write 1.1s cubic-bezier(0.6, 0, 0.2, 1) both;
+}
+
+@keyframes write {
+  /* Márgenes negativos: el recorte deja espacio para los trazos que se salen de
+     la caja del texto (rabitos, acentos, la s final) y no se los come al terminar */
+  from {
+    clip-path: inset(-0.3em 100% -0.3em -0.3em);
+  }
+  to {
+    clip-path: inset(-0.3em -0.3em -0.3em -0.3em);
+  }
+}
+
+.sun {
+  position: absolute;
+  right: -66px;
+  top: -10px;
+  display: inline-flex;
+}
+
+.sunSpin {
+  display: inline-flex;
+}
+
+.squiggle {
+  margin: calc(var(--space-1) * -1) 0 var(--space-1) var(--space-1);
+  max-width: 100%;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: var(--text-muted);
+}
+
+.stats {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-5);
+}
+
+.stat {
+  flex-shrink: 0;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-4) var(--space-8) var(--space-4) var(--space-4);
+  border-radius: var(--radius-20);
+  background: var(--surface-glass);
+  border: 1px solid var(--border);
+}
+
+.statIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-12);
+  flex-shrink: 0;
+}
+
+.statIcon_inverted {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.statIcon_accent {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.statIcon_warm {
+  background: var(--accent-warm);
+  color: var(--text);
+}
+
+.statText {
+  display: flex;
+  flex-direction: column;
+}
+
+.statValue {
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.statLabel {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+@media (max-width: 1080px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .stats {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 720px) {
+  .sun {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hello {
+    animation: none;
+  }
+}

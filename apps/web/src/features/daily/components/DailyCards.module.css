@@ -1,0 +1,91 @@
+.card {
+  padding: var(--space-10);
+  gap: var(--space-7);
+  height: 100%;
+}
+
+.goals {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.goal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.goalHead {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.goalName {
+  font-weight: 500;
+}
+
+.goalPct {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.meals {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.meal {
+  all: unset;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-14);
+  background: var(--surface-raised);
+  cursor: pointer;
+  transition: background var(--duration-base) ease;
+}
+
+.meal:hover {
+  background: var(--surface-muted);
+}
+
+.meal:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.mealKind {
+  width: 72px;
+  flex-shrink: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.mealDish {
+  flex: 1;
+  min-width: 0;
+  transition: color var(--duration-base) ease;
+}
+
+.mealDone .mealDish {
+  color: var(--text-muted);
+}
+
+.mealCheck {
+  flex-shrink: 0;
+  color: var(--accent-strong);
+}
+
+.emptyText {
+  color: var(--text-muted);
+}
