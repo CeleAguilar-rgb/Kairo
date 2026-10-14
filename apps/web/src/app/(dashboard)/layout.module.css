@@ -11,3 +11,19 @@
 .content {
   padding: 0;
 }
+
+/* Se hizo clic en un enlace y la página siguiente todavía no llega: la actual
+   se atenúa y baja un poco, para que se note que la app ya reaccionó.
+   La transición vive AQUÍ y no en .content a propósito: así solo anima al entrar en
+   este estado. Al llegar la página nueva el contenedor vuelve de golpe a 100%, porque la
+   pantalla que llega (esqueleto o página) ya hace su propio fundido desde 50%; si además
+   el contenedor volviera animado, los dos fundidos se multiplicarían y la pantalla caería
+   a ~30% de opacidad justo al cambiar (se vería como un parpadeo). */
+.content[data-pending] {
+  opacity: 0.55;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition:
+    opacity var(--duration-base) ease,
+    transform var(--duration-base) var(--ease-out);
+}

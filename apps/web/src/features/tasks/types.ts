@@ -1,10 +1,11 @@
+import type { TaskPriority, TaskStatus } from '@kairo/shared'
+
 import type { IsoDate } from '@/lib/dates'
 
 // Forma de una tarea como la devolverá GET /v1/tasks (tabla tasks de
-// docs/guides/data-model.md, en camelCase). Cuando exista el esquema Zod en
-// packages/shared/src/tasks/, estos tipos se reemplazan por z.infer<…>.
-export type TaskStatus = 'todo' | 'in_progress' | 'done'
-export type TaskPriority = 'low' | 'medium' | 'high'
+// docs/guides/data-model.md, en camelCase). Los estados y prioridades salen
+// de packages/shared (los mismos que valida createTaskSchema).
+export type { TaskPriority, TaskStatus }
 
 export type Subtask = {
   id: string
@@ -30,4 +31,12 @@ export const PRIORITY_LABEL: Record<TaskPriority, string> = {
   high: 'Alta',
   medium: 'Media',
   low: 'Baja',
+}
+
+// Columnas del tablero y opciones de "Estado", en el orden del canvas.
+export const STATUS_LABEL: Record<TaskStatus, string> = {
+  todo: 'Por hacer',
+  in_progress: 'En curso',
+  review: 'Revisión',
+  done: 'Hecho',
 }

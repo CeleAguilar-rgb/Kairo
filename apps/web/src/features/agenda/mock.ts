@@ -2,6 +2,7 @@ import 'server-only'
 
 import { addDays, startOfWeek, zonedToUtc } from '@/lib/dates'
 import type { MockContext } from '@/lib/mock/context'
+import { PROJECT_ID } from '@/lib/mock/ids'
 
 import type { AgendaEvent, EventKind } from './types'
 
@@ -21,8 +22,8 @@ type Seed = {
 // no a una fecha fija, para que la semana actual siempre tenga algo.
 const SEEDS: Seed[] = [
   { id: 'e1', weekday: 0, start: '08:00', minutes: 120, title: 'Meal prep de la semana', kind: 'personal', place: 'Casa' },
-  { id: 'e2', weekday: 2, start: '11:00', minutes: 45, title: 'Revisión del bot con mi jefe', kind: 'work', project: { id: 'p-bot', name: 'Bot de marketing' } },
-  { id: 'e3', weekday: 2, start: '16:00', minutes: 120, title: 'Bloque de enfoque', kind: 'personal', project: { id: 'p-dash', name: 'Dashboard personal' } },
+  { id: 'e2', weekday: 2, start: '11:00', minutes: 45, title: 'Revisión del bot con mi jefe', kind: 'work', project: { id: PROJECT_ID.bot, name: 'Bot de marketing' } },
+  { id: 'e3', weekday: 2, start: '16:00', minutes: 120, title: 'Bloque de enfoque', kind: 'personal', project: { id: PROJECT_ID.dash, name: 'Dashboard personal' } },
   { id: 'e4', weekday: 2, start: '20:30', minutes: 60, title: 'Escribir', kind: 'personal', place: 'Escritos' },
   { id: 'e5', weekday: 3, start: '10:30', minutes: 30, title: 'Daily', kind: 'work' },
   { id: 'e6', weekday: 3, start: '17:00', minutes: 90, title: 'Avanzar escuela', kind: 'personal', place: 'Rutina · Enfoque' },

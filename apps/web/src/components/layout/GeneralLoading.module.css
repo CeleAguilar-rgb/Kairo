@@ -1,0 +1,84 @@
+/* Ocupa buena parte de la pantalla para que, al ocultarse la página vieja, el contenido
+   no se encoja de golpe y el scroll no se mueva. */
+.wrap {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  padding: var(--space-9) var(--space-14);
+}
+
+.doodles {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-8);
+}
+
+/* El "bob" del canvas (Estados.dc.html), más rápido y escalonado para que los tres
+   formen una ola. */
+.doodle {
+  display: inline-flex;
+  animation: hop 1.4s ease-in-out infinite;
+}
+
+@keyframes hop {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(5deg);
+  }
+}
+
+.caption {
+  margin: 0;
+  font-family: var(--font-script);
+  font-size: 24px;
+  line-height: 1;
+  color: var(--text-muted);
+}
+
+/* Los tres puntos laten uno tras otro */
+.dots span {
+  display: inline-block;
+  opacity: 0.25;
+  animation: dot 1.4s ease-in-out infinite;
+}
+
+.dots span:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.dots span:nth-child(3) {
+  animation-delay: 0.36s;
+}
+
+@keyframes dot {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 720px) {
+  .wrap {
+    padding: var(--space-6) var(--space-5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doodle,
+  .dots span {
+    animation: none;
+  }
+
+  .dots span {
+    opacity: 1;
+  }
+}

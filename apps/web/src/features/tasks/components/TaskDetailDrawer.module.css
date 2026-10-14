@@ -23,6 +23,12 @@
   color: var(--accent-ink);
   font-size: 13px;
   font-weight: 500;
+  text-decoration: none;
+  transition: background var(--duration-base) ease;
+}
+
+a.chip:hover {
+  background: var(--accent);
 }
 
 .close {

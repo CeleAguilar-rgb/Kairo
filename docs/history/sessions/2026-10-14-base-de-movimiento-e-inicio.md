@@ -14,6 +14,8 @@
 - `loading.tsx` con esqueleto de la forma real que solo aparece si la carga pasa de 400 ms.
 - Páginas provisionales (`SectionPlaceholder`) en `/tareas`, `/proyectos`, `/agenda`, `/finanzas`, `/escritos`, `/dia-a-dia`, `/escuela` y `/recordatorios` para que el Topnav no lleve a un 404.
 - Se borró `DemoShowcase` (vista temporal de tokens; ya existe el Inicio real).
+- **Modo demo (`pnpm dev:demo` en `apps/web`):** levanta solo el front sin `.env`, sin Supabase y sin API. Se salta el candado de sesión y `getMe()` devuelve un perfil de ejemplo (`lib/mock/demo-me.ts`). Doble candado en `lib/demo.ts`: solo con `NODE_ENV === 'development'` **y** `NEXT_PUBLIC_KAIRO_DEMO=1` (la pone `scripts/dev-demo.mjs`); en un build de producción siempre está apagado. Tocó `env.ts`, `server-env.ts`, `proxy.ts`, el layout del dashboard y `getMe()`.
+- **Ajustes del header y del saludo tras revisarlos contra el canvas:** el header es una cuadrícula `1fr auto 1fr` (nav centrado de verdad) con buscar, avisos y doodles antes del avatar, y el mismo margen de 44px que el contenido. La bandeja de doodles pasó al header (`components/layout/Doodles.tsx`, con un contexto compartido con el saludo, donde se dibujan los pegados). El saludo es una cuadrícula con las estadísticas fijas a la derecha; solo se apilan en pantallas de menos de 1080px. Escuela salió del nav (`inNav: false`), como en el canvas, que tiene 7 secciones. La animación de "escribir" del saludo recortaba la "s" final: el `clip-path` ahora deja margen para los trazos que se salen de la caja de la letra a mano.
 
 ## Decisiones tomadas
 - Ninguna nueva en `docs/guides/decisions.md`. De estructura: el `index.ts` de cada módulo exporta componentes y tipos; las funciones de datos se importan de `features/<id>/api.ts` (solo servidor), porque mezclar ambos en `index.ts` metería código `server-only` en componentes de cliente.
@@ -27,11 +29,13 @@
 
 ## Quedó pendiente
 - Lo que se marca en Inicio (pendientes, comidas, recordatorios, tarjetas ocultas) vive solo en memoria: se pierde al recargar hasta que existan los endpoints.
-- El botón de doodles quedó en el saludo, no en el header como en el canvas (ahí van también buscar y avisos, que llegan con `Atajos`).
+- Buscar y avisos del header solo muestran "… llega pronto" hasta que se construya `Atajos`. Escuela no tiene entrada en el nav: se llegará desde buscar o desde "Más" (teléfono).
+- En modo demo no funcionan cerrar sesión, guardar perfil ni las pantallas de login (necesitan Supabase de verdad).
 - La pantalla `Tareas` del canvas tiene 4 columnas (incluye "Revisión") y prioridad Alta/Media/Baja, pero `tasks.status` solo tiene `todo`, `in_progress`, `done`. Decidir con el usuario al construir Tareas.
-- `loading.tsx` está en la raíz de `(dashboard)`, así que otras rutas (Perfil) muestran el esqueleto de Inicio mientras cargan; cada sección puede traer el suyo.
-- No se pudo probar en el navegador: en esta máquina no hay `.env` de web ni de API. Se verificó con `typecheck`, `lint` y `next build` (las 18 rutas compilan).
+- `loading.tsx` está en la raíz de `(dashboard)`, así que otras rutas (Perfil) muestran el esqueleto de Inicio mientras cargan; cada sección puede traer el suyo. (Resuelto después: ahora es una pantalla de carga general a propósito, ver la nota `2026-10-14-tareas-2.md`.)
+- No se probó con sesión real: en esta máquina no hay `.env` de web ni de API. Se verificó con `typecheck`, `lint`, `next build` (las 18 rutas compilan) y en el navegador con el modo demo, revisado por el usuario y con capturas a 1280, 1440 y 1520 px.
 
 ## Notas para la siguiente sesión
-- Para levantar el proyecto en esta máquina: `corepack pnpm install` (pnpm no está instalado globalmente; corepack usa la versión de `packageManager`) y copiar los `.env` de web y API.
+- En esta laptop `pnpm` ya funciona (atajo de corepack en `%APPDATA%\npm`) y las dependencias están instaladas. Sin `.env`: `pnpm dev:demo` desde `apps/web`. Con `.env` (copiarlos de la otra computadora): `pnpm dev` desde la raíz.
+- pnpm avisa que bloqueó el script de instalación de `@parcel/watcher`: solo lo usa Jest en modo watch (tests de la API), no afecta a la app.
 - Siguiente pantalla: `Tareas` + `TareaNueva` (lista/tablero, filtros por proyecto, panel lateral para crear). Reutilizar `TaskDetailDrawer`, `Drawer`, `Toast` y `listTasks()` de `features/tasks/api.ts`.

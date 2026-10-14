@@ -160,3 +160,25 @@
   font-size: 14px;
   color: var(--text-muted);
 }
+
+/* Flota despacio: CSS puro, sin JavaScript corriendo para siempre */
+.bob {
+  display: inline-flex;
+  animation: bob 4s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(4deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bob {
+    animation: none;
+  }
+}

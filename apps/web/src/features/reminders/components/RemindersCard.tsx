@@ -48,13 +48,7 @@ export function RemindersCard({ reminders: initial, today, timeZone, hourFormat 
 
   return (
     <Card as="section" tone="accent" className={styles.card} aria-labelledby="home-reminders">
-      <motion.span
-        className={styles.spiral}
-        animate={{ rotate: 360 }}
-        transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}
-      >
-        <Doodle kind="spiral" size={48} stroke="accent-ink" strokeWidth={2} />
-      </motion.span>
+      <span className={styles.spiral}><Doodle kind="spiral" size={48} stroke="accent-ink" strokeWidth={2} /></span>
 
       <CardHeader
         id="home-reminders"
@@ -73,6 +67,7 @@ export function RemindersCard({ reminders: initial, today, timeZone, hourFormat 
             <motion.li
               key={reminder.id}
               layout
+              layoutDependency={reminders.map((r) => r.id).join(',')}
               className={styles.row}
               variants={listItem}
               exit={{ opacity: 0, x: 24, scale: 0.96, transition: { duration: DURATION.base, ease: EASE_OUT } }}

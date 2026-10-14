@@ -5,13 +5,13 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { DoodleTray } from '@/components/layout/Doodles'
+import { usePendingHref } from '@/components/layout/Navigation'
 import { LineIcon } from '@/components/ui/Card'
 import { useToast } from '@/components/ui/Toast'
 import type { Profile, UserSection } from '@/lib/account/api'
 import { getAvatar } from '@/lib/account/avatars'
 import { popover, SPRING } from '@/lib/motion'
 import { modules, type ModuleManifest } from '@/lib/modules/registry'
-import { createClient } from '@/lib/supabase/client'
 import styles from './Topnav.module.css'
 
 type TopnavProps = { profile: Profile; sections: UserSection[] }
@@ -23,6 +23,7 @@ export function Topnav({ profile, sections }: TopnavProps) {
   const menuWrapRef = useRef<HTMLDivElement>(null)
   const avatar = getAvatar(profile.avatarPath)
   const toast = useToast()
+  const pendingHref = usePendingHref()
 
   // Clic afuera o Escape cierran el menú, como cualquier menú nativo.
   useEffect(() => {
@@ -58,7 +59,8 @@ export function Topnav({ profile, sections }: TopnavProps) {
         (sectionByModule.get(a.id)?.position ?? -1) -
         (sectionByModule.get(b.id)?.position ?? -1),
     )
-  const activeId = findActive(visibleModules, pathname)
+  // Si ya se hizo clic en otra sección, la píldora viaja hacia ella sin esperar a que cargue.
+  const activeId = findActive(visibleModules, pendingHref ?? pathname)
 
   // Buscar y avisos llegan con la pantalla Atajos; mientras, que el botón responda algo.
   function soon(what: string) {
@@ -66,6 +68,9 @@ export function Topnav({ profile, sections }: TopnavProps) {
   }
 
   async function handleSignOut() {
+    // Import dinámico: el cliente de Supabase pesa ~65 KB y solo se necesita aquí, al
+    // cerrar sesión. Así no se descarga en cada página del dashboard.
+    const { createClient } = await import('@/lib/supabase/client')
     const supabase = createClient()
     // scope 'local': por default signOut() cierra la sesión en TODOS los
     // dispositivos (ver perfil/PerfilTab.tsx para esa otra opción, explícita).

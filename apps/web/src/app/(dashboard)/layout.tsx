@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { DoodlesProvider } from '@/components/layout/Doodles'
+import { NavigationProvider, PageFrame } from '@/components/layout/Navigation'
 import { ToastProvider } from '@/components/ui/Toast'
 import { getMe } from '@/lib/account/api'
 import { DEMO_MODE } from '@/lib/demo'
@@ -30,10 +31,12 @@ export default async function DashboardLayout({
   return (
     <ToastProvider>
       <DoodlesProvider>
-        <div className={styles.shell}>
-          <Topnav profile={me.profile} sections={me.sections} />
-          <div className={styles.content}>{children}</div>
-        </div>
+        <NavigationProvider>
+          <div className={styles.shell}>
+            <Topnav profile={me.profile} sections={me.sections} />
+            <PageFrame className={styles.content}>{children}</PageFrame>
+          </div>
+        </NavigationProvider>
       </DoodlesProvider>
     </ToastProvider>
   )

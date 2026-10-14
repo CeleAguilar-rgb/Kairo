@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation'
+import { PageEnter } from '@/components/layout/PageEnter'
 import { getMe } from '@/lib/account/api'
 import { PerfilView } from './PerfilView'
 
@@ -8,5 +9,9 @@ export default async function PerfilPage() {
   const me = await getMe()
   if (!me) redirect('/bienvenida')
 
-  return <PerfilView profile={me.profile} sections={me.sections} />
+  return (
+    <PageEnter>
+      <PerfilView profile={me.profile} sections={me.sections} />
+    </PageEnter>
+  )
 }

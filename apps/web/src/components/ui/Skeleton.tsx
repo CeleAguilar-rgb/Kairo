@@ -7,7 +7,7 @@ type SkeletonProps = {
   height?: CSSProperties['height']
   // 'inverted' para esqueletos dentro de la tarjeta destacada (fondo tinta).
   tone?: 'surface' | 'inverted'
-  radius?: 'sm' | 'md' | 'pill'
+  radius?: 'sm' | 'md' | 'lg' | 'pill'
 }
 
 // Bloque con brillo que se desliza (pantalla Estados del canvas). Se usa

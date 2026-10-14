@@ -102,9 +102,7 @@ export function WeekCard({ events, today, timeZone, hourFormat, weekStart }: Wee
           >
             {dayEvents.length === 0 ? (
               <div className={styles.empty}>
-                <motion.span animate={{ y: [0, -4, 0], rotate: [-4, 4, -4] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}>
-                  <Doodle kind="cloud" size={40} />
-                </motion.span>
+                <span className={styles.bob}><Doodle kind="cloud" size={40} /></span>
                 <span>Día libre. Toca otro día o agrega un evento.</span>
               </div>
             ) : (

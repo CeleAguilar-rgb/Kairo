@@ -2,7 +2,7 @@
 
 > Léelo al empezar cada sesión. Actualízalo al terminar. Máximo ~60 líneas: es un resumen, no un diario. El detalle va en `sessions/`.
 
-**Última actualización:** 2026-10-14 · sesión `2026-10-14-base-de-movimiento-e-inicio.md`
+**Última actualización:** 2026-10-14 · sesión `2026-10-14-tareas-2.md`
 
 ## Fase actual
 
@@ -10,7 +10,8 @@ Fase 0 (base), **en progreso**. Paso 4 de 6 (Auth) casi listo.
 
 ## Lo último que se hizo
 
-- **2026-10-14 · Base de movimiento e Inicio (solo front, con datos de ejemplo).** `lib/motion.ts` (curvas, resortes y variantes compartidas), componentes `Drawer`, `Modal`, `Toast` con "Deshacer", `Progress`, `Skeleton`, `Doodle`, `EmptyState`; Topnav con píldora activa que se desliza; transición de página (`template.tsx`). Inicio (`Main`) completo con sus 8 tarjetas, "Ajustar mi Inicio" y bandeja de doodles. Cada módulo tiene `types.ts`/`mock.ts`/`api.ts`: cuando llegue su endpoint solo cambia `api.ts`. Rutas provisionales para las secciones que faltan. Sin probar en navegador (no hay `.env` en esta máquina); `typecheck`, `lint` y `next build` pasan. Siguiente pantalla: `Tareas` + `TareaNueva`. Detalle y pendientes en la nota de sesión.
+- **2026-10-14 · Tareas (solo front, con datos de ejemplo).** `/tareas` completa: lista por fechas con captura rápida, tablero de 4 columnas (arrastrar o con la flecha), panel de nueva tarea validado con `createTaskSchema` (`packages/shared`), detalle con Estado, filtros por proyecto. Componentes nuevos `Segmented` y `Select`. Se suma el estado `review` (Revisión) y no se construye la hora de la tarea. **Pendiente de base de datos:** agregar `review` al enum `tasks.status` con migración y actualizar `data-model.md`. Siguiente pantalla: `Proyectos`.
+- **2026-10-14 · Base de movimiento e Inicio (solo front, con datos de ejemplo).** `lib/motion.ts` (curvas, resortes y variantes compartidas), componentes `Drawer`, `Modal`, `Toast` con "Deshacer", `Progress`, `Skeleton`, `Doodle`, `EmptyState`; Topnav con píldora activa que se desliza; transición de página (`template.tsx`). Inicio (`Main`) completo con sus 8 tarjetas, "Ajustar mi Inicio" y bandeja de doodles. Cada módulo tiene `types.ts`/`mock.ts`/`api.ts`: cuando llegue su endpoint solo cambia `api.ts`. Rutas provisionales para las secciones que faltan. Modo demo para ver el front sin `.env` (`pnpm dev:demo` en `apps/web`, solo en desarrollo); el header y el saludo se ajustaron contra el canvas en el navegador. Siguiente pantalla: `Tareas` + `TareaNueva`. Detalle y pendientes en la nota de sesión.
 - Login completo: invitación (`/aceptar-invitacion`), entrar (`/entrar`), recuperar contraseña (`/recuperar` + `/restablecer-contrasena`), guard global de la API (`auth/jwt.guard.ts`, `getClaims()` por JWKS). Las tres pantallas comparten layout y piezas en `app/(auth)/` (`BrandPanel`, `SetPasswordForm`, los `.module.css` de layout). Detalle de cada una en las sesiones `-1` a `-5` de hoy.
 - **Decisión #26 (reemplaza la #7): código por correo pasa a "Después".** Exigía correo propio en la API, que no existe. Por ahora el login es solo correo + contraseña. `login_codes`/`verified_sessions` quedan listas sin usarse.
 - Se integró `Motion` por primera vez en el proyecto (ya estaba en el stack): entrada escalonada en los formularios de auth, banners de error animados, `whileTap` en el `Button` compartido (toda la app).

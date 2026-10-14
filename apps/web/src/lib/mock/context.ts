@@ -31,9 +31,15 @@ export const getMockContext = cache(async (): Promise<MockContext> => {
   }
 })
 
-// Simula la latencia de red de la API (para ver esqueletos y transiciones de
-// carga como se verán de verdad). 0 en producción por si algo se queda así.
-export function mockDelay(ms = 250) {
-  if (process.env.NODE_ENV === 'production') return Promise.resolve()
+// Latencia de red simulada de la API. Por defecto NO hay: con datos de ejemplo cada
+// navegación ya espera lo que tarda el servidor de desarrollo, y sumarle una espera
+// artificial solo hace sentir la app más lenta. Para ver los esqueletos de carga como
+// se verán con la API de verdad, arranca con latencia, por ejemplo en PowerShell:
+//   $env:MOCK_DELAY_MS = 400; pnpm dev:demo
+// (en producción nunca espera, por si algo se queda puesto).
+const DEFAULT_DELAY_MS = Number(process.env.MOCK_DELAY_MS ?? 0)
+
+export function mockDelay(ms = DEFAULT_DELAY_MS) {
+  if (process.env.NODE_ENV === 'production' || ms <= 0) return Promise.resolve()
   return new Promise((resolve) => setTimeout(resolve, ms))
 }

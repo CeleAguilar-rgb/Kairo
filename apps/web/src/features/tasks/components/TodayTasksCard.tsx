@@ -12,7 +12,7 @@ import { useToast } from '@/components/ui/Toast'
 import { formatRelativeDay, type IsoDate } from '@/lib/dates'
 import { listItem, SPRING, staggerList } from '@/lib/motion'
 
-import type { Task } from '../types'
+import type { Task, TaskStatus } from '../types'
 
 import { TaskDetailDrawer } from './TaskDetailDrawer'
 import styles from './TodayTasksCard.module.css'
@@ -49,6 +49,10 @@ export function TodayTasksCard({ tasks: initial, today, onDoneCountChange }: Tod
     if (willBeDone && next.every((t) => t.status === 'done')) {
       toast.show({ message: '¡Listo todo lo de hoy! Buen trabajo.', icon: 'check' })
     }
+  }
+
+  function changeStatus(task: Task, status: TaskStatus) {
+    update(tasks.map((t) => (t.id === task.id ? { ...t, status, doneAt: status === 'done' ? new Date().toISOString() : null } : t)))
   }
 
   function toggleSubtask(task: Task, subtaskId: string) {
@@ -136,7 +140,7 @@ export function TodayTasksCard({ tasks: initial, today, onDoneCountChange }: Tod
         <LineIcon d="M9 6l6 6-6 6" size={14} strokeWidth={2} />
       </Link>
 
-      <TaskDetailDrawer task={openTask} today={today} onClose={() => setOpenId(null)} onToggleDone={toggleDone} onToggleSubtask={toggleSubtask} />
+      <TaskDetailDrawer task={openTask} today={today} onClose={() => setOpenId(null)} onToggleDone={toggleDone} onToggleSubtask={toggleSubtask} onChangeStatus={changeStatus} />
     </Card>
   )
 }

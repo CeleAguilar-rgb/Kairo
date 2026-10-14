@@ -8,7 +8,6 @@ import { Input } from '@/components/ui/Input'
 import { updateProfile } from '@/lib/account/actions'
 import type { Profile } from '@/lib/account/api'
 import { AVATARS } from '@/lib/account/avatars'
-import { createClient } from '@/lib/supabase/client'
 import styles from './PerfilTab.module.css'
 
 type PerfilTabProps = { profile: Profile }
@@ -27,6 +26,8 @@ export function PerfilTab({ profile }: PerfilTabProps) {
   // mismo en vez de solo refrescar la página.
   async function handleRevokeAllSessions() {
     setRevoking(true)
+    // Import dinámico: ver Topnav.tsx (el cliente de Supabase no va en el bundle inicial).
+    const { createClient } = await import('@/lib/supabase/client')
     const supabase = createClient()
     await supabase.auth.signOut({ scope: 'global' })
     router.push('/entrar')

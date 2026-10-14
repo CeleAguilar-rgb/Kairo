@@ -27,7 +27,11 @@
 .hello {
   font-family: var(--font-script);
   font-weight: 400;
-  font-size: clamp(56px, 7vw, 96px);
+  /* Nunca se parte en dos líneas. El tamaño baja solo cuando la ventana es angosta:
+     descuenta lo que ocupan las estadísticas (~780px con márgenes) y reparte el resto
+     entre las ~6 "em" que mide el saludo más largo ("Buenas noches"). */
+  font-size: clamp(48px, calc((100vw - 780px) / 6), 96px);
+  white-space: nowrap;
   line-height: 0.95;
   letter-spacing: 0.01em;
   /* La letra a mano se sale un poco de su caja (la s final): este margen la
@@ -54,8 +58,17 @@
   display: inline-flex;
 }
 
+/* Giro continuo en CSS: corre en el compositor, sin JavaScript ni recálculo de estilos
+   en cada cuadro (con Motion eran ~60 por segundo para siempre). */
 .sunSpin {
   display: inline-flex;
+  animation: spin 40s linear 1.4s infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .squiggle {
@@ -146,7 +159,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hello {
+  .hello,
+  .sunSpin {
     animation: none;
   }
 }

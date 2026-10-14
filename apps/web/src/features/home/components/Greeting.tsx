@@ -38,13 +38,7 @@ export function Greeting({ hello, subtitle, pendingCount, activeProjects, dueThi
             animate={{ scale: 1, rotate: 8 }}
             transition={{ ...SPRING.pop, delay: 0.9 }}
           >
-            <motion.span
-              className={styles.sunSpin}
-              animate={{ rotate: 360 }}
-              transition={{ duration: 40, repeat: Infinity, ease: 'linear', delay: 1.4 }}
-            >
-              <Doodle kind="sun" size={62} strokeWidth={2} />
-            </motion.span>
+            <span className={styles.sunSpin}><Doodle kind="sun" size={62} strokeWidth={2} /></span>
           </motion.span>
         </div>
         <svg className={styles.squiggle} width="300" height="16" viewBox="0 0 300 16" fill="none" aria-hidden="true">

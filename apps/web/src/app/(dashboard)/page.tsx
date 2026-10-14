@@ -1,9 +1,16 @@
 import { redirect } from 'next/navigation'
 
+import { PageEnter } from '@/components/layout/PageEnter'
 import { HomeView } from '@/features/home'
 import { getHomeData } from '@/features/home/api'
 import { getMe } from '@/lib/account/api'
-import { addDays, formatLongDay, minutesNowIn, startOfWeek, todayIn } from '@/lib/dates'
+import {
+  addDays,
+  formatLongDay,
+  minutesNowIn,
+  startOfWeek,
+  todayIn,
+} from '@/lib/dates'
 
 // Inicio: el saludo y las tarjetas de los módulos activos. La página solo
 // junta datos y calcula lo que depende de la hora (en la zona del perfil),
@@ -21,20 +28,22 @@ export default async function DashboardHome() {
   const weekEnd = addDays(startOfWeek(today, profile.weekStart), 6)
 
   return (
-    <HomeView
-      data={data}
-      enabledModules={enabledModules}
-      name={profile.name ?? 'tú'}
-      hello={greetingFor(nowMinutes)}
-      dateText={formatLongDay(today)}
-      today={today}
-      weekEnd={weekEnd}
-      nowMinutes={nowMinutes}
-      timeZone={profile.timezone}
-      hourFormat={profile.hourFormat}
-      weekStart={profile.weekStart}
-      currency={profile.currency}
-    />
+    <PageEnter>
+      <HomeView
+        data={data}
+        enabledModules={enabledModules}
+        name={profile.name ?? 'tú'}
+        hello={greetingFor(nowMinutes)}
+        dateText={formatLongDay(today)}
+        today={today}
+        weekEnd={weekEnd}
+        nowMinutes={nowMinutes}
+        timeZone={profile.timezone}
+        hourFormat={profile.hourFormat}
+        weekStart={profile.weekStart}
+        currency={profile.currency}
+      />
+    </PageEnter>
   )
 }
 

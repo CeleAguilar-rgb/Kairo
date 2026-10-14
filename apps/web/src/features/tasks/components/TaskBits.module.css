@@ -1,0 +1,80 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 26px;
+  max-width: 100%;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  font-size: 12px;
+  color: var(--text-muted);
+  justify-self: start;
+  overflow: hidden;
+}
+
+.chipText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  /* Los tonos claros (crema, arena) se perderían sobre el chip: un aro fino los marca */
+  box-shadow: 0 0 0 1px var(--border-control);
+}
+
+/* "Sin proyecto": círculo punteado, sin color */
+.dotNone {
+  width: 6px;
+  height: 6px;
+  border: 1.5px dashed var(--text-subtle);
+}
+
+.priority {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  min-height: 24px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.high {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.medium {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.low {
+  background: var(--surface-muted);
+  color: var(--text-muted);
+}
+
+.due {
+  font-size: 13px;
+  white-space: nowrap;
+  text-align: right;
+  color: var(--text-muted);
+}
+
+.due_today {
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.due_overdue {
+  color: var(--danger);
+  font-weight: 600;
+}
