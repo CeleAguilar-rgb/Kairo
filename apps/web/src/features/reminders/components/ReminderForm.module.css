@@ -1,0 +1,59 @@
+/* La hoja clara dentro de la tarjeta lavanda (Recordatorios.dc.html) */
+.form {
+  overflow: hidden;
+  border-radius: var(--radius-20);
+  background: var(--surface);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-7);
+}
+
+.dateTime {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.date {
+  flex: 1;
+  min-width: 150px;
+}
+
+/* Con el formato de 12 horas el navegador escribe "10:00 a. m." y el ícono del reloj: 130px lo cortaba */
+.time {
+  width: 170px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.segmentedWrap {
+  display: flex;
+  align-self: flex-start;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.formError {
+  font-size: 13px;
+  color: var(--danger);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}

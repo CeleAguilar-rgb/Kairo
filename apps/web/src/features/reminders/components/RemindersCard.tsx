@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useOptimistic, useTransition } from 'react'
 
 import { Card, CardHeader, LineIcon } from '@/components/ui/Card'
 import { Doodle } from '@/components/ui/Doodle'
@@ -10,6 +10,8 @@ import { useToast } from '@/components/ui/Toast'
 import { dateOfMoment, formatRelativeDay, formatTime, type IsoDate } from '@/lib/dates'
 import { DURATION, EASE_OUT, listItem, staggerList } from '@/lib/motion'
 
+import { completeReminderAction, undoReminderAction } from '../actions'
+import { effectiveAt } from '../reminder-utils'
 import type { Reminder } from '../types'
 
 import styles from './RemindersCard.module.css'
@@ -21,29 +23,45 @@ type RemindersCardProps = {
   hourFormat: '12h' | '24h'
 }
 
-// "Recordatorios" de Inicio (Main.dc.html). "Listo" lo quita de la lista con
-// un aviso para deshacer; la fila de abajo sube a ocupar su lugar (layout).
-export function RemindersCard({ reminders: initial, today, timeZone, hourFormat }: RemindersCardProps) {
-  const [reminders, setReminders] = useState(initial)
-  const toast = useToast()
+// Cuántos recordatorios caben en la tarjeta: los que tocan primero. El resto está en /recordatorios.
+const VISIBLE = 3
 
-  function complete(reminder: Reminder) {
-    setReminders((current) => current.filter((r) => r.id !== reminder.id))
-    toast.show({
-      message: `"${reminder.title}" quedó listo.`,
-      icon: 'check',
-      onUndo: () => setReminders((current) => [...current, reminder].sort((a, b) => a.remindAt.localeCompare(b.remindAt))),
+// "Recordatorios" de Inicio (Main.dc.html). "Listo" lo quita de la lista con un aviso para deshacer; la
+// fila de abajo sube a ocupar su lugar (layout). Lee de la misma lista que /recordatorios y usa sus
+// mismas acciones, así lo que marcas aquí también queda marcado allá.
+export function RemindersCard({ reminders: all, today, timeZone, hourFormat }: RemindersCardProps) {
+  const toast = useToast()
+  const [, startTransition] = useTransition()
+  // La fila se va al instante; cuando el servidor contesta, la lista de verdad ocupa su lugar.
+  const [pending, removeOptimistic] = useOptimistic(all, (current, id: string) => current.filter((r) => r.id !== id))
+  const reminders = pending.slice(0, VISIBLE)
+
+  function undo(token: string) {
+    startTransition(async () => {
+      await undoReminderAction(token)
     })
   }
 
+  function complete(reminder: Reminder) {
+    startTransition(async () => {
+      removeOptimistic(reminder.id)
+      const result = await completeReminderAction(reminder.id)
+      if (!result.ok) return toast.show({ message: result.message ?? 'No se pudo marcar como listo.', icon: 'info' })
+      const token = result.undoToken
+      toast.show({ message: `"${reminder.title}" quedó listo.`, icon: 'check', onUndo: token ? () => undo(token) : undefined })
+    })
+  }
+
+  // Cuándo toca: si se pospuso, la hora nueva.
   function when(reminder: Reminder) {
-    const day = dateOfMoment(reminder.remindAt, timeZone)
-    if (reminder.precision === 'month') {
-      const month = new Intl.DateTimeFormat('es-MX', { month: 'long', timeZone }).format(new Date(reminder.remindAt))
+    const at = effectiveAt(reminder)
+    const day = dateOfMoment(at, timeZone)
+    if (reminder.precision === 'month' && !reminder.snoozedTo) {
+      const month = new Intl.DateTimeFormat('es-MX', { month: 'long', timeZone }).format(new Date(at))
       return month.charAt(0).toUpperCase() + month.slice(1)
     }
-    if (reminder.precision === 'day') return formatRelativeDay(day, today)
-    return `${formatRelativeDay(day, today)}, ${formatTime(reminder.remindAt, timeZone, hourFormat)}`
+    if (reminder.precision === 'day' && !reminder.snoozedTo) return formatRelativeDay(day, today)
+    return `${formatRelativeDay(day, today)}, ${formatTime(at, timeZone, hourFormat)}`
   }
 
   return (
