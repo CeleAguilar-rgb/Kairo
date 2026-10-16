@@ -1,0 +1,345 @@
+/* Los dos totales de la franja de arriba */
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.statValue {
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--text);
+}
+
+.statLabel {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* La cuadrícula del canvas: tarjetas (4 columnas) y tabla (8). */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-7);
+  align-items: start;
+}
+
+.c4 {
+  grid-column: span 4;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.c8 {
+  grid-column: span 8;
+  min-width: 0;
+}
+
+@media (max-width: 1080px) {
+  .c4,
+  .c8 {
+    grid-column: span 12;
+  }
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.headTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.h2i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-12);
+  flex-shrink: 0;
+}
+
+.h2iInk {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.h2iAccent {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.empty {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+/* --- Tarjetas --- */
+
+.tileWrap {
+  position: relative;
+}
+
+.tile {
+  /* Sin `all: unset`: el fondo y el color de la tarjeta vienen de FinanceColors.module.css y no deben perderse */
+  appearance: none;
+  border: 0;
+  font: inherit;
+  text-align: left;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: 100%;
+  min-height: 156px;
+  padding: var(--space-9) var(--space-10);
+  border-radius: var(--radius-22);
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition:
+    opacity var(--duration-base) ease,
+    box-shadow var(--duration-base) ease;
+}
+
+.tile:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* La tarjeta elegida lleva un anillo claro y otro de tinta; las demás se apagan */
+.tileOn {
+  box-shadow:
+    0 0 0 3px var(--bg),
+    0 0 0 5px var(--surface-inverted),
+    var(--shadow-md);
+}
+
+.tileDim {
+  opacity: 0.45;
+}
+
+.tileName {
+  font-size: 15px;
+  font-weight: 500;
+  padding-right: var(--space-13);
+}
+
+.tileNumber {
+  font-size: 22px;
+  letter-spacing: 0.12em;
+  font-weight: 300;
+}
+
+.tileFoot {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: auto;
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.tileTrash {
+  all: unset;
+  box-sizing: border-box;
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-5);
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  color: inherit;
+  opacity: 0.7;
+  cursor: pointer;
+  transition:
+    opacity var(--duration-base) ease,
+    background var(--duration-base) ease;
+}
+
+.tileTrash:hover {
+  opacity: 1;
+  background: var(--tint-ink-06);
+}
+
+.tileTrash:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.cardActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* --- Tabla de membresías --- */
+
+.tableCard {
+  gap: var(--space-5);
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+}
+
+.table th {
+  padding: var(--space-3) var(--space-5);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  color: var(--text-muted);
+}
+
+.table td {
+  padding: var(--space-5);
+  border-top: 1px solid var(--border-soft);
+}
+
+.table th.right,
+.table td.right {
+  text-align: right;
+}
+
+.row {
+  transition:
+    opacity var(--duration-base) ease,
+    background var(--duration-base) ease;
+}
+
+.row:hover {
+  background: var(--surface-raised);
+}
+
+.paused {
+  opacity: 0.6;
+}
+
+.rowDim {
+  opacity: 0.25;
+}
+
+.service {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  cursor: pointer;
+  border-radius: var(--radius-12);
+}
+
+.service:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+}
+
+.initial {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-12);
+  background: var(--surface-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.serviceText {
+  display: flex;
+  flex-direction: column;
+}
+
+.serviceName {
+  font-weight: 500;
+}
+
+.date {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Un cobro que ya viene va oscuro, como en Inicio */
+.dateSoon {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.cardCell {
+  white-space: nowrap;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.statusActive {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.statusPaused {
+  background: var(--surface-muted);
+  color: var(--text-muted);
+}
+
+.amount {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.dialogList {
+  margin: 0;
+  padding-left: var(--space-9);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile,
+  .tileTrash,
+  .row {
+    transition: none;
+  }
+}

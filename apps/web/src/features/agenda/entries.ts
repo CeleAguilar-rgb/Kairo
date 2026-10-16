@@ -1,6 +1,6 @@
-import type { Membership } from '@/features/finance'
+import { cardLabel, type Membership } from '@/features/finance'
 import type { Task } from '@/features/tasks'
-import { addMonths, daysInMonth, type IsoDate } from '@/lib/dates'
+import { addDays, addMonths, daysInMonth, type IsoDate } from '@/lib/dates'
 import { formatMoney } from '@/lib/money'
 
 import type { AgendaEntry } from './types'
@@ -8,11 +8,36 @@ import type { AgendaEntry } from './types'
 // De otros módulos, la Agenda solo lee lo que ya publican: los cobros de las membresías (Finanzas) y
 // las tareas con fecha (Tareas). Aquí se convierten en entradas de la agenda; la Agenda no toca sus tablas.
 
-// Los cobros de cada membresía dentro de [from, to]: cada mes (o cada año) en su día de cobro. Un
-// cobro el día 31 cae el último día en los meses más cortos.
+// Los cobros de cada membresía dentro de [from, to]: cada semana, cada mes o cada año, en su día de cobro.
+// Un cobro el día 31 cae el último día en los meses más cortos.
 export function paymentEntries(memberships: Membership[], from: IsoDate, to: IsoDate): AgendaEntry[] {
   const entries: AgendaEntry[] = []
+  const push = (membership: Membership, date: IsoDate) => {
+    entries.push({
+      id: `${membership.id}@${date}`,
+      type: 'payment',
+      title: `${membership.name} ${formatMoney(membership.amountCents, membership.currency)}`,
+      date,
+      allDay: true,
+      startMin: null,
+      endMin: null,
+      notes: null,
+      place: null,
+      project: null,
+      detail: cardLabel(membership.card),
+      href: '/finanzas/membresias',
+    })
+  }
+
   for (const membership of memberships) {
+    // Cada semana: de 7 en 7 días a partir del próximo cobro, hacia atrás y hacia adelante.
+    if (membership.cadence === 'weekly') {
+      let date = membership.nextChargeOn
+      while (addDays(date, -7) >= from) date = addDays(date, -7)
+      for (; date <= to; date = addDays(date, 7)) if (date >= from) push(membership, date)
+      continue
+    }
+
     const step = membership.cadence === 'monthly' ? 1 : 12
     // Se parte del próximo cobro conocido y se cuenta hacia atrás y hacia adelante.
     for (let k = -Math.ceil(24 / step); ; k++) {
@@ -22,20 +47,7 @@ export function paymentEntries(memberships: Membership[], from: IsoDate, to: Iso
       const date = `${base.slice(0, 8)}${String(Math.min(membership.chargeDay, last)).padStart(2, '0')}`
       if (date > to) break
       if (date < from) continue
-      entries.push({
-        id: `${membership.id}@${date}`,
-        type: 'payment',
-        title: `${membership.name} ${formatMoney(membership.amountCents, membership.currency)}`,
-        date,
-        allDay: true,
-        startMin: null,
-        endMin: null,
-        notes: null,
-        place: null,
-        project: null,
-        detail: membership.card ? `${membership.card.kind === 'debit' ? 'Débito' : 'Crédito'} ••${membership.card.last4}` : 'Sin tarjeta',
-        href: '/finanzas',
-      })
+      push(membership, date)
     }
   }
   return entries

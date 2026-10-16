@@ -1,4 +1,13 @@
 // API pública del módulo (docs/guides/modules.md). Datos: ./api (solo servidor).
 export { PaymentsCard } from './components/PaymentsCard'
+export { FinanceHeader } from './components/FinanceHeader'
+export { FinanceToolbar } from './components/FinanceToolbar'
+export { MonthSwitcher } from './components/MonthSwitcher'
+export { SummaryView } from './components/SummaryView'
+export { MovementsView } from './components/MovementsView'
+export { SavingsDebtsView } from './components/SavingsDebtsView'
+export { MembershipsView } from './components/MembershipsView'
+export { BudgetView } from './components/BudgetView'
+export { cardLabel } from './finance-utils'
 export type { Membership, PaymentCard } from './types'
 export { financeModule } from './module'

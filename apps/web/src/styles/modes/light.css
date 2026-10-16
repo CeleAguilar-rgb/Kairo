@@ -37,6 +37,8 @@
   --danger: var(--danger-700);
   --danger-soft: var(--blush-100);
   --danger-on-inverted: var(--danger-on-dark);
+  --caution: var(--rose-300);
+  --caution-ink: var(--rose-700);
 
   --surface-hover: var(--tint-ink-06);
   --surface-glass: var(--tint-cream-70);

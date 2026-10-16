@@ -1,0 +1,47 @@
+.card {
+  gap: var(--space-6);
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5) var(--space-9);
+}
+
+.sums {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  font-size: 14px;
+}
+
+.sumIn {
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.sumOut {
+  font-weight: 600;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.day {
+  padding: var(--space-3) var(--space-4) var(--space-1);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.empty {
+  margin: 0;
+  padding: var(--space-13);
+  text-align: center;
+  color: var(--text-muted);
+}

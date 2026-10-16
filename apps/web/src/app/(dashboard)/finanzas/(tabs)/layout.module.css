@@ -1,0 +1,20 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+  /* 20px bajo el header y 44px a los lados: el mismo ritmo que Inicio, Tareas y Proyectos */
+  padding: var(--space-9) var(--space-14) var(--space-15);
+}
+
+/* El contenido de la pestaña (la franja de acción y la vista) lleva el mismo espacio que el resto de .wrap */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+}
+
+@media (max-width: 720px) {
+  .wrap {
+    padding: var(--space-6) var(--space-5) var(--space-14);
+  }
+}

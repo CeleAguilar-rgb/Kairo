@@ -12,7 +12,7 @@ type ProgressBarProps = {
   value: number
   label: string
   // 'accent' (metas, lavanda fuerte), 'soft' (objetivos de un proyecto, lavanda) o 'ink' (proyectos, tinta).
-  tone?: 'accent' | 'soft' | 'ink' | 'danger'
+  tone?: 'accent' | 'soft' | 'ink' | 'danger' | 'caution'
   // Retraso de la entrada, para escalonar varias barras seguidas.
   delay?: number
 }

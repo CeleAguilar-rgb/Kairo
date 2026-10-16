@@ -1,0 +1,38 @@
+.group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.swatch {
+  /* Sin `all: unset`: el color de la muestra viene de FinanceColors.module.css */
+  appearance: none;
+  border: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-12);
+  cursor: pointer;
+  /* Un borde fino para que las claras se vean sobre el panel */
+  box-shadow: inset 0 0 0 1px var(--border);
+  transition: box-shadow var(--duration-base) ease;
+}
+
+.swatch:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* El elegido: un anillo claro y otro de tinta, como en el canvas */
+.on {
+  box-shadow:
+    0 0 0 2px var(--surface),
+    0 0 0 4px var(--focus-ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swatch {
+    transition: none;
+  }
+}

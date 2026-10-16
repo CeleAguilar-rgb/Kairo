@@ -37,6 +37,8 @@
  * --danger                   error / acción destructiva, siempre sobre --surface (peligro)
  * --danger-soft               fondo de confirmaciones de borrar (peligro-suave)
  * --danger-on-inverted        error sobre --surface-inverted
+ * --caution                  aviso suave antes de un error: la barra del presupuesto al llegar al 80% (no está en el PDF; sale de FinResumen.dc.html)
+ * --caution-ink              texto sobre --surface para ese mismo aviso
  * --surface-hover             tinte sutil al pasar el mouse sobre superficies planas (no está en el PDF)
  * --surface-glass           superficie translúcida sobre --bg: nav, estadísticas del saludo, filas sobre --accent-soft
  * --surface-inverted-glass  bloque translúcido dentro de --surface-inverted (bloque actual de la rutina)

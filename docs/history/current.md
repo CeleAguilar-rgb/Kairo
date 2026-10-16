@@ -2,7 +2,7 @@
 
 > Léelo al empezar cada sesión. Actualízalo al terminar. Máximo ~60 líneas: es un resumen, no un diario. El detalle va en `sessions/`.
 
-**Última actualización:** 2026-10-16 · sesión `2026-10-16-dia-a-dia-6.md`
+**Última actualización:** 2026-10-16 · sesión `2026-10-16-finanzas-7.md`
 
 ## Fase actual
 
@@ -10,6 +10,7 @@ Fase 0 (base), **en progreso**. Paso 4 de 6 (Auth) casi listo.
 
 ## Lo último que se hizo
 
+- **2026-10-16 · Finanzas (solo front, con datos de ejemplo).** Módulo completo en `/finanzas` con sus cinco pestañas: Resumen (cifras del mes, gráfica de 6 meses, presupuesto, ahorros, deudas, cobros), Movimientos (por día, filtros, panel de nuevo/corregir/borrar con "Deshacer"), Ahorros y deudas (aportar, retirar, pagar hasta liquidar), Membresías (tarjetas que filtran, mensual/anual/semanal, pausar, borrar tarjeta con sus membresías) y Presupuesto (límite por categoría, "Así vas", avisos). Todo se calcula de los movimientos (decisión #29: "Te queda" resta también los pagos de deuda) y nace con las pestañas fluidas (#28). Inicio y Agenda leen las mismas membresías. Probado en Edge real (escritorio y 390 px) y la lógica con ~90 aserciones. **Falta, antes de conectar la API:** las columnas nuevas que pide el canvas (tarjeta en efectivo, cadencia semanal, membresía pausada, tipo de deuda, colores de categoría…, lista en `sessions/2026-10-16-finanzas-7.md`) y las tareas programadas (cobros, movimientos que se repiten, avisos). Siguiente pantalla: Escuela o Escritos.
 - **2026-10-16 · Cambiar de pestaña ya no se siente como cambiar de pantalla (Día a día y Proyectos; decisión #28).** Antes, al tocar una pestaña todo se atenuaba (cabecera y pestañas incluidas), salía "Cargando…" y las tarjetas entraban en cascada (~1 s). Ahora la cabecera y las pestañas no se mueven, no hay pantalla de carga, el contenido viejo solo se atenúa si tarda y el nuevo entra con un fundido de 200 ms. Piezas: `data-tab-switch` en las pestañas, `usePendingTabSwitch` en `Navigation.tsx`, `SectionPanel` y `useCalmEntry` (`components/layout/`). Medido antes/después en Edge (escritorio y 390 px); detalle y cómo usarlo en una sección nueva en `sessions/2026-10-16-dia-a-dia-6.md`. Las secciones con pestañas que vengan deben usarlo.
 - **2026-10-16 · Día a día (solo front, con datos de ejemplo).** Módulo completo en `/dia-a-dia`: Hoy (rutina en línea de tiempo con la raya de "ahora", tarjeta de enfoque en curso, avance, menú y rachas), Menú semanal, Reporte, Diario, Metas (con celebración y vitrina) y el editor de rutinas (`/dia-a-dia/rutina`, panel de bloques). "Tarde" = marcado después de insistir (decisión #27). Probado en Edge real (escritorio y 390 px) y la lógica pura con aserciones. **Falta, antes de conectar la API:** el PIN del diario (el canvas no tiene su pantalla; hoy el Diario NO está protegido) y las columnas nuevas de rutina, menú, diario y metas (lista completa en `sessions/2026-10-16-dia-a-dia-6.md`). Siguiente pantalla: Finanzas, Escuela o Escritos.
 
@@ -38,6 +39,7 @@ El paso 4 de Auth está prácticamente terminado. Falta, del lado del usuario (n
 - Correo para enviar invitaciones a otras personas: por ahora SMTP de Resend sin dominio propio (`onboarding@resend.dev`, solo entrega al correo con el que te registraste en Resend — sirve para probar, no para invitar a nadie más todavía). Más adelante: crear un Gmail dedicado a Kairo (decidir si se usa como SMTP o solo como cuenta de Resend) o comprar un dominio.
 - Tareas que se repiten, o si eso vive solo en Recordatorios.
 - Día a día: si los 30 minutos de gracia para marcar "a tiempo" un bloque sin "insistir" y sin hora de fin (decisión #27) son los que quieres.
+- Finanzas: si "Te queda" debe restar también los pagos de deuda, como lo dejamos (decisión #29), o ignorarlos como el canvas.
 - Agenda: mostrar la rutina detrás de los eventos y arrastrar eventos.
 - Proteger `main` en GitHub (pedir Pull Request para hacer merge).
 - En la Fase 0: si se agrega commitlint + husky para validar los mensajes de commit, y GitHub Actions para revisar cada Pull Request.

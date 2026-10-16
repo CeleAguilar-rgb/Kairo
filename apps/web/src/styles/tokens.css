@@ -43,6 +43,10 @@
   --danger-on-dark: #f6c8bb;
   --blush-100: #f6e3dd;
 
+  /* Color: aviso suave (el presupuesto al llegar al 80%, antes de pasarse) */
+  --rose-300: #c9a79c;
+  --rose-700: #8a5a4b;
+
   /* Espacio — pasos reales del diseño, no una escala inventada de múltiplos de 4 */
   --space-1: 4px;
   --space-2: 6px;

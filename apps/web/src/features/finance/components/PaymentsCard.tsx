@@ -7,7 +7,8 @@ import { dayOfMonth, diffDays, formatMonthShort, type IsoDate } from '@/lib/date
 import { formatMoney } from '@/lib/money'
 import { fadeUp, staggerList } from '@/lib/motion'
 
-import { CARD_KIND_LABEL, type Membership } from '../types'
+import { cardLabel } from '../finance-utils'
+import type { Membership } from '../types'
 
 import styles from './PaymentsCard.module.css'
 
@@ -45,7 +46,7 @@ export function PaymentsCard({ payments, today }: { payments: Membership[]; toda
                   {payment.card ? (
                     <span className={styles.cardInfo}>
                       <LineIcon d={['M5 6h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z', 'M3 10h18']} size={14} strokeWidth={2} />
-                      {CARD_KIND_LABEL[payment.card.kind]} ••{payment.card.last4}
+                      {cardLabel(payment.card)}
                     </span>
                   ) : null}
                 </div>
