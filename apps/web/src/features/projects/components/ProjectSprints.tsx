@@ -3,6 +3,7 @@
 import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
 import { useState } from 'react'
 
+import { useCalmEntry } from '@/components/layout/SectionPanel'
 import { Button } from '@/components/ui/Button'
 import { Card, CardHeader, LineIcon } from '@/components/ui/Card'
 import { Doodle } from '@/components/ui/Doodle'
@@ -34,9 +35,10 @@ type ProjectSprintsProps = {
   weekEnd: IsoDate
 }
 
-// Cada tarjeta entra un poco después de la anterior, de arriba hacia abajo.
-const enter = (position: number) => ({
-  initial: { opacity: 0, y: 12 },
+// Cada tarjeta entra un poco después de la anterior, de arriba hacia abajo. Si se llegó por una pestaña
+// (`calm`), nacen ya en su lugar: la pantalla se siente la misma (ver SectionPanel).
+const enter = (position: number, calm: boolean) => ({
+  initial: calm ? (false as const) : { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE_OUT, delay: 0.1 + position * 0.07 } },
 })
 
@@ -53,6 +55,7 @@ function dayClass(position: number, total: number, index: number) {
 // cerrados. Hoy todo vive en memoria; la lógica está en sprint-utils.ts.
 export function ProjectSprints({ sprints, today, weekEnd }: ProjectSprintsProps) {
   const toast = useToast()
+  const calm = useCalmEntry()
   const [state, setState] = useState<SprintState>(sprints)
   const [closeOpen, setCloseOpen] = useState(false)
   const [startOpen, setStartOpen] = useState(false)
@@ -84,7 +87,7 @@ export function ProjectSprints({ sprints, today, weekEnd }: ProjectSprintsProps)
 
   return (
     <>
-      <motion.div {...enter(0)} className={styles.toolbar}>
+      <motion.div {...enter(0, calm)} className={styles.toolbar}>
         <span className={styles.toolbarText}>Sprints de dos semanas · uno activo a la vez</span>
         {active ? (
           <Button onClick={() => setCloseOpen(true)}>Cerrar Sprint {active.number}</Button>
@@ -97,7 +100,7 @@ export function ProjectSprints({ sprints, today, weekEnd }: ProjectSprintsProps)
         <div className={styles.main}>
           {active && days ? (
             <>
-              <motion.div {...enter(1)}>
+              <motion.div {...enter(1, calm)}>
                 <Card tone="inverted" as="section" className={styles.active} aria-labelledby="sprint-active">
                   <span className={styles.bolt} aria-hidden="true">
                     <Doodle kind="bolt" size={40} stroke="inverted" />
@@ -137,7 +140,7 @@ export function ProjectSprints({ sprints, today, weekEnd }: ProjectSprintsProps)
                 </Card>
               </motion.div>
 
-              <motion.div {...enter(2)}>
+              <motion.div {...enter(2, calm)}>
                 <Card as="section" className={styles.card} aria-labelledby="sprint-board">
                   <CardHeader
                     id="sprint-board"
@@ -164,7 +167,9 @@ export function ProjectSprints({ sprints, today, weekEnd }: ProjectSprintsProps)
                               <span className={styles.columnName}>{column.label}</span>
                               <span className={[styles.columnCount, column.status === 'done' ? styles.columnCountDone : null].filter(Boolean).join(' ')}>{items.length}</span>
                             </div>
-                            <AnimatePresence mode="popLayout">
+                            {/* `initial={!calm}`: al llegar por una pestaña las tarjetas ya están en su lugar; las que
+                                se mueven de columna siguen animándose. */}
+                            <AnimatePresence mode="popLayout" initial={!calm}>
                               {items.map((task) => (
                                 <motion.div
                                   key={task.id}
@@ -215,7 +220,7 @@ export function ProjectSprints({ sprints, today, weekEnd }: ProjectSprintsProps)
               </motion.div>
             </>
           ) : (
-            <motion.div {...enter(1)}>
+            <motion.div {...enter(1, calm)}>
               <EmptyState
                 id="sprint-empty"
                 eyebrow="Sprints"
@@ -229,7 +234,7 @@ export function ProjectSprints({ sprints, today, weekEnd }: ProjectSprintsProps)
         </div>
 
         <aside className={styles.side}>
-          <motion.div {...enter(2)}>
+          <motion.div {...enter(2, calm)}>
             <Card as="section" className={styles.card} aria-labelledby="sprint-backlog">
               <CardHeader
                 id="sprint-backlog"
@@ -265,7 +270,7 @@ export function ProjectSprints({ sprints, today, weekEnd }: ProjectSprintsProps)
             </Card>
           </motion.div>
 
-          <motion.div {...enter(3)}>
+          <motion.div {...enter(3, calm)}>
             <Card as="section" className={styles.card} aria-labelledby="sprint-closed">
               <CardHeader
                 id="sprint-closed"

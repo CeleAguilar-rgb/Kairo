@@ -3,6 +3,7 @@
 import { motion } from 'motion/react'
 import { useEffect, useOptimistic, useState, useTransition } from 'react'
 
+import { useCalmEntry } from '@/components/layout/SectionPanel'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { useToast } from '@/components/ui/Toast'
@@ -55,6 +56,7 @@ function applyOptimistic(day: RoutineDay, action: OptimisticAction): RoutineDay 
 // bloque pasa por una acción de servidor; la fila reacciona al instante y la lista real la reemplaza.
 export function TodayView({ day, streaks, meals, nowIso, timeZone, hourFormat, dateText }: TodayViewProps) {
   const toast = useToast()
+  const calm = useCalmEntry()
   const [, startTransition] = useTransition()
   const [now, setNow] = useState(nowIso)
   const [visible, apply] = useOptimistic(day, applyOptimistic)
@@ -108,7 +110,7 @@ export function TodayView({ day, streaks, meals, nowIso, timeZone, hourFormat, d
           <motion.section
             className={styles.timeline}
             aria-label="Rutina de hoy"
-            initial={{ opacity: 0, y: 12 }}
+            initial={calm ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: EASE_OUT, delay: 0.12 }}
           >
@@ -125,7 +127,7 @@ export function TodayView({ day, streaks, meals, nowIso, timeZone, hourFormat, d
 
           <motion.div
             className={styles.side}
-            initial={{ opacity: 0, y: 12 }}
+            initial={calm ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: EASE_OUT, delay: 0.2 }}
           >

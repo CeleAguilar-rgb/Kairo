@@ -21,14 +21,15 @@ const TABS = [
 
 // Las cinco partes de Día a día como pestañas que son rutas (igual que las de un proyecto): cada una tiene
 // su URL, así que el botón "atrás" y los enlaces directos funcionan. La píldora oscura se desliza a la
-// pestaña elegida, y se mueve al hacer clic sin esperar a que llegue la página.
+// pestaña elegida, y se mueve al hacer clic sin esperar a que llegue la página. `data-tab-switch` le dice a
+// la navegación que esto es cambiar de pestaña, no de pantalla (ver Navigation.tsx y SectionPanel.tsx).
 export function DailyTabs() {
   const pathname = usePathname()
   const target = usePendingHref() ?? pathname
 
   return (
     <LayoutGroup id="daily-tabs">
-      <nav className={styles.tabs} aria-label="Día a día">
+      <nav className={styles.tabs} aria-label="Día a día" data-tab-switch>
         {TABS.map((tab) => {
           const active = tab.href === BASE ? target === BASE : target.startsWith(tab.href)
           return (

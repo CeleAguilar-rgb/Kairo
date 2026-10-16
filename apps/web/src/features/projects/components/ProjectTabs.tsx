@@ -20,7 +20,8 @@ const TABS = [
 // Las partes del proyecto (Resumen, Sprints, Archivos) como pestañas que son rutas: cada una
 // tiene su URL, así que el botón "atrás" y los enlaces directos funcionan. La píldora oscura
 // se desliza a la pestaña elegida, y se mueve al hacer clic sin esperar a que llegue la página
-// (igual que el menú de arriba).
+// (igual que el menú de arriba). `data-tab-switch` le dice a la navegación que esto es cambiar de pestaña,
+// no de pantalla (ver Navigation.tsx y SectionPanel.tsx).
 export function ProjectTabs({ projectId }: { projectId: string }) {
   const base = `/proyectos/${projectId}`
   const pathname = usePathname()
@@ -28,7 +29,7 @@ export function ProjectTabs({ projectId }: { projectId: string }) {
 
   return (
     <LayoutGroup id="project-tabs">
-      <nav className={styles.tabs} aria-label="Partes del proyecto">
+      <nav className={styles.tabs} aria-label="Partes del proyecto" data-tab-switch>
         {TABS.map((tab) => {
           const href = `${base}${tab.slug}`
           const active = tab.slug === '' ? target === base : target.startsWith(href)

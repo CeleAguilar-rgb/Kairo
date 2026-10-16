@@ -19,6 +19,8 @@ type GoalCardProps = {
   today: IsoDate
   // Para escalonar la entrada de varias tarjetas seguidas.
   delay?: number
+  // La tarjeta nace ya en su lugar, sin subir (al cambiar de pestaña; lo decide la vista que la pinta).
+  calm?: boolean
   onOpen: (goal: Goal) => void
 }
 
@@ -27,13 +29,13 @@ export function AreaChip({ area, className }: { area: Goal['area']; className?: 
 }
 
 // Una meta activa o en pausa (Metas.dc.html): área, cómo se mide, el avance, el porqué y la fecha.
-export function GoalCard({ goal, today, delay = 0, onOpen }: GoalCardProps) {
+export function GoalCard({ goal, today, delay = 0, calm = false, onOpen }: GoalCardProps) {
   return (
     <motion.button
       type="button"
       className={[styles.card, goal.status === 'paused' ? styles.paused : null].filter(Boolean).join(' ')}
       onClick={() => onOpen(goal)}
-      initial={{ opacity: 0, y: 10 }}
+      initial={calm ? false : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE_OUT, delay } }}
       whileHover={{ y: -3 }}
       whileTap={{ scale: 0.99 }}
@@ -65,11 +67,11 @@ export function GoalCard({ goal, today, delay = 0, onOpen }: GoalCardProps) {
 }
 
 // Una meta lograda (la vitrina): tarjeta oscura con su estrella.
-export function AchievedGoalCard({ goal, delay = 0 }: { goal: Goal; delay?: number }) {
+export function AchievedGoalCard({ goal, delay = 0, calm = false }: { goal: Goal; delay?: number; calm?: boolean }) {
   return (
     <motion.div
       className={styles.achieved}
-      initial={{ opacity: 0, y: 10 }}
+      initial={calm ? false : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE_OUT, delay } }}
     >
       <span className={styles.star} aria-hidden="true">

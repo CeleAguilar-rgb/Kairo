@@ -4,6 +4,7 @@ import { classifyProjectFile, fileExtensionOf, PROJECT_FILE_EXTENSIONS, PROJECT_
 import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
 import { useEffect, useRef, useState, type DragEvent, type FormEvent } from 'react'
 
+import { useCalmEntry } from '@/components/layout/SectionPanel'
 import { Button } from '@/components/ui/Button'
 import { Card, CardHeader, LineIcon } from '@/components/ui/Card'
 import { Modal } from '@/components/ui/Modal'
@@ -33,9 +34,10 @@ type Upload = { id: string; name: string; sizeBytes: number; duration: number }
 
 const ACCEPT = PROJECT_FILE_EXTENSIONS.map((extension) => `.${extension}`).join(',')
 
-// Cada tarjeta entra un poco después de la anterior, de arriba hacia abajo.
-const enter = (position: number) => ({
-  initial: { opacity: 0, y: 12 },
+// Cada tarjeta entra un poco después de la anterior, de arriba hacia abajo. Si se llegó por una pestaña
+// (`calm`), nacen ya en su lugar: la pantalla se siente la misma (ver SectionPanel).
+const enter = (position: number, calm: boolean) => ({
+  initial: calm ? (false as const) : { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE_OUT, delay: 0.1 + position * 0.07 } },
 })
 
@@ -112,6 +114,7 @@ function Thumb({ file }: { file: LocalFile }) {
 // imagen), pero no se guarda en ningún lado y se pierde al recargar, hasta que exista Storage.
 export function ProjectFiles({ data, links: initialLinks, today }: ProjectFilesProps) {
   const toast = useToast()
+  const calm = useCalmEntry()
   const inputRef = useRef<HTMLInputElement>(null)
   const timers = useRef(new Map<string, ReturnType<typeof setTimeout>>())
   const previews = useRef(new Set<string>())
@@ -250,7 +253,7 @@ export function ProjectFiles({ data, links: initialLinks, today }: ProjectFilesP
 
   return (
     <>
-      <motion.div {...enter(0)} className={styles.toolbar}>
+      <motion.div {...enter(0, calm)} className={styles.toolbar}>
         <span className={styles.toolbarText}>Archivos y enlaces del proyecto</span>
         <Button onClick={() => inputRef.current?.click()}>
           <LineIcon d="M12 16V4M7 9l5-5 5 5M4 20h16" size={16} />
@@ -274,7 +277,7 @@ export function ProjectFiles({ data, links: initialLinks, today }: ProjectFilesP
 
       <div className={styles.grid}>
         <div className={styles.main}>
-          <motion.div {...enter(1)}>
+          <motion.div {...enter(1, calm)}>
             <Card as="section" className={styles.card} aria-labelledby="files-title">
               <CardHeader
                 id="files-title"
@@ -316,7 +319,9 @@ export function ProjectFiles({ data, links: initialLinks, today }: ProjectFilesP
                     <span className={styles.hint}>o toca para elegir · hasta {formatBytes(PROJECT_FILE_MAX_BYTES)}</span>
                   </button>
 
-                  <AnimatePresence mode="popLayout">
+                  {/* `initial={!calm}`: al llegar por una pestaña los archivos ya están en su lugar; los que se
+                      suben después siguen entrando con su animación. */}
+                  <AnimatePresence mode="popLayout" initial={!calm}>
                     {showUploads
                       ? uploads.map((upload) => (
                           <motion.div
@@ -395,7 +400,7 @@ export function ProjectFiles({ data, links: initialLinks, today }: ProjectFilesP
         </div>
 
         <aside className={styles.side}>
-          <motion.div {...enter(2)}>
+          <motion.div {...enter(2, calm)}>
             <Card as="section" className={styles.card} aria-labelledby="files-links">
               <CardHeader id="files-links" title="Enlaces" iconTone="accent" icon={<LineIcon d={['M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1', 'M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1']} />} />
               {safeLinks.length === 0 ? (
@@ -446,7 +451,7 @@ export function ProjectFiles({ data, links: initialLinks, today }: ProjectFilesP
             </Card>
           </motion.div>
 
-          <motion.div {...enter(3)}>
+          <motion.div {...enter(3, calm)}>
             <Card as="section" className={styles.card} aria-labelledby="files-space">
               <h2 id="files-space" className={styles.plainTitle}>
                 Espacio

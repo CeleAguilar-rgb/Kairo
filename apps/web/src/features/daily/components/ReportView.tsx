@@ -4,6 +4,7 @@ import { motion } from 'motion/react'
 import Link from 'next/link'
 import { useState } from 'react'
 
+import { useCalmEntry } from '@/components/layout/SectionPanel'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Card, LineIcon } from '@/components/ui/Card'
 import { EmptyState } from '@/components/ui/EmptyState'
@@ -59,6 +60,7 @@ function defaultSelection(rows: ReportRow[]): Selection | null {
 // Reporte (Reporte.dc.html): tres números de la semana y la matriz bloque por bloque con cada día. Se lee
 // del historial de la rutina; la semana viene en la dirección (`?semana=`), así que esto solo la pinta.
 export function ReportView({ report, today, hourFormat }: ReportViewProps) {
+  const calm = useCalmEntry()
   const [selected, setSelected] = useState<Selection | null>(() => defaultSelection(report.rows))
   const stats = reportStats(report.rows)
 
@@ -85,7 +87,7 @@ export function ReportView({ report, today, hourFormat }: ReportViewProps) {
 
   return (
     <>
-      <motion.div className={styles.stats} variants={staggerList(0.08, 0.1)} initial="hidden" animate="show">
+      <motion.div className={styles.stats} variants={staggerList(0.08, 0.1)} initial={calm ? false : 'hidden'} animate="show">
         <motion.div variants={fadeUp}>
           <Card as="section" className={styles.stat} aria-labelledby="stat-pct">
             <span id="stat-pct" className={styles.statLabel}>
@@ -138,7 +140,7 @@ export function ReportView({ report, today, hourFormat }: ReportViewProps) {
         </motion.div>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: EASE_OUT, delay: 0.3 }}>
+      <motion.div initial={calm ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: EASE_OUT, delay: 0.3 }}>
         <Card as="section" className={styles.board} aria-labelledby="report-matrix">
           <div className={styles.boardHead}>
             <h2 id="report-matrix" className={styles.boardTitle}>

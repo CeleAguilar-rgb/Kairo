@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 
+import { useCalmEntry } from '@/components/layout/SectionPanel'
 import { Button } from '@/components/ui/Button'
 import { LineIcon } from '@/components/ui/Card'
 import { EmptyState } from '@/components/ui/EmptyState'
@@ -41,6 +42,9 @@ const FILTERS: { value: GoalStatus; label: string }[] = [
 // panel, el formulario de nueva meta y la celebración al lograr una.
 export function GoalsView({ goals, today, habitBlocks, projects }: GoalsViewProps) {
   const entering = useEntering()
+  // Las tarjetas que están desde que se abre la pestaña nacen ya en su lugar; una meta nueva, que llega
+  // después, sí entra con su animación (por eso solo en la ventana de entrada).
+  const calm = useCalmEntry() && entering
   const [filter, setFilter] = useState<GoalStatus>('active')
   const [panel, setPanel] = useState<Panel>(null)
   const [celebrating, setCelebrating] = useState<string | null>(null)
@@ -103,9 +107,9 @@ export function GoalsView({ goals, today, habitBlocks, projects }: GoalsViewProp
             <div className={styles.goals}>
               {shown.map((goal, index) =>
                 goal.status === 'done' ? (
-                  <AchievedGoalCard key={goal.id} goal={goal} delay={entering ? 0.1 + index * 0.06 : 0} />
+                  <AchievedGoalCard key={goal.id} goal={goal} delay={entering ? 0.1 + index * 0.06 : 0} calm={calm} />
                 ) : (
-                  <GoalCard key={goal.id} goal={goal} today={today} delay={entering ? 0.1 + index * 0.06 : 0} onOpen={(item) => setPanel({ type: 'detail', id: item.id })} />
+                  <GoalCard key={goal.id} goal={goal} today={today} delay={entering ? 0.1 + index * 0.06 : 0} calm={calm} onOpen={(item) => setPanel({ type: 'detail', id: item.id })} />
                 ),
               )}
             </div>

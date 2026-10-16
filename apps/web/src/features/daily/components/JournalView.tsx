@@ -4,6 +4,7 @@ import { journalEntrySchema, JOURNAL_TAGS, MOOD_LEVELS, type JournalTag } from '
 import { AnimatePresence, motion } from 'motion/react'
 import { useOptimistic, useState, useTransition } from 'react'
 
+import { useCalmEntry } from '@/components/layout/SectionPanel'
 import { Button } from '@/components/ui/Button'
 import { Card, LineIcon } from '@/components/ui/Card'
 import { Doodle } from '@/components/ui/Doodle'
@@ -48,6 +49,7 @@ const GRATITUDE_SLOTS = 3
 // los días anteriores. El PIN y el cifrado de la entrada llegan con la API (docs/guides/security.md).
 export function JournalView({ entries, today, daySummary, timeZone, hourFormat, weekStart }: JournalViewProps) {
   const toast = useToast()
+  const calm = useCalmEntry()
   const [, startTransition] = useTransition()
   const [saving, startSaving] = useTransition()
 
@@ -103,7 +105,7 @@ export function JournalView({ entries, today, daySummary, timeZone, hourFormat, 
 
   return (
     <div className={styles.grid}>
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: EASE_OUT, delay: 0.12 }}>
+      <motion.div initial={calm ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: EASE_OUT, delay: 0.12 }}>
         <Card as="section" className={styles.today} aria-labelledby="journal-today">
           <span className={styles.corner} aria-hidden="true">
             <Doodle kind="star" size={56} strokeWidth={2} />
@@ -222,7 +224,7 @@ export function JournalView({ entries, today, daySummary, timeZone, hourFormat, 
         </Card>
       </motion.div>
 
-      <motion.div className={styles.side} variants={staggerList(0.08, 0.2)} initial="hidden" animate="show">
+      <motion.div className={styles.side} variants={staggerList(0.08, 0.2)} initial={calm ? false : 'hidden'} animate="show">
         <motion.div variants={fadeUp}>
           <Card as="section" className={styles.calendar} aria-labelledby="journal-month">
             <div className={styles.calendarHead}>

@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 
+import { useCalmEntry } from '@/components/layout/SectionPanel'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { LineIcon } from '@/components/ui/Card'
 import { formatWallTime, minutesToWallTime } from '@/lib/dates'
@@ -36,6 +37,7 @@ type RoutineTimelineProps = {
 // La línea de tiempo de hoy (DiaADia.dc.html): cada bloque con su hora, su ícono y su casilla, una raya
 // punteada en "ahora", y el bloque de enfoque en curso como tarjeta oscura con su siguiente tarea.
 export function RoutineTimeline({ blocks, focus, nowMinutes, hourFormat, onToggle, onCompleteTask, onPomodoro }: RoutineTimelineProps) {
+  const calm = useCalmEntry()
   const current = currentBlock(blocks, nowMinutes)
   const markerBefore = nowMarkerIndex(blocks, nowMinutes)
   const nowText = formatWallTime(minutesToWallTime(nowMinutes), hourFormat)
@@ -61,7 +63,7 @@ export function RoutineTimeline({ blocks, focus, nowMinutes, hourFormat, onToggl
   if (markerBefore === blocks.length) items.push(<NowLine key="now" text={nowText} />)
 
   return (
-    <motion.ol className={styles.list} variants={staggerList(0.04, 0.2)} initial="hidden" animate="show">
+    <motion.ol className={styles.list} variants={staggerList(0.04, 0.2)} initial={calm ? false : 'hidden'} animate="show">
       {items}
     </motion.ol>
   )

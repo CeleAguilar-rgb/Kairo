@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
 
 import { PageEnter } from '@/components/layout/PageEnter'
+import { SectionPanel } from '@/components/layout/SectionPanel'
 import { ProjectHeader, ProjectTabs } from '@/features/projects'
 import { getProject } from '@/features/projects/api'
 import { formatDayMonth } from '@/lib/dates'
@@ -14,7 +15,9 @@ type ProjectLayoutProps = {
 }
 
 // La cabecera y las pestañas son comunes a Resumen, Sprints y Archivos: viven en el layout, así
-// que al cambiar de pestaña solo cambia el contenido de abajo y la cabecera no se vuelve a animar.
+// que al cambiar de pestaña solo cambia el contenido de abajo y la cabecera no se vuelve a animar. Ese
+// contenido va en un SectionPanel: al elegir una pestaña lo atenúa si tarda y lo cambia con un fundido
+// corto, para que se sienta la misma pantalla (igual que en Día a día).
 export default async function ProjectLayout({ children, params }: ProjectLayoutProps) {
   const { id } = await params
   const project = await getProject(id)
@@ -31,7 +34,7 @@ export default async function ProjectLayout({ children, params }: ProjectLayoutP
           startedText={project.startedOn ? `Desde el ${formatDayMonth(project.startedOn)}` : null}
         />
         <ProjectTabs projectId={project.id} />
-        {children}
+        <SectionPanel className={styles.panel}>{children}</SectionPanel>
       </div>
     </PageEnter>
   )

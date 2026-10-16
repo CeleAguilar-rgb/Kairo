@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 import { useState, type FormEvent } from 'react'
 
+import { useCalmEntry } from '@/components/layout/SectionPanel'
 import { Card, CardHeader, LineIcon } from '@/components/ui/Card'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { Doodle } from '@/components/ui/Doodle'
@@ -32,9 +33,10 @@ const STATUS_TEXT: Record<ProjectTask['status'], string> = {
   done: 'Hecho',
 }
 
-// Cada tarjeta entra un poco después de la anterior, de arriba hacia abajo.
-const enter = (position: number) => ({
-  initial: { opacity: 0, y: 12 },
+// Cada tarjeta entra un poco después de la anterior, de arriba hacia abajo. Si se llegó por una pestaña
+// (`calm`), nacen ya en su lugar: la pantalla se siente la misma (ver SectionPanel).
+const enter = (position: number, calm: boolean) => ({
+  initial: calm ? (false as const) : { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE_OUT, delay: 0.12 + position * 0.07 } },
 })
 
@@ -56,6 +58,7 @@ function isSafeUrl(url: string) {
 // hasta que existan los endpoints de proyectos.
 export function ProjectSummary({ project, today, weekEnd }: ProjectSummaryProps) {
   const entering = useEntering()
+  const calm = useCalmEntry()
   const [objectives, setObjectives] = useState(project.objectives)
   const [tasks, setTasks] = useState(project.tasks)
   const [view, setView] = useState<TaskView>('pending')
@@ -106,7 +109,7 @@ export function ProjectSummary({ project, today, weekEnd }: ProjectSummaryProps)
   return (
     <div className={styles.grid}>
       <div className={styles.main}>
-        <motion.div {...enter(0)}>
+        <motion.div {...enter(0, calm)}>
           <Card as="section" className={styles.card} aria-labelledby="project-about">
             <CardHeader id="project-about" title="De qué trata" iconTone="warm" icon={<LineIcon d="M4 5h16M4 10h16M4 15h10M4 20h7" />} />
             {project.description ? (
@@ -117,7 +120,7 @@ export function ProjectSummary({ project, today, weekEnd }: ProjectSummaryProps)
           </Card>
         </motion.div>
 
-        <motion.div {...enter(1)}>
+        <motion.div {...enter(1, calm)}>
           <Card as="section" className={styles.card} aria-labelledby="project-objectives">
             <CardHeader
               id="project-objectives"
@@ -152,7 +155,7 @@ export function ProjectSummary({ project, today, weekEnd }: ProjectSummaryProps)
           </Card>
         </motion.div>
 
-        <motion.div {...enter(2)}>
+        <motion.div {...enter(2, calm)}>
           <Card as="section" className={styles.card} aria-labelledby="project-tasks">
             <CardHeader
               id="project-tasks"
@@ -188,7 +191,9 @@ export function ProjectSummary({ project, today, weekEnd }: ProjectSummaryProps)
             />
 
             <div className={styles.rows}>
-              <AnimatePresence mode="popLayout">
+              {/* `initial={!calm}`: al llegar por una pestaña las tareas ya están en su lugar; las que se agregan o
+                  se muestran después (cambiar de "Pendientes" a "Hechas") siguen entrando con su animación. */}
+              <AnimatePresence mode="popLayout" initial={!calm}>
                 {shown.map((task, index) => {
                   const isDone = task.status === 'done'
                   const dueClass = isDone || !task.dueOn ? null : task.dueOn === today ? styles.dueToday : task.dueOn < today ? styles.dueOverdue : null
@@ -250,7 +255,7 @@ export function ProjectSummary({ project, today, weekEnd }: ProjectSummaryProps)
       </div>
 
       <aside className={styles.side}>
-        <motion.div {...enter(1)}>
+        <motion.div {...enter(1, calm)}>
           <Card tone="inverted" as="section" className={[styles.card, styles.avance].join(' ')} aria-labelledby="project-progress">
             <span className={styles.heart} aria-hidden="true">
               <Doodle kind="heart" size={40} stroke="inverted" />
@@ -280,7 +285,7 @@ export function ProjectSummary({ project, today, weekEnd }: ProjectSummaryProps)
           </Card>
         </motion.div>
 
-        <motion.div {...enter(2)}>
+        <motion.div {...enter(2, calm)}>
           <Card as="section" className={styles.card} aria-labelledby="project-details">
             <h2 id="project-details" className={styles.plainTitle}>
               Detalles
@@ -345,7 +350,7 @@ export function ProjectSummary({ project, today, weekEnd }: ProjectSummaryProps)
           </Card>
         </motion.div>
 
-        <motion.div {...enter(3)}>
+        <motion.div {...enter(3, calm)}>
           <Card tone="accent" as="section" className={styles.card} aria-labelledby="project-notes">
             <label id="project-notes" htmlFor="project-notes-text" className={styles.plainTitle}>
               Notas
