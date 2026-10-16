@@ -1,22 +1,30 @@
 'use client'
 
 import { AnimatePresence, motion } from 'motion/react'
-import { useState } from 'react'
+import { useOptimistic, useTransition } from 'react'
 
 import { Card, CardHeader, CardLink, LineIcon } from '@/components/ui/Card'
+import { useToast } from '@/components/ui/Toast'
 import { DURATION, fadeUp, SPRING, staggerList } from '@/lib/motion'
 
+import { toggleMealDoneAction } from '../meal-actions'
 import { MEAL_LABEL, type MealPlan } from '../types'
 
 import styles from './DailyCards.module.css'
 
-// "Menú de hoy" (Main.dc.html). Picar una comida la marca como comida
-// (meal_plans.done); en memoria hasta que exista el endpoint.
+// "Menú de hoy" (Main.dc.html). Picar una comida la marca como comida (meal_plans.done) con una acción de
+// servidor; la fila reacciona al instante y, cuando la acción termina, la lista real la reemplaza.
 export function MenuCard({ meals: initial }: { meals: MealPlan[] }) {
-  const [meals, setMeals] = useState(initial)
+  const toast = useToast()
+  const [, startTransition] = useTransition()
+  const [meals, flip] = useOptimistic(initial, (current, id: string) => current.map((m) => (m.id === id ? { ...m, done: !m.done } : m)))
 
-  function toggle(id: string) {
-    setMeals((current) => current.map((m) => (m.id === id ? { ...m, done: !m.done } : m)))
+  function toggle(meal: MealPlan) {
+    startTransition(async () => {
+      flip(meal.id)
+      const result = await toggleMealDoneAction({ date: meal.planDate, meal: meal.meal })
+      if (!result.ok) toast.show({ message: result.message ?? 'No se pudo marcar la comida.', icon: 'info' })
+    })
   }
 
   return (
@@ -39,7 +47,7 @@ export function MenuCard({ meals: initial }: { meals: MealPlan[] }) {
                 className={[styles.meal, meal.done ? styles.mealDone : null].filter(Boolean).join(' ')}
                 aria-pressed={meal.done}
                 aria-label={`${MEAL_LABEL[meal.meal]}: ${meal.dish}${meal.done ? ', comido' : ''}`}
-                onClick={() => toggle(meal.id)}
+                onClick={() => toggle(meal)}
                 whileTap={{ scale: 0.98 }}
               >
                 <span className={styles.mealKind}>{MEAL_LABEL[meal.meal]}</span>

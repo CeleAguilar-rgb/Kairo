@@ -42,6 +42,7 @@
  * --surface-inverted-glass  bloque translúcido dentro de --surface-inverted (bloque actual de la rutina)
  * --accent-glow             fila seleccionada dentro de --surface-inverted (pendiente abierto)
  * --scrim                    velo detrás de paneles laterales y modales (no está en el PDF; sale del canvas)
+ * --mood-1 … --mood-5       escala del ánimo del Diario, de "muy mal" a "muy bien" (caritas y mapa del mes; no está en el PDF; sale de Diario.dc.html)
  *
  * --success: pendiente. El PDF no define un verde — "lavanda" ya cubre
  * lo hecho/el avance; se agrega si aparece un uso que de verdad lo pida.

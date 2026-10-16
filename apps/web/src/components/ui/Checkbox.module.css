@@ -30,6 +30,10 @@
   border-color: var(--text-on-inverted-muted);
 }
 
+.danger {
+  border-color: var(--danger);
+}
+
 .checked {
   background: var(--accent);
   border-color: var(--accent);

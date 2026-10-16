@@ -1,9 +1,8 @@
 import { z } from 'zod'
 
-import { EVENT_DELETE_SCOPES, EVENT_KINDS, EVENT_REMINDERS, EVENT_REPEATS } from './constants'
+import { timeOfDay } from '../time'
 
-// Una hora de pared "HH:MM" de 24 horas ('09:30', '17:00').
-const timeOfDay = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Escribe una hora válida.')
+import { EVENT_DELETE_SCOPES, EVENT_KINDS, EVENT_REMINDERS, EVENT_REPEATS } from './constants'
 
 // Formulario de evento (EventoNuevo.dc.html): sirve para crear y para editar. La fecha es un día
 // suelto ('AAAA-MM-DD') y las horas son horas de pared en la zona del perfil: la API las convierte

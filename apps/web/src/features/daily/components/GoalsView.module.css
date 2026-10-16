@@ -1,0 +1,18 @@
+/* El número dentro de cada opción del filtro, más tenue que el nombre */
+.count {
+  margin-left: var(--space-3);
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.goals {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-9);
+}
+
+@media (max-width: 400px) {
+  .goals {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -10,8 +10,8 @@ type CheckboxProps = {
   checked: boolean
   onToggle: () => void
   label: string
-  // 'inverted' para usarlo sobre --surface-inverted (tarjeta destacada).
-  tone?: 'surface' | 'inverted'
+  // 'inverted' para usarlo sobre --surface-inverted (tarjeta destacada); 'danger' para lo que ya se atrasó (rutina).
+  tone?: 'surface' | 'inverted' | 'danger'
   className?: string
 }
 
@@ -19,7 +19,7 @@ type CheckboxProps = {
 // se llena con un rebote corto, la palomita se dibuja de izquierda a derecha y
 // un anillo de acento se expande y desvanece detrás, como una onda.
 export function Checkbox({ checked, onToggle, label, tone = 'surface', className }: CheckboxProps) {
-  const classes = [styles.checkbox, tone === 'inverted' ? styles.inverted : null, checked ? styles.checked : null, className]
+  const classes = [styles.checkbox, tone === 'inverted' ? styles.inverted : null, tone === 'danger' ? styles.danger : null, checked ? styles.checked : null, className]
     .filter(Boolean)
     .join(' ')
 

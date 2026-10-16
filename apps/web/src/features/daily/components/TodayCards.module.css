@@ -1,0 +1,105 @@
+.progress {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-11);
+}
+
+.progressText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.progressTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.side {
+  gap: var(--space-5);
+}
+
+.empty {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.meals,
+.streaks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.meal {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-14);
+  background: var(--surface-raised);
+}
+
+.mealKind {
+  width: 72px;
+  flex-shrink: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.mealDish {
+  flex: 1;
+  min-width: 0;
+}
+
+.streaks {
+  gap: var(--space-5);
+}
+
+.streak {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.streakName {
+  flex: 1;
+  min-width: 0;
+}
+
+.dots {
+  display: flex;
+  gap: 3px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 3px;
+  background: var(--border-soft);
+}
+
+.dotOn {
+  background: var(--accent-strong);
+}
+
+.streakDays {
+  width: 58px;
+  text-align: right;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent-ink);
+}

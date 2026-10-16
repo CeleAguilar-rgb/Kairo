@@ -1,0 +1,165 @@
+.card {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-10);
+  border-radius: var(--radius-28);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: box-shadow var(--duration-base) ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.paused {
+  background: var(--surface-raised);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px var(--space-4);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+/* Un color por área, como en el canvas */
+.area_work {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.area_personal {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.area_school {
+  background: var(--accent);
+  color: var(--text);
+}
+
+.area_health {
+  background: var(--surface-muted);
+  color: var(--text-muted);
+}
+
+.area_money {
+  background: var(--accent-warm);
+  color: var(--text);
+}
+
+.kind {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.numbers {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.percent {
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.progressText {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.why {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.due {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* --- Lograda --- */
+
+.achieved {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-6);
+  padding: var(--space-10);
+  border-radius: var(--radius-28);
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.star {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-6);
+}
+
+.achievedChip {
+  align-self: flex-start;
+}
+
+.achievedTitle {
+  padding-right: 70px;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.achievedWhen {
+  font-size: 14px;
+  color: var(--text-on-inverted-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+}

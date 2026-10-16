@@ -2,13 +2,17 @@
 
 > Léelo al empezar cada sesión. Actualízalo al terminar. Máximo ~60 líneas: es un resumen, no un diario. El detalle va en `sessions/`.
 
-**Última actualización:** 2026-10-14 · sesión `2026-10-14-agenda-4.md`
+**Última actualización:** 2026-10-16 · sesión `2026-10-16-dia-a-dia-6.md`
 
 ## Fase actual
 
 Fase 0 (base), **en progreso**. Paso 4 de 6 (Auth) casi listo.
 
 ## Lo último que se hizo
+
+- **2026-10-16 · Día a día (solo front, con datos de ejemplo).** Módulo completo en `/dia-a-dia`: Hoy (rutina en línea de tiempo con la raya de "ahora", tarjeta de enfoque en curso, avance, menú y rachas), Menú semanal, Reporte, Diario, Metas (con celebración y vitrina) y el editor de rutinas (`/dia-a-dia/rutina`, panel de bloques). "Tarde" = marcado después de insistir (decisión #27). Probado en Edge real (escritorio y 390 px) y la lógica pura con aserciones. **Falta, antes de conectar la API:** el PIN del diario (el canvas no tiene su pantalla; hoy el Diario NO está protegido) y las columnas nuevas de rutina, menú, diario y metas (lista completa en `sessions/2026-10-16-dia-a-dia-6.md`). Siguiente pantalla: Finanzas, Escuela o Escritos.
+
+- **2026-10-15 · Recordatorios (solo front, con datos de ejemplo).** `/recordatorios` completa: "Para hoy" (lo de hoy y lo atrasado, hora en rojo), marcar listo con "Deshacer", posponer (10 min, 1 h, mañana a las 9) con menú accesible, formulario de nuevo recordatorio validado con `createReminderSchema` (`packages/shared`; rechaza horas pasadas), series "Cada día" / "Lunes a viernes" que generan la siguiente vez, estado "Todo al día" y una tarjeta extra "Más adelante" (no está en el canvas). La tarjeta de Inicio lee de la misma lista y usa las mismas acciones. Probado en Edge real (escritorio y 390 px). **Pendiente de base de datos:** `reminders` necesita repetición, origen "Rutina" y precisión (ver `sessions/2026-10-15-recordatorios-5.md`). Siguiente pantalla: Finanzas, Escuela o Escritos.
 
 - **2026-10-14 · Agenda (solo front, con datos de ejemplo).** `/agenda` completa: vistas Día, Semana y Mes, panel con detalle, "Próximos" y filtros, formulario de nuevo/editar evento validado con `eventSchema` (`packages/shared`) y acciones de servidor, detalle con "Unirme a la llamada", duplicar, mover de día y borrar por alcance (solo este / este y los siguientes / toda la serie) con "Deshacer". Junta eventos, pagos de Finanzas y tareas con fecha en una sola fuente, y Inicio ("Esta semana") lee de la misma. Probado en el navegador y en celular; lo creado vive en la memoria del servidor de desarrollo. **Pendiente de base de datos:** `events` necesita tipo `school`, lugar, repetición (con fin y ocurrencias saltadas) y aviso. Siguiente pantalla: Finanzas, Escritos, Día a día, Escuela o Recordatorios (ver `sessions/2026-10-14-agenda-4.md`).
 - **2026-10-14 · Proyectos (solo front, con datos de ejemplo).** Módulo completo: galería (`/proyectos`), detalle con sus tres pestañas Resumen, Sprints y Archivos (`/proyectos/[id]`, cabecera y pestañas en el layout) y el formulario de nuevo/editar proyecto, validado con `projectSchema` (`packages/shared`) y con acciones de servidor; lo creado y editado se ve de verdad mientras el servidor de desarrollo siga encendido. Todo lo demás se pierde al cambiar de pestaña o recargar hasta que existan los endpoints (ver `sessions/2026-10-14-proyectos-3.md`). "Ver en el tablero" abre `/tareas?proyecto=<id>`. Se arregló un error de `Navigation` con el botón "atrás".
@@ -32,6 +36,7 @@ El paso 4 de Auth está prácticamente terminado. Falta, del lado del usuario (n
 
 - Correo para enviar invitaciones a otras personas: por ahora SMTP de Resend sin dominio propio (`onboarding@resend.dev`, solo entrega al correo con el que te registraste en Resend — sirve para probar, no para invitar a nadie más todavía). Más adelante: crear un Gmail dedicado a Kairo (decidir si se usa como SMTP o solo como cuenta de Resend) o comprar un dominio.
 - Tareas que se repiten, o si eso vive solo en Recordatorios.
+- Día a día: si los 30 minutos de gracia para marcar "a tiempo" un bloque sin "insistir" y sin hora de fin (decisión #27) son los que quieres.
 - Agenda: mostrar la rutina detrás de los eventos y arrastrar eventos.
 - Proteger `main` en GitHub (pedir Pull Request para hacer merge).
 - En la Fase 0: si se agrega commitlint + husky para validar los mensajes de commit, y GitHub Actions para revisar cada Pull Request.

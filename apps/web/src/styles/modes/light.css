@@ -43,4 +43,10 @@
   --surface-inverted-glass: var(--tint-cream-08);
   --accent-glow: var(--tint-lavender-14);
   --scrim: var(--tint-ink-28);
+
+  --mood-1: var(--sand-300);
+  --mood-2: var(--sand-100);
+  --mood-3: var(--lavender-100);
+  --mood-4: var(--lavender-300);
+  --mood-5: var(--lavender-400);
 }

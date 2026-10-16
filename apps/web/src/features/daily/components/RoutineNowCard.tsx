@@ -3,9 +3,10 @@
 import { motion } from 'motion/react'
 
 import { Card, CardHeader, CardLink, LineIcon } from '@/components/ui/Card'
-import { formatWallTime, wallTimeToMinutes } from '@/lib/dates'
+import { formatWallTime } from '@/lib/dates'
 import { EASE_OUT, fadeUp, staggerList } from '@/lib/motion'
 
+import { currentBlock, endMinutes, isOverdue, startMinutes } from '../routine-utils'
 import { ROUTINE_KIND_LABEL, type RoutineBlockToday } from '../types'
 
 import styles from './RoutineNowCard.module.css'
@@ -24,17 +25,17 @@ const MAX_LINES = 3
 // "Ahora en tu rutina" (Main.dc.html): el bloque en curso (o el siguiente),
 // lo que ya pasó sin marcar (en rojo) y lo que viene.
 export function RoutineNowCard({ blocks, nowMinutes, hourFormat }: RoutineNowCardProps) {
-  const current = blocks.find((b) => wallTimeToMinutes(b.startsAt) <= nowMinutes && nowMinutes < wallTimeToMinutes(b.endsAt))
-  const upcoming = blocks.filter((b) => wallTimeToMinutes(b.startsAt) > nowMinutes)
+  // Solo un bloque con rango puede estar "en curso"; un hábito es un momento.
+  const current = currentBlock(blocks, nowMinutes)
+  const upcoming = blocks.filter((b) => startMinutes(b) > nowMinutes)
   const focus = current ?? upcoming[0] ?? null
-  const missed = blocks.filter((b) => wallTimeToMinutes(b.endsAt) <= nowMinutes && !b.done)
+  // Lo que ya se insistió y sigue sin marcar (en rojo).
+  const missed = blocks.filter((b) => isOverdue(b, nowMinutes))
   const rest = upcoming.filter((b) => b.id !== focus?.id)
   const lines = [...missed.map((b) => ({ block: b, missed: true })), ...rest.map((b) => ({ block: b, missed: false }))].slice(0, MAX_LINES)
 
   // Qué tanto del bloque actual ya pasó (0 a 1), para la barrita de avance.
-  const elapsed = current
-    ? (nowMinutes - wallTimeToMinutes(current.startsAt)) / (wallTimeToMinutes(current.endsAt) - wallTimeToMinutes(current.startsAt))
-    : 0
+  const elapsed = current ? (nowMinutes - startMinutes(current)) / (endMinutes(current) - startMinutes(current)) : 0
 
   return (
     <Card as="section" tone="inverted" className={styles.card} aria-labelledby="home-routine">
@@ -56,7 +57,7 @@ export function RoutineNowCard({ blocks, nowMinutes, hourFormat }: RoutineNowCar
             ) : (
               <span className={styles.nextTag}>Sigue</span>
             )}
-            {formatWallTime(focus.startsAt, hourFormat)} – {formatWallTime(focus.endsAt, hourFormat)} · {ROUTINE_KIND_LABEL[focus.kind]}
+            {formatWallTime(focus.startsAt, hourFormat)}{focus.endsAt ? ` – ${formatWallTime(focus.endsAt, hourFormat)}` : ''} · {ROUTINE_KIND_LABEL[focus.kind]}
           </span>
           <span className={styles.nowTitle}>{focus.title}</span>
           {focus.note ? <span className={styles.nowNote}>→ {focus.note}</span> : null}

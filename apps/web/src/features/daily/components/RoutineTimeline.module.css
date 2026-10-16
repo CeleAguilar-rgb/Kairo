@@ -1,0 +1,322 @@
+/* La línea de tiempo de hoy. Las medidas de las columnas son variables para que la raya vertical (el riel)
+   siempre caiga justo en medio de los íconos, también en celular. */
+.list {
+  --time-col: 64px;
+  --icon-col: 40px;
+  --row-gap: var(--space-5);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* El riel: pasa por el centro de la columna de íconos, detrás de ellos */
+.list::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--time-col) + var(--row-gap) + var(--icon-col) / 2 - 1px);
+  width: 2px;
+  background: var(--border-soft);
+}
+
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--time-col) var(--icon-col) minmax(0, 1fr) auto;
+  gap: var(--row-gap);
+  align-items: center;
+  min-height: 56px;
+  padding: var(--space-2) 0;
+}
+
+.time {
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Lo que todavía no llega va más tenue y sin negrita */
+.timeFuture {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.icon {
+  position: relative;
+  z-index: 1;
+  width: var(--icon-col);
+  height: var(--icon-col);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-14);
+  background: var(--surface-raised);
+  color: var(--text);
+  transition:
+    background var(--duration-base) ease,
+    color var(--duration-base) ease;
+}
+
+.iconDone {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.iconOverdue {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.iconFree {
+  background: var(--surface-muted);
+  color: var(--text-muted);
+}
+
+.iconFocus {
+  align-self: start;
+  margin-top: var(--space-4);
+  background: var(--accent);
+  color: var(--text);
+}
+
+.text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-weight: 500;
+  transition: color var(--duration-base) ease;
+}
+
+.titleDone {
+  color: var(--text-muted);
+}
+
+.sub {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* "Hecho 17:21 · tarde" */
+.subLate {
+  color: var(--accent-strong);
+}
+
+/* "Hace 1 h 20 min · ya te lo recordé" */
+.subOverdue {
+  color: var(--danger);
+  font-weight: 500;
+}
+
+.rangeChip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px var(--space-4);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  background: var(--surface-muted);
+  color: var(--text-muted);
+}
+
+/* La raya punteada de "ahora": no ocupa alto, se dibuja entre dos bloques */
+.now {
+  position: relative;
+  z-index: 2;
+  height: 0;
+  margin-left: var(--time-col);
+  border-top: 2px dashed var(--accent-strong);
+}
+
+.nowTime {
+  position: absolute;
+  left: calc(var(--time-col) * -1);
+  top: -11px;
+  padding: 1px var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--accent-strong);
+  color: var(--surface);
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --- Bloque de enfoque en curso --- */
+
+.focusRow {
+  align-items: start;
+}
+
+.focusTime {
+  padding-top: var(--space-8);
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.focus {
+  grid-column: 3 / 5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin: var(--space-1) 0;
+  padding: var(--space-7) var(--space-8);
+  border-radius: var(--radius-22);
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.focusHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.focusTitles {
+  display: flex;
+  flex-direction: column;
+}
+
+.focusTitle {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.focusMeta {
+  font-size: 13px;
+  color: var(--text-on-inverted-soft);
+}
+
+.focusChip {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--text);
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-16);
+  background: var(--surface-inverted-glass);
+  border: 1px solid var(--border-inverted);
+}
+
+.taskCheckOff {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.taskText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.taskKicker {
+  font-size: 12px;
+  color: var(--text-on-inverted-soft);
+}
+
+.taskName {
+  font-weight: 500;
+}
+
+.taskLink {
+  font-size: 13px;
+  white-space: nowrap;
+  color: var(--accent);
+}
+
+.focusActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+}
+
+.pomodoro {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 40px;
+  padding: 0 var(--space-7);
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--text);
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform var(--duration-base) ease;
+}
+
+.pomodoro:hover {
+  transform: translateY(-1px);
+}
+
+.pomodoro:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.focusProgress {
+  font-size: 13px;
+  color: var(--text-on-inverted-soft);
+}
+
+@media (max-width: 720px) {
+  .list {
+    --time-col: 52px;
+    --icon-col: 36px;
+    --row-gap: var(--space-4);
+  }
+
+  .focusRow .iconFocus {
+    display: none;
+  }
+
+  .focus {
+    grid-column: 2 / 5;
+  }
+
+  .taskLink {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pomodoro,
+  .icon,
+  .title {
+    transition: none;
+  }
+
+  .pomodoro:hover {
+    transform: none;
+  }
+}
