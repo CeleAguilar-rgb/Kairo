@@ -1,0 +1,162 @@
+/* Columnas de tarjetas de distinta altura: 3 columnas de al menos 260px, como en el canvas */
+.notes {
+  columns: 3 260px;
+  column-gap: var(--space-7);
+}
+
+.item {
+  break-inside: avoid;
+  margin-bottom: var(--space-7);
+}
+
+.drop {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 150px;
+  padding: var(--space-7);
+  margin-bottom: var(--space-7);
+  break-inside: avoid;
+  border-radius: var(--radius-22);
+  border: 2px dashed var(--border-control);
+  color: var(--text);
+  text-align: center;
+  cursor: pointer;
+  transition: background var(--duration-base) ease;
+}
+
+.drop:hover:not(:disabled) {
+  background: var(--surface-hover);
+}
+
+.drop:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.drop:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.dropTitle {
+  font-weight: 500;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.note {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius-22);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--text);
+  transition:
+    transform var(--duration-base) ease,
+    box-shadow var(--duration-base) ease;
+}
+
+.note:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  color: var(--text);
+}
+
+.note:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6) var(--space-7) var(--space-7);
+}
+
+.title {
+  font-weight: 500;
+}
+
+.excerpt {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 14px;
+}
+
+.box {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 5px;
+  border: 1.5px solid var(--text-subtle);
+}
+
+.boxDone {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.checkDone {
+  color: var(--text-subtle);
+  text-decoration: line-through;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.images {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.when {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .note,
+  .drop {
+    transition: none;
+  }
+
+  .note:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,44 @@
+/* Los colores de Escritos por clave, tomados de las variables semánticas. Los usan las etiquetas (estado de un
+   capítulo, etiqueta de una nota), los círculos de los personajes y los lomos de los libros. Un componente los
+   toma con colors[`tone_${tone}`] / colors[`spine_${color}`]. */
+
+.tone_ink {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.tone_accent {
+  background: var(--accent);
+  color: var(--text);
+}
+
+.tone_soft {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.tone_warm {
+  background: var(--accent-warm);
+  color: var(--text);
+}
+
+.tone_muted {
+  background: var(--surface-muted);
+  color: var(--text-muted);
+}
+
+/* El lomo de un libro (EscritosInicio): tinta con letra dorada, lavanda y arena */
+.spine_ink {
+  background: var(--surface-inverted);
+  color: var(--accent-warm);
+}
+
+.spine_lavender {
+  background: var(--accent);
+  color: var(--text);
+}
+
+.spine_sand {
+  background: var(--accent-warm);
+  color: var(--text);
+}

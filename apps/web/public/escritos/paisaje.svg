@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200" role="img" aria-label="Montañas al atardecer">
+<rect width="300" height="200" fill="#e9e7fb"/>
+<circle cx="225" cy="58" r="22" fill="#fffdf9"/>
+<path d="M0 160l70-70 50 45 40-35 80 70v30H0z" fill="#3a3480"/>
+<path d="M0 175l90-50 70 40 60-30 80 40v25H0z" fill="#1f1c19"/>
+</svg>

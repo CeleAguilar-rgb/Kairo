@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Noche">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1f1c19"/><stop offset=".7" stop-color="#3a3480"/><stop offset="1" stop-color="#6a62d6"/></linearGradient></defs>
+<rect width="200" height="200" fill="url(#g)"/>
+</svg>
