@@ -22,23 +22,27 @@ type TaskCreateDrawerProps = {
   projects: ProjectOption[]
   // Proyecto con el que arranca (el del filtro activo de la pantalla).
   defaultProjectId: string | null
+  // Esperando la respuesta de crear: a diferencia de marcar o mover una
+  // tarea (que se ven al instante), aquí sí hay que esperar el id real
+  // antes de cerrar, así que el botón lo muestra.
+  pending: boolean
   onClose: () => void
   onCreate: (input: CreateTaskInput) => void
 }
 
-export function TaskCreateDrawer({ open, projects, defaultProjectId, onClose, onCreate }: TaskCreateDrawerProps) {
+export function TaskCreateDrawer({ open, projects, defaultProjectId, pending, onClose, onCreate }: TaskCreateDrawerProps) {
   return (
     <Drawer open={open} onClose={onClose} title="Nueva tarea" hideTitle width="lg">
       {/* El formulario es un componente aparte a propósito: Drawer lo desmonta al
           cerrarse, así cada vez que se abre empieza vacío sin tener que limpiarlo a mano. */}
-      <TaskCreateForm projects={projects} defaultProjectId={defaultProjectId} onClose={onClose} onCreate={onCreate} />
+      <TaskCreateForm projects={projects} defaultProjectId={defaultProjectId} pending={pending} onClose={onClose} onCreate={onCreate} />
     </Drawer>
   )
 }
 
 type FormProps = Omit<TaskCreateDrawerProps, 'open'>
 
-function TaskCreateForm({ projects, defaultProjectId, onClose, onCreate }: FormProps) {
+function TaskCreateForm({ projects, defaultProjectId, pending, onClose, onCreate }: FormProps) {
   const [title, setTitle] = useState('')
   const [projectId, setProjectId] = useState(defaultProjectId ?? '')
   const [status, setStatus] = useState<TaskStatus>('todo')
@@ -67,6 +71,7 @@ function TaskCreateForm({ projects, defaultProjectId, onClose, onCreate }: FormP
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
+    if (pending) return
     // Una subtarea escrita que no se agregó con Enter cuenta: nadie quiere perderla.
     const pendingSubtask = newSubtask.trim()
     const result = createTaskSchema.safeParse({
@@ -232,14 +237,14 @@ function TaskCreateForm({ projects, defaultProjectId, onClose, onCreate }: FormP
       </div>
 
       <footer className={styles.actions}>
-        <Button variant="ghost" onClick={onClose}>
+        <Button variant="ghost" onClick={onClose} disabled={pending}>
           Cancelar
         </Button>
-        <Button type="submit" className={styles.submit}>
+        <Button type="submit" className={styles.submit} disabled={pending}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M5 12l5 5L20 7" />
           </svg>
-          Crear tarea
+          {pending ? 'Creando…' : 'Crear tarea'}
         </Button>
       </footer>
     </form>

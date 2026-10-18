@@ -12,6 +12,13 @@
   gap: var(--space-5);
 }
 
+.topActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
 .chip {
   display: inline-flex;
   align-items: center;
@@ -52,6 +59,34 @@ a.chip:hover {
 }
 
 .close:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* Mismo tamaño que .close, pero sin su giro de 90°: no tiene sentido en un
+   bote de basura. Se tiñe de rojo-peligro en vez de girar. */
+.delete {
+  all: unset;
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  color: var(--text-muted);
+  transition:
+    background var(--duration-base) ease,
+    color var(--duration-base) ease;
+}
+
+.delete:hover {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.delete:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
 }
@@ -215,6 +250,7 @@ a.chip:hover {
 
 .primary {
   flex: 1;
+  min-width: max-content;
   overflow: hidden;
 }
 
@@ -222,4 +258,5 @@ a.chip:hover {
   display: inline-flex;
   align-items: center;
   gap: var(--space-3);
+  white-space: nowrap;
 }

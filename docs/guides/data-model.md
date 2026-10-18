@@ -39,7 +39,7 @@ Para los módulos que todavía no tienen backend (todos salvo Cuenta e Inicio + 
 | project_objectives | text, done, position | → projects |
 | project_links | title, url | → projects |
 | sprints | number, goal, starts_on, ends_on, status (`active`, `closed`), notes, closed_at | → projects |
-| tasks | title, notes, status (`todo`, `in_progress`, `done`), priority, due_on, done_at, position | → projects (opcional), → sprints (opcional; vacío = backlog), → tasks como padre (subtareas). Las **notas rápidas** del Inicio son tareas: pendientes marcables que se abren con más detalle. |
+| tasks | title, notes, status (`todo`, `in_progress`, `review`, `done`), priority, due_on, done_at, position, project_id, parent_task_id | → projects (opcional; la columna existe pero sin FK todavía — Proyectos no tiene tabla ni service en la API, así que el service de Tareas devuelve `project: null` hasta que le toque su turno en Fase 1b, decisión #35), → sprints (opcional; vacío = backlog; columna todavía sin agregar, se suma cuando Proyectos tenga sprints), → tasks como padre (subtareas, vía `parent_task_id`). Las **notas rápidas** del Inicio son tareas: pendientes marcables que se abren con más detalle. |
 | attachments | name, storage_path, mime, size_bytes | → projects **o** pages (exactamente una, con check). |
 
 ## Agenda
@@ -111,5 +111,4 @@ Para los módulos que todavía no tienen backend (todos salvo Cuenta e Inicio + 
 
 - Pascua: por ahora, fecha real (no fija en abril); revisar si hace falta otra regla cuando se construyan las temporadas.
 - Tareas que se repiten (pagar renta cada mes) o si eso vive solo en Recordatorios.
-- Tareas: el canvas de `TareaNueva.dc.html` muestra un cuarto estado ("Revisión") que no está en `status` abajo; por ahora se construye solo con los 3 documentados (`todo`, `in_progress`, `done`). Si se quiere agregar `in_review`, es una migración nueva (`ALTER TYPE`).
 - Agenda: mostrar la rutina detrás de los eventos y arrastrar eventos para moverlos.

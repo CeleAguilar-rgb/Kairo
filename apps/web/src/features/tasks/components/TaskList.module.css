@@ -140,6 +140,19 @@
   outline-offset: 3px;
 }
 
+/* Solo se ve al pasar el mouse por la fila (o con el foco dentro): el ícono
+   fijo en cada fila competía demasiado con el resto de la información. */
+.delete {
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity var(--duration-base) ease;
+}
+
+.row:hover .delete,
+.row:focus-within .delete {
+  opacity: 1;
+}
+
 .title {
   position: relative;
   justify-self: start;

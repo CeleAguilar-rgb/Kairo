@@ -3,6 +3,8 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState, type FormEvent } from 'react'
 
+import { Button } from '@/components/ui/Button'
+import { LineIcon } from '@/components/ui/Card'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { Doodle } from '@/components/ui/Doodle'
 import type { IsoDate } from '@/lib/dates'
@@ -25,10 +27,11 @@ type TaskListProps = {
   onToggleDone: (task: Task) => void
   onOpen: (task: Task) => void
   onQuickAdd: (title: string) => void
+  onDelete: (task: Task) => void
 }
 
 // Vista Lista de Tareas.dc.html: captura rápida arriba y grupos por fecha.
-export function TaskList({ groups, today, weekEnd, openId, recentId, quickProjectName, onToggleDone, onOpen, onQuickAdd }: TaskListProps) {
+export function TaskList({ groups, today, weekEnd, openId, recentId, quickProjectName, onToggleDone, onOpen, onQuickAdd, onDelete }: TaskListProps) {
   // Quién está en qué grupo y en qué orden: Motion solo re-mide las filas si esto cambia.
   const listKey = groups.map((group) => `${group.key}:${group.items.map((task) => task.id).join(',')}`).join('|')
 
@@ -105,6 +108,15 @@ export function TaskList({ groups, today, weekEnd, openId, recentId, quickProjec
                       <PriorityBadge priority={task.priority} />
                       <DueText label={dueLabel(task.dueOn, today, weekEnd)} tone={dueTone(task, today)} />
                     </button>
+                    <Button
+                      variant="plain"
+                      iconOnly
+                      className={styles.delete}
+                      aria-label={`Borrar "${task.title}"`}
+                      onClick={() => onDelete(task)}
+                    >
+                      <LineIcon d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" size={16} />
+                    </Button>
                   </motion.div>
                 )
               })}

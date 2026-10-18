@@ -15,3 +15,13 @@ export const createTaskSchema = z.object({
 })
 
 export type CreateTaskInput = z.infer<typeof createTaskSchema>
+
+// PATCH /v1/tasks/:id (conventions.md: PATCH cambia parcialmente). Una
+// subtarea es una fila de tasks como cualquier otra, así que el mismo
+// endpoint sirve para moverla en el tablero, marcarla hecha desde el detalle,
+// o alternar una subtarea: todas son "cambia el status de esta fila".
+export const updateTaskStatusSchema = z.object({
+  status: z.enum(TASK_STATUSES),
+})
+
+export type UpdateTaskStatusInput = z.infer<typeof updateTaskStatusSchema>

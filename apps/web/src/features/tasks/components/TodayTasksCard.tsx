@@ -2,7 +2,7 @@
 
 import { motion } from 'motion/react'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 
 import { Card, CardHeader, LineIcon } from '@/components/ui/Card'
 import { Checkbox } from '@/components/ui/Checkbox'
@@ -12,6 +12,7 @@ import { useToast } from '@/components/ui/Toast'
 import { formatRelativeDay, type IsoDate } from '@/lib/dates'
 import { listItem, SPRING, staggerList } from '@/lib/motion'
 
+import { updateTaskStatus } from '../actions'
 import type { Task, TaskStatus } from '../types'
 
 import { TaskDetailDrawer } from './TaskDetailDrawer'
@@ -23,29 +24,39 @@ type TodayTasksCardProps = {
   onDoneCountChange?: (pending: number) => void
 }
 
-// "Pendientes de hoy": la tarjeta destacada de Inicio (Main.dc.html). Marcar
-// se guarda solo en memoria hasta que exista PATCH /v1/tasks/:id.
+// "Pendientes de hoy": la tarjeta destacada de Inicio (Main.dc.html).
 export function TodayTasksCard({ tasks: initial, today, onDoneCountChange }: TodayTasksCardProps) {
   const [tasks, setTasks] = useState(initial)
   const [openId, setOpenId] = useState<string | null>(null)
+  const [, startTransition] = useTransition()
   const toast = useToast()
 
   const doneCount = tasks.filter((t) => t.status === 'done').length
   const openTask = tasks.find((t) => t.id === openId) ?? null
 
+  // Optimista (como en TasksView): la fila cambia al instante, el PATCH va detrás.
   function update(next: Task[]) {
     setTasks(next)
     onDoneCountChange?.(next.filter((t) => t.status !== 'done').length)
   }
 
+  function sync(taskId: string, status: TaskStatus) {
+    startTransition(async () => {
+      const result = await updateTaskStatus(taskId, status)
+      if ('error' in result) toast.show({ message: result.error, icon: 'info' })
+    })
+  }
+
   function toggleDone(task: Task) {
-    const willBeDone = task.status !== 'done'
+    const status: TaskStatus = task.status === 'done' ? 'todo' : 'done'
+    const willBeDone = status === 'done'
     const next = tasks.map((t) =>
       t.id === task.id
-        ? { ...t, status: willBeDone ? ('done' as const) : ('todo' as const), doneAt: willBeDone ? new Date().toISOString() : null }
+        ? { ...t, status, doneAt: willBeDone ? new Date().toISOString() : null }
         : t,
     )
     update(next)
+    sync(task.id, status)
     if (willBeDone && next.every((t) => t.status === 'done')) {
       toast.show({ message: '¡Listo todo lo de hoy! Buen trabajo.', icon: 'check' })
     }
@@ -53,14 +64,19 @@ export function TodayTasksCard({ tasks: initial, today, onDoneCountChange }: Tod
 
   function changeStatus(task: Task, status: TaskStatus) {
     update(tasks.map((t) => (t.id === task.id ? { ...t, status, doneAt: status === 'done' ? new Date().toISOString() : null } : t)))
+    sync(task.id, status)
   }
 
   function toggleSubtask(task: Task, subtaskId: string) {
+    const subtask = task.subtasks.find((s) => s.id === subtaskId)
+    if (!subtask) return
+    const done = !subtask.done
     update(
       tasks.map((t) =>
-        t.id === task.id ? { ...t, subtasks: t.subtasks.map((s) => (s.id === subtaskId ? { ...s, done: !s.done } : s)) } : t,
+        t.id === task.id ? { ...t, subtasks: t.subtasks.map((s) => (s.id === subtaskId ? { ...s, done } : s)) } : t,
       ),
     )
+    sync(subtaskId, done ? 'done' : 'todo')
   }
 
   const allDone = tasks.length > 0 && doneCount === tasks.length

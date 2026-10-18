@@ -1,12 +1,12 @@
-import { date, integer, text, timestamp } from 'drizzle-orm/pg-core'
+import { date, integer, text, timestamp, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core'
 import { app, userColumns } from './_shared'
 
-export const taskStatusEnum = app.enum('task_status', ['todo', 'in_progress', 'done'])
+export const taskStatusEnum = app.enum('task_status', ['todo', 'in_progress', 'review', 'done'])
 export const taskPriorityEnum = app.enum('task_priority', ['low', 'medium', 'high'])
 
-// Molde de Fase 1 (Inicio + Tareas): sin project_id, sprint_id ni
-// parent_task_id todavía (llegan con Proyectos, ver data-model.md).
-// position ordena la lista; lo calcula el service, nunca lo manda la persona.
+// Reconexión de Fase 1b (decisión #35, data-model.md): sin sprint_id todavía
+// (llega con Proyectos, en su turno). position ordena la lista; lo calcula el
+// service, nunca lo manda la persona.
 export const tasks = app
   .table('tasks', {
     ...userColumns,
@@ -17,5 +17,14 @@ export const tasks = app
     dueOn: date('due_on'),
     doneAt: timestamp('done_at', { withTimezone: true }),
     position: integer('position').notNull().default(0),
+    // Sin .references(): Proyectos no tiene tabla en la API todavía (decisión #35).
+    projectId: uuid('project_id'),
+    // Auto-referenciada: una subtarea es una fila de tasks con parentTaskId
+    // apuntando al id de su tarea padre. El callback anota su tipo de retorno
+    // porque TypeScript no puede inferirlo solo (la tabla se refiere a sí misma
+    // mientras todavía se está definiendo).
+    parentTaskId: uuid('parent_task_id').references((): AnyPgColumn => tasks.id, {
+      onDelete: 'cascade',
+    }),
   })
   .enableRLS()

@@ -3,7 +3,7 @@
 import type { CreateTaskInput } from '@kairo/shared'
 import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
 import dynamic from 'next/dynamic'
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useTransition } from 'react'
 
 import { Button } from '@/components/ui/Button'
 import { LineIcon } from '@/components/ui/Card'
@@ -14,10 +14,12 @@ import { projectTone } from '@/features/projects'
 import type { IsoDate } from '@/lib/dates'
 import { EASE_OUT, SPRING } from '@/lib/motion'
 
+import { createTask, deleteTask, restoreTask, updateTaskStatus } from '../actions'
 import { groupTasks } from '../grouping'
 import type { Task, TaskStatus } from '../types'
 
 import { TaskBoard } from './TaskBoard'
+import { TaskDeleteDialog } from './TaskDeleteDialog'
 import { TaskDetailDrawer } from './TaskDetailDrawer'
 import { TaskList } from './TaskList'
 import styles from './TasksView.module.css'
@@ -43,9 +45,10 @@ type TasksViewProps = {
   initialProjectId?: string
 }
 
-// Pantalla Tareas (Tareas.dc.html + TareaNueva.dc.html). Todo vive en memoria
-// hasta que existan los endpoints: al llegar, cada acción de aquí (crear, mover,
-// marcar) pasa a ser una Server Action y el estado se reemplaza por lo que devuelva.
+// Pantalla Tareas (Tareas.dc.html + TareaNueva.dc.html). Optimista: cada
+// acción cambia el estado local al instante y la Server Action va detrás
+// (como SeccionesTab); crear es la excepción, porque necesita el id real
+// antes de dejar interactuar con la tarjeta.
 export function TasksView({
   initialTasks,
   projects,
@@ -64,6 +67,14 @@ export function TasksView({
   // Se monta la primera vez que se abre y se queda, para que la animación de salida corra.
   const [createLoaded, setCreateLoaded] = useState(startWithCreate)
   const [recentId, setRecentId] = useState<string | null>(null)
+  // Tarea esperando confirmación en el diálogo de borrar; null = cerrado.
+  const [deletingTask, setDeletingTask] = useState<Task | null>(null)
+  // Crear sí espera a la API: necesitamos el id real antes de dejar que la
+  // persona interactúe con la tarjeta (marcarla, abrir su detalle). Mover o
+  // marcar una ya existente no espera: se ve al instante (startTransition)
+  // y el servidor se pone al día detrás.
+  const [isCreating, startCreating] = useTransition()
+  const [, startTransition] = useTransition()
 
   const filtered = useMemo(
     () =>
@@ -89,18 +100,29 @@ export function TasksView({
     setTasks((current) => current.map((t) => (t.id === taskId ? change(t) : t)))
   }
 
-  function setStatus(task: Task, status: TaskStatus) {
-    if (task.status === status) return
-    patch(task.id, (t) => ({
+  // Optimista: la pantalla cambia al instante y el PATCH va detrás. Sirve
+  // tanto para una tarea (taskId = su id) como para una subtarea (taskId =
+  // el id de la subtarea): las dos son filas de tasks en la API.
+  function applyStatus(taskId: string, status: TaskStatus, cascadeSubtasks = false) {
+    patch(taskId, (t) => ({
       ...t,
       status,
       doneAt: status === 'done' ? new Date().toISOString() : null,
       // Al cerrar una tarea, sus subtareas quedan hechas (así lo hace el canvas).
       subtasks:
-        status === 'done'
+        cascadeSubtasks && status === 'done'
           ? t.subtasks.map((s) => ({ ...s, done: true }))
           : t.subtasks,
     }))
+    startTransition(async () => {
+      const result = await updateTaskStatus(taskId, status)
+      if ('error' in result) toast.show({ message: result.error, icon: 'info' })
+    })
+  }
+
+  function setStatus(task: Task, status: TaskStatus) {
+    if (task.status === status) return
+    applyStatus(task.id, status, true)
   }
 
   function toggleDone(task: Task) {
@@ -108,50 +130,42 @@ export function TasksView({
   }
 
   function toggleSubtask(task: Task, subtaskId: string) {
+    const subtask = task.subtasks.find((s) => s.id === subtaskId)
+    if (!subtask) return
+    const done = !subtask.done
     patch(task.id, (t) => ({
       ...t,
       subtasks: t.subtasks.map((s) =>
-        s.id === subtaskId ? { ...s, done: !s.done } : s,
+        s.id === subtaskId ? { ...s, done } : s,
       ),
     }))
-  }
-
-  function addTask(input: CreateTaskInput) {
-    const project = projects.find((p) => p.id === input.projectId) ?? null
-    const id = crypto.randomUUID()
-    const task: Task = {
-      id,
-      title: input.title,
-      notes: input.notes,
-      status: input.status,
-      priority: input.priority,
-      dueOn: input.dueOn,
-      doneAt: input.status === 'done' ? new Date().toISOString() : null,
-      // La nueva va primero dentro de su grupo.
-      position: Math.min(0, ...tasks.map((t) => t.position)) - 1,
-      project,
-      subtasks: input.subtasks.map((title, i) => ({
-        id: `${id}-s${i}`,
-        title,
-        done: input.status === 'done',
-      })),
-    }
-    setTasks((current) => [task, ...current])
-    setRecentId(id)
-    setTimeout(
-      () => setRecentId((current) => (current === id ? null : current)),
-      2600,
-    )
+    startTransition(async () => {
+      const result = await updateTaskStatus(subtaskId, done ? 'done' : 'todo')
+      if ('error' in result) toast.show({ message: result.error, icon: 'info' })
+    })
   }
 
   function handleCreate(input: CreateTaskInput) {
-    addTask(input)
-    setCreateOpen(false)
-    toast.show({ message: `"${input.title}" se creó.`, icon: 'check' })
+    startCreating(async () => {
+      const result = await createTask(input)
+      if ('error' in result) {
+        toast.show({ message: result.error, icon: 'info' })
+        return
+      }
+      const { task } = result
+      setTasks((current) => [task, ...current])
+      setRecentId(task.id)
+      setTimeout(
+        () => setRecentId((current) => (current === task.id ? null : current)),
+        2600,
+      )
+      setCreateOpen(false)
+      toast.show({ message: `"${task.title}" se creó.`, icon: 'check' })
+    })
   }
 
   function handleQuickAdd(title: string) {
-    addTask({
+    handleCreate({
       title,
       projectId: activeProject?.id ?? null,
       status: 'todo',
@@ -159,6 +173,35 @@ export function TasksView({
       dueOn: null,
       subtasks: [],
       notes: null,
+    })
+  }
+
+  // Optimista, pero guardando la tarea por si el PATCH falla o la persona
+  // pica "Deshacer": sin eso no habría nada que devolver a la lista sin
+  // pedírselo otra vez al servidor.
+  function handleDeleteConfirm(task: Task) {
+    setDeletingTask(null)
+    setTasks((current) => current.filter((t) => t.id !== task.id))
+    if (openId === task.id) setOpenId(null)
+
+    startTransition(async () => {
+      const result = await deleteTask(task.id)
+      if ('error' in result) {
+        setTasks((current) => [task, ...current])
+        toast.show({ message: result.error, icon: 'info' })
+        return
+      }
+      toast.show({
+        message: `"${task.title}" se movió a la papelera.`,
+        icon: 'trash',
+        onUndo: () => {
+          setTasks((current) => [task, ...current])
+          startTransition(async () => {
+            const restored = await restoreTask(task.id)
+            if ('error' in restored) toast.show({ message: restored.error, icon: 'info' })
+          })
+        },
+      })
     })
   }
 
@@ -368,6 +411,7 @@ export function TasksView({
               onToggleDone={toggleDone}
               onOpen={(task) => setOpenId(task.id)}
               onQuickAdd={handleQuickAdd}
+              onDelete={setDeletingTask}
             />
           ) : (
             <TaskBoard
@@ -376,6 +420,7 @@ export function TasksView({
               weekEnd={weekEnd}
               onOpen={(task) => setOpenId(task.id)}
               onMove={setStatus}
+              onDelete={setDeletingTask}
             />
           )}
         </motion.div>
@@ -388,12 +433,19 @@ export function TasksView({
         onToggleDone={toggleDone}
         onToggleSubtask={toggleSubtask}
         onChangeStatus={setStatus}
+        onDelete={setDeletingTask}
+      />
+      <TaskDeleteDialog
+        task={deletingTask}
+        onClose={() => setDeletingTask(null)}
+        onConfirm={handleDeleteConfirm}
       />
       {createLoaded ? (
         <TaskCreateDrawer
           open={createOpen}
           projects={projects}
           defaultProjectId={activeProject?.id ?? null}
+          pending={isCreating}
           onClose={() => setCreateOpen(false)}
           onCreate={handleCreate}
         />

@@ -1,13 +1,21 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
   Inject,
   Param,
   ParseUUIDPipe,
+  Patch,
   Post,
 } from '@nestjs/common'
-import { type CreateTaskInput, createTaskSchema } from '@kairo/shared'
+import {
+  type CreateTaskInput,
+  createTaskSchema,
+  type UpdateTaskStatusInput,
+  updateTaskStatusSchema,
+} from '@kairo/shared'
 import { CurrentUser } from '../../auth/current-user.decorator'
 import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
 import { TasksService } from './tasks.service'
@@ -30,13 +38,33 @@ export class TasksController {
     return this.tasksService.create(userId, body)
   }
 
-  // Acción que no es CRUD (conventions.md): POST .../complete, no un PATCH
-  // genérico de status.
-  @Post(':id/complete')
-  complete(
+  // Una subtarea es una fila de tasks como cualquier otra: el mismo PATCH
+  // mueve una tarea en el tablero, la marca hecha desde el detalle, o
+  // alterna una subtarea (se le manda su propio id).
+  @Patch(':id')
+  updateStatus(
+    @CurrentUser() userId: string,
+    @Param('id', new ParseUUIDPipe()) taskId: string,
+    @Body(new ZodValidationPipe(updateTaskStatusSchema)) body: UpdateTaskStatusInput,
+  ) {
+    return this.tasksService.setStatus(userId, taskId, body.status)
+  }
+
+  // DELETE manda a la papelera (conventions.md), nunca borra de verdad.
+  @Delete(':id')
+  @HttpCode(204)
+  async remove(
     @CurrentUser() userId: string,
     @Param('id', new ParseUUIDPipe()) taskId: string,
   ) {
-    return this.tasksService.complete(userId, taskId)
+    await this.tasksService.delete(userId, taskId)
+  }
+
+  @Post(':id/restore')
+  restore(
+    @CurrentUser() userId: string,
+    @Param('id', new ParseUUIDPipe()) taskId: string,
+  ) {
+    return this.tasksService.restore(userId, taskId)
   }
 }

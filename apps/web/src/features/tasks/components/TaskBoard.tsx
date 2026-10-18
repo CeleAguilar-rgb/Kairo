@@ -20,6 +20,7 @@ type TaskBoardProps = {
   weekEnd: IsoDate
   onOpen: (task: Task) => void
   onMove: (task: Task, status: TaskStatus) => void
+  onDelete: (task: Task) => void
 }
 
 const COLUMN_ICON: Record<TaskStatus, ReactNode> = {
@@ -48,6 +49,7 @@ export function TaskBoard({
   weekEnd,
   onOpen,
   onMove,
+  onDelete,
 }: TaskBoardProps) {
   const [dragId, setDragId] = useState<string | null>(null)
   const [overStatus, setOverStatus] = useState<TaskStatus | null>(null)
@@ -182,26 +184,48 @@ export function TaskBoard({
                     >
                       <div className={styles.cardTop}>
                         <ProjectChip project={task.project} />
-                        <button
-                          type="button"
-                          className={styles.next}
-                          onClick={() => onMove(task, next)}
-                          aria-label={`Mover "${task.title}" a ${STATUS_LABEL[next]}`}
-                        >
-                          <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            aria-hidden="true"
+                        <div className={styles.cardTopActions}>
+                          <button
+                            type="button"
+                            className={styles.delete}
+                            onClick={() => onDelete(task)}
+                            aria-label={`Borrar "${task.title}"`}
                           >
-                            <path d="M9 6l6 6-6 6" />
-                          </svg>
-                        </button>
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              aria-hidden="true"
+                            >
+                              <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />
+                            </svg>
+                          </button>
+                          <button
+                            type="button"
+                            className={styles.next}
+                            onClick={() => onMove(task, next)}
+                            aria-label={`Mover "${task.title}" a ${STATUS_LABEL[next]}`}
+                          >
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              aria-hidden="true"
+                            >
+                              <path d="M9 6l6 6-6 6" />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
                       <h3 className={styles.cardTitle}>
                         <button

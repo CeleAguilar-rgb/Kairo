@@ -31,6 +31,8 @@ type TaskDetailDrawerProps = {
   onToggleSubtask: (task: Task, subtaskId: string) => void
   // Si viene, el panel muestra el selector de Estado (Tareas); Inicio no lo necesita.
   onChangeStatus?: (task: Task, status: TaskStatus) => void
+  // Si viene, el panel muestra "Borrar" (Tareas); Inicio no lo necesita.
+  onDelete?: (task: Task) => void
 }
 
 // Panel lateral del detalle de un pendiente (Main.dc.html y Tareas.dc.html).
@@ -43,6 +45,7 @@ export function TaskDetailDrawer({
   onToggleDone,
   onToggleSubtask,
   onChangeStatus,
+  onDelete,
 }: TaskDetailDrawerProps) {
   const focus = useFocus()
   const done = task?.status === 'done'
@@ -103,25 +106,49 @@ export function TaskDetailDrawer({
                 Sin proyecto
               </span>
             )}
-            <button
-              type="button"
-              className={styles.close}
-              aria-label="Cerrar detalle"
-              onClick={onClose}
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                aria-hidden="true"
+            <div className={styles.topActions}>
+              {onDelete ? (
+                <button
+                  type="button"
+                  className={styles.delete}
+                  aria-label={`Borrar "${task.title}"`}
+                  onClick={() => onDelete(task)}
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />
+                  </svg>
+                </button>
+              ) : null}
+              <button
+                type="button"
+                className={styles.close}
+                aria-label="Cerrar detalle"
+                onClick={onClose}
               >
-                <path d="M6 6l12 12M18 6L6 18" />
-              </svg>
-            </button>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M6 6l12 12M18 6L6 18" />
+                </svg>
+              </button>
+            </div>
           </motion.div>
 
           <motion.div className={styles.heading} variants={fadeUp}>
