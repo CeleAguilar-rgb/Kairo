@@ -7,6 +7,7 @@ import { Checkbox } from '@/components/ui/Checkbox'
 import { Drawer } from '@/components/ui/Drawer'
 import { ProgressBar } from '@/components/ui/Progress'
 import { Segmented } from '@/components/ui/Segmented'
+import { useFocus } from '@/features/focus'
 import { formatRelativeDay, type IsoDate } from '@/lib/dates'
 import { fadeUp, staggerList } from '@/lib/motion'
 
@@ -43,6 +44,7 @@ export function TaskDetailDrawer({
   onToggleSubtask,
   onChangeStatus,
 }: TaskDetailDrawerProps) {
+  const focus = useFocus()
   const done = task?.status === 'done'
   const subsDone = task?.subtasks.filter((s) => s.done).length ?? 0
 
@@ -276,7 +278,7 @@ export function TaskDetailDrawer({
                 </motion.span>
               </AnimatePresence>
             </Button>
-            <Button variant="ghost">
+            <Button variant="ghost" onClick={() => focus.focusOnTask(task.title)}>
               <svg
                 width="16"
                 height="16"
@@ -288,9 +290,10 @@ export function TaskDetailDrawer({
                 strokeLinejoin="round"
                 aria-hidden="true"
               >
-                <path d="M14 4l6 6L9 21H3v-6L14 4z" />
+                <circle cx="12" cy="12" r="9" />
+                <path d="M10 9v6l5-3z" fill="currentColor" stroke="none" />
               </svg>
-              Editar
+              Pomodoro
             </Button>
           </motion.div>
         </motion.div>

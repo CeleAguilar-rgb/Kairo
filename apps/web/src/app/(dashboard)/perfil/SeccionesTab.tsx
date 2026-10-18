@@ -37,6 +37,9 @@ export function SeccionesTab({ sections }: SeccionesTabProps) {
   )
   const [error, setError] = useState<string>()
   const [isPending, startTransition] = useTransition()
+  // El módulo que se acaba de apagar: dispara el aviso de abajo. Se limpia en
+  // cuanto se prende cualquier módulo, igual que en el canvas (Perfil.dc.html:238).
+  const [lastOff, setLastOff] = useState<ModuleId | null>(null)
 
   // 'home', 'reminders' y 'focus' no están en MODULE_CATALOG (no se eligen
   // aquí), pero sí tienen fila en user_sections. updateSections reemplaza la
@@ -70,8 +73,10 @@ export function SeccionesTab({ sections }: SeccionesTabProps) {
   }
 
   function handleToggle(id: ModuleId) {
-    const next = { ...enabled, [id]: !enabled[id] }
+    const wasEnabled = !!enabled[id]
+    const next = { ...enabled, [id]: !wasEnabled }
     setEnabled(next)
+    setLastOff(wasEnabled ? id : null)
     persist(order, next)
   }
 
@@ -86,6 +91,13 @@ export function SeccionesTab({ sections }: SeccionesTabProps) {
     setOrder(next)
     persist(next, enabled)
   }
+
+  // Cuántos módulos encendidos hay hasta cada posición de `order` (inclusive);
+  // de ahí sale qué filas muestran "Abajo en celular" (las primeras 4).
+  const onCountUpTo = order.reduce<number[]>((acc, id) => {
+    const previous = acc.length ? acc[acc.length - 1] : 0
+    return [...acc, previous + (enabled[id] ? 1 : 0)]
+  }, [])
 
   return (
     <Card aria-labelledby="secciones-tab-title">
@@ -102,6 +114,10 @@ export function SeccionesTab({ sections }: SeccionesTabProps) {
         {order.map((id, index) => {
           const entry = catalogById.get(id)
           if (!entry) return null
+
+          // Los primeros 4 módulos encendidos, en el orden de la lista, son
+          // los que entrarán al menú de abajo del celular (fase posterior).
+          const showsOnPhone = !!enabled[id] && onCountUpTo[index] <= 4
 
           return (
             <div key={id} className={styles.row}>
@@ -173,6 +189,10 @@ export function SeccionesTab({ sections }: SeccionesTabProps) {
                 <span className={styles.description}>{entry.description}</span>
               </div>
 
+              {showsOnPhone ? (
+                <span className={styles.badge}>Abajo en celular</span>
+              ) : null}
+
               <Toggle
                 checked={!!enabled[id]}
                 onToggle={() => handleToggle(id)}
@@ -182,6 +202,13 @@ export function SeccionesTab({ sections }: SeccionesTabProps) {
           )
         })}
       </div>
+
+      {lastOff ? (
+        <span className={styles.offNote} role="status">
+          {catalogById.get(lastOff)?.name} se ocultó del menú y del Inicio. Tus
+          datos no se borran: si la vuelves a prender, todo sigue ahí.
+        </span>
+      ) : null}
 
       {error ? (
         <span className={styles.error} role="alert">

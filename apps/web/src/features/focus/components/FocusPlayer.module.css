@@ -1,0 +1,534 @@
+.dock {
+  position: fixed;
+  right: var(--space-9);
+  bottom: var(--space-9);
+  z-index: 55;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-4);
+}
+
+/* La píldora colapsada */
+
+.pill {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+  box-shadow: var(--shadow-toast);
+  cursor: pointer;
+  /* Ancho fijo, no min/max: que cambie de tarea no debe encoger o estirar la
+     píldora, el nombre largo se trunca con el "…" de .pillTitle/.pillSub. */
+  width: min(340px, calc(100vw - var(--space-9) * 2));
+}
+
+.pill:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.pillRingWrap {
+  flex-shrink: 0;
+}
+
+.pillText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.pillTitle {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pillSub {
+  font-size: 12px;
+  color: var(--text-on-inverted-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pillAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--surface-inverted);
+  flex-shrink: 0;
+}
+
+.pillArt {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+  background: conic-gradient(from 200deg, var(--accent), var(--accent-strong), var(--accent-warm), var(--accent));
+}
+
+/* Las pestañas de modo (Música / Enfoque) */
+
+.modeTabs {
+  flex: 1;
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted-muted);
+}
+
+.modeTab,
+.modeTabSelected {
+  all: unset;
+  box-sizing: border-box;
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.modeTab {
+  color: var(--text-on-inverted-muted);
+}
+
+.modeTabSelected {
+  background: var(--text-on-inverted);
+  color: var(--surface-inverted);
+}
+
+.modeTab:focus-visible,
+.modeTabSelected:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* El panel expandido */
+
+.panel {
+  width: min(340px, calc(100vw - var(--space-9) * 2));
+  box-sizing: border-box;
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+  border-radius: var(--radius-28);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panelTitle {
+  font-weight: 500;
+}
+
+.iconButton {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted-muted);
+  color: var(--text-on-inverted);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.iconButton:focus-visible,
+.playButton:focus-visible,
+.taskButton:focus-visible,
+.preset:focus-visible,
+.presetSelected:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* El anillo del cronómetro */
+
+.ringWrap {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  align-self: center;
+}
+
+.ringTrack {
+  stroke: var(--surface-inverted-muted);
+}
+
+.ringWork {
+  stroke: var(--accent);
+  transition: stroke-dashoffset 1s linear;
+}
+
+.ringBreak {
+  stroke: var(--accent-warm);
+  transition: stroke-dashoffset 1s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ringWork,
+  .ringBreak {
+    transition: none;
+  }
+}
+
+.ringCenter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.clock {
+  font-size: 40px;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+.phase {
+  font-size: 13px;
+  color: var(--text-on-inverted-muted);
+}
+
+/* Los puntos de sesiones del día */
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.dotDone,
+.dotCurrent,
+.dotPending {
+  height: 10px;
+  border-radius: var(--radius-pill);
+  transition: width 0.2s ease;
+}
+
+.dotDone {
+  width: 10px;
+  background: var(--accent);
+}
+
+.dotCurrent {
+  width: 22px;
+  background: var(--accent-strong);
+}
+
+.dotPending {
+  width: 10px;
+  background: var(--surface-inverted-muted);
+}
+
+/* La tarea en foco */
+
+.taskButton {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-16);
+  background: var(--surface-inverted-muted);
+  cursor: pointer;
+}
+
+.taskButton:hover {
+  background: var(--border-inverted);
+}
+
+.taskText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.taskLabel {
+  font-size: 12px;
+  color: var(--text-on-inverted-muted);
+}
+
+.taskName {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.taskChange {
+  font-size: 12px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* Los presets de duración */
+
+.presets {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.preset,
+.presetSelected {
+  all: unset;
+  box-sizing: border-box;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-3);
+  border-radius: var(--radius-14);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.preset {
+  background: var(--surface-inverted-muted);
+  color: var(--text-on-inverted);
+}
+
+.presetSelected {
+  background: var(--text-on-inverted);
+  color: var(--surface-inverted);
+}
+
+.presetMinutes {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.presetBreak {
+  opacity: 0.7;
+}
+
+/* Los controles de reproducción */
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+}
+
+.playButton {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--surface-inverted);
+  cursor: pointer;
+}
+
+/* "Poner música al empezar" */
+
+.musicToggleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: 14px;
+}
+
+.switch,
+.switchOn {
+  all: unset;
+  box-sizing: border-box;
+  width: 44px;
+  height: 26px;
+  border-radius: var(--radius-pill);
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.switch {
+  background: var(--surface-inverted-sunken);
+}
+
+.switchOn {
+  background: var(--accent);
+}
+
+.switchKnob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--text-on-inverted);
+  transition: transform 0.2s ease;
+}
+
+.switchOn .switchKnob {
+  transform: translateX(18px);
+  background: var(--surface-inverted);
+}
+
+.switch:focus-visible,
+.switchOn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switchKnob {
+    transition: none;
+  }
+}
+
+/* El modo Música */
+
+.musicHead {
+  display: flex;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.art {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius-22);
+  flex-shrink: 0;
+  background: conic-gradient(from 200deg, var(--accent), var(--accent-strong), var(--accent-warm), var(--accent));
+}
+
+.musicInfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.device {
+  font-size: 12px;
+  color: var(--text-on-inverted-muted);
+}
+
+.songTitle {
+  font-size: 18px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.songArtist {
+  color: var(--text-on-inverted-muted);
+}
+
+.progressTrack {
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted-muted);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: var(--radius-pill);
+}
+
+.playlists {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.playlistsLabel {
+  font-size: 12px;
+  color: var(--text-on-inverted-muted);
+  padding: 0 var(--space-3) var(--space-1);
+}
+
+.playlist {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3);
+  border-radius: var(--radius-14);
+  cursor: pointer;
+  width: 100%;
+}
+
+.playlist:hover {
+  background: var(--surface-inverted-muted);
+}
+
+.playlist:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.playlistCover {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-12);
+  flex-shrink: 0;
+  background: var(--accent);
+}
+
+.playlistText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.playlistName {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.playlistDescription {
+  font-size: 12px;
+  color: var(--text-on-inverted-muted);
+}
+
+.spotifyNote {
+  font-size: 12px;
+  color: var(--text-on-inverted-muted);
+}

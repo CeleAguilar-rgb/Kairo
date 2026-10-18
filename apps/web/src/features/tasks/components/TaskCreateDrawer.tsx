@@ -118,7 +118,7 @@ function TaskCreateForm({ projects, defaultProjectId, onClose, onCreate }: FormP
             if (titleError && event.target.value.trim()) setTitleError(undefined)
           }}
           onBlur={() => {
-            if (titleMissing && title.length > 0) setTitleError('Escribe qué hay que hacer para crear la tarea.')
+            if (titleMissing) setTitleError('Escribe qué hay que hacer para crear la tarea.')
           }}
         />
 

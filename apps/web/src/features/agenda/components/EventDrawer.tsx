@@ -236,7 +236,9 @@ function EventForm({ mode, initial, projects, pending, serverErrors, onClose, on
               options={EVENT_REMINDERS.map((value) => ({ value, label: EVENT_REMINDER_LABEL[value] }))}
             />
           </div>
-          {reminder === 'none' ? null : <span className={styles.hint}>Te llegará un recordatorio {EVENT_REMINDER_TEXT[reminder]}.</span>}
+          {reminder === 'none' ? null : (
+            <span className={styles.hint}>Te llegará un recordatorio {EVENT_REMINDER_TEXT[reminder]}. Aparece en Inicio.</span>
+          )}
         </div>
 
         <Textarea

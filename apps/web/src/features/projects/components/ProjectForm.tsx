@@ -218,6 +218,9 @@ export function ProjectForm({ mode, projectId, initial, taskCounts }: ProjectFor
                 setName(event.target.value)
                 clearError('name')
               }}
+              onBlur={() => {
+                if (!name.trim()) setErrors((current) => ({ ...current, name: 'Escribe un nombre para el proyecto.' }))
+              }}
             />
 
             <div className={styles.field}>
