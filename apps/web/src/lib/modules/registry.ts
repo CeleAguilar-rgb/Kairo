@@ -1,5 +1,9 @@
 import type { ModuleId } from '@kairo/shared'
+import { tasksModule } from '@/features/tasks'
 
+// Sin datos de Inicio aquí (ver tasksModule): el Topnav ('use client')
+// importa este archivo, así que tiene que quedarse ligero y sin nada
+// server-only. Las tarjetas de Inicio están en ./home-cards.ts.
 export type ModuleManifest = {
   id: ModuleId
   label: string
@@ -8,6 +12,8 @@ export type ModuleManifest = {
   icon: string[]
 }
 
+// 'home' no tiene features/home/ (no es un módulo con tablas propias, ver
+// modules.md): su manifiesto vive aquí directo.
 export const homeModule: ModuleManifest = {
   id: 'home',
   label: 'Inicio',
@@ -16,7 +22,7 @@ export const homeModule: ModuleManifest = {
 }
 
 // El sidebar/topnav recorre esta lista y la filtra por user_sections (ver
-// docs/guides/modules.md). Por ahora solo existe Inicio; cada módulo nuevo
-// de la Fase 1 agrega su manifiesto aquí cuando se construye, sin tocar el
-// componente del Shell.
-export const modules: ModuleManifest[] = [homeModule]
+// docs/guides/modules.md). Cada módulo nuevo de la Fase 1 agrega su
+// manifiesto en features/<modulo>/module.ts y se registra aquí, sin tocar
+// el componente del Shell.
+export const modules: ModuleManifest[] = [homeModule, tasksModule]

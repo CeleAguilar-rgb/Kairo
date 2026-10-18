@@ -58,13 +58,15 @@ El sidebar, Inicio y la bienvenida se arman recorriendo el registro y filtrando 
 
 ## Agregar un módulo nuevo
 
+Desde Recordatorios, primero el front (con datos dummy) y después el backend (decisión #27, `docs/guides/roadmap.md`):
+
 1. Describir qué hace en `docs/guides/features.md`.
 2. Agregar su id a `MODULE_IDS` en `packages/shared/src/modules.ts`.
-3. Crear sus tablas en `docs/guides/data-model.md` y con una migración de Drizzle (`apps/api/src/db/schema/<modulo>.ts`).
-4. Crear el módulo en la API (con sus tests de aislamiento entre usuarios).
-5. Crear la carpeta en `features/`, su manifiesto, y registrarlo.
-6. Crear sus rutas en `app/(dashboard)/`.
-7. Si aporta a Agenda, Inicio, búsqueda o papelera, implementar esas funciones.
+3. Crear la carpeta en `features/`, su manifiesto, sus componentes (datos dummy con la forma que sugiere `docs/guides/data-model.md`, sin forzarla) y registrarlo.
+4. Crear sus rutas en `app/(dashboard)/`.
+5. Cuando toque el backend: ajustar sus tablas en `docs/guides/data-model.md` según lo que terminó pidiendo el front, con una migración de Drizzle (`apps/api/src/db/schema/<modulo>.ts`).
+6. Crear el módulo en la API, en `apps/api/src/modules/<modulo>/` (con sus tests de aislamiento entre usuarios).
+7. Conectar: sustituir los datos dummy por la API real. Si aporta a Agenda, Inicio, búsqueda o papelera, implementar esas funciones.
 
 Ningún otro módulo debería necesitar cambios. Si los necesita, revisa si se está rompiendo la regla de no importar internos de otro módulo.
 

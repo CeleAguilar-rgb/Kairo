@@ -1,0 +1,85 @@
+.card {
+  min-height: 280px;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.headingText {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text-on-inverted-muted);
+}
+
+.count {
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-on-inverted-muted);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  margin: 0 calc(var(--space-3) * -1);
+  border-radius: var(--radius-14);
+}
+
+.row:hover {
+  background: var(--surface-inverted-muted);
+}
+
+.rowTitle {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty {
+  margin: 0;
+  color: var(--text-on-inverted-muted);
+}
+
+.link {
+  margin-top: auto;
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 40px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted-muted);
+  color: var(--text-on-inverted);
+  text-decoration: none;
+  font-size: 14px;
+}

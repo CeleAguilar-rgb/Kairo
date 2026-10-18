@@ -4,9 +4,10 @@ import { AccountModule } from './account/account.module'
 import { JwtGuard } from './auth/jwt.guard'
 import { DbModule } from './common/db/db.module'
 import { SupabaseModule } from './common/supabase/supabase.module'
+import { TasksModule } from './modules/tasks/tasks.module'
 
 @Module({
-  imports: [DbModule, SupabaseModule, AccountModule],
+  imports: [DbModule, SupabaseModule, AccountModule, TasksModule],
   providers: [{ provide: APP_GUARD, useClass: JwtGuard }],
 })
 export class AppModule {}

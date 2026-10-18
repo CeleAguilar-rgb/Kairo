@@ -1,0 +1,27 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+  padding: var(--space-7) var(--space-11) var(--space-14);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: clamp(40px, 8vw, 56px);
+  line-height: 1;
+  color: var(--text);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-7);
+  align-items: start;
+}
+
+.empty {
+  margin: 0;
+  color: var(--text-muted);
+}

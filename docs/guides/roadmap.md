@@ -11,15 +11,26 @@
 
 ## Fase 1: módulos (en este orden, en PC)
 
-1. **Inicio + tareas y notas rápidas.** Es el molde de todos los demás: valida el patrón completo (esquema compartido → controller → service → repository → api del front → componente → tarjeta de Inicio).
-2. **Recordatorios** (avisos en la app y Web Push, jobs programados).
-3. **Agenda.**
-4. **Día a día** (rutina, menú, diario con PIN, metas).
-5. **Finanzas.**
-6. **Escuela.**
-7. **Proyectos con Scrum.**
-8. **Escritos.**
-9. **Música y enfoque:** pomodoro (Spotify va en integraciones).
+**Inicio + tareas y notas rápidas** ya se construyó completo, de punta a punta (esquema compartido → controller → service → repository → componente → tarjeta de Inicio): fue el molde que validó el patrón.
+
+**Desde Recordatorios, el orden se invierte (decisión #27): primero todo el front de cada módulo, con datos dummy y animaciones reales; el backend y la conexión vienen después, módulo por módulo.** La idea nació del front: el usuario quiere ver y usar pantallas con calidad real, no de relleno, y prefiere ajustar el diseño de datos a lo que el front termine pidiendo, no al revés.
+
+### Fase 1a: front de todos los módulos
+
+Para cada uno: pantallas tal como están en `docs/design/screens/`, animaciones de Motion de verdad (nada de placeholders), datos dummy con la forma que ya sugiere `docs/guides/data-model.md` — sin forzarla: si el front pide algo distinto, se ajusta el modelo de datos, no el front.
+
+1. Recordatorios
+2. Agenda
+3. Día a día
+4. Finanzas
+5. Escuela
+6. Proyectos con Scrum
+7. Escritos
+8. Música y enfoque
+
+### Fase 1b: backend y conexión (mismo orden, después)
+
+Por cada módulo: ajustar su tabla en `data-model.md` según lo que terminó pidiendo el front, migración de Drizzle, esquema compartido, controller → service → repository (con sus tests de aislamiento), y conectar sustituyendo los datos dummy por la API real.
 
 Junto con los módulos, lo global: papelera, búsqueda Ctrl+K, panel de avisos, captura rápida (+) y adornos de temporada.
 

@@ -2,6 +2,8 @@
 
 Fuente: el documento "Mi tablero · Funcionalidades y base de datos" del usuario, ajustado a las decisiones de arquitectura y seguridad. Si cambias algo aquí, cámbialo con una migración de Drizzle y actualiza este archivo.
 
+Para los módulos que todavía no tienen backend (todos salvo Cuenta e Inicio + Tareas): esto es el punto de partida para el front con datos dummy, no un molde fijo — si al construir las pantallas el front termina pidiendo otra forma, se ajusta esto, no al revés (decisión #27).
+
 ## Convenciones
 
 - PostgreSQL en Supabase, esquema **`app`**.
@@ -109,4 +111,5 @@ Fuente: el documento "Mi tablero · Funcionalidades y base de datos" del usuario
 
 - Pascua: por ahora, fecha real (no fija en abril); revisar si hace falta otra regla cuando se construyan las temporadas.
 - Tareas que se repiten (pagar renta cada mes) o si eso vive solo en Recordatorios.
+- Tareas: el canvas de `TareaNueva.dc.html` muestra un cuarto estado ("Revisión") que no está en `status` abajo; por ahora se construye solo con los 3 documentados (`todo`, `in_progress`, `done`). Si se quiere agregar `in_review`, es una migración nueva (`ALTER TYPE`).
 - Agenda: mostrar la rutina detrás de los eventos y arrastrar eventos para moverlos.

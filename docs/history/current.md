@@ -2,27 +2,24 @@
 
 > Léelo al empezar cada sesión. Actualízalo al terminar. Máximo ~60 líneas: es un resumen, no un diario. El detalle va en `sessions/`.
 
-**Última actualización:** 2026-10-13 · sesión `2026-10-13-guard-global-y-aceptar-invitacion-5.md`
+**Última actualización:** 2026-10-14 · sesión `2026-10-13-shell-dashboard-y-tests.md`
 
 ## Fase actual
 
-Fase 0 (base), **en progreso**. Paso 4 de 6 (Auth) casi listo.
+**Fase 0 (base): completa.** Fase 1 en progreso: el molde Inicio + Tareas ya está construido completo.
 
 ## Lo último que se hizo
 
-- Login completo: invitación (`/aceptar-invitacion`), entrar (`/entrar`), recuperar contraseña (`/recuperar` + `/restablecer-contrasena`), guard global de la API (`auth/jwt.guard.ts`, `getClaims()` por JWKS). Las tres pantallas comparten layout y piezas en `app/(auth)/` (`BrandPanel`, `SetPasswordForm`, los `.module.css` de layout). Detalle de cada una en las sesiones `-1` a `-5` de hoy.
-- **Decisión #26 (reemplaza la #7): código por correo pasa a "Después".** Exigía correo propio en la API, que no existe. Por ahora el login es solo correo + contraseña. `login_codes`/`verified_sessions` quedan listas sin usarse.
-- Se integró `Motion` por primera vez en el proyecto (ya estaba en el stack): entrada escalonada en los formularios de auth, banners de error animados, `whileTap` en el `Button` compartido (toda la app).
-- Bug real encontrado y arreglado: las plantillas de correo no pueden usar `{{ .ConfirmationURL }}` (pierde el token en el fragmento de la URL) — van con `{{ .TokenHash }}` + `verifyOtp()`. Ambas plantillas (`invite-user.html`, `recover-password.html`) se pegan a mano en el dashboard de Supabase; no hay sincronización automática.
-- Las cuatro pantallas de auth (`entrar`, `recuperar`, `aceptar-invitacion`, `restablecer-contrasena`) ahora comparten el mismo panel de marca (logo + doodles animados) — las dos últimas antes eran una tarjeta simple y sin eso. Probado de punta a punta en el navegador: invitación, login y recuperar/restablecer contraseña funcionan de verdad.
+- Shell del dashboard: layout protegido en `app/(dashboard)/` (sin sesión → `/entrar`, sin perfil → `/bienvenida`), Topnav armado desde `lib/modules/registry.ts`, y Perfil básico con dos pestañas ("Mi perfil", "Mis secciones").
+- "Cerrar todas las sesiones" en Perfil → Mi perfil. De paso se corrigió que "Cerrar sesión" normal revocaba la sesión en **todos** los dispositivos por accidente (scope `'global'` es el default de `signOut()`); ahora usa `'local'`.
+- Primeros tests del proyecto (paso 6, cierra Fase 0): Jest + Supertest en `apps/api/test/`, contra la app de Nest completa y la base real. `test/helpers/test-users.ts` crea y borra usuarios reales de Supabase Auth con la Admin API en cada corrida. NestJS 12 es ESM-only (`@nestjs/common`, `@nestjs/testing`): Jest corre en modo ESM real (`--experimental-vm-modules`, `useESM`), con `tsconfig.spec.json` separado del de producción.
+- **Molde Inicio + Tareas, completo de punta a punta**: esquema compartido, tabla `tasks` + migración, `modules/tasks/` (controller/service/repository) en la API, `features/tasks/` en el front (lista, agregar, marcar hecha), y la tarjeta "Pendientes de hoy" en Inicio. Los módulos van en `apps/api/src/modules/<id>/` y `apps/web/src/features/<id>/` — no donde se pusieron al principio; corregido a media sesión.
+- Bug real encontrado probando en el navegador (no solo con `tsc`/`eslint`): el Topnav (`'use client'`) importaba el registro de módulos, y ese registro cargó sin querer un componente de Inicio que arrastraba código `server-only` → 500 en `/`. Se separó `lib/modules/registry.ts` (ligero, lo usa el Topnav) de `lib/modules/home-cards.ts` (`server-only`, solo lo usa Inicio).
+- **Decisión #27: desde Recordatorios, primero todo el front de cada módulo (datos dummy, animaciones reales) y después su backend y conexión** — antes era el molde completo por módulo de una vez. Lo pidió el usuario: la calidad del front le importa más (es quien va a usar la app), y prefiere ajustar `data-model.md` a lo que el front termine pidiendo, no al revés. Roadmap, `modules.md` y el plan del molde en este archivo ya están actualizados con el nuevo orden.
 
 ## Siguiente paso
 
-El paso 4 de Auth está prácticamente terminado. Falta, del lado del usuario (no código):
-- Pegar `recover-password.html` en el dashboard de Supabase (Authentication → Email Templates → Reset Password) — la de invitación ya se pegó, esta todavía no se confirmó.
-- Confirmar que la sesión dura 30 días en el dashboard de Supabase (decisión #8).
-
-"Cerrar todas las sesiones" espera a que exista Perfil (punto 5). Con eso, Fase 0 pasa al punto 5: Shell del dashboard (layout, sidebar desde el registro de módulos, perfil básico, bienvenida).
+**Fase 1a: front de Recordatorios** (datos dummy, animaciones de Motion reales, fiel a `docs/design/screens/`). Después de Recordatorios y los demás módulos del front (Fase 1a completa), se construye el backend de todos, módulo por módulo (Fase 1b) — ver `docs/guides/roadmap.md`.
 
 ## Pendientes de decidir con el usuario
 
@@ -37,8 +34,10 @@ El paso 4 de Auth está prácticamente terminado. Falta, del lado del usuario (n
 - `@nestjs/cli` (generadores `nest generate`, etc.) no se puede usar: bug de `@angular-devkit/schematics` + Node 22. Mientras tanto, los archivos de `apps/api` se escriben a mano. Revisar si una versión futura lo arregla.
 - `drizzle-kit migrate` (la CLI) no muestra el error cuando una migración falla; hay que diagnosticar llamando a `migrate()` de `drizzle-orm` directamente en un script aparte si vuelve a pasar. Revisar si una versión futura lo arregla.
 - `tsx`/esbuild (el toolchain de `apps/api`) no siempre emite la metadata de tipos que Nest usa para inyectar un parámetro de constructor sin `@Inject()` explícito — falla en tiempo de ejecución (`UndefinedDependencyException`) aunque `tsc --noEmit` no marque nada. Pasó con `Reflector` en `jwt.guard.ts`; se resolvió con `@Inject(Reflector)` explícito. Si se escribe otro guard/interceptor/pipe a mano, probarlo corriendo la API, no solo con `tsc`.
+- `apps/api/package.json` no tiene `"type": "module"` y nunca se probó `pnpm build && pnpm start` (solo `tsx watch` en dev). Como `@nestjs/common` es ESM-only, el build de producción probablemente necesite ese campo. Revisar antes de desplegar.
+- Dos tareas de Auth que son del usuario, no de código: pegar `recover-password.html` en el dashboard de Supabase (Authentication → Email Templates), y confirmar ahí que la sesión dura 30 días (decisión #8).
 
 ## Pendiente dentro del paso 2 (componentes de `components/ui/`)
 
-- Select, Toggle y el grupo segmentado (Lista/Tablero, Prioridad) quedan para cuando se construya `TareaNueva` en Fase 1 — no eran necesarios todavía.
+- Select y el grupo segmentado (Lista/Tablero, Prioridad) quedan para cuando se construya `TareaNueva` en Fase 1 — no eran necesarios todavía. (Toggle ya se construyó, para "Mis secciones" en Perfil.)
 - `modes/dark.css` no existe (fase posterior), aunque el PDF ya trae los valores oscuros documentados.

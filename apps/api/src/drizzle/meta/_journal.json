@@ -15,6 +15,13 @@
       "when": 1791827584131,
       "tag": "0001_account_tables",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791956431857,
+      "tag": "0002_elite_carlie_cooper",
+      "breakpoints": true
     }
   ]
 }
