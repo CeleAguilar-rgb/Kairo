@@ -2,25 +2,27 @@ import 'server-only'
 
 import { listUpcomingPayments } from '@/features/finance/api'
 import { listTasks } from '@/features/tasks/api'
+import { api } from '@/lib/api-client'
 import { addDays, minutesToWallTime, startOfWeek, zonedToUtc, type IsoDate } from '@/lib/dates'
+import { DEMO_MODE } from '@/lib/demo'
 import { getMockContext, mockDelay } from '@/lib/mock/context'
 
 import { paymentEntries, taskEntries } from './entries'
 import { buildEventRecords } from './mock'
-import { applyStore } from './mock-store'
 import { occurrenceDates, toEntry, type EventRecord } from './records'
 import type { AgendaEntry, AgendaEvent } from './types'
 
-// Los eventos de ejemplo + lo que se creó o editó (mock-store). Con la API: una petición.
+// Las series de eventos (una fila por evento o por serie, no por vez que ocurre — decisión #37).
+// Modo demo (sin Supabase ni API): datos de ejemplo. Fuera de él, la API real. Expandirlas a sus
+// ocurrencias de un rango sigue pasando aquí (records.ts), no se duplica en el servidor.
 async function loadRecords(): Promise<EventRecord[]> {
-  const ctx = await getMockContext()
-  return applyStore(buildEventRecords(ctx))
+  if (DEMO_MODE) return buildEventRecords(await getMockContext())
+  return api.get<EventRecord[]>('/events')
 }
 
 // Todo lo de la agenda en una ventana de fechas: eventos (con las veces que se repiten), cobros de
 // membresías y tareas con fecha, ya puestos en el día y la hora de la zona del perfil. La ventana es
-// de unos nueve meses alrededor de hoy: al navegar más lejos no hay nada. Con la API la pantalla
-// pedirá el rango que muestra: `api.get('/agenda?from=…&to=…')`.
+// de unos nueve meses alrededor de hoy: al navegar más lejos no hay nada.
 export async function getAgendaEntries(): Promise<AgendaEntry[]> {
   const ctx = await getMockContext()
   await mockDelay()
@@ -38,7 +40,7 @@ export async function getAgendaEntries(): Promise<AgendaEntry[]> {
 }
 
 // Los eventos de la semana de hoy, para la tarjeta "Esta semana" de Inicio: la misma agenda, en la
-// forma en que los devolverá la API (momentos UTC). Con la API: `api.get('/events?from=…&to=…')`.
+// forma en que los devuelve la API (momentos UTC).
 export async function listWeekEvents(): Promise<AgendaEvent[]> {
   const ctx = await getMockContext()
   await mockDelay()

@@ -32,6 +32,8 @@ Para cada uno: pantallas tal como están en `docs/design/screens/`, animaciones 
 
 Por cada módulo: ajustar su tabla en `data-model.md` según lo que terminó pidiendo el front, migración de Drizzle, esquema compartido, controller → service → repository (con sus tests de aislamiento), y conectar sustituyendo los datos dummy por la API real.
 
+**Hecho:** Tareas (reconectada a su molde de antes de la decisión #27, más papelera), Recordatorios y Agenda. **Sigue:** Día a día.
+
 Junto con los módulos, lo global: papelera, búsqueda Ctrl+K, panel de avisos, captura rápida (+) y adornos de temporada.
 
 El orden puede cambiar; la arquitectura de módulos existe para eso.

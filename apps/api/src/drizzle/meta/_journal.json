@@ -29,6 +29,20 @@
       "when": 1792349101911,
       "tag": "0003_gray_enchantress",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1792353546869,
+      "tag": "0004_overrated_ironclad",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1792360366819,
+      "tag": "0005_flawless_mole_man",
+      "breakpoints": true
     }
   ]
 }

@@ -46,8 +46,8 @@ Para los módulos que todavía no tienen backend (todos salvo Cuenta e Inicio + 
 
 | Tabla | Columnas | Relaciones / notas |
 |---|---|---|
-| events | title, kind (`work`, `personal`), starts_at, ends_at, all_day, notes | → projects (opcional) |
-| reminders | title, remind_at, done_at, snoozed_to, notified_at | → tasks, events o memberships (opcional, uno a la vez). Lo no atendido pasa al día siguiente. |
+| events | title, kind (`work`, `personal`, `school`), date, all_day, start_min, end_min, place, notes, repeat (`none`, `daily`, `weekdays`, `weekly`, `monthly`, `yearly`), until, skip (arreglo de días), reminder (`none`, `10m`, `1h`, `1d`) | → projects (opcional, sin FK todavía — decisión #37). Una fila es un evento **o una serie completa**, no una vez que ocurre: `date` es su primer día, `start_min`/`end_min` son minutos desde medianoche en la zona del perfil (no un momento UTC — lo necesita igual en cada vez de la serie), `until` es hasta cuándo llega (null = sin fin) y `skip`, los días sueltos que se borraron ("solo este"). Expandir una serie a sus ocurrencias de un rango es lógica del front (front-first: así terminó pidiéndolo `Agenda.dc.html`), no de la API. |
+| reminders | title, remind_at, done_at, snoozed_to, notified_at, repeat (`none`, `daily`, `weekdays`), spawned_from_id | → tasks, events o memberships (opcional, uno a la vez; sin columnas todavía — nada los crea ligados aún, decisión #36). Lo no atendido pasa al día siguiente. Al completar uno que se repite nace la siguiente vez como otra fila, con `spawned_from_id` apuntando a este; "Deshacer" la borra y reabre la original. |
 
 ## Día a día
 
