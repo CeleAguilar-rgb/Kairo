@@ -24,7 +24,9 @@ import type {
 
 // Datos de ejemplo de DiaADia.dc.html, RutinaEditar.dc.html, MenuSemanal.dc.html, Reporte.dc.html,
 // Diario.dc.html y Metas.dc.html. Todo es relativo a "hoy" (ctx.day) para que la app se vea viva.
-// Lo que el usuario hace (marcar, escribir, crear) vive en mock-store.ts mientras no exista la API.
+// Con la API ya conectada (decisión #37/#39 aplicadas a Día a día), este archivo solo sirve de lectura
+// para el modo demo (api.ts, cuando DEMO_MODE): lo que el usuario hace ahí ya no se guarda (igual que en
+// Recordatorios y Agenda, las Server Actions de actions.ts siempre llaman a la API real).
 
 export type DailySeed = {
   routines: Routine[]
@@ -357,8 +359,9 @@ export function buildDailySeed(ctx: MockContext, weekStart: IsoDate, nowMinutes:
 
 // --- Enfoque --------------------------------------------------------------------------------------
 
-// Las tareas pendientes de cada área o proyecto, que un bloque de enfoque muestra una por una. Con la API
-// salen de las tareas del módulo Tareas filtradas por área/proyecto.
+// Las tareas pendientes de cada área o proyecto, que un bloque de enfoque muestra una por una. Sigue de
+// ejemplo con la API conectada (decisión #39): Tareas no tiene el concepto de "área" (solo project_id),
+// así que filtrar por ahí pediría agregarlo primero — fuera de este alcance.
 export const FOCUS_TASKS: Record<string, string[]> = {
   school: ['Revisar requisitos de inscripción', 'Juntar documentos para la ingeniería', 'Comparar fechas de la maestría'],
   work: ['Propuesta de módulos', 'Revisar el flujo del bot con el equipo'],
@@ -373,7 +376,7 @@ export const FOCUS_AREA_LABEL: Record<string, string> = {
   personal: 'Personal',
 }
 
-// Lo que el Diario cuenta de hoy fuera de la rutina: tareas hechas y eventos. Con la API salen de Tareas y
-// Agenda; aquí son de ejemplo, como en el canvas.
+// Lo que el Diario cuenta de hoy fuera de la rutina: tareas hechas y eventos. Debería salir de Tareas y
+// Agenda; sigue de ejemplo con la API conectada (decisión #39), igual que FOCUS_TASKS arriba.
 export const TODAY_SUMMARY_EXTRAS = ['1 tarea hecha', 'Daily · Partida con amigos']
 

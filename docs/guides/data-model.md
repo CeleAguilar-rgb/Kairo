@@ -53,12 +53,14 @@ Para los módulos que todavía no tienen backend (todos salvo Cuenta e Inicio + 
 
 | Tabla | Columnas | Relaciones / notas |
 |---|---|---|
-| routines | name, days (lunes a domingo) | |
-| routine_blocks | starts_at, ends_at, title, kind, position | → routines. Horas del día (`time`). |
-| routine_logs | log_date, done, note | → routine_blocks |
-| meal_plans | plan_date, meal (`breakfast`, `lunch`, `dinner`), dish, done | |
-| journal_entries | entry_date, mood, body_encrypted | Una por día por usuario (único). `body` cifrado (ver `docs/guides/security.md`). |
-| goals | title, target, current, unit, due_on | |
+| routines | name, days (arreglo de 7 booleanos, lunes a domingo), active | |
+| routine_blocks | starts_at, ends_at (`time`, opcional: un hábito es un momento, no un rango), title, kind (`habit`, `meal`, `focus`, `free`), icon, position, alert, nag_minutes, counts_for_report, link, note | → routines. `link`: área fija (`school`/`work`/`personal`) o id de proyecto, sin FK todavía — igual que `project_id` en Tareas/Agenda (decisión #35/#37), aplicado aquí como decisión #39. `note` existe en la tabla pero el formulario de bloque todavía no lo edita (sigue solo de ejemplo). |
+| routine_logs | log_date, done_at, late, focus_done | → routine_blocks (sin cascada visible: borrar la rutina o el bloque va a su papelera, `deleted_at`, nunca borra de verdad, así que el historial del reporte no se pierde). Un registro por bloque por día; `focus_done` solo aplica a bloques de enfoque. |
+| meal_plans | plan_date, meal (`breakfast`, `lunch`, `dinner`), dish, done, prep, note | `has_event` (si cae un evento de la Agenda en esa comida) no es columna: se deriva al leer, igual que `project` en Tareas/Agenda — hoy siempre `false`, Agenda todavía no tiene datos reales que consultar (decisión #39). |
+| journal_entries | entry_date, mood, body, gratitude (arreglo), tags (arreglo), summary (arreglo), saved_at | Una por día por usuario (sin UNIQUE en la base, igual que el resto del módulo: la aplicación ya lo garantiza). `body` **sin cifrar y sin PIN** (decisión #39, en contra de lo que pedía `docs/guides/security.md` #6 — pendiente de reforzar si se decide más adelante). `summary` ("Tu día en resumen") lo arma y congela el front al guardar, no la API. |
+| goals | title, area (`work`/`personal`/`school`/`health`/`money`), kind (`milestones`/`number`/`habit`/`project`), status, target, current, unit, block_id, project_id, due_on, why, achieved_on | `block_id` → routine_blocks (FK, mismo módulo); `project_id` sin FK (Proyectos sin tabla todavía). Para `milestones`/`project`/`habit`, `target`/`current`/`unit` guardados no se usan: el front los recalcula siempre al leer (igual que `project: null` en Tareas/Agenda, decisión #37/#39). |
+| goal_milestones | text, done | → goals |
+| goal_log_entries | log_date, amount | → goals. El registro de avance de una meta de tipo Número. |
 
 ## Finanzas
 

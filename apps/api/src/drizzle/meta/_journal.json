@@ -43,6 +43,13 @@
       "when": 1792360366819,
       "tag": "0005_flawless_mole_man",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1792362399390,
+      "tag": "0006_cheerful_the_enforcers",
+      "breakpoints": true
     }
   ]
 }
