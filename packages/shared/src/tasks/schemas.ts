@@ -1,22 +1,17 @@
 import { z } from 'zod'
 
-export const TASK_PRIORITIES = ['low', 'medium', 'high'] as const
-export type TaskPriority = (typeof TASK_PRIORITIES)[number]
+import { TASK_PRIORITIES, TASK_STATUSES } from './constants'
 
-export const TASK_STATUSES = ['todo', 'in_progress', 'done'] as const
-export type TaskStatus = (typeof TASK_STATUSES)[number]
-
-export const DEFAULT_TASK_PRIORITY: TaskPriority = 'medium'
-
-// Tarea mínima del molde (Fase 1, paso 1): sin proyecto, sprint ni subtareas
-// todavía (data-model.md ya deja esas columnas listas en la tabla; se usan
-// cuando se construya Proyectos). status y position los pone el repository,
-// nunca la persona: toda tarea nueva nace en 'todo'.
+// Formulario "Nueva tarea" (panel lateral de TareaNueva.dc.html). La fecha es
+// un día suelto (due_on, 'AAAA-MM-DD'): las tareas no llevan hora.
 export const createTaskSchema = z.object({
-  title: z.string().trim().min(1, 'Escribe un título.').max(200),
-  notes: z.string().trim().max(2000).optional(),
-  priority: z.enum(TASK_PRIORITIES).default(DEFAULT_TASK_PRIORITY),
-  dueOn: z.iso.date().optional(),
+  title: z.string().trim().min(1, 'Escribe qué hay que hacer para crear la tarea.').max(200, 'Máximo 200 caracteres.'),
+  projectId: z.uuid().nullable(),
+  status: z.enum(TASK_STATUSES),
+  priority: z.enum(TASK_PRIORITIES),
+  dueOn: z.iso.date().nullable(),
+  subtasks: z.array(z.string().trim().min(1).max(200)).max(50),
+  notes: z.string().trim().max(5000).nullable(),
 })
 
 export type CreateTaskInput = z.infer<typeof createTaskSchema>

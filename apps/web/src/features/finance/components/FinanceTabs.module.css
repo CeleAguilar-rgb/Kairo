@@ -1,0 +1,54 @@
+.tabs {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  align-self: flex-start;
+  max-width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
+  border-radius: var(--radius-pill);
+  background: var(--surface-glass);
+  border: 1px solid var(--border);
+}
+
+.tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 var(--space-7);
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--text);
+  transition: background var(--duration-base) ease;
+}
+
+.tab:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* La pestaña elegida: el texto cambia a crema sobre la píldora oscura que se desliza */
+.active,
+.active:hover {
+  background: transparent;
+  color: var(--text-on-inverted);
+}
+
+.pill {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted);
+}
+
+.content {
+  position: relative;
+}

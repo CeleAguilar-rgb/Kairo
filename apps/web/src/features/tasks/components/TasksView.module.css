@@ -1,0 +1,183 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  /* 20px bajo el header y 44px a los lados: el mismo ritmo que Inicio */
+  padding: var(--space-9) var(--space-14) var(--space-15);
+}
+
+@media (max-width: 720px) {
+  .main {
+    padding: var(--space-6) var(--space-5) var(--space-14);
+  }
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-9);
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.title {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: 64px;
+  line-height: 1;
+}
+
+.bolt {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.squiggle {
+  margin: -2px 0 2px 2px;
+  max-width: 100%;
+}
+
+.summary {
+  color: var(--text-muted);
+  font-size: 17px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.doneToggle {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 38px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface-glass);
+  color: var(--text);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background var(--duration-base) ease,
+    color var(--duration-base) ease,
+    border-color var(--duration-base) ease,
+    opacity var(--duration-base) ease;
+}
+
+.doneToggle:hover:not(:disabled):not(.doneToggleOn) {
+  background: var(--surface-hover);
+}
+
+.doneToggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.doneToggleOn {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+.doneToggle:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+@media (max-width: 720px) {
+  .filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 0 calc(var(--space-5) * -1);
+    padding: 0 var(--space-5) var(--space-1);
+  }
+}
+
+.filter {
+  all: unset;
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 38px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface-glass);
+  color: var(--text);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color var(--duration-base) ease,
+    background var(--duration-base) ease,
+    border-color var(--duration-base) ease;
+}
+
+.filter:hover:not(.filterSelected) {
+  background: var(--surface-hover);
+}
+
+.filter:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.filterSelected {
+  color: var(--text-on-inverted);
+  border-color: var(--surface-inverted);
+}
+
+/* La píldora oscura viaja de un filtro al siguiente (layoutId) */
+.filterPill {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: var(--surface-inverted);
+}
+
+.filterDot,
+.filterName,
+.filterCount {
+  position: relative;
+  z-index: 1;
+}
+
+.filterDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  /* Los tonos claros (crema, arena) se pierden sobre el fondo: un borde fino los marca */
+  box-shadow: 0 0 0 1px var(--border-control);
+}
+
+.filterCount {
+  font-size: 12px;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}

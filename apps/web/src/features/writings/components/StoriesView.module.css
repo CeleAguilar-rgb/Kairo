@@ -1,0 +1,276 @@
+.split {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: var(--space-9);
+  align-items: start;
+}
+
+.books {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.book {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  width: 100%;
+  border-radius: var(--radius-22);
+  background: var(--surface-raised);
+  cursor: pointer;
+  transition:
+    transform var(--duration-base) ease,
+    box-shadow var(--duration-base) ease,
+    background var(--duration-base) ease;
+}
+
+.book:hover {
+  transform: translateY(-2px);
+}
+
+.book:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* El libro elegido: más claro y con un contorno de tinta */
+.bookOn {
+  background: var(--surface);
+  box-shadow: 0 0 0 2px var(--text);
+}
+
+.spine {
+  flex-shrink: 0;
+  width: 64px;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px 14px 14px 6px;
+  font-weight: 300;
+  font-size: 30px;
+  box-shadow: inset 7px 0 0 var(--tint-ink-28);
+}
+
+.bookText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-align: left;
+}
+
+.bookTitle {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.hintSmall {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.track {
+  height: 7px;
+  border-radius: var(--radius-pill);
+  background: var(--border-soft);
+  overflow: hidden;
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted);
+}
+
+.addBook {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  min-height: 64px;
+  border-radius: var(--radius-22);
+  border: 2px dashed var(--border-control);
+  cursor: pointer;
+  font-weight: 500;
+  transition: background var(--duration-base) ease;
+}
+
+.addBook:hover {
+  background: var(--surface-hover);
+}
+
+.addBook:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.detail {
+  gap: var(--space-7);
+  padding: 26px;
+}
+
+.detailHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-7);
+}
+
+.detailTitles {
+  flex: 1;
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.detailTitle {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.summary {
+  margin: 0;
+  max-width: 640px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.listTitle {
+  margin: 0 0 var(--space-2);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  min-height: 56px;
+  border-top: 1px solid var(--border-soft);
+  text-decoration: none;
+  color: var(--text);
+  transition: background var(--duration-base) ease;
+}
+
+.row:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.row:focus-visible {
+  outline: 2px solid var(--focus-ring);
+}
+
+.rowLabel {
+  width: 34px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-subtle);
+}
+
+.rowTitle {
+  flex: 1;
+  min-width: 0;
+  font-weight: 500;
+}
+
+.emptyRows {
+  margin: 0;
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--border-soft);
+  color: var(--text-muted);
+}
+
+.addRow {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-soft);
+}
+
+.people {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.person {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-1) var(--space-6) var(--space-1) var(--space-1);
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  text-decoration: none;
+  color: var(--text);
+  transition: background var(--duration-base) ease;
+}
+
+.person:hover {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.person:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .hideSmall {
+    display: none;
+  }
+
+  .detailTitle {
+    font-size: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book,
+  .addBook,
+  .row,
+  .person {
+    transition: none;
+  }
+
+  .book:hover {
+    transform: none;
+  }
+}

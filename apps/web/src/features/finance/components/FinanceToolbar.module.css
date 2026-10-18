@@ -1,0 +1,23 @@
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5) var(--space-9);
+  min-height: 44px;
+}
+
+.start {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-12);
+  color: var(--text-muted);
+  font-size: 17px;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}

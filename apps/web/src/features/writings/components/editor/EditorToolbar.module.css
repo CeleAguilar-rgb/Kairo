@@ -1,0 +1,124 @@
+.toolbar {
+  position: sticky;
+  top: var(--space-3);
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: var(--space-4);
+  padding: var(--space-2);
+  border-radius: var(--radius-18);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+}
+
+.separator {
+  width: 1px;
+  height: 22px;
+  margin: 0 var(--space-1);
+  background: var(--border);
+}
+
+.insert {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.insert:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.insert:disabled,
+.tool:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.block {
+  min-height: 36px;
+  width: 124px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-12);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.block:hover:not(:disabled) {
+  background: var(--surface-raised);
+}
+
+.block:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+.tool {
+  all: unset;
+  box-sizing: border-box;
+  width: 32px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-12);
+  color: var(--text);
+  font-size: 15px;
+  cursor: pointer;
+  transition: background var(--duration-fast) ease;
+}
+
+.tool:hover:not(:disabled) {
+  background: var(--surface-raised);
+}
+
+.tool:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+/* El botón de un formato que está puesto donde está el cursor */
+.toolOn,
+.toolOn:hover:not(:disabled) {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.strike {
+  text-decoration: line-through;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool {
+    transition: none;
+  }
+}

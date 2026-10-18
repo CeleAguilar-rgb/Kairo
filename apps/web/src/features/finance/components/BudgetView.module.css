@@ -1,0 +1,317 @@
+/* Dos columnas del canvas (FinPresupuesto): las categorías (8) y a un lado "Así vas", los avisos y el mes que viene (4). */
+.cols {
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  gap: var(--space-9);
+  align-items: start;
+}
+
+@media (max-width: 1080px) {
+  .cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.total {
+  font-size: 14px;
+}
+
+.board {
+  gap: var(--space-3);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.rowWrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--border-soft);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 130px 44px;
+  gap: var(--space-5);
+  align-items: center;
+}
+
+.tile {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rowMain {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.rowHead {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: 14px;
+}
+
+.rowName {
+  font-weight: 500;
+}
+
+.rowText {
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.over {
+  color: var(--danger);
+  font-weight: 500;
+}
+
+.warn {
+  color: var(--caution-ink);
+}
+
+.limit {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-12);
+  border: 1px solid var(--border-control);
+  background: var(--surface);
+  font: inherit;
+  color: var(--text);
+  text-align: right;
+  transition: border-color var(--duration-base) ease;
+}
+
+.limit::placeholder {
+  color: var(--text-subtle);
+}
+
+.limit:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+.limitInvalid {
+  border-color: var(--danger);
+}
+
+.trash {
+  all: unset;
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition:
+    background var(--duration-base) ease,
+    color var(--duration-base) ease;
+}
+
+.trash:hover {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.trash:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.error {
+  font-size: 13px;
+  color: var(--danger);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* "Nueva categoría" y su formulario */
+.addCategory {
+  all: unset;
+  box-sizing: border-box;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: 0 var(--space-7);
+  margin-top: var(--space-3);
+  border-radius: var(--radius-pill);
+  border: 1px dashed var(--border-control);
+  color: var(--text);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--duration-base) ease;
+}
+
+.addCategory:hover {
+  background: var(--surface-raised);
+}
+
+.addCategory:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.newCategory {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  margin-top: var(--space-3);
+  padding: var(--space-8);
+  border-radius: var(--radius-22);
+  background: var(--surface-raised);
+}
+
+.newField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.newLabel {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.newActions {
+  display: flex;
+  gap: var(--space-4);
+}
+
+/* --- La columna de la derecha --- */
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+}
+
+.summary {
+  gap: var(--space-5);
+}
+
+.big {
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.summarySub {
+  font-size: 14px;
+  color: var(--text-on-inverted-soft);
+}
+
+.track {
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted-muted);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  transform-origin: left center;
+}
+
+.panel {
+  gap: var(--space-5);
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.nextActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* En celular el nombre, lo gastado y la barra ocupan todo el ancho, y el límite y el bote van en la línea de abajo.
+   Va al final a propósito: .trash usa "all: unset" y esta regla tiene que ganarle. */
+@media (max-width: 720px) {
+  .row {
+    grid-template-columns: 36px minmax(0, 1fr) 40px;
+    grid-template-areas:
+      'tile main main'
+      '. limit trash';
+    row-gap: var(--space-4);
+  }
+
+  .tile {
+    grid-area: tile;
+  }
+
+  .rowMain {
+    grid-area: main;
+  }
+
+  .limitWrap {
+    grid-area: limit;
+  }
+
+  .trash,
+  .noTrash {
+    grid-area: trash;
+  }
+
+  .rowHead {
+    flex-wrap: wrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .limit,
+  .trash,
+  .addCategory {
+    transition: none;
+  }
+}

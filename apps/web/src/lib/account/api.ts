@@ -2,6 +2,8 @@ import 'server-only'
 import type { ModuleId } from '@kairo/shared'
 import { cache } from 'react'
 import { api, ApiError } from '@/lib/api-client'
+import { DEMO_MODE } from '@/lib/demo'
+import { DEMO_ME } from '@/lib/mock/demo-me'
 
 export type Profile = {
   id: string
@@ -29,6 +31,7 @@ export type Me = { profile: Profile; sections: UserSection[] }
 // cache(): el layout del dashboard y la página que renderiza pueden pedirlo
 // en el mismo request; React lo deduplica en vez de llamar a la API dos veces.
 export const getMe = cache(async (): Promise<Me | null> => {
+  if (DEMO_MODE) return DEMO_ME
   try {
     return await api.get<Me>('/me')
   } catch (error) {

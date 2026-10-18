@@ -1,0 +1,131 @@
+.row {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  width: 100%;
+  min-height: 56px;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-16);
+  color: var(--text);
+}
+
+/* En el Resumen es solo lectura, con una línea fina entre renglones */
+div.row {
+  border-radius: 0;
+  border-top: 1px solid var(--border-soft);
+}
+
+.button {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  width: 100%;
+  min-height: 60px;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-16);
+  cursor: pointer;
+  transition: background var(--duration-base) ease;
+}
+
+.button:hover {
+  background: var(--surface-raised);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 0;
+}
+
+/* Un movimiento recién guardado se resalta y se apaga solo */
+.highlighted {
+  background: var(--accent-soft);
+  animation: fade-highlight 1.6s var(--ease-out) 0.4s both;
+}
+
+@keyframes fade-highlight {
+  to {
+    background: transparent;
+  }
+}
+
+.tile {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-14);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Por tipo: ingreso lavanda, gasto neutro, ahorro cálido, deuda tinta */
+.kind_income {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.kind_expense {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.kind_saving_deposit,
+.kind_saving_withdrawal {
+  background: var(--accent-warm);
+  color: var(--text);
+}
+
+.kind_debt_payment {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.repeat {
+  display: inline-flex;
+  color: var(--text-muted);
+}
+
+.amount {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.incoming {
+  color: var(--accent-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+
+  .highlighted {
+    animation: none;
+    background: transparent;
+  }
+}

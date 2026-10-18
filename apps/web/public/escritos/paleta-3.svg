@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Lavanda">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cbc6f5"/><stop offset="1" stop-color="#e9e7fb"/></linearGradient></defs>
+<rect width="200" height="200" fill="url(#g)"/>
+</svg>

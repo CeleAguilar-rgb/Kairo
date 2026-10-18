@@ -1,0 +1,326 @@
+.split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-7);
+  align-items: flex-start;
+}
+
+.grow {
+  flex: 999 1 520px;
+  min-width: 0;
+}
+
+.side {
+  flex: 1 1 320px;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+@media (max-width: 1080px) {
+  .side {
+    max-width: none;
+  }
+}
+
+.matrixCard {
+  gap: var(--space-6);
+  padding: var(--space-10);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.headTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-12);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.iconWarm {
+  background: var(--accent-warm);
+  color: var(--text);
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+}
+
+.swatchStory {
+  background: var(--surface-inverted);
+}
+
+.swatchLore {
+  background: var(--accent);
+}
+
+.swatchIdea {
+  border: 1.5px dashed var(--text-subtle);
+}
+
+.empty {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.scroll {
+  overflow-x: auto;
+}
+
+/* `--eras` es cuántas eras tiene el mundo: una columna por era, además de la de los nombres */
+.matrix {
+  display: grid;
+  grid-template-columns: 150px repeat(var(--eras, 4), minmax(150px, 1fr));
+  gap: var(--space-3);
+  min-width: 780px;
+}
+
+.eraHead {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-12);
+  color: var(--text);
+  text-decoration: none;
+  transition: background var(--duration-base) ease;
+}
+
+.eraHead:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.eraHead:focus-visible,
+.item:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.eraNumber {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-muted);
+}
+
+.eraName {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.rowHead {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-3) var(--space-1);
+  border-top: 1px solid var(--border-soft);
+}
+
+.rowName {
+  font-weight: 600;
+}
+
+.rowSub {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  min-height: 64px;
+  border-radius: var(--radius-14);
+  border-top: 1px solid var(--border-soft);
+}
+
+.cellFilled {
+  background: var(--surface-raised);
+}
+
+/* Una celda vacía va rayada, como en el canvas */
+.cellEmpty {
+  background: repeating-linear-gradient(135deg, transparent 0 8px, var(--border-soft) 8px 9px);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-12);
+  font-size: 13px;
+  line-height: 1.3;
+  text-decoration: none;
+  transition: transform var(--duration-base) ease;
+}
+
+.item:hover {
+  transform: translateY(-1px);
+}
+
+.item_story {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.item_story:hover {
+  color: var(--text-on-inverted);
+}
+
+.item_lore {
+  background: var(--accent);
+  color: var(--text);
+}
+
+.item_lore:hover {
+  color: var(--text);
+}
+
+.item_idea {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1.5px dashed var(--text-subtle);
+}
+
+.item_idea:hover {
+  color: var(--text-muted);
+}
+
+/* Huecos por llenar */
+.gaps {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-10);
+  border-radius: var(--radius-28);
+  background: var(--accent-soft);
+}
+
+.gapsDoodle {
+  position: absolute;
+  top: -12px;
+  right: var(--space-8);
+  transform: rotate(10deg);
+}
+
+.gapsHint {
+  font-size: 13px;
+  color: var(--accent-ink);
+}
+
+.gapsEmpty,
+.rulesEmpty {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.gap {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-16);
+  background: var(--surface-glass);
+}
+
+.gapBox {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  border-radius: 7px;
+  border: 1.5px solid var(--accent-ink);
+}
+
+.gapText {
+  display: flex;
+  flex-direction: column;
+}
+
+.gapTitle {
+  font-weight: 500;
+}
+
+.gapDetail {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.rules {
+  gap: var(--space-4);
+  padding: var(--space-10);
+}
+
+.rule {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.rule strong {
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eraHead,
+  .item {
+    transition: none;
+  }
+
+  .item:hover {
+    transform: none;
+  }
+}

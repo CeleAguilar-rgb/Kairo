@@ -1,0 +1,20 @@
+/* Entrada de la pantalla de carga que muestra PageFrame al hacer clic. Si el contenedor
+   de la página no se atenúa mientras tanto (ver PageFrame), este es el único fundido. */
+.loaderIn {
+  animation: loader-in 220ms ease both;
+}
+
+@keyframes loader-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loaderIn {
+    animation: none;
+  }
+}

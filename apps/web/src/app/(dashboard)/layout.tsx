@@ -1,6 +1,10 @@
 import { redirect } from 'next/navigation'
 import type { ReactNode } from 'react'
+import { DoodlesProvider } from '@/components/layout/Doodles'
+import { NavigationProvider, PageFrame } from '@/components/layout/Navigation'
+import { ToastProvider } from '@/components/ui/Toast'
 import { getMe } from '@/lib/account/api'
+import { DEMO_MODE } from '@/lib/demo'
 import { createClient } from '@/lib/supabase/server'
 import styles from './layout.module.css'
 import { Topnav } from './Topnav'
@@ -13,17 +17,27 @@ type DashboardLayoutProps = { children: ReactNode }
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
-  const supabase = await createClient()
-  const { data } = await supabase.auth.getClaims()
-  if (!data) redirect('/entrar')
+  // En modo demo (lib/demo.ts, solo en desarrollo) no hay Supabase: se salta
+  // el candado de sesión y getMe() devuelve el perfil de ejemplo.
+  if (!DEMO_MODE) {
+    const supabase = await createClient()
+    const { data } = await supabase.auth.getClaims()
+    if (!data) redirect('/entrar')
+  }
 
   const me = await getMe()
   if (!me) redirect('/bienvenida')
 
   return (
-    <div className={styles.shell}>
-      <Topnav profile={me.profile} sections={me.sections} />
-      <div className={styles.content}>{children}</div>
-    </div>
+    <ToastProvider>
+      <DoodlesProvider>
+        <NavigationProvider>
+          <div className={styles.shell}>
+            <Topnav profile={me.profile} sections={me.sections} />
+            <PageFrame className={styles.content}>{children}</PageFrame>
+          </div>
+        </NavigationProvider>
+      </DoodlesProvider>
+    </ToastProvider>
   )
 }

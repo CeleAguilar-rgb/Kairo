@@ -1,0 +1,32 @@
+/* Al llegar una pestaña (no la primera de la visita), su contenido aparece con un fundido corto que
+   parte de donde quedó el contenido viejo atenuado: así el relevo se siente continuo y no un corte.
+   Sin `animation-fill-mode: forwards` a propósito: al terminar, la animación se quita y el elemento deja
+   de crear un contexto de apilamiento (los paneles laterales que se abren dentro siguen por encima). */
+.panel[data-calm] {
+  animation: panel-in var(--duration-base) var(--ease-out);
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0.7;
+  }
+}
+
+/* Se tocó una pestaña y la nueva todavía no llega: el contenido viejo se atenúa, sin moverse. El retraso
+   de 150 ms evita el parpadeo cuando llega rápido (lo normal en producción): ahí ni se alcanza a ver. La
+   transición vive en este estado y no en .panel, para que solo anime al entrar a él. */
+.panel[data-switching] {
+  opacity: 0.7;
+  pointer-events: none;
+  transition: opacity var(--duration-base) ease 150ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel[data-calm] {
+    animation: none;
+  }
+
+  .panel[data-switching] {
+    transition: none;
+  }
+}

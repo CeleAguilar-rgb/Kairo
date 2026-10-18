@@ -1,0 +1,67 @@
+.scopes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  margin: var(--space-5) 0;
+  text-align: left;
+}
+
+.scope {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-16);
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition:
+    border-color 200ms ease,
+    background 200ms ease;
+}
+
+.scope:hover {
+  border-color: var(--border-control);
+}
+
+.scope:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.scopeOn,
+.scopeOn:hover {
+  border-color: var(--surface-inverted);
+  background: var(--surface-muted);
+}
+
+.radio {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 1.5px solid var(--text-subtle);
+  background: var(--surface);
+}
+
+.scopeOn .radio {
+  border: 6px solid var(--surface-inverted);
+}
+
+.scopeText {
+  display: flex;
+  flex-direction: column;
+}
+
+.scopeName {
+  font-weight: 500;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}

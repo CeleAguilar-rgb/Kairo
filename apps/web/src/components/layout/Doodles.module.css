@@ -1,0 +1,95 @@
+.trayWrap {
+  position: relative;
+}
+
+.tray {
+  position: absolute;
+  top: 54px;
+  right: 0;
+  z-index: var(--z-popover);
+  width: 300px;
+  padding: var(--space-6);
+  border-radius: var(--radius-22);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  transform-origin: top right;
+}
+
+.trayHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trayTitle {
+  font-weight: 500;
+}
+
+.trayHint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.trayGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.doodleButton {
+  all: unset;
+  box-sizing: border-box;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--duration-base) ease;
+}
+
+.doodleButton:hover {
+  background: var(--surface-muted);
+}
+
+.doodleButton:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.clear {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-muted);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.clear:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.placedArea {
+  position: absolute;
+  inset: -20px -40px -10px -10px;
+  pointer-events: none;
+  z-index: var(--z-adornment);
+}
+
+.placed {
+  position: absolute;
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+}

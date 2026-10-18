@@ -1,0 +1,37 @@
+.main {
+  padding: var(--space-9) var(--space-14) var(--space-15);
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-9);
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+  text-decoration: none;
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--duration-base) ease,
+    box-shadow var(--duration-base) ease;
+}
+
+.back:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.back:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  .main {
+    padding: var(--space-6) var(--space-5) var(--space-14);
+  }
+}

@@ -1,0 +1,235 @@
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-9);
+}
+
+@media (max-width: 900px) {
+  .stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.stat {
+  gap: var(--space-4);
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.statLabel {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.big {
+  font-size: 44px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.statName {
+  font-weight: 500;
+}
+
+.skipName {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.moveLink {
+  align-self: flex-start;
+  font-size: 14px;
+}
+
+.board {
+  gap: var(--space-7);
+}
+
+.boardHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.boardTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.scroller {
+  overflow-x: auto;
+  margin: 0 calc(var(--space-1) * -1);
+  padding: var(--space-1);
+}
+
+.matrix {
+  display: grid;
+  grid-template-columns: minmax(150px, 1.4fr) repeat(7, minmax(36px, 1fr)) 64px;
+  gap: var(--space-2);
+  align-items: center;
+  min-width: 560px;
+}
+
+.dayHead {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  border-radius: var(--radius-pill);
+  padding: 2px 0;
+}
+
+.dayToday {
+  font-weight: 600;
+  color: var(--surface);
+  background: var(--surface-inverted);
+}
+
+.scoreHead {
+  text-align: right;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.rowHead {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.rowName {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rowTime {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.score {
+  text-align: right;
+  font-weight: 500;
+}
+
+/* Las celdas: cada estado tiene su aspecto (también lo usa la leyenda con .swatch) */
+.cell {
+  all: unset;
+  box-sizing: border-box;
+  height: 40px;
+  border-radius: var(--radius-12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.cell:hover:not(.cellInert) {
+  transform: translateY(-1px);
+}
+
+.cell:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.cellOn {
+  box-shadow:
+    0 0 0 2px var(--surface),
+    0 0 0 4px var(--text);
+}
+
+.cellInert {
+  cursor: default;
+}
+
+.cell_done {
+  background: var(--accent-strong);
+  color: var(--surface);
+}
+
+.cell_late {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.cell_skipped {
+  background: var(--surface);
+  border: 1.5px dashed color-mix(in srgb, var(--danger) 45%, var(--surface));
+}
+
+.cell_pending {
+  background: var(--surface-raised);
+}
+
+.cell_future {
+  background: transparent;
+  border: 1px solid var(--border-soft);
+}
+
+.cell_off {
+  background: repeating-linear-gradient(135deg, var(--surface-raised) 0 4px, transparent 4px 8px);
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-6);
+  border-radius: var(--radius-14);
+  background: var(--surface-raised);
+  font-size: 14px;
+}
+
+.detail svg {
+  flex-shrink: 0;
+}
+
+.notes {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell {
+    transition: none;
+  }
+
+  .cell:hover {
+    transform: none;
+  }
+}

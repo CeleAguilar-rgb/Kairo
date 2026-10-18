@@ -1,0 +1,49 @@
+/* Los colores de Finanzas por clave, tomados de las variables semánticas. Los usan las categorías (ícono y
+   muestra de color) y las tarjetas. Un componente los toma con styles[`cat_${color}`] / styles[`card_${color}`]. */
+
+/* Una categoría (FinPresupuesto): Lavanda, Lavanda suave, Arena, Durazno y Crema. */
+.cat_lavender {
+  background: var(--accent);
+  color: var(--text);
+}
+
+.cat_lavender_soft {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.cat_sand {
+  background: var(--accent-warm);
+  color: var(--text);
+}
+
+.cat_peach {
+  background: var(--danger-soft);
+  color: var(--text);
+}
+
+.cat_cream {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+/* Una tarjeta o cuenta (FinMembresia): Tinta, Lavanda, Arena y Lavanda suave. */
+.card_ink {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.card_lavender {
+  background: var(--accent);
+  color: var(--text);
+}
+
+.card_sand {
+  background: var(--accent-warm);
+  color: var(--text);
+}
+
+.card_lavender_soft {
+  background: var(--accent-soft);
+  color: var(--text);
+}

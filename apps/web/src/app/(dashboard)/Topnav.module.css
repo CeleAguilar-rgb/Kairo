@@ -1,10 +1,14 @@
+/* Tres columnas: las de los lados miden lo mismo (1fr), así el nav queda
+   centrado de verdad aunque el logo y los íconos tengan anchos distintos. */
 .header {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-5);
-  padding: var(--space-7) var(--space-11);
+  /* Aire entre el nav y lo que tiene a cada lado, para que nunca se peguen */
+  column-gap: var(--space-9);
+  row-gap: var(--space-5);
+  /* Mismo margen lateral que el contenido de las páginas (44px), como el .wrap del canvas */
+  padding: var(--space-11) var(--space-14) 0;
 }
 
 .logo {
@@ -15,6 +19,13 @@
   font-size: 28px;
   line-height: 1;
   color: var(--text);
+  text-decoration: none;
+  border-radius: var(--radius-12);
+}
+
+.logo:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
 }
 
 .nav {
@@ -22,11 +33,13 @@
   gap: var(--space-1);
   padding: var(--space-1);
   border-radius: var(--radius-pill);
-  background: var(--surface);
+  background: var(--surface-glass);
   border: 1px solid var(--border);
+  backdrop-filter: blur(var(--blur-scrim));
 }
 
 .navLink {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: var(--space-3);
@@ -36,16 +49,106 @@
   text-decoration: none;
   color: var(--text);
   white-space: nowrap;
-  transition: background var(--duration-base) ease;
+  transition:
+    background var(--duration-base) ease,
+    color var(--duration-base) ease;
 }
 
-.navLink:hover {
+.navLink:hover:not(.navLinkActive) {
   background: var(--surface-hover);
+}
+
+.navLinkActive {
+  color: var(--text-on-inverted);
+}
+
+/* Detrás del ícono y el texto (los dos llevan position relative + z-index 1) */
+.activePill {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted);
+}
+
+.navIcon,
+.navLabel {
+  position: relative;
+  z-index: 1;
+}
+
+.navIcon {
+  transition: transform var(--duration-base) var(--ease-spring);
+}
+
+.navLink:hover .navIcon {
+  transform: translateY(-1px) rotate(-6deg);
 }
 
 .navLink:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
+}
+
+.logo {
+  justify-self: start;
+}
+
+.end {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.iconButton {
+  all: unset;
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    background var(--duration-base) ease,
+    color var(--duration-base) ease;
+}
+
+.iconButton:hover {
+  background: var(--surface-hover);
+}
+
+.iconButtonOpen,
+.iconButtonOpen:hover {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.iconButton:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* Pantallas medianas: enlaces más compactos para que el nav quepa en una línea (canvas) */
+@media (min-width: 721px) and (max-width: 1320px) {
+  .navLink {
+    padding: 0 var(--space-4);
+    gap: var(--space-2);
+  }
+}
+
+@media (max-width: 720px) {
+  .header {
+    padding: var(--space-6) var(--space-5) 0;
+  }
 }
 
 .menuWrap {
@@ -74,8 +177,9 @@
 .menu {
   position: absolute;
   top: 54px;
+  transform-origin: top right;
   right: 0;
-  z-index: 10;
+  z-index: var(--z-popover);
   width: 220px;
   box-sizing: border-box;
   padding: var(--space-3);
@@ -134,4 +238,32 @@
 .menuDivider {
   border-top: 1px solid var(--border-soft);
   margin: var(--space-2) 0;
+}
+
+/* Medio: los íconos y el avatar necesitan más que la mitad de lo que sobra, así que las
+   columnas de los lados dejan de ser iguales y el nav se centra en el espacio libre
+   (queda casi al centro; lo importante es que no se pegue a la lupa). */
+@media (min-width: 1141px) and (max-width: 1240px) {
+  .header {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .nav {
+    justify-self: center;
+  }
+}
+
+/* Angosto: logo e íconos arriba, el nav abajo a todo lo ancho (con scroll si no cabe) */
+@media (max-width: 1140px) {
+  .header {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: center;
+    max-width: 100%;
+    overflow-x: auto;
+  }
 }

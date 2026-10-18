@@ -2,6 +2,7 @@
 
 import type { ModuleId } from '@kairo/shared'
 import { AnimatePresence, motion } from 'motion/react'
+import { EASE_OUT } from '@/lib/motion'
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
@@ -12,7 +13,6 @@ import { MODULE_CATALOG } from '@/lib/modules/catalog'
 import styles from './BienvenidaWizard.module.css'
 
 const TOTAL_STEPS = 3
-const EASE = [0.3, 0.7, 0.2, 1] as const
 
 export function BienvenidaWizard() {
   const [step, setStep] = useState(1)
@@ -130,7 +130,7 @@ export function BienvenidaWizard() {
             initial={{ opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.45, ease: EASE }}
+            transition={{ duration: 0.45, ease: EASE_OUT }}
           >
             <Card aria-labelledby="b-t1">
               <div className={styles.heading}>
@@ -205,7 +205,7 @@ export function BienvenidaWizard() {
             initial={{ opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.45, ease: EASE }}
+            transition={{ duration: 0.45, ease: EASE_OUT }}
             aria-labelledby="b-t2"
           >
             <div className={styles.heading}>
@@ -307,7 +307,7 @@ export function BienvenidaWizard() {
             initial={{ opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.45, ease: EASE }}
+            transition={{ duration: 0.45, ease: EASE_OUT }}
           >
             <Card className={styles.doneCard} aria-labelledby="b-t3">
               <svg

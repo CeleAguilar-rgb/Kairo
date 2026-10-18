@@ -1,0 +1,60 @@
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-drawer);
+  display: grid;
+  place-items: center;
+  padding: var(--space-7);
+  background: var(--scrim);
+  backdrop-filter: blur(var(--blur-scrim));
+}
+
+.card {
+  position: relative;
+  width: min(420px, 100%);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 34px var(--space-12) var(--space-11);
+  border-radius: 32px;
+  background: var(--surface);
+  text-align: center;
+  box-shadow: var(--shadow-dialog);
+}
+
+/* Cada doodle arranca en el centro de la tarjeta (arriba, donde está la estrella) y viaja hasta su lugar */
+.burst {
+  position: absolute;
+  left: calc(50% - 17px);
+  top: 90px;
+  display: inline-flex;
+  pointer-events: none;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 1;
+}
+
+.goal {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}

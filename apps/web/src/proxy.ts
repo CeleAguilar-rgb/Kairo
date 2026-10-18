@@ -1,10 +1,14 @@
 import { createServerClient } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
+import { DEMO_MODE } from '@/lib/demo'
 import { env } from '@/lib/env'
 
 // Refresca el token de sesión en cada petición. Sin esto, la sesión de 30 días se corta
 // cuando caduca el access token aunque el refresh token siga siendo válido.
 export async function proxy(request: NextRequest) {
+  // Modo demo (lib/demo.ts): no hay sesión que refrescar ni Supabase al que llamar.
+  if (DEMO_MODE) return NextResponse.next({ request })
+
   let response = NextResponse.next({ request })
 
   const supabase = createServerClient(env.NEXT_PUBLIC_SUPABASE_URL, env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, {

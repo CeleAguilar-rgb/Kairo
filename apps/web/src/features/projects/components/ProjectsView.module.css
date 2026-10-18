@@ -1,0 +1,84 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  /* 20px bajo el header y 44px a los lados: el mismo ritmo que Inicio y Tareas */
+  padding: var(--space-9) var(--space-14) var(--space-15);
+}
+
+@media (max-width: 720px) {
+  .main {
+    padding: var(--space-6) var(--space-5) var(--space-14);
+  }
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-9);
+}
+
+.summary {
+  color: var(--text-muted);
+  font-size: 17px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+/* El número dentro de cada opción del filtro, más tenue que el nombre */
+.count {
+  margin-left: var(--space-3);
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-8);
+}
+
+/* La casilla punteada "Nuevo proyecto" al final de la galería */
+.newTile {
+  box-sizing: border-box;
+  height: 100%;
+  text-decoration: none;
+  cursor: pointer;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
+  text-align: center;
+  border-radius: var(--radius-28);
+  border: 2px dashed var(--border-control);
+  color: var(--text-muted);
+  transition: background 200ms ease;
+}
+
+.newTile:hover {
+  background: var(--surface-hover);
+}
+
+.newTile:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.newTitle {
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.newHint {
+  font-size: 13px;
+}

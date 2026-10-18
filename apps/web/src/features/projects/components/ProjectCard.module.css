@@ -1,0 +1,148 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-28);
+  overflow: hidden;
+  transition:
+    transform 250ms var(--ease-out),
+    box-shadow 250ms ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  color: var(--text);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.cover {
+  position: relative;
+  height: 172px;
+  overflow: hidden;
+  background: var(--surface-muted);
+}
+
+.art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms var(--ease-out);
+}
+
+.card:hover .art {
+  transform: scale(1.05);
+}
+
+/* Etiqueta del tipo, arriba a la izquierda: cada tipo se distingue por su relleno */
+.kind {
+  position: absolute;
+  top: var(--space-6);
+  left: var(--space-6);
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.kind_work {
+  background: var(--bg);
+  color: var(--text);
+  border: 1.5px solid var(--text);
+}
+
+.kind_school {
+  background: var(--accent);
+  color: var(--text);
+  border: 1.5px solid var(--text);
+}
+
+.kind_personal {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+/* "En pausa" / "Terminado", arriba a la derecha */
+.status {
+  position: absolute;
+  top: var(--space-6);
+  right: var(--space-6);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 28px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--space-4);
+  padding: var(--space-8) var(--space-9) var(--space-9);
+}
+
+.name {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.description {
+  color: var(--text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-1);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.next {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .art {
+    transition: none;
+  }
+
+  .card:hover,
+  .card:hover .art {
+    transform: none;
+  }
+}

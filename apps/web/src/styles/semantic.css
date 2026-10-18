@@ -11,11 +11,13 @@
  * así el modo oscuro es escribir ese archivo y nada más.
  *
  * --bg                      fondo general de la app (crema)
+ * --bg-glow                 brillo suave arriba a la derecha del fondo (gradiente del canvas)
  * --surface                 tarjetas, inputs, popovers (superficie)
  * --surface-raised          filas, campos, días de la semana (superficie-2)
  * --surface-muted           pista de barras de progreso, etiquetas neutras, botón secundario (arena-suave)
  * --surface-inverted        tarjeta destacada por pantalla — la más importante (tarjeta-destacada)
  * --surface-inverted-muted  pistas e íconos dentro de --surface-inverted (tinta-2)
+ * --surface-inverted-sunken base de esqueletos dentro de --surface-inverted (no está en el PDF; sale de la pantalla Estados)
  * --border                  borde por defecto de tarjetas y menús (linea)
  * --border-soft             línea divisoria, más tenue que --border (no está en el PDF; uso propio para separadores de fila)
  * --border-control          borde de inputs y botón "fantasma" (linea-fuerte)
@@ -24,15 +26,25 @@
  * --text-subtle             placeholder, tachado de "hecho", borde de casilla vacía — nunca texto que se deba leer (texto-3)
  * --text-on-inverted        texto sobre --surface-inverted (crema)
  * --text-on-inverted-muted  metadatos sobre --surface-inverted (texto-tenue-oscuro)
+ * --text-on-inverted-soft   texto secundario legible sobre --surface-inverted, más claro que -muted (horarios de la rutina)
+ * --border-inverted         borde de bloques dentro de --surface-inverted
  * --accent                  lo hecho, lo elegido, el avance: checks, anillo, barras, subrayado, doodles (lavanda)
  * --accent-soft              fondo suave de acento: recordatorios, eventos, chips (lavanda-suave)
  * --accent-ink               texto sobre --accent-soft (lavanda-tinta)
+ * --accent-strong            lavanda fuerte para relleno de barras de metas y énfasis puntual (mismo valor que --focus-ring, pero con otro uso)
  * --accent-warm              fondo del cálido de apoyo: algunos doodles e íconos puntuales (no está en el PDF como variable propia, aunque el color sí aparece ahí — mismo caso que --border-soft)
  * --focus-ring               anillo de foco de teclado, 2px — nunca para otra cosa (foco)
  * --danger                   error / acción destructiva, siempre sobre --surface (peligro)
  * --danger-soft               fondo de confirmaciones de borrar (peligro-suave)
  * --danger-on-inverted        error sobre --surface-inverted
+ * --caution                  aviso suave antes de un error: la barra del presupuesto al llegar al 80% (no está en el PDF; sale de FinResumen.dc.html)
+ * --caution-ink              texto sobre --surface para ese mismo aviso
  * --surface-hover             tinte sutil al pasar el mouse sobre superficies planas (no está en el PDF)
+ * --surface-glass           superficie translúcida sobre --bg: nav, estadísticas del saludo, filas sobre --accent-soft
+ * --surface-inverted-glass  bloque translúcido dentro de --surface-inverted (bloque actual de la rutina)
+ * --accent-glow             fila seleccionada dentro de --surface-inverted (pendiente abierto)
+ * --scrim                    velo detrás de paneles laterales y modales (no está en el PDF; sale del canvas)
+ * --mood-1 … --mood-5       escala del ánimo del Diario, de "muy mal" a "muy bien" (caritas y mapa del mes; no está en el PDF; sale de Diario.dc.html)
  *
  * --success: pendiente. El PDF no define un verde — "lavanda" ya cubre
  * lo hecho/el avance; se agrega si aparece un uso que de verdad lo pida.

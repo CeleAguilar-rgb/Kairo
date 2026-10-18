@@ -1,0 +1,408 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.toolbarText {
+  color: var(--text-muted);
+}
+
+/* Dos columnas: el sprint y su tablero a la izquierda; backlog y cerrados a la derecha */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--space-7);
+  align-items: start;
+}
+
+.main,
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  min-width: 0;
+}
+
+.main {
+  grid-column: span 8;
+}
+
+.side {
+  grid-column: span 4;
+}
+
+@media (max-width: 1080px) {
+  .main,
+  .side {
+    grid-column: span 12;
+  }
+}
+
+.card {
+  padding: var(--space-11);
+  gap: var(--space-7);
+}
+
+.muted {
+  color: var(--text-on-inverted-muted);
+}
+
+.count {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.empty {
+  padding: var(--space-7);
+  border-radius: var(--radius-16);
+  background: var(--surface-raised);
+  color: var(--text-muted);
+}
+
+/* Sprint activo (tarjeta oscura) */
+.active {
+  position: relative;
+  gap: var(--space-7);
+}
+
+.bolt {
+  position: absolute;
+  top: var(--space-8);
+  right: var(--space-9);
+  display: inline-flex;
+  transform: rotate(8deg);
+}
+
+.activeHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+  /* deja libre la esquina del rayo */
+  padding-right: 56px;
+}
+
+.activeTitles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.kicker {
+  font-size: 13px;
+  color: var(--text-on-inverted-muted);
+}
+
+.sprintName {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.range {
+  color: var(--text-on-inverted-soft);
+}
+
+.leftChip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.goal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.goalText {
+  font-size: 17px;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.progressRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.track {
+  height: 8px;
+  border-radius: var(--radius-8);
+  background: var(--surface-inverted-muted);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: var(--radius-8);
+  background: var(--accent);
+  transform-origin: left center;
+}
+
+/* Los 14 días: los que pasaron, hoy, los que faltan */
+.days {
+  display: grid;
+  grid-template-columns: repeat(14, minmax(0, 1fr));
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+}
+
+.day {
+  height: 10px;
+  border-radius: 4px;
+}
+
+.dayPast {
+  background: var(--accent);
+}
+
+.dayToday {
+  background: var(--text-on-inverted);
+}
+
+.dayFuture {
+  background: var(--surface-inverted-muted);
+}
+
+.dayNone {
+  background: transparent;
+}
+
+/* Tablero del sprint */
+.columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+@media (max-width: 720px) {
+  .columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-5);
+  border-radius: var(--radius-22);
+  background: var(--surface-raised);
+}
+
+.columnHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-1);
+}
+
+.columnName {
+  font-weight: 500;
+}
+
+.columnCount {
+  min-width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.columnCountDone {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.columnEmpty {
+  padding: var(--space-3) var(--space-1);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.taskCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-4) var(--space-4) var(--space-6);
+  border-radius: var(--radius-16);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.taskTitle {
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.taskTitleDone {
+  color: var(--text-muted);
+}
+
+.taskFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.taskMeta {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.moves {
+  display: inline-flex;
+}
+
+.move {
+  all: unset;
+  box-sizing: border-box;
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition:
+    background 200ms ease,
+    color 200ms ease;
+}
+
+/* Un área de toque más grande que la flecha, sin que se vea */
+.move::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+}
+
+.move:hover {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.move:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Backlog */
+.rows {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  min-height: 52px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.rowTitle {
+  flex: 1;
+  min-width: 0;
+}
+
+.addButton {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-control);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 200ms ease;
+}
+
+.addButton:hover {
+  background: var(--surface-muted);
+}
+
+.addButton:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Sprints cerrados */
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.closedItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-6) var(--space-7);
+  border-radius: var(--radius-16);
+  background: var(--surface-raised);
+}
+
+.closedHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.closedName {
+  font-weight: 500;
+}
+
+.score {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent-ink);
+}
+
+.retro {
+  margin-top: var(--space-2);
+  font-size: 14px;
+  color: var(--text-muted);
+}

@@ -1,37 +1,55 @@
-import { getMe } from '@/lib/account/api'
-import { HOME_CARDS_BY_MODULE } from '@/lib/modules/home-cards'
-import { modules } from '@/lib/modules/registry'
-import styles from './page.module.css'
+import { redirect } from 'next/navigation'
 
-// "Ajustar mi Inicio" (home_cards: prender/apagar y ordenar tarjetas suelta)
-// es de un incremento posterior. Por ahora se muestran todas las tarjetas
-// que aportan los módulos activos, en el orden de sus secciones.
+import { PageEnter } from '@/components/layout/PageEnter'
+import { HomeView } from '@/features/home'
+import { getHomeData } from '@/features/home/api'
+import { getMe } from '@/lib/account/api'
+import {
+  addDays,
+  formatLongDay,
+  minutesNowIn,
+  startOfWeek,
+  todayIn,
+} from '@/lib/dates'
+
+// Inicio: el saludo y las tarjetas de los módulos activos. La página solo
+// junta datos y calcula lo que depende de la hora (en la zona del perfil),
+// para que servidor y navegador muestren exactamente lo mismo.
 export default async function DashboardHome() {
   const me = await getMe()
-  const sectionByModule = new Map((me?.sections ?? []).map((section) => [section.section, section]))
+  if (!me) redirect('/bienvenida')
 
-  const activeModules = modules
-    .filter((module) => sectionByModule.get(module.id)?.enabled)
-    .sort(
-      (a, b) =>
-        (sectionByModule.get(a.id)?.position ?? 0) - (sectionByModule.get(b.id)?.position ?? 0),
-    )
+  const { profile, sections } = me
+  const enabledModules = sections.filter((s) => s.enabled).map((s) => s.section)
+  const data = await getHomeData(enabledModules)
 
-  const homeCards = activeModules.flatMap((module) => HOME_CARDS_BY_MODULE[module.id] ?? [])
+  const today = todayIn(profile.timezone)
+  const nowMinutes = minutesNowIn(profile.timezone)
+  const weekEnd = addDays(startOfWeek(today, profile.weekStart), 6)
 
   return (
-    <div className={styles.wrap}>
-      <h1 className={styles.title}>Inicio</h1>
-
-      {homeCards.length > 0 ? (
-        <div className={styles.grid}>
-          {homeCards.map((HomeCard, index) => (
-            <HomeCard key={index} />
-          ))}
-        </div>
-      ) : (
-        <p className={styles.empty}>Activa secciones desde tu perfil para ver sus tarjetas aquí.</p>
-      )}
-    </div>
+    <PageEnter>
+      <HomeView
+        data={data}
+        enabledModules={enabledModules}
+        name={profile.name ?? 'tú'}
+        hello={greetingFor(nowMinutes)}
+        dateText={formatLongDay(today)}
+        today={today}
+        weekEnd={weekEnd}
+        nowMinutes={nowMinutes}
+        timeZone={profile.timezone}
+        hourFormat={profile.hourFormat}
+        weekStart={profile.weekStart}
+        currency={profile.currency}
+      />
+    </PageEnter>
   )
+}
+
+function greetingFor(minutes: number) {
+  if (minutes < 5 * 60) return 'Buenas noches'
+  if (minutes < 12 * 60) return 'Buenos días'
+  if (minutes < 19 * 60) return 'Buenas tardes'
+  return 'Buenas noches'
 }

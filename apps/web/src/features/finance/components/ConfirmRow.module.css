@@ -1,0 +1,21 @@
+.confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-18);
+  background: var(--danger-soft);
+  color: var(--text);
+}
+
+.text {
+  flex: 1 1 200px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.cancel,
+.confirmButton {
+  min-height: 40px;
+}

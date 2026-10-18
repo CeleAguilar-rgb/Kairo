@@ -1,0 +1,130 @@
+.card {
+  position: relative;
+  padding: var(--space-10);
+  gap: var(--space-5);
+  height: 100%;
+  overflow: hidden;
+}
+
+.spiral {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-6);
+  display: inline-flex;
+  opacity: 0.7;
+  pointer-events: none;
+  animation: spin 24s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spiral {
+    animation: none;
+  }
+}
+
+.titleLink {
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--radius-8);
+}
+
+.titleLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.titleLink:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.list {
+  /* popLayout saca de flujo (absolute) a la fila que se va: necesita un ancestro posicionado */
+  position: relative;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.row {
+  display: flex;
+  gap: var(--space-5);
+  align-items: flex-start;
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-16);
+  background: var(--surface-glass);
+  color: var(--text);
+}
+
+.row > svg {
+  margin-top: 3px;
+  flex-shrink: 0;
+  color: var(--accent-ink);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.when {
+  font-size: 13px;
+  color: var(--accent-ink);
+}
+
+.done {
+  all: unset;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  color: var(--accent-ink);
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.8);
+  transition:
+    opacity var(--duration-base) ease,
+    transform var(--duration-base) var(--ease-spring),
+    background var(--duration-base) ease;
+}
+
+/* El botón aparece al pasar por la fila, o siempre que tenga foco de teclado */
+.row:hover .done,
+.done:focus-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.done:hover {
+  background: var(--accent);
+}
+
+.done:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Sin mouse (pantallas táctiles) no hay hover: el botón se ve siempre */
+@media (hover: none) {
+  .done {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.empty {
+  color: var(--accent-ink);
+}

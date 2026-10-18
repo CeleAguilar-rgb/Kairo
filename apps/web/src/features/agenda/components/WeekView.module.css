@@ -1,0 +1,82 @@
+/* En pantallas angostas la semana se desliza de lado: siete columnas apretadas no se leen */
+.scroll {
+  overflow-x: auto;
+}
+
+.week {
+  min-width: 760px;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: 64px repeat(7, minmax(0, 1fr));
+  column-gap: var(--space-2);
+  padding-bottom: var(--space-3);
+}
+
+.dayHead {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-1) 0;
+  border-radius: var(--radius-14);
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+
+.dayHead:hover {
+  background: var(--surface-raised);
+}
+
+.dayHead:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.dow {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.numToday {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+/* La fila de lo que dura todo el día: una celda por columna */
+.allDay {
+  display: grid;
+  grid-template-columns: 64px repeat(7, minmax(0, 1fr));
+  column-gap: var(--space-2);
+  padding: var(--space-3) 0 var(--space-4);
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.allDayLabel {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding-top: var(--space-2);
+}
+
+.allDayCell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  min-width: 0;
+}

@@ -1,0 +1,41 @@
+.art {
+  display: block;
+}
+
+.map {
+  background: var(--accent-warm);
+}
+
+.photo {
+  background: var(--accent-soft);
+}
+
+/* La paleta: tres colores en una cuadrícula, como en el canvas */
+.mood {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 70px 70px;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  background: var(--surface);
+}
+
+.mood > span {
+  display: block;
+}
+
+.moodNight {
+  grid-row: span 2;
+  border-radius: 16px 4px 4px 16px;
+  background: linear-gradient(160deg, var(--surface-inverted), var(--accent-ink) 70%, var(--accent-strong));
+}
+
+.moodGold {
+  border-radius: 4px 16px 4px 4px;
+  background: var(--accent-warm);
+}
+
+.moodLavender {
+  border-radius: 4px 4px 16px 4px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+}

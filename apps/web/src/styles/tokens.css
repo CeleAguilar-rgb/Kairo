@@ -8,6 +8,7 @@
 :root {
   /* Color: crema / superficie */
   --cream-50: #fffdf9;
+  --cream-25: #fbf8f2;
   --cream-100: #f7f2ea;
   --cream-200: #f3eee6;
   --cream-300: #f0eadf;
@@ -19,6 +20,7 @@
 
   /* Color: tinta (texto y superficies oscuras) */
   --ink-900: #1f1c19;
+  --ink-850: #2e2a26;
   --ink-800: #3a3530;
   --ink-700: #4a443d;
   --ink-600: #6b645b;
@@ -29,6 +31,7 @@
   /* Color: acento lavanda */
   --lavender-100: #e9e7fb;
   --lavender-300: #cbc6f5;
+  --lavender-400: #9d96e8;
   --lavender-600: #6a62d6;
   --lavender-ink: #3a3480;
 
@@ -39,6 +42,10 @@
   --danger-700: #8c2f1b;
   --danger-on-dark: #f6c8bb;
   --blush-100: #f6e3dd;
+
+  /* Color: aviso suave (el presupuesto al llegar al 80%, antes de pasarse) */
+  --rose-300: #c9a79c;
+  --rose-700: #8a5a4b;
 
   /* Espacio — pasos reales del diseño, no una escala inventada de múltiplos de 4 */
   --space-1: 4px;
@@ -61,7 +68,10 @@
   --radius-8: 8px;
   --radius-12: 12px;
   --radius-14: 14px;
+  --radius-16: 16px;
+  --radius-18: 18px;
   --radius-20: 20px;
+  --radius-22: 22px;
   --radius-28: 28px;
   --radius-pill: 999px;
 
@@ -70,10 +80,16 @@
   --shadow-md: 0 14px 28px -18px rgba(31, 28, 25, 0.5);
   --shadow-lg: 0 24px 48px -24px rgba(31, 28, 25, 0.45);
   --shadow-xl: 0 30px 60px -20px rgba(31, 28, 25, 0.45);
+  --shadow-toast: 0 20px 40px -20px rgba(31, 28, 25, 0.7);
+  --shadow-dialog: 0 40px 80px -30px rgba(31, 28, 25, 0.6);
+  --shadow-featured: 0 24px 48px -28px rgba(31, 28, 25, 0.6);
 
   /* Capas translúcidas (hover sobre fondos claros, scrim de modales) */
   --tint-ink-06: rgba(31, 28, 25, 0.06);
   --tint-ink-28: rgba(31, 28, 25, 0.28);
+  --tint-cream-70: rgba(255, 253, 249, 0.7);
+  --tint-cream-08: rgba(243, 238, 230, 0.08);
+  --tint-lavender-14: rgba(203, 198, 245, 0.14);
 
   /* Duración y curvas de animación (Motion las reutiliza igual) */
   --duration-fast: 150ms;
@@ -81,6 +97,18 @@
   --duration-slow: 380ms;
   --ease-out: cubic-bezier(0.3, 0.7, 0.2, 1);
   --ease-spring: cubic-bezier(0.3, 1.6, 0.5, 1);
+
+  /* Capas (z-index): de abajo hacia arriba, para que nada compita con números sueltos */
+  --z-popover: 20;
+  --z-adornment: 30;
+  --z-scrim: 65;
+  --z-drawer: 70;
+  --z-toast: 80;
+
+  /* Anchos de paneles y desenfoque del fondo detrás de ellos (scrim del canvas) */
+  --panel-md: 440px;
+  --panel-lg: 560px;
+  --blur-scrim: 3px;
 
   /* Fuentes — las variables --font-outfit/--font-gochi las define next/font en layout.tsx */
   --font-sans: var(--font-outfit), system-ui, sans-serif;

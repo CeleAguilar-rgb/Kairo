@@ -1,0 +1,12 @@
+// API pública del módulo (docs/guides/modules.md). Datos: ./api (solo servidor).
+export { ProjectFiles } from './components/ProjectFiles'
+export { ProjectForm } from './components/ProjectForm'
+export { ProjectHeader } from './components/ProjectHeader'
+export { ProjectsCard } from './components/ProjectsCard'
+export { ProjectsView } from './components/ProjectsView'
+export { ProjectSprints } from './components/ProjectSprints'
+export { ProjectSummary } from './components/ProjectSummary'
+export { ProjectTabs } from './components/ProjectTabs'
+export type { Project, ProjectDetail } from './types'
+export { projectsModule } from './module'
+export { projectTone } from './tone'

@@ -1,5 +1,7 @@
-// API pública del módulo (docs/guides/modules.md): lo único que debería
-// importar otro módulo o el registro de Inicio/Topnav. api.ts y actions.ts
-// los sigue llamando directo app/(dashboard)/tareas/ (es su propia ruta,
-// no otro módulo).
-export * from './module'
+// API pública del módulo para el resto de la app (docs/guides/modules.md).
+// Las funciones de datos viven en ./api (solo servidor) y se importan desde ahí.
+export { TodayTasksCard } from './components/TodayTasksCard'
+export { TaskDetailDrawer } from './components/TaskDetailDrawer'
+export { TasksView } from './components/TasksView'
+export type { Task, TaskStatus, TaskPriority, Subtask } from './types'
+export { tasksModule } from './module'

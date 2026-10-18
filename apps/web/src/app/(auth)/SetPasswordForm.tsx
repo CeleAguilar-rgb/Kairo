@@ -2,6 +2,7 @@
 
 import { setPasswordSchema } from '@kairo/shared'
 import { AnimatePresence, motion } from 'motion/react'
+import { EASE_OUT } from '@/lib/motion'
 import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 import { Button } from '@/components/ui/Button'
@@ -21,7 +22,6 @@ type SetPasswordFormProps = {
   kind: 'invite' | 'recovery'
 }
 
-const EASE = [0.3, 0.7, 0.2, 1] as const
 
 const container = {
   hidden: {},
@@ -30,7 +30,7 @@ const container = {
 
 const item = {
   hidden: { opacity: 0, y: 10 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: EASE } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: EASE_OUT } },
 }
 
 function validate(password: string, confirmPassword: string): FieldErrors {
@@ -144,7 +144,7 @@ export function SetPasswordForm({ title, subtitle, submitLabel, savingLabel, kin
             initial={{ opacity: 0, height: 0, y: -6 }}
             animate={{ opacity: 1, height: 'auto', y: 0 }}
             exit={{ opacity: 0, height: 0, y: -6 }}
-            transition={{ duration: 0.25, ease: EASE }}
+            transition={{ duration: 0.25, ease: EASE_OUT }}
           >
             {formError}
           </motion.p>

@@ -1,28 +1,36 @@
 import type { ModuleId } from '@kairo/shared'
-import { tasksModule } from '@/features/tasks'
 
-// Sin datos de Inicio aquí (ver tasksModule): el Topnav ('use client')
-// importa este archivo, así que tiene que quedarse ligero y sin nada
-// server-only. Las tarjetas de Inicio están en ./home-cards.ts.
+import { agendaModule } from '@/features/agenda/module'
+import { dailyModule } from '@/features/daily/module'
+import { financeModule } from '@/features/finance/module'
+import { homeModule } from '@/features/home/module'
+import { projectsModule } from '@/features/projects/module'
+import { remindersModule } from '@/features/reminders/module'
+import { schoolModule } from '@/features/school/module'
+import { tasksModule } from '@/features/tasks/module'
+import { writingsModule } from '@/features/writings/module'
+
 export type ModuleManifest = {
   id: ModuleId
   label: string
   href: string
   // Paths de <path d="…">; algunos íconos del canvas son más de uno (p. ej. Inicio: techo + casa).
   icon: string[]
+  // false para módulos con ruta propia que no van en la barra de secciones.
+  inNav?: boolean
 }
 
-// 'home' no tiene features/home/ (no es un módulo con tablas propias, ver
-// modules.md): su manifiesto vive aquí directo.
-export const homeModule: ModuleManifest = {
-  id: 'home',
-  label: 'Inicio',
-  href: '/',
-  icon: ['M4 11l8-7 8 7', 'M6 10v10h12V10'],
-}
-
-// El sidebar/topnav recorre esta lista y la filtra por user_sections (ver
-// docs/guides/modules.md). Cada módulo nuevo de la Fase 1 agrega su
-// manifiesto en features/<modulo>/module.ts y se registra aquí, sin tocar
-// el componente del Shell.
-export const modules: ModuleManifest[] = [homeModule, tasksModule]
+// El topnav recorre esta lista y la filtra por user_sections (ver
+// docs/guides/modules.md). Cada módulo declara su manifiesto en
+// features/<id>/module.ts; aquí solo se juntan, sin tocar el componente del Shell.
+export const modules: ModuleManifest[] = [
+  homeModule,
+  tasksModule,
+  projectsModule,
+  agendaModule,
+  financeModule,
+  writingsModule,
+  dailyModule,
+  schoolModule,
+  remindersModule,
+]
