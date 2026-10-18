@@ -1,0 +1,70 @@
+.card {
+  gap: var(--space-5);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.gpa {
+  font-size: 15px;
+}
+
+.gpaValue {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.scroll {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 480px;
+}
+
+.table th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.table td {
+  padding: 0 var(--space-5);
+  height: 52px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.name {
+  font-weight: 500;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  margin-right: var(--space-4);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.average {
+  font-weight: 600;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}

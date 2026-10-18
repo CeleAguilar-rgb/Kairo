@@ -1,0 +1,28 @@
+/* Los colores de materia por clave, igual que features/finance/components/FinanceColors.module.css
+   (un módulo no importa archivos internos de otro, así que School tiene su propia copia). Un
+   componente los toma con styles[`subject_${color}`]. */
+
+.subject_ink {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.subject_lavender {
+  background: var(--accent);
+  color: var(--text);
+}
+
+.subject_sand {
+  background: var(--accent-warm);
+  color: var(--text);
+}
+
+.subject_lavender_soft {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.subject_peach {
+  background: var(--danger-soft);
+  color: var(--text);
+}

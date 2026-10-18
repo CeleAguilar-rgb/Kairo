@@ -1,0 +1,164 @@
+/* Ocupa todo el panel: el Drawer ya trae el padding, el formulario reparte
+   encabezado fijo, campos con scroll y botones fijos abajo (igual que
+   features/tasks/components/TaskCreateDrawer.module.css). */
+.form {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  margin: calc(var(--space-11) * -1);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-9) var(--space-11) var(--space-3);
+}
+
+.heading {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.close {
+  all: unset;
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    background var(--duration-base) ease,
+    transform var(--duration-base) var(--ease-spring);
+}
+
+.close:hover {
+  background: var(--surface-hover);
+  transform: rotate(90deg);
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.fields {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-3) var(--space-11) var(--space-9);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.days {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.day,
+.daySelected {
+  all: unset;
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.day {
+  background: var(--surface-raised);
+  color: var(--text);
+}
+
+.daySelected {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.day:focus-visible,
+.daySelected:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.timeRow {
+  display: flex;
+  gap: var(--space-5);
+  align-items: flex-end;
+}
+
+.timeRow > :first-child,
+.timeRow > :last-child {
+  flex: 1;
+}
+
+.timeDash {
+  padding-bottom: var(--space-5);
+  color: var(--text-muted);
+}
+
+.colors {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.swatch {
+  all: unset;
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-8);
+  cursor: pointer;
+  border: 1px solid var(--border-control);
+}
+
+.swatchSelected {
+  box-shadow:
+    0 0 0 2px var(--surface),
+    0 0 0 4px var(--focus-ring);
+}
+
+.swatch:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-7) var(--space-11) var(--space-9);
+  border-top: 1px solid var(--border-soft);
+}
+
+.submit {
+  flex: 1;
+}

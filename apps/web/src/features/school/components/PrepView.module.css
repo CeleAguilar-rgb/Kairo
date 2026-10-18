@@ -1,0 +1,112 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-9);
+}
+
+.hero {
+  gap: var(--space-6);
+  position: relative;
+  overflow: hidden;
+}
+
+.heroArt {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  opacity: 0.6;
+  color: var(--accent);
+}
+
+.heroLabel {
+  color: var(--text-on-inverted-muted);
+}
+
+.heroDays {
+  font-size: 56px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.heroNote {
+  color: var(--text-on-inverted-muted);
+  max-width: 300px;
+}
+
+.heroActions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.heroGoalLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 var(--space-9);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-inverted);
+  color: var(--text-on-inverted);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background var(--duration-base) ease;
+}
+
+.heroGoalLink:hover {
+  background: var(--surface-inverted-muted);
+}
+
+.heroGoalLink:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.prepCard {
+  gap: var(--space-5);
+}
+
+.prepTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.prepRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  min-height: 48px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.prepRow:first-child {
+  border-top: 0;
+}
+
+.prepText {
+  font-weight: 500;
+}
+
+.prepTextDone {
+  font-weight: 500;
+  color: var(--text-subtle);
+  text-decoration: line-through;
+}
+
+.prepNote {
+  flex: 1;
+  text-align: right;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.prepHint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.prepHintLink {
+  color: inherit;
+  text-decoration: underline;
+}
