@@ -6,11 +6,12 @@ import { DbModule } from './common/db/db.module'
 import { SupabaseModule } from './common/supabase/supabase.module'
 import { AgendaModule } from './modules/agenda/agenda.module'
 import { DailyModule } from './modules/daily/daily.module'
+import { FinanceModule } from './modules/finance/finance.module'
 import { RemindersModule } from './modules/reminders/reminders.module'
 import { TasksModule } from './modules/tasks/tasks.module'
 
 @Module({
-  imports: [DbModule, SupabaseModule, AccountModule, TasksModule, RemindersModule, AgendaModule, DailyModule],
+  imports: [DbModule, SupabaseModule, AccountModule, TasksModule, RemindersModule, AgendaModule, DailyModule, FinanceModule],
   providers: [{ provide: APP_GUARD, useClass: JwtGuard }],
 })
 export class AppModule {}

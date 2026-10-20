@@ -2,6 +2,7 @@ import type {
   CardColor,
   CardKind,
   CategoryColor,
+  CategoryIcon,
   CategoryKind,
   DebtKind,
   MembershipCadence,
@@ -35,10 +36,13 @@ export type PaymentCard = {
 }
 
 // El ícono de una categoría: una clave, no un dibujo (finance-meta.ts guarda el trazo de cada una).
-export type CategoryIconKey = 'cart' | 'food' | 'car' | 'card' | 'star' | 'heart' | 'dots' | 'tag' | 'income' | 'gift'
+export type CategoryIconKey = CategoryIcon
 
 export type Category = {
   id: string
+  // Solo las categorías que la API crea sola la traen ('other' es "Otros", la que no se puede borrar); las
+  // que agrega la persona son null. No es el id: ese es un uuid distinto por persona.
+  key: string | null
   name: string
   kind: CategoryKind
   color: CategoryColor
@@ -114,6 +118,33 @@ export type Membership = {
   notify: boolean
   status: MembershipStatus
 }
+
+// --- Lo que devuelve la API (hechos crudos) -------------------------------------------------------------
+
+// Un ahorro como lo devuelve la API: lo guardado, más lo ahorrado hasta hoy (suma de TODOS sus movimientos,
+// no solo de los que se descargan).
+export type SavingRecord = SavingGoal & { savedCents: number }
+
+// Una deuda con lo pagado hasta hoy y el día de su último pago (de los movimientos de esa deuda).
+export type DebtRecord = Debt & { paidCents: number; lastPaymentOn: IsoDate | null }
+
+// Todo lo que leen las cinco pestañas (`GET /finance/records`): las filas tal cual. Los totales del mes, el
+// presupuesto, la gráfica y los textos los arma api.ts con estas filas (decisión #38).
+export type FinanceRecords = {
+  cards: PaymentCard[]
+  // Las tarjetas que se borraron: los movimientos viejos siguen diciendo con cuál se pagaron.
+  archivedCards: PaymentCard[]
+  categories: Category[]
+  // Del más nuevo al más viejo, desde el inicio de la ventana de 6 meses.
+  transactions: Transaction[]
+  savings: SavingRecord[]
+  debts: DebtRecord[]
+  memberships: MembershipRecord[]
+  budgetAlerts: { at80: boolean; overLimit: boolean }
+}
+
+// Lo mínimo que leen Inicio, la Agenda y Membresías (`GET /finance/memberships`).
+export type MembershipsData = { cards: PaymentCard[]; memberships: MembershipRecord[] }
 
 // --- Lo que arma api.ts para cada pantalla ----------------------------------------------------------
 

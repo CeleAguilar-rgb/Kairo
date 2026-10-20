@@ -1,9 +1,9 @@
-import { FALLBACK_CATEGORY_ID, FINANCE_MONTHS_BACK } from '@kairo/shared'
+import { FALLBACK_CATEGORY_KEY, FINANCE_MONTHS_BACK } from '@kairo/shared'
 
 import { addDays, addMonths, dayOfMonth, daysInMonth, formatMonthShort, weekdayOf, type IsoDate } from '@/lib/dates'
 import { formatMoney } from '@/lib/money'
 
-import { CARD_KIND_LABEL, type BudgetRow, type BudgetState, type Category, type CategoryShare, type Debt, type DebtView, type FinanceLookup, type Membership, type MembershipRecord, type MonthBar, type MonthKey, type MonthTotals, type PaymentCard, type SavingGoal, type SavingView, type ShareTone, type Transaction } from './types'
+import { CARD_KIND_LABEL, type BudgetRow, type BudgetState, type Category, type CategoryShare, type DebtRecord, type DebtView, type FinanceLookup, type Membership, type MembershipRecord, type MonthBar, type MonthKey, type MonthTotals, type PaymentCard, type SavingGoal, type SavingRecord, type SavingView, type ShareTone, type Transaction } from './types'
 import { DEBT_KIND_LABEL, INCOMING_KINDS, MONTH_NAMES, WEEKDAY_NAMES } from './finance-meta'
 
 // La lógica pura de Finanzas: meses, totales, presupuesto, progreso de ahorros y deudas, cobros de
@@ -231,6 +231,9 @@ export function chartAriaLabel(bars: MonthBar[]): string {
 
 // --- Ahorros y deudas -----------------------------------------------------------------------------
 
+// Lo ahorrado y lo pagado de VERDAD lo suma la API sobre todos los movimientos (SavingRecord.savedCents,
+// DebtRecord.paidCents). Estas dos las usa solo el modo demo (mock.ts), que arma esos totales de sus propios
+// movimientos de ejemplo.
 export function savedOf(savingId: string, transactions: Transaction[]): number {
   let saved = 0
   for (const transaction of transactions) {
@@ -288,21 +291,19 @@ export function savingDueText(dueOn: IsoDate | null): string {
   return `Meta: ${monthWord(monthOf(dueOn))} ${dueOn.slice(0, 4)}`
 }
 
-export function savingView(goal: SavingGoal, transactions: Transaction[], today: IsoDate): SavingView {
-  const savedCents = savedOf(goal.id, transactions)
-  return { ...goal, savedCents, dueText: savingDueText(goal.dueOn), tip: savingTip(goal, savedCents, transactions, today) }
+// `transactions` son los de la ventana de 6 meses: de ahí sale el ritmo de ahorro del consejo. Lo ahorrado
+// viene ya sumado de todos los movimientos (`goal.savedCents`).
+export function savingView(goal: SavingRecord, transactions: Transaction[], today: IsoDate): SavingView {
+  const { savedCents, ...saving } = goal
+  return { ...saving, savedCents, dueText: savingDueText(goal.dueOn), tip: savingTip(saving, savedCents, transactions, today) }
 }
 
-export function debtView(debt: Debt, transactions: Transaction[]): DebtView {
-  const paidCents = Math.min(debt.totalCents, paidOf(debt.id, transactions))
+// Lo pagado y el día del último pago vienen ya sumados de todos los movimientos de la deuda.
+export function debtView(record: DebtRecord): DebtView {
+  const { paidCents: rawPaid, lastPaymentOn, ...debt } = record
+  const paidCents = Math.min(debt.totalCents, rawPaid)
   const leftCents = debt.totalCents - paidCents
-
-  let paidOffOn: IsoDate | null = null
-  if (leftCents <= 0) {
-    for (const transaction of transactions) {
-      if (transaction.debtId === debt.id && transaction.kind === 'debt_payment' && (paidOffOn === null || transaction.occurredOn > paidOffOn)) paidOffOn = transaction.occurredOn
-    }
-  }
+  const paidOffOn: IsoDate | null = leftCents <= 0 ? lastPaymentOn : null
 
   const second = debt.monthlyPaymentCents
     ? debt.kind === 'card'
@@ -535,12 +536,14 @@ export function inOutTotals(transactions: Transaction[]) {
   return { inCents, outCents }
 }
 
-// La categoría con la que arranca el formulario de un movimiento nuevo.
+// La categoría con la que arranca el formulario de un movimiento nuevo: "Sueldo" para un ingreso y "Comida
+// fuera" para un gasto, y si la persona ya no las tiene, la primera de ese tipo. Se buscan por su `key` (el id
+// de cada persona es un uuid).
 export function defaultCategoryId(kind: 'expense' | 'income', categories: Category[]): string | null {
   const ofKind = categories.filter((category) => category.kind === kind)
-  const preferred = ofKind.find((category) => category.id === (kind === 'income' ? 'salary' : 'dining'))
+  const preferred = ofKind.find((category) => category.key === (kind === 'income' ? 'salary' : 'dining'))
   return (preferred ?? ofKind[0])?.id ?? null
 }
 
-// Al borrar una categoría, sus gastos se pasan a "Otros".
-export const isFallbackCategory = (categoryId: string) => categoryId === FALLBACK_CATEGORY_ID
+// Al borrar una categoría, sus gastos se pasan a "Otros", y "Otros" es la única que no se puede borrar.
+export const isFallbackCategory = (category: Category) => category.key === FALLBACK_CATEGORY_KEY

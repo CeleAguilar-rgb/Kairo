@@ -64,14 +64,17 @@ Para los módulos que todavía no tienen backend (todos salvo Cuenta e Inicio + 
 
 ## Finanzas
 
+Dinero en centavos `bigint` (un monto puede pasar de los 2,100 millones de centavos de un `integer`; el tope de la app es `MAX_AMOUNT_CENTS`), cada monto con su `currency` (solo MXN, decisión #10). Todas con `deleted_at` (papelera) salvo `finance_settings`. Los enums son nativos de Postgres (decisión #23).
+
 | Tabla | Columnas | Relaciones / notas |
 |---|---|---|
-| cards | name, kind (`debit`, `credit`), last4, color | **Solo** últimos 4 dígitos. |
-| categories | name, icon, color, monthly_limit_cents | Al borrar una, sus movimientos pasan a "Otros". |
-| transactions | kind (`income`, `expense`, `saving_deposit`, `saving_withdrawal`, `debt_payment`), amount_cents, currency, occurred_on, note | → categories, cards, savings_goals, debts, memberships (cada una opcional) |
-| savings_goals | name, target_cents, currency, due_on | Lo ahorrado se calcula de sus transactions. |
-| debts | name, lender, total_cents, currency, interest_rate, next_payment_on, paid_off_at | Lo pagado se calcula de sus transactions. |
-| memberships | name, amount_cents, currency, cadence (`monthly`, `yearly`), charge_day, next_charge_on | → cards. Al borrar una tarjeta se pregunta qué hacer con sus membresías. |
+| cards | name, kind (`debit`, `credit`, `cash`), last4, color (`ink`, `lavender`, `sand`, `lavender_soft`), cut_day, due_day | **Solo** últimos 4 dígitos: además de Zod, un CHECK de la base exige `last4` nulo o exactamente 4 dígitos (regla 9). El efectivo no lleva `last4`; solo el crédito lleva días de corte y de pago (1 a 31). Borrar una se lleva sus membresías (juntas a la papelera, y "Deshacer" devuelve las dos). Las borradas se siguen mandando al front como "archivadas": los movimientos viejos dicen con cuál se pagaron. |
+| categories | key, name, kind (`expense`, `income`), color, icon, monthly_limit_cents, position | `key` solo en las que la API crea sola (`DEFAULT_CATEGORIES` en `@kairo/shared`: `groceries`, `dining`, `transport`, `memberships`, `outings`, `health`, `other`, `salary`, `extra`, `gift`, `income-other`), nulo en las que agrega la persona; índice único parcial (user_id, key). Se crean la primera vez que se abre Finanzas, **sin límites**. `other` ("Otros") no se puede borrar. Borrar una categoría de gasto **no toca sus movimientos**: ella va a la papelera y, al leer, un gasto cuya categoría no está vivo se cuenta en "Otros" (decisión #40). `monthly_limit_cents` nulo = sin límite. |
+| transactions | kind (`expense`, `income`, `saving_deposit`, `saving_withdrawal`, `debt_payment`), amount_cents, currency, concept, note, occurred_on (`date`), repeat_monthly | → categories, cards, savings_goals, debts, memberships (cada una opcional, `ON DELETE SET NULL`). `concept` vacío = se llama como su categoría. Qué referencias pide cada tipo (ahorro para `saving_*`, deuda para `debt_payment`, categoría para gasto/ingreso) lo garantiza el service, no la base. Índice (user_id, occurred_on). |
+| savings_goals | name, target_cents, currency, due_on | Lo ahorrado **no se guarda**: la API lo suma de sus `transactions` (aportes menos retiros, nunca negativo) sobre todos los movimientos. |
+| debts | name, kind (`person`, `card`, `loan`, `other`), total_cents, currency, annual_interest_pct, monthly_payment_cents, next_payment_on | Lo pagado **no se guarda**: la API lo suma de los `debt_payment` (y manda el día del último, para "Deuda liquidada. Fue el…"). Sin `lender` ni `paid_off_at` (el nombre ya dice a quién; lo liquidado se deduce de lo pagado). Con pago mensual, `next_payment_on` nace como el primer día del mes que viene. |
+| memberships | name, amount_cents, currency, cadence (`monthly`, `yearly`, `weekly`), charge_day, charge_month, charge_weekday, card_id, notify, status (`active`, `paused`) | → cards (`ON DELETE SET NULL`). El próximo cobro **no se guarda**: el front lo calcula con el día de cobro (así nunca queda en el pasado). `charge_day` mensual y anual, `charge_month` solo anual, `charge_weekday` solo semanal. Sus cobros **no se vuelven movimientos solos todavía** (viene con las tareas programadas, decisión #40). |
+| finance_settings | budget_alert_at_80, budget_alert_over | Una fila por persona (única en `user_id`), sin papelera. Los dos avisos del presupuesto; sin fila valen ambos prendidos. Los avisos de verdad llegan con las tareas programadas: aquí solo se guarda la preferencia. |
 
 ## Escritos
 

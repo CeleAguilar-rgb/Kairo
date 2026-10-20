@@ -1,6 +1,6 @@
 'use client'
 
-import { CATEGORY_COLORS, FALLBACK_CATEGORY_ID, categorySchema, type CategoryColor } from '@kairo/shared'
+import { CATEGORY_COLORS, FALLBACK_CATEGORY_KEY, categorySchema, type CategoryColor } from '@kairo/shared'
 import { motion } from 'motion/react'
 import { useOptimistic, useState, useTransition, type FormEvent } from 'react'
 
@@ -166,7 +166,9 @@ function CategoryRow({ row, confirming, onAskDelete, onCancel }: CategoryRowProp
   const { category } = row
   const [limit, setLimit] = useState(row.limitCents === null ? '' : moneyInputText(row.limitCents))
   const [error, setError] = useState('')
-  const deletable = category.id !== FALLBACK_CATEGORY_ID
+  // "Otros" es adonde van los gastos de las categorías que se borran: no se puede borrar (se reconoce por su
+  // `key`, no por su id, que es un uuid distinto por persona).
+  const deletable = category.key !== FALLBACK_CATEGORY_KEY
 
   function commit() {
     const trimmed = limit.trim()

@@ -1,28 +1,23 @@
 import 'server-only'
 
-import { FALLBACK_CATEGORY_ID, FINANCE_CURRENCY, FINANCE_MONTHS_BACK } from '@kairo/shared'
+import { DEFAULT_CATEGORIES, FALLBACK_CATEGORY_KEY, FINANCE_CURRENCY, FINANCE_MONTHS_BACK } from '@kairo/shared'
 
 import { addDays, dayOfMonth, daysInMonth, type IsoDate } from '@/lib/dates'
 import type { MockContext } from '@/lib/mock/context'
 
-import { firstOfNextMonth, monthOf, shiftMonth } from './finance-utils'
-import type { Category, Debt, MembershipRecord, MonthKey, PaymentCard, SavingGoal, Transaction } from './types'
+import { firstOfNextMonth, monthOf, paidOf, savedOf, shiftMonth } from './finance-utils'
+import type { Category, Debt, FinanceRecords, MembershipRecord, MonthKey, PaymentCard, SavingGoal, Transaction } from './types'
 
 // Los datos de ejemplo de Finanzas, armados para parecerse a los números del canvas (FinResumen, FinAhorros…):
 // en el mes actual entran $18,500, salen $9,240 en gastos y se apartan $2,000. Los meses anteriores salen de
 // la gráfica del canvas. Todo es relativo a "hoy" (el mes actual es el de hoy), así que la pantalla siempre
-// se ve viva. El presupuesto, el avance de cada ahorro y de cada deuda NO se escriben aquí: se calculan de
-// estos movimientos (finance-utils.ts), igual que lo hará la API con un SUM.
+// se ve viva. El presupuesto y el avance de cada ahorro y de cada deuda NO se escriben aquí: se calculan de
+// estos movimientos (finance-utils.ts), igual que hace la API con un SUM.
+//
+// Solo lo usa el modo demo (lib/demo.ts: sin Supabase ni API). Con la API real, api.ts pide los mismos datos
+// a `GET /finance/records`; por eso la semilla tiene la misma forma que esa respuesta.
 
-export type FinanceSeed = {
-  cards: PaymentCard[]
-  categories: Category[]
-  transactions: Transaction[]
-  savings: SavingGoal[]
-  debts: Debt[]
-  memberships: MembershipRecord[]
-  budgetAlerts: { at80: boolean; overLimit: boolean }
-}
+export type FinanceSeed = FinanceRecords
 
 // Un número estable a partir de unas piezas, para repartir días y cuentas sin azar de verdad (la pantalla no
 // cambia en cada recarga).
@@ -46,20 +41,24 @@ const CARDS: PaymentCard[] = [
   { id: 'card-cash', name: 'Efectivo', kind: 'cash', last4: null, color: 'sand', cutDay: null, dueDay: null },
 ]
 
-// Los límites son los de FinPresupuesto.
-const CATEGORIES: Category[] = [
-  { id: 'groceries', name: 'Súper y comida', kind: 'expense', color: 'sand', icon: 'cart', limitCents: 400_000 },
-  { id: 'dining', name: 'Comida fuera', kind: 'expense', color: 'lavender_soft', icon: 'food', limitCents: 150_000 },
-  { id: 'transport', name: 'Transporte', kind: 'expense', color: 'cream', icon: 'car', limitCents: 120_000 },
-  { id: 'memberships', name: 'Membresías', kind: 'expense', color: 'lavender', icon: 'card', limitCents: 140_000 },
-  { id: 'outings', name: 'Salidas', kind: 'expense', color: 'peach', icon: 'star', limitCents: 200_000 },
-  { id: 'health', name: 'Salud', kind: 'expense', color: 'lavender_soft', icon: 'heart', limitCents: 80_000 },
-  { id: FALLBACK_CATEGORY_ID, name: 'Otros', kind: 'expense', color: 'cream', icon: 'dots', limitCents: 100_000 },
-  { id: 'salary', name: 'Sueldo', kind: 'income', color: 'lavender_soft', icon: 'income', limitCents: null },
-  { id: 'extra', name: 'Trabajo extra', kind: 'income', color: 'lavender_soft', icon: 'income', limitCents: null },
-  { id: 'gift', name: 'Regalo', kind: 'income', color: 'sand', icon: 'gift', limitCents: null },
-  { id: 'income-other', name: 'Otro', kind: 'income', color: 'cream', icon: 'dots', limitCents: null },
-]
+// Las mismas categorías de arranque que crea la API (DEFAULT_CATEGORIES), con los límites de FinPresupuesto
+// (la API las crea sin límite). En la demo el id es la misma clave: así los movimientos de abajo las nombran
+// por 'dining', 'salary'…
+const DEMO_LIMITS: Record<string, number> = {
+  groceries: 400_000,
+  dining: 150_000,
+  transport: 120_000,
+  memberships: 140_000,
+  outings: 200_000,
+  health: 80_000,
+  [FALLBACK_CATEGORY_KEY]: 100_000,
+}
+
+const CATEGORIES: Category[] = DEFAULT_CATEGORIES.map((category) => ({
+  ...category,
+  id: category.key,
+  limitCents: DEMO_LIMITS[category.key] ?? null,
+}))
 
 // "Próximos cobros": el cobro va a N días de hoy en lugar de una fecha fija, para que Inicio y la Agenda
 // siempre tengan algo cerca. Xbox Game Pass está en pausa, como en el canvas.
@@ -78,7 +77,7 @@ const EXPENSE_TOTALS: Record<number, number> = { [-5]: 14_100, [-4]: 16_900, [-3
 const MEMBERSHIPS_PESOS = 1_099
 
 function pastCategories(offset: number): Record<string, number> {
-  if (offset === -1) return { groceries: 3_900, dining: 2_100, transport: 1_180, outings: 2_300, health: 800, [FALLBACK_CATEGORY_ID]: 3_741 }
+  if (offset === -1) return { groceries: 3_900, dining: 2_100, transport: 1_180, outings: 2_300, health: 800, [FALLBACK_CATEGORY_KEY]: 3_741 }
   const rest = EXPENSE_TOTALS[offset] - MEMBERSHIPS_PESOS
   const round10 = (value: number) => Math.round(value / 10) * 10
   const groceries = round10(rest * 0.3)
@@ -86,7 +85,7 @@ function pastCategories(offset: number): Record<string, number> {
   const transport = round10(rest * 0.1)
   const outings = round10(rest * 0.13)
   const health = round10(rest * 0.05)
-  return { groceries, dining, transport, outings, health, [FALLBACK_CATEGORY_ID]: rest - groceries - dining - transport - outings - health }
+  return { groceries, dining, transport, outings, health, [FALLBACK_CATEGORY_KEY]: rest - groceries - dining - transport - outings - health }
 }
 
 const NAMES: Record<string, string[]> = {
@@ -95,7 +94,7 @@ const NAMES: Record<string, string[]> = {
   transport: ['Gasolina', 'Uber al trabajo', 'Estacionamiento', 'Metro', 'Servicio del coche'],
   outings: ['Cine con amigos', 'Concierto', 'Museo', 'Salida con la familia'],
   health: ['Farmacia', 'Consulta', 'Dentista'],
-  [FALLBACK_CATEGORY_ID]: ['Regalo de cumpleaños', 'Reparación del celular', 'Papelería', 'Lavandería'],
+  [FALLBACK_CATEGORY_KEY]: ['Regalo de cumpleaños', 'Reparación del celular', 'Papelería', 'Lavandería'],
 }
 
 // Cuánto se aparta y se paga en cada mes (en pesos), por mes relativo a hoy. Repartido para que ningún mes
@@ -222,8 +221,8 @@ export function buildFinanceSeed(ctx: MockContext): FinanceSeed {
         ['transport', 'Uber al trabajo', 85, 8, 'card-credit'],
         ['outings', 'Concierto', 650, 6, 'card-credit'],
         ['outings', 'Cine con amigos', 250, 7, 'card-debit'],
-        [FALLBACK_CATEGORY_ID, 'Regalo de cumpleaños', 1_200, 5, 'card-debit'],
-        [FALLBACK_CATEGORY_ID, 'Reparación del celular', 1_121, 7, 'card-credit'],
+        [FALLBACK_CATEGORY_KEY, 'Regalo de cumpleaños', 1_200, 5, 'card-debit'],
+        [FALLBACK_CATEGORY_KEY, 'Reparación del celular', 1_121, 7, 'card-credit'],
       ]
       for (const [categoryId, concept, pesos, canvasDay, cardId] of expenses) {
         add({ kind: 'expense', amountCents: cents(pesos), occurredOn: dayIn(month, mapDay(canvasDay)), concept, categoryId, cardId })
@@ -284,13 +283,19 @@ export function buildFinanceSeed(ctx: MockContext): FinanceSeed {
     { id: 'debt-diego', name: 'Préstamo de Diego', kind: 'person', totalCents: cents(5_000), annualInterestPct: null, monthlyPaymentCents: null, nextPaymentOn: null },
   ]
 
+  // Lo ahorrado y lo pagado salen de los movimientos de arriba, igual que la API los suma en la base: así la
+  // demo se ve exactamente como se vería con datos reales.
+  const lastPaymentOf = (debtId: string): IsoDate | null =>
+    ordered.filter((item) => item.kind === 'debt_payment' && item.debtId === debtId).reduce<IsoDate | null>((last, item) => (last === null || item.occurredOn > last ? item.occurredOn : last), null)
+
   // Copias, no las listas de arriba: lo que se edite en la sesión no debe cambiar las semillas.
   return {
     cards: CARDS.map((card) => ({ ...card })),
+    archivedCards: [],
     categories: CATEGORIES.map((category) => ({ ...category })),
     transactions: ordered,
-    savings,
-    debts,
+    savings: savings.map((goal) => ({ ...goal, savedCents: savedOf(goal.id, ordered) })),
+    debts: debts.map((debt) => ({ ...debt, paidCents: paidOf(debt.id, ordered), lastPaymentOn: lastPaymentOf(debt.id) })),
     memberships,
     budgetAlerts: { at80: true, overLimit: true },
   }

@@ -36,11 +36,14 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
 
   if (response.status === 204) return undefined as T
 
-  const body = (await response.json()) as T | ApiErrorBody
+  // Un endpoint que no devuelve nada (el "Deshacer" de Día a día y de Finanzas) responde con el cuerpo vacío:
+  // no hay JSON que leer, y response.json() fallaría aunque la API sí hubiera hecho lo pedido.
+  const text = await response.text()
+  const body = (text ? JSON.parse(text) : undefined) as T | ApiErrorBody | undefined
 
   if (!response.ok) {
-    const { code, message } = (body as ApiErrorBody).error
-    throw new ApiError(response.status, code, message)
+    const error = (body as ApiErrorBody | undefined)?.error
+    throw new ApiError(response.status, error?.code ?? 'INTERNAL_ERROR', error?.message ?? 'Algo salió mal. Intenta de nuevo.')
   }
 
   return body as T

@@ -48,5 +48,27 @@ export type MembershipStatus = (typeof MEMBERSHIP_STATUSES)[number]
 export const DEBT_KINDS = ['person', 'card', 'loan', 'other'] as const
 export type DebtKind = (typeof DEBT_KINDS)[number]
 
+// El ícono de una categoría: una clave, no un dibujo (el front guarda el trazo de cada una).
+export const CATEGORY_ICONS = ['cart', 'food', 'car', 'card', 'star', 'heart', 'dots', 'tag', 'income', 'gift'] as const
+export type CategoryIcon = (typeof CATEGORY_ICONS)[number]
+
+// Las categorías nacen solas la primera vez que una persona abre Finanzas (la API las crea, una vez). Cada una
+// trae una `key` fija: es lo que la distingue de las que la persona crea después, y lo que usa el front para
+// saber cuál es "Otros" (no se puede borrar) o con cuál arrancar el formulario. El id de cada una es un uuid
+// distinto por persona. Sin límite de gasto: el presupuesto lo pone cada quien.
+export const DEFAULT_CATEGORIES = [
+  { key: 'groceries', name: 'Súper y comida', kind: 'expense', color: 'sand', icon: 'cart' },
+  { key: 'dining', name: 'Comida fuera', kind: 'expense', color: 'lavender_soft', icon: 'food' },
+  { key: 'transport', name: 'Transporte', kind: 'expense', color: 'cream', icon: 'car' },
+  { key: 'memberships', name: 'Membresías', kind: 'expense', color: 'lavender', icon: 'card' },
+  { key: 'outings', name: 'Salidas', kind: 'expense', color: 'peach', icon: 'star' },
+  { key: 'health', name: 'Salud', kind: 'expense', color: 'lavender_soft', icon: 'heart' },
+  { key: 'other', name: 'Otros', kind: 'expense', color: 'cream', icon: 'dots' },
+  { key: 'salary', name: 'Sueldo', kind: 'income', color: 'lavender_soft', icon: 'income' },
+  { key: 'extra', name: 'Trabajo extra', kind: 'income', color: 'lavender_soft', icon: 'income' },
+  { key: 'gift', name: 'Regalo', kind: 'income', color: 'sand', icon: 'gift' },
+  { key: 'income-other', name: 'Otro', kind: 'income', color: 'cream', icon: 'dots' },
+] as const satisfies readonly { key: string; name: string; kind: CategoryKind; color: CategoryColor; icon: CategoryIcon }[]
+
 // La categoría a la que van a parar los gastos de una categoría que se borra. No se puede borrar.
-export const FALLBACK_CATEGORY_ID = 'other'
+export const FALLBACK_CATEGORY_KEY = 'other'

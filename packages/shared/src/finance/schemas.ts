@@ -11,10 +11,10 @@ import {
   TRANSACTION_KINDS,
 } from './constants'
 
-// Un id que llega de la pantalla. En los datos de ejemplo no son uuid (igual que en Día a día); con la API
-// serán `z.uuid()` y cada consulta llevará `where: { id, userId }`. Se define aquí y no se importa de Día a
-// día: un módulo no se apoya en los archivos internos de otro.
-const id = z.string().min(1).max(64)
+// Un id que llega de la pantalla: siempre un uuid (con la API real toda fila lo tiene) y cada consulta lleva
+// `where: { id, userId }`. Si no lo fuera, llegaría hasta Postgres y fallaría ahí con un 500. Se define aquí y
+// no se importa de otro módulo: un módulo no se apoya en los archivos internos de otro.
+const id = z.uuid()
 
 const day = z.iso.date()
 
@@ -188,3 +188,14 @@ export type BudgetAlertsInput = z.infer<typeof budgetAlertsSchema>
 
 // Una referencia suelta a algo de Finanzas por su id: borrarlo, pausarlo…
 export const financeIdSchema = id
+
+// Lo que la API necesita para leer Finanzas: desde qué día traer los movimientos (el inicio de la ventana de
+// 6 meses de la gráfica). Lo de antes de esa fecha no hace falta para ninguna pantalla.
+export const financeRecordsQuerySchema = z.object({ from: z.iso.date() })
+
+export type FinanceRecordsQuery = z.infer<typeof financeRecordsQuerySchema>
+
+// El "token" de Deshacer: lo arma la API al borrar (es la acción exacta a deshacer, codificada en el string) y
+// la pantalla solo lo devuelve. Aquí solo se revisa que sea un texto de tamaño razonable; la API lo decodifica
+// y lo vuelve a validar (nunca se confía en él).
+export const financeUndoTokenSchema = z.string().min(1).max(4000)

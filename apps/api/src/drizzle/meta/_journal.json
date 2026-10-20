@@ -50,6 +50,13 @@
       "when": 1792362399390,
       "tag": "0006_cheerful_the_enforcers",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1792510570773,
+      "tag": "0007_finance_tables",
+      "breakpoints": true
     }
   ]
 }
