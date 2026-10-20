@@ -28,6 +28,15 @@ export class SprintsRepository {
       .orderBy(desc(sprints.number))
   }
 
+  // Los sprints de un proyecto a la papelera juntos (activo y cerrados): lo usa borrar una materia de Escuela.
+  // sprint_tasks no tiene deleted_at: sus filas quedan, pero sin su sprint ya no las alcanza nadie.
+  async softDeleteByProject(userId: string, projectId: string) {
+    await this.db
+      .update(sprints)
+      .set({ deletedAt: new Date() })
+      .where(and(eq(sprints.userId, userId), eq(sprints.projectId, projectId), isNull(sprints.deletedAt)))
+  }
+
   async lastNumber(userId: string, projectId: string): Promise<number> {
     const [row] = await this.db
       .select({ value: max(sprints.number) })

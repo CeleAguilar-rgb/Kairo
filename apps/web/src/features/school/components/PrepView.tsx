@@ -8,27 +8,59 @@ import { Card } from '@/components/ui/Card'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { fadeUp, staggerList } from '@/lib/motion'
 
-import type { PrepItem } from '../types'
+import { formatDayMonth } from '@/lib/dates'
+
+import type { PrepItem, Term } from '../types'
 
 import styles from './PrepView.module.css'
 
 type PrepViewProps = {
-  daysLeft: number
+  term: Term | null
+  // Null si ya empezó el periodo o todavía no hay uno.
+  daysLeft: number | null
   items: PrepItem[]
+  goalLabel: string
   onTogglePrep: (item: PrepItem) => void
   onSeeTerm: () => void
+  onDefineTerm: () => void
+}
+
+// El texto grande y la nota de la tarjeta oscura según en qué punto está el periodo.
+function heroCopy(term: Term | null, daysLeft: number | null) {
+  if (!term)
+    return {
+      label: 'Faltan',
+      days: '— días',
+      note: 'Define cuándo empieza tu periodo y aquí vas a ver la cuenta regresiva.',
+    }
+  if (daysLeft === null)
+    return {
+      label: 'Tu periodo',
+      days: 'En curso',
+      note: `${term.name}. Ya empezó: tus materias, entregas y calificaciones están en "Durante el semestre".`,
+    }
+  return {
+    label: 'Faltan',
+    days: `${daysLeft} ${daysLeft === 1 ? 'día' : 'días'}`,
+    note: `Para el ${formatDayMonth(term.startsOn)}. ${term.name}. Cuando sepas, agrega tus materias y armamos tu horario.`,
+  }
 }
 
 // "Antes de empezar" (Escuela.dc.html): cuenta regresiva y la lista de
-// preparación. "Estas casillas son las tareas del proyecto 'Ingeniería o
-// maestría'" — por ahora solo datos propios de Escuela (decisión: apegarse
-// al canvas, la conexión real con Proyectos llega en Fase 1b).
+// preparación. Las casillas son las tareas del proyecto de preparación del
+// periodo (decisión #43): marcarlas aquí las marca en Tareas y en Proyectos.
 export function PrepView({
+  term,
   daysLeft,
   items,
+  goalLabel,
   onTogglePrep,
   onSeeTerm,
+  onDefineTerm,
 }: PrepViewProps) {
+  const copy = heroCopy(term, daysLeft)
+  const prepProject = term?.prepProject ?? null
+
   return (
     <div className={styles.grid}>
       <Card tone="inverted" className={styles.hero}>
@@ -47,16 +79,17 @@ export function PrepView({
           <path d="M3 15l17-9 17 9-17 9-17-9z" />
           <path d="M10 19v8c0 3 4.5 6 10 6s10-3 10-6v-8" />
         </svg>
-        <span className={styles.heroLabel}>Faltan</span>
-        <span className={styles.heroDays}>{daysLeft} días</span>
-        <span className={styles.heroNote}>
-          Para enero. Ingeniería o maestría: lo que llegue primero. Cuando
-          sepas, eliges y armamos tu horario.
-        </span>
+        <span className={styles.heroLabel}>{copy.label}</span>
+        <span className={styles.heroDays}>{copy.days}</span>
+        <span className={styles.heroNote}>{copy.note}</span>
         <div className={styles.heroActions}>
-          <Button onClick={onSeeTerm}>Ver cómo se verá</Button>
+          {term ? (
+            <Button onClick={onSeeTerm}>Ver cómo se verá</Button>
+          ) : (
+            <Button onClick={onDefineTerm}>Definir periodo</Button>
+          )}
           <Link href="/dia-a-dia/metas" className={styles.heroGoalLink}>
-            Meta: Entrar a la ingeniería
+            {goalLabel}
           </Link>
         </div>
       </Card>
@@ -65,38 +98,51 @@ export function PrepView({
         <h2 id="h-prep" className={styles.prepTitle}>
           Antes de empezar
         </h2>
-        <motion.div
-          variants={staggerList(0.04)}
-          initial="hidden"
-          animate="show"
-        >
-          {items.map((item) => (
-            <motion.div
-              key={item.id}
-              variants={fadeUp}
-              className={styles.prepRow}
-            >
-              <Checkbox
-                checked={item.done}
-                onToggle={() => onTogglePrep(item)}
-                label={item.title}
-              />
-              <span
-                className={item.done ? styles.prepTextDone : styles.prepText}
+        {items.length > 0 ? (
+          <motion.div
+            variants={staggerList(0.04)}
+            initial="hidden"
+            animate="show"
+          >
+            {items.map((item) => (
+              <motion.div
+                key={item.id}
+                variants={fadeUp}
+                className={styles.prepRow}
               >
-                {item.title}
-              </span>
-              <span className={styles.prepNote}>{item.note}</span>
-            </motion.div>
-          ))}
-        </motion.div>
-        <span className={styles.prepHint}>
-          Estas casillas son las tareas del proyecto{' '}
-          <Link href="/proyectos" className={styles.prepHintLink}>
-            &ldquo;Ingeniería o maestría&rdquo;
-          </Link>
-          .
-        </span>
+                <Checkbox
+                  checked={item.done}
+                  onToggle={() => onTogglePrep(item)}
+                  label={item.title}
+                />
+                <span
+                  className={item.done ? styles.prepTextDone : styles.prepText}
+                >
+                  {item.title}
+                </span>
+                <span className={styles.prepNote}>{item.note}</span>
+              </motion.div>
+            ))}
+          </motion.div>
+        ) : (
+          <span className={styles.prepHint}>
+            {prepProject
+              ? 'Ese proyecto todavía no tiene tareas. Agrégalas ahí y van a aparecer aquí.'
+              : 'Elige en "Periodo" el proyecto cuyas tareas son tu lista de preparación.'}
+          </span>
+        )}
+        {prepProject ? (
+          <span className={styles.prepHint}>
+            Estas casillas son las tareas del proyecto{' '}
+            <Link
+              href={`/proyectos/${prepProject.id}`}
+              className={styles.prepHintLink}
+            >
+              &ldquo;{prepProject.name}&rdquo;
+            </Link>
+            .
+          </span>
+        ) : null}
       </Card>
     </div>
   )

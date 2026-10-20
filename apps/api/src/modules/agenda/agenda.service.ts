@@ -49,10 +49,17 @@ export class AgendaService {
     return rows.map((row) => toEventRecord(row, projectOf(row, projects)))
   }
 
-  async create(userId: string, input: EventInput) {
+  // `until` solo lo pasa otro módulo (Escuela: las clases de una materia terminan con su periodo); el
+  // formulario de eventos no lo manda, una serie nueva no tiene fin.
+  async create(userId: string, input: EventInput, until: string | null = null) {
     await this.assertProject(userId, input.projectId)
-    const row = await this.repository.create(userId, { ...toRow(input), until: null, skip: [] })
+    const row = await this.repository.create(userId, { ...toRow(input), until, skip: [] })
     return this.recordOf(userId, row)
+  }
+
+  // API pública para Escuela: los eventos de un proyecto se van a la papelera con él. No falla si no tiene.
+  async deleteByProject(userId: string, projectId: string): Promise<void> {
+    await this.repository.softDeleteByProject(userId, projectId)
   }
 
   // Edita el evento (si es una serie, toda la serie): until y skip no

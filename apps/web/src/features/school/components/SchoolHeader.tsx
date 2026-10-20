@@ -15,6 +15,8 @@ type SchoolHeaderProps = {
   mode: SchoolMode
   onModeChange: (mode: SchoolMode) => void
   subtitle: string
+  hasTerm: boolean
+  onEditTerm: () => void
   onNewSubject: () => void
 }
 
@@ -26,11 +28,15 @@ const MODE_OPTIONS: { value: SchoolMode; label: string }[] = [
 // El encabezado de Escuela.dc.html: título, subtítulo, el tablist "Momento" y
 // el botón "Materia" (en el canvas vive en el header fijo, pero ahí solo
 // aparece en esta pantalla — igual que "Nuevo proyecto"/"Nueva tarea", va en
-// los controles de la página, no en el Topnav global).
+// los controles de la página, no en el Topnav global). "Periodo" no está en el
+// canvas: sin él no habría dónde definir las fechas del cuatrimestre (de ahí
+// sale la cuenta regresiva), así que se agregó como botón secundario.
 export function SchoolHeader({
   mode,
   onModeChange,
   subtitle,
+  hasTerm,
+  onEditTerm,
   onNewSubject,
 }: SchoolHeaderProps) {
   return (
@@ -51,6 +57,9 @@ export function SchoolHeader({
           onChange={onModeChange}
           options={MODE_OPTIONS}
         />
+        <Button variant="secondary" onClick={onEditTerm}>
+          {hasTerm ? 'Periodo' : 'Definir periodo'}
+        </Button>
         <Button onClick={onNewSubject}>
           <svg
             width="16"

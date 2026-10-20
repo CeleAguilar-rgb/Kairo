@@ -78,6 +78,11 @@ export class TasksService {
     }
   }
 
+  // API pública para Escuela: las tareas de un proyecto se van a la papelera con él. No falla si no tiene.
+  async deleteByProject(userId: string, projectId: string): Promise<void> {
+    await this.repository.softDeleteByProject(userId, projectId)
+  }
+
   // "Deshacer" del aviso de borrar.
   async restore(userId: string, taskId: string) {
     const result = await this.repository.restore(userId, taskId)

@@ -7,7 +7,12 @@ import { Button } from '@/components/ui/Button'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { EASE_OUT } from '@/lib/motion'
 
-import { formatGrade, subjectAverage } from '../school-utils'
+import {
+  formatGrade,
+  roomsText,
+  scheduleText,
+  subjectAverage,
+} from '../school-utils'
 import { ASSIGNMENT_KIND_LABEL, WEEKDAY_LABEL } from '../types'
 import type { Assignment, Subject } from '../types'
 
@@ -25,18 +30,14 @@ function nextAssignmentText(
   subjectId: string,
   assignments: Assignment[],
 ): string {
+  // La más próxima primero; una entrega sin fecha va después de las que sí la tienen.
   const next = assignments
     .filter((a) => a.subjectId === subjectId && !a.done)
-    .sort((a, b) => a.dueOn.localeCompare(b.dueOn))[0]
+    .sort((a, b) => (a.dueOn ?? '9999').localeCompare(b.dueOn ?? '9999'))[0]
   if (!next) return 'Sin entregas pendientes'
-  return `${ASSIGNMENT_KIND_LABEL[next.kind]}: ${next.title}`
-}
-
-function scheduleText(subject: Subject): string {
-  const days = subject.days
-    .map((day) => WEEKDAY_LABEL[day].slice(0, 3))
-    .join(' y ')
-  return `${days} · ${subject.startsAt}`
+  return next.kind
+    ? `${ASSIGNMENT_KIND_LABEL[next.kind]}: ${next.title}`
+    : next.title
 }
 
 export function SubjectsGrid({
@@ -113,8 +114,12 @@ export function SubjectsGrid({
               </Button>
             </div>
             <div className={styles.chips}>
-              <span className={styles.chip}>{scheduleText(subject)}</span>
-              <span className={styles.chip}>{subject.room}</span>
+              <span className={styles.chip}>
+                {scheduleText(subject.classes, WEEKDAY_LABEL)}
+              </span>
+              {roomsText(subject.classes) ? (
+                <span className={styles.chip}>{roomsText(subject.classes)}</span>
+              ) : null}
             </div>
             <div className={styles.avgRow}>
               <span className={styles.avgLabel}>Promedio</span>

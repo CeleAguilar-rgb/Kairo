@@ -38,6 +38,13 @@ export class ProjectsService {
     return new Map(rows.map((row) => [row.id, { id: row.id, name: row.name }]))
   }
 
+  // El proyecto (con sus objetivos y enlaces) a la papelera. Solo es método, no hay ruta `DELETE /projects/:id`:
+  // borrar un proyecto desde su pantalla llega con la Papelera (decisión #41). Escuela lo usa al borrar una materia,
+  // después de mandar a la papelera lo suyo (tareas, eventos, sprints). false = ya estaba borrado.
+  softDelete(userId: string, id: string): Promise<boolean> {
+    return this.repository.softDeleteWithLists(userId, id)
+  }
+
   // --- Lo propio -----------------------------------------------------------------------------------------
 
   async findAll(userId: string) {

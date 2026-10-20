@@ -11,8 +11,9 @@ import colors from './SchoolColors.module.css'
 import styles from './ScheduleGrid.module.css'
 
 // El horario de clases (Escuela.dc.html): una cuadrícula semana × hora, con
-// solo las horas que de verdad tienen clase. "Las clases salen también en tu
-// Agenda y en Día a día" cuando exista la conexión real (Fase 1b).
+// solo las horas que de verdad tienen clase. Cada bloque es un evento semanal
+// de Agenda ligado a la materia (decisión #43): por eso "salen también en tu
+// Agenda".
 export function ScheduleGrid({ subjects }: { subjects: Subject[] }) {
   if (subjects.length === 0) {
     return (

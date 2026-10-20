@@ -12,24 +12,52 @@ export type SubjectGrades = {
   final: number | null
 }
 
-export type Subject = {
-  id: string
-  name: string
-  teacher: string | null
-  color: SubjectColor
-  days: Weekday[]
+export type GradeField = keyof SubjectGrades
+
+export type ProjectRef = { id: string; name: string }
+
+// Una clase de la semana: el día, la hora y el salón. Sale de un evento semanal de Agenda ligado al proyecto
+// de la materia (decisión #43): la API no las devuelve, las arma school-utils.ts con la lista de eventos.
+export type ClassSlot = {
+  day: Weekday
   startsAt: string // 'HH:mm'
   endsAt: string
   room: string
+}
+
+export type Subject = {
+  id: string
+  // La materia es un proyecto de tipo Escuela: sus tareas y sus eventos cuelgan de este id.
+  projectId: string
+  termId: string | null
+  name: string
+  teacher: string | null
+  color: SubjectColor
+  classes: ClassSlot[]
   grades: SubjectGrades
 }
 
+// Lo que devuelve GET /v1/school/subjects: la materia sin sus clases.
+export type SubjectRecord = Omit<Subject, 'classes'>
+
+// El periodo (cuatrimestre, semestre…): sus fechas mandan la cuenta regresiva de "Antes de empezar" y
+// `prepProject` es el proyecto cuyas tareas son la lista de preparación.
+export type Term = {
+  id: string
+  name: string
+  startsOn: IsoDate
+  endsOn: IsoDate
+  prepProject: ProjectRef | null
+}
+
+// Una entrega es una tarea del proyecto de la materia. `kind` (tarea, proyecto, examen, lectura) solo existe en
+// los datos de ejemplo: Tareas todavía no tiene tipo, así que con la API es null y no se muestra.
 export type Assignment = {
   id: string
   subjectId: string
   title: string
-  kind: AssignmentKind
-  dueOn: IsoDate
+  kind: AssignmentKind | null
+  dueOn: IsoDate | null
   done: boolean
 }
 
@@ -37,7 +65,7 @@ export type PrepItem = {
   id: string
   title: string
   done: boolean
-  // Fecha o estado en texto libre ("14 oct", "nov", "Hecho") — el canvas no modela una fecha real aquí.
+  // Lo que se ve a la derecha: "Hecho", la fecha de la tarea ("14 de octubre") o nada.
   note: string
 }
 
@@ -72,4 +100,10 @@ export const WEEKDAY_LABEL: Record<Weekday, string> = {
   thu: 'Jueves',
   fri: 'Viernes',
   sat: 'Sábado',
+}
+
+export const GRADE_LABEL: Record<GradeField, string> = {
+  midterm1: 'Parcial 1',
+  midterm2: 'Parcial 2',
+  final: 'Final',
 }

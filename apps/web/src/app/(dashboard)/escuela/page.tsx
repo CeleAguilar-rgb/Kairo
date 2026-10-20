@@ -7,23 +7,17 @@ import { getMe } from '@/lib/account/api'
 
 // Escuela: antes de empezar (cuenta regresiva y preparación) o durante el
 // semestre (horario, materias, entregas, calificaciones). Esta página solo
-// junta los datos (de ejemplo por ahora); la pantalla es SchoolView.
+// junta los datos (de la API; de ejemplo en modo demo); la pantalla es
+// SchoolView.
 export default async function SchoolPage() {
   const me = await getMe()
   if (!me) redirect('/bienvenida')
 
-  const { subjects, assignments, prepItems, prepDaysLeft, today } =
-    await getSchoolData()
+  const data = await getSchoolData()
 
   return (
     <PageEnter>
-      <SchoolView
-        subjects={subjects}
-        assignments={assignments}
-        prepItems={prepItems}
-        prepDaysLeft={prepDaysLeft}
-        today={today}
-      />
+      <SchoolView {...data} />
     </PageEnter>
   )
 }

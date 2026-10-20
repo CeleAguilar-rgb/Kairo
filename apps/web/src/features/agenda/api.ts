@@ -20,6 +20,12 @@ async function loadRecords(): Promise<EventRecord[]> {
   return api.get<EventRecord[]>('/events')
 }
 
+// Las series tal cual se guardan, sin expandir a sus ocurrencias: Escuela arma el horario de clases con ellas
+// (un evento semanal ligado al proyecto de la materia).
+export function listEventRecords(): Promise<EventRecord[]> {
+  return loadRecords()
+}
+
 // Todo lo de la agenda en una ventana de fechas: eventos (con las veces que se repiten), cobros de
 // membresías y tareas con fecha, ya puestos en el día y la hora de la zona del perfil. La ventana es
 // de unos nueve meses alrededor de hoy: al navegar más lejos no hay nada.

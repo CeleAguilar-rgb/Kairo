@@ -89,14 +89,12 @@ Dinero en centavos `bigint` (un monto puede pasar de los 2,100 millones de centa
 
 ## Escuela
 
+Escuela solo guarda lo suyo (decisión #43). **Una materia es un proyecto `school`** (su nombre es el del proyecto), **sus clases son eventos semanales de Agenda** con su `project_id` (uno por día de clase; el salón es el `place` del evento) y **sus entregas son tareas** de ese proyecto. La lista de "Antes de empezar" son las tareas del proyecto de preparación del periodo. Por eso no hay tablas `class_sessions`, `assignments` ni `prep_items`.
+
 | Tabla | Columnas | Relaciones / notas |
 |---|---|---|
-| school_terms | name, starts_on, ends_on, status (`upcoming`, `ongoing`, `finished`) | |
-| subjects | name, teacher, color | → school_terms |
-| class_sessions | weekday, starts_at, ends_at, room | → subjects |
-| assignments | title, due_at, done_at | → subjects |
-| grades | name, score, weight | → subjects |
-| prep_items | title, done, position | → school_terms |
+| school_terms | name, starts_on, ends_on, prep_project_id | → projects (el de preparación, opcional, `ON DELETE SET NULL`; que sea de la misma persona lo revisa el service). Check: `ends_on >= starts_on`. El estado (por empezar, en curso, terminado) **no se guarda**: sale de las fechas. Cuál es "el periodo actual" lo elige el Next.js. |
+| subjects | project_id (único), term_id, teacher, color (`lavender`, `ink`, `sand`, `lavender_soft`, `peach`), midterm_1, midterm_2, final | → projects (`ON DELETE CASCADE`), → school_terms (`ON DELETE SET NULL`; nulo = materia sin periodo, la adopta el primer periodo que se cree). Las tres calificaciones son `numeric(3,1)` de 0 a 10 (check), nulo = sin calificar. |
 
 ## Enfoque y sistema
 

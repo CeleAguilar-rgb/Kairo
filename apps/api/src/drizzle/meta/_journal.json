@@ -64,6 +64,13 @@
       "when": 1792515857738,
       "tag": "0008_projects_and_sprints",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1792517889383,
+      "tag": "0009_school_tables",
+      "breakpoints": true
     }
   ]
 }

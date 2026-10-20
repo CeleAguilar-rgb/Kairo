@@ -126,9 +126,11 @@
   gap: var(--space-4);
 }
 
+/* Sin `all: unset`: reiniciaría también el `background` que le pone la clase de color de SchoolColors. */
 .swatch {
-  all: unset;
   box-sizing: border-box;
+  appearance: none;
+  padding: 0;
   width: 32px;
   height: 32px;
   border-radius: var(--radius-8);
@@ -150,6 +152,11 @@
 .hint {
   font-size: 13px;
   color: var(--text-muted);
+}
+
+.error {
+  font-size: 13px;
+  color: var(--danger);
 }
 
 .actions {

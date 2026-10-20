@@ -56,8 +56,36 @@
   margin-right: var(--space-4);
 }
 
-.muted {
+/* La casilla se ve como el texto de la tabla; el borde aparece al pasar el cursor y al enfocarla. */
+.gradeInput {
+  box-sizing: border-box;
+  width: 64px;
+  height: 36px;
+  padding: 0 var(--space-3);
+  /* El texto queda alineado con el encabezado de su columna; el borde de hover sobresale. */
+  margin-left: calc(var(--space-3) * -1);
+  border: 1px solid transparent;
+  border-radius: var(--radius-8);
+  background: transparent;
+  font: inherit;
+  color: var(--text);
+  transition: border-color var(--duration-base) ease;
+}
+
+.gradeInput::placeholder {
   color: var(--text-muted);
+  opacity: 1;
+}
+
+.gradeInput:hover {
+  border-color: var(--border-control);
+}
+
+.gradeInput:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+  background: var(--surface);
+  border-color: var(--border-control);
 }
 
 .average {

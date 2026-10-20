@@ -36,7 +36,7 @@ export function AssignmentsList({
       <EmptyState
         id="assignments-empty"
         title="No hay entregas"
-        description="Cuando agregues materias, sus entregas van a aparecer aquí."
+        description="Cuando agregues materias y les pongas tareas (en Tareas, con la materia como proyecto), sus entregas van a aparecer aquí."
       />
     )
   }
@@ -78,9 +78,11 @@ export function AssignmentsList({
                     >
                       {assignment.title}
                     </span>
-                    <span className={styles.kind}>
-                      {ASSIGNMENT_KIND_LABEL[assignment.kind]}
-                    </span>
+                    {assignment.kind ? (
+                      <span className={styles.kind}>
+                        {ASSIGNMENT_KIND_LABEL[assignment.kind]}
+                      </span>
+                    ) : null}
                   </div>
                   {subject ? (
                     <span
@@ -93,7 +95,7 @@ export function AssignmentsList({
                     </span>
                   ) : null}
                   <span className={overdue ? styles.dueOverdue : styles.due}>
-                    {formatDayMonth(assignment.dueOn)}
+                    {assignment.dueOn ? formatDayMonth(assignment.dueOn) : ''}
                   </span>
                 </motion.div>
               )

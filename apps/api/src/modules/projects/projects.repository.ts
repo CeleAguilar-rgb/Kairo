@@ -78,6 +78,29 @@ export class ProjectsRepository {
     })
   }
 
+  // El proyecto con sus objetivos y enlaces a la papelera, juntos (regla 11). Devuelve false si ya no estaba:
+  // así quien lo llama puede reintentar un borrado que se quedó a medias.
+  softDeleteWithLists(userId: string, id: string): Promise<boolean> {
+    return this.db.transaction(async (tx) => {
+      const deletedAt = new Date()
+      const [project] = await tx
+        .update(projects)
+        .set({ deletedAt })
+        .where(and(eq(projects.id, id), eq(projects.userId, userId), isNull(projects.deletedAt)))
+        .returning({ id: projects.id })
+      if (!project) return false
+      await tx
+        .update(projectObjectives)
+        .set({ deletedAt })
+        .where(and(eq(projectObjectives.projectId, id), eq(projectObjectives.userId, userId), isNull(projectObjectives.deletedAt)))
+      await tx
+        .update(projectLinks)
+        .set({ deletedAt })
+        .where(and(eq(projectLinks.projectId, id), eq(projectLinks.userId, userId), isNull(projectLinks.deletedAt)))
+      return true
+    })
+  }
+
   // Editar el formulario reemplaza las dos listas (regla 11: lo que se quita va a la papelera, no se borra de
   // verdad). Los objetivos que conservan su texto conservan su fila, y con ella si estaban cumplidos; lo mismo
   // con un enlace de mismo nombre y dirección. Todo en una transacción: no puede quedar un proyecto a medias.

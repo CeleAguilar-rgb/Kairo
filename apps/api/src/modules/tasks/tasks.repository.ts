@@ -174,6 +174,33 @@ export class TasksRepository {
     })
   }
 
+  // Todas las tareas de un proyecto (con sus subtareas) a la papelera juntas, en una transacción: lo usa borrar
+  // una materia de Escuela. Una subtarea no lleva el proyecto, solo su tarea padre, por eso se busca por padre.
+  async softDeleteByProject(userId: string, projectId: string) {
+    await this.db.transaction(async (tx) => {
+      const deletedAt = new Date()
+      const parents = await tx
+        .update(tasks)
+        .set({ deletedAt })
+        .where(and(eq(tasks.userId, userId), eq(tasks.projectId, projectId), isNull(tasks.deletedAt)))
+        .returning({ id: tasks.id })
+      if (parents.length === 0) return
+      await tx
+        .update(tasks)
+        .set({ deletedAt })
+        .where(
+          and(
+            eq(tasks.userId, userId),
+            inArray(
+              tasks.parentTaskId,
+              parents.map((parent) => parent.id),
+            ),
+            isNull(tasks.deletedAt),
+          ),
+        )
+    })
+  }
+
   // "Deshacer" del aviso: limpia deletedAt de la tarea y de las subtareas
   // que se fueron con ella en esa misma borrada.
   async restore(userId: string, taskId: string) {

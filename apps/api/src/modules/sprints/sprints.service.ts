@@ -36,6 +36,11 @@ export class SprintsService {
     }
   }
 
+  // API pública para Escuela: los sprints de un proyecto se van a la papelera con él. No falla si no tiene.
+  async deleteByProject(userId: string, projectId: string): Promise<void> {
+    await this.repository.softDeleteByProject(userId, projectId)
+  }
+
   // "Empezar Sprint N": solo si el proyecto no tiene uno activo. Empieza hoy (en la zona del perfil).
   async start(userId: string, projectId: string, input: StartSprintInput) {
     await this.assertProject(userId, projectId)

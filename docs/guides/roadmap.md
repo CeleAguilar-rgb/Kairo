@@ -32,17 +32,16 @@ Para cada uno: pantallas tal como están en `docs/design/screens/`, animaciones 
 
 Por cada módulo: ajustar su tabla en `data-model.md` según lo que terminó pidiendo el front, migración de Drizzle, esquema compartido, controller → service → repository (con sus tests de aislamiento), y conectar sustituyendo los datos dummy por la API real.
 
-**Hecho:** Tareas (reconectada a su molde de antes de la decisión #27, más papelera), Recordatorios, Agenda, Día a día (sus 4 partes: rutina, menú, diario —sin PIN ni cifrado, decisión #39— y metas), Finanzas (sus 5 pestañas; los cobros de membresías aún no se vuelven movimientos solos: eso es de las tareas programadas, decisión #40) y Proyectos (Resumen y Sprints; sin archivos, decisión #42).
+**Hecho:** Tareas (reconectada a su molde de antes de la decisión #27, más papelera), Recordatorios, Agenda, Día a día (sus 4 partes: rutina, menú, diario —sin PIN ni cifrado, decisión #39— y metas), Finanzas (sus 5 pestañas; los cobros de membresías aún no se vuelven movimientos solos: eso es de las tareas programadas, decisión #40), Proyectos (Resumen y Sprints; sin archivos, decisión #42) y Escuela (periodo, materias con su horario, entregas, calificaciones y "Antes de empezar"; una materia es un proyecto, sus clases son eventos de Agenda y sus entregas tareas, decisión #43).
 
-**Lo que sigue, en este orden** (cambia el de la lista de arriba: Proyectos va antes que Escuela porque una materia es un Proyecto de tipo `school`, decisión #41):
+**Lo que sigue, en este orden** (cambia el de la lista de arriba: Proyectos y Escuela van antes que Escritos, decisión #41):
 
-1. **Escuela.** Una materia es un proyecto `school`, sus entregas son tareas y sus clases eventos recurrentes: decidir qué parte de su front necesita tablas propias y qué se arma con Proyectos, Tareas y Agenda.
-2. **Archivos (Storage).** Paso propio: tabla `attachments`, bucket privado con URLs firmadas, límites de tamaño y tipo, cuota. Conecta la pestaña Archivos de Proyectos y la portada subida por la persona (decisión #41).
-3. **Escritos**, que reutiliza Storage para imágenes, portadas y galerías.
-4. **Enfoque.** Con su backend, el Resumen de un proyecto muestra los minutos de pomodoro de la semana (hoy siempre "0 min").
-5. **Lo global:** la Papelera como pantalla para ver y restaurar lo borrado (con ella llega **borrar un proyecto**, que arrastra objetivos, enlaces, sprints, tareas y archivos), búsqueda Ctrl+K, panel de avisos, captura rápida (+), adornos de temporada y las **tareas programadas** (que anotarían solos los cobros de membresías y mandarían los avisos del presupuesto y de los recordatorios). El roadmap original las agrupaba "junto con los módulos", sin fecha: se pueden adelantar, por ejemplo la Papelera, si hace falta.
+1. **Archivos (Storage).** Paso propio: tabla `attachments`, bucket privado con URLs firmadas, límites de tamaño y tipo, cuota. Conecta la pestaña Archivos de Proyectos y la portada subida por la persona (decisión #41).
+2. **Escritos**, que reutiliza Storage para imágenes, portadas y galerías.
+3. **Enfoque.** Con su backend, el Resumen de un proyecto muestra los minutos de pomodoro de la semana (hoy siempre "0 min").
+4. **Lo global:** la Papelera como pantalla para ver y restaurar lo borrado (con ella llega **borrar un proyecto**, que arrastra objetivos, enlaces, sprints, tareas y archivos), búsqueda Ctrl+K, panel de avisos, captura rápida (+), adornos de temporada y las **tareas programadas** (que anotarían solos los cobros de membresías y mandarían los avisos del presupuesto y de los recordatorios). El roadmap original las agrupaba "junto con los módulos", sin fecha: se pueden adelantar, por ejemplo la Papelera, si hace falta.
 
-Sin lugar fijo, porque ni el canvas los pide todavía: quitar una tarea de un sprint o editar su meta una vez empezado.
+Sin lugar fijo, porque ni el canvas los pide todavía: quitar una tarea de un sprint o editar su meta una vez empezado; editar una materia (profesor, color, días de clase); el tipo de entrega (examen, lectura…), que pediría un campo nuevo en Tareas; y que cambiar las fechas de un periodo ajuste el fin de las clases que ya se crearon (hoy se cambia en Agenda).
 
 El orden puede cambiar; la arquitectura de módulos existe para eso.
 

@@ -52,6 +52,15 @@ export class AgendaRepository {
     return row
   }
 
+  // Todos los eventos de un proyecto (las series enteras, no una vez), a la papelera juntos: lo usa borrar una
+  // materia de Escuela.
+  async softDeleteByProject(userId: string, projectId: string) {
+    await this.db
+      .update(events)
+      .set({ deletedAt: new Date() })
+      .where(and(eq(events.userId, userId), eq(events.projectId, projectId), isNull(events.deletedAt)))
+  }
+
   async restore(userId: string, id: string) {
     const [row] = await this.db
       .update(events)

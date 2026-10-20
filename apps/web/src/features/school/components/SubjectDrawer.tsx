@@ -22,12 +22,15 @@ import styles from './SubjectDrawer.module.css'
 
 type SubjectDrawerProps = {
   open: boolean
+  // El periodo al que va la materia (el que se muestra); null si todavía no hay uno.
+  termId: string | null
   onClose: () => void
   onCreated: () => void
 }
 
 export function SubjectDrawer({
   open,
+  termId,
   onClose,
   onCreated,
 }: SubjectDrawerProps) {
@@ -40,12 +43,16 @@ export function SubjectDrawer({
       width="lg"
     >
       {/* Aparte, para que al abrir vuelva a empezar vacío (Drawer desmonta al cerrarse). */}
-      <SubjectForm onClose={onClose} onCreated={onCreated} />
+      <SubjectForm termId={termId} onClose={onClose} onCreated={onCreated} />
     </Drawer>
   )
 }
 
-function SubjectForm({ onClose, onCreated }: Omit<SubjectDrawerProps, 'open'>) {
+function SubjectForm({
+  termId,
+  onClose,
+  onCreated,
+}: Omit<SubjectDrawerProps, 'open'>) {
   const toast = useToast()
   const [pending, startTransition] = useTransition()
   const [name, setName] = useState('')
@@ -63,6 +70,7 @@ function SubjectForm({ onClose, onCreated }: Omit<SubjectDrawerProps, 'open'>) {
         ? current.filter((d) => d !== day)
         : [...current, day],
     )
+    if (errors.days) setErrors((current) => ({ ...current, days: '' }))
   }
 
   function handleSubmit(event: FormEvent) {
@@ -86,7 +94,7 @@ function SubjectForm({ onClose, onCreated }: Omit<SubjectDrawerProps, 'open'>) {
     setErrors({})
 
     startTransition(async () => {
-      const result = await createSubjectAction(parsed.data)
+      const result = await createSubjectAction(parsed.data, termId)
       if (!result.ok) {
         setErrors(result.errors)
         toast.show({
@@ -181,6 +189,11 @@ function SubjectForm({ onClose, onCreated }: Omit<SubjectDrawerProps, 'open'>) {
               )
             })}
           </div>
+          {errors.days ? (
+            <span className={styles.error} role="alert">
+              {errors.days}
+            </span>
+          ) : null}
         </div>
 
         <div className={styles.timeRow}>
