@@ -52,12 +52,13 @@ export function buildFiles(ctx: MockContext): Record<string, ProjectFiles> {
       uploadedOn: ctx.day(-daysAgo),
       look: look ?? null,
     }))
-    result[PROJECT_ID[key]] = { files, usedElsewhereBytes: USED_ELSEWHERE_BYTES, quotaBytes: QUOTA_BYTES }
+    result[PROJECT_ID[key]] = { files, usedElsewhereBytes: USED_ELSEWHERE_BYTES, quotaBytes: QUOTA_BYTES, storageReady: true }
   }
   return result
 }
 
-// Un proyecto que no está en el ejemplo (uno recién creado) no tiene archivos todavía.
-export function emptyFiles(): ProjectFiles {
-  return { files: [], usedElsewhereBytes: USED_ELSEWHERE_BYTES, quotaBytes: QUOTA_BYTES }
+// Un proyecto que no está en el ejemplo (uno recién creado) no tiene archivos todavía. `storageReady` dice si la
+// subida de ejemplo está disponible: en el demo sí; en modo real no, hasta que exista Storage (decisión #41).
+export function emptyFiles(storageReady = true): ProjectFiles {
+  return { files: [], usedElsewhereBytes: USED_ELSEWHERE_BYTES, quotaBytes: QUOTA_BYTES, storageReady }
 }

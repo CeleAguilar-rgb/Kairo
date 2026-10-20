@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common'
 import { AccountModule } from '../../account/account.module'
+import { ProjectsModule } from '../projects/projects.module'
 import { DailyUndoController } from './daily-undo.controller'
 import { DailyUndoService } from './daily-undo.service'
 import { GoalsController } from './goals.controller'
@@ -19,7 +20,7 @@ import { RoutinesService } from './routines.service'
 // de módulos por sección de la UI, y las 4 viven bajo una sola ("daily" en el registro del front), con
 // su propio controller/service/repository cada una para no amontonar todo en un archivo.
 @Module({
-  imports: [AccountModule],
+  imports: [AccountModule, ProjectsModule],
   controllers: [RoutinesController, MealsController, JournalController, GoalsController, DailyUndoController],
   providers: [
     RoutinesService,

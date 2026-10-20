@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common'
 import type { CreateTaskInput, TaskStatus } from '@kairo/shared'
-import { and, asc, count, eq, isNotNull, isNull } from 'drizzle-orm'
+import { and, asc, count, eq, inArray, isNotNull, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 import { DB } from '../../common/db/db.module'
 import { tasks } from '../../db/schema/tasks'
@@ -19,6 +19,24 @@ export class TasksRepository {
       .from(tasks)
       .where(and(eq(tasks.userId, userId), isNull(tasks.deletedAt)))
       .orderBy(asc(tasks.position), asc(tasks.createdAt))
+  }
+
+  // Varias tareas (no subtareas) por id, de esta persona, junto con sus subtareas. Un id ajeno o borrado no sale.
+  async findByIds(userId: string, ids: string[]) {
+    if (ids.length === 0) return { tasks: [], subtasks: [] }
+    const rows = await this.db
+      .select()
+      .from(tasks)
+      .where(and(eq(tasks.userId, userId), isNull(tasks.deletedAt), isNull(tasks.parentTaskId), inArray(tasks.id, ids)))
+      .orderBy(asc(tasks.position), asc(tasks.createdAt))
+    const subtasks = rows.length
+      ? await this.db
+          .select()
+          .from(tasks)
+          .where(and(eq(tasks.userId, userId), isNull(tasks.deletedAt), inArray(tasks.parentTaskId, rows.map((row) => row.id))))
+          .orderBy(asc(tasks.position))
+      : []
+    return { tasks: rows, subtasks }
   }
 
   // Solo cuenta tareas (no subtareas): position ordena la lista de Tareas,

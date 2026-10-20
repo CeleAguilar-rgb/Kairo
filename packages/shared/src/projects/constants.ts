@@ -16,6 +16,14 @@ export const PROJECT_COVER_KEYS = [...PROJECT_COVER_CHOICES, 'dash', 'bot', 'vin
 
 export type ProjectCoverKey = (typeof PROJECT_COVER_KEYS)[number]
 
+// Sprints (pestaña Sprints): de una o de dos semanas, uno activo a la vez por proyecto.
+export const SPRINT_WEEKS = [1, 2] as const
+export type SprintWeeks = (typeof SPRINT_WEEKS)[number]
+
+// Qué hacer con las tareas sin terminar al cerrar un sprint: pasarlas al siguiente o regresarlas al backlog.
+export const SPRINT_CLOSE_MOVES = ['next', 'back'] as const
+export type SprintCloseMove = (typeof SPRINT_CLOSE_MOVES)[number]
+
 // Archivos de un proyecto (pestaña Archivos). La API vuelve a validar tipo y tamaño antes de
 // firmar la subida (docs/guides/security.md, sección 7): esto solo evita subir lo que se va a rechazar.
 export const PROJECT_FILE_MAX_BYTES = 50 * 1024 * 1024

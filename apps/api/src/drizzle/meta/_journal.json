@@ -57,6 +57,13 @@
       "when": 1792510570773,
       "tag": "0007_finance_tables",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1792515857738,
+      "tag": "0008_projects_and_sprints",
+      "breakpoints": true
     }
   ]
 }

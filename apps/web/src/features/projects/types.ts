@@ -57,6 +57,28 @@ export function coverPathOf(cover: ProjectCoverKey | null): string | null {
   return cover ? `${COVER_PREFIX}${cover}` : null
 }
 
+// ---- Lo que devuelve la API (hechos crudos, decisión #38) ----
+
+// `GET /projects`: las columnas del proyecto. El avance, el conteo de tareas y la próxima fecha NO vienen: los
+// arma api.ts con la lista de tareas (project-utils.ts), igual que Agenda y Día a día arman lo suyo.
+export type ProjectRecord = Omit<Project, 'progress' | 'taskCount' | 'doneCount' | 'nextDueOn'>
+
+export type ProjectDetailRecord = ProjectRecord & {
+  notes: string | null
+  objectives: ProjectObjective[]
+  links: ProjectLink[]
+}
+
+// `GET /projects/:id/sprints`. El título y el estado de cada tarea del sprint activo los pone api.ts con la lista
+// de Tareas: aquí solo vienen sus ids. Los sprints cerrados traen la foto de cuántas tareas tuvieron y cuántas
+// estaban hechas al cerrarlos.
+export type SprintRecord = { id: string; number: number; goal: string; startsOn: IsoDate; endsOn: IsoDate; notes: string | null }
+
+export type ProjectSprintsRecord = {
+  active: (SprintRecord & { taskIds: string[] }) | null
+  closed: (SprintRecord & { doneCount: number; totalCount: number })[]
+}
+
 // ---- Detalle (GET /v1/projects/:id) ----
 
 export type ProjectObjective = { id: string; text: string; done: boolean }
@@ -142,4 +164,7 @@ export type ProjectFiles = {
   // Lo que ocupan los archivos de los demás proyectos y escritos (el espacio es uno solo).
   usedElsewhereBytes: number
   quotaBytes: number
+  // ¿Ya se pueden subir archivos de verdad? Storage llega como paso aparte (decisión #41): mientras tanto, en modo
+  // real la pestaña no finge guardar nada. En el demo sigue la subida de ejemplo.
+  storageReady: boolean
 }

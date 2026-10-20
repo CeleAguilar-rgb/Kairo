@@ -14,11 +14,13 @@ import { formatBytes } from '@/lib/bytes'
 import { dayOfMonth, formatMonthShort, type IsoDate } from '@/lib/dates'
 import { DURATION, EASE_OUT, SPRING } from '@/lib/motion'
 
+import { addProjectLinkAction } from '../actions'
 import type { ProjectFile, ProjectFiles as ProjectFilesData, ProjectLink } from '../types'
 
 import styles from './ProjectFiles.module.css'
 
 type ProjectFilesProps = {
+  projectId: string
   data: ProjectFilesData
   links: ProjectLink[]
   today: IsoDate
@@ -110,9 +112,10 @@ function Thumb({ file }: { file: LocalFile }) {
 }
 
 // La pestaña Archivos (ProyectoArchivos.dc.html): los archivos del proyecto, sus enlaces y el espacio.
-// Hoy todo vive en memoria: lo que subes de verdad se lee (nombre, tamaño, vista previa de una
-// imagen), pero no se guarda en ningún lado y se pierde al recargar, hasta que exista Storage.
-export function ProjectFiles({ data, links: initialLinks, today }: ProjectFilesProps) {
+// Los enlaces sí se guardan (son del proyecto). Los archivos todavía no: en el demo la subida es de ejemplo
+// (lo que subes se lee, pero no se guarda y se pierde al recargar) y en modo real avisa que llega pronto, hasta
+// que exista Storage (`data.storageReady`, decisión #41).
+export function ProjectFiles({ projectId, data, links: initialLinks, today }: ProjectFilesProps) {
   const toast = useToast()
   const calm = useCalmEntry()
   const inputRef = useRef<HTMLInputElement>(null)
@@ -160,6 +163,10 @@ export function ProjectFiles({ data, links: initialLinks, today }: ProjectFilesP
   // Revisa cada archivo (tipo, tamaño y espacio) y empieza a "subir" los que pasan. La API vuelve a
   // validar esto antes de firmar la subida: aquí solo se evita subir lo que se va a rechazar.
   const addFiles = (list: FileList | File[]) => {
+    if (!data.storageReady) {
+      toast.show({ message: 'Subir archivos llega pronto. Mientras tanto, guarda enlaces.', icon: 'info' })
+      return
+    }
     let reserved = usedTotal + uploading
     for (const source of Array.from(list)) {
       const kind = classifyProjectFile(source.name)
@@ -234,7 +241,8 @@ export function ProjectFiles({ data, links: initialLinks, today }: ProjectFilesP
     })
   }
 
-  const handleAddLink = (event: FormEvent) => {
+  // El enlace se guarda en el proyecto (la API vuelve a validarlo) y entra a la lista con su id real.
+  const handleAddLink = async (event: FormEvent) => {
     event.preventDefault()
     const url = linkUrl.trim()
     const parsed = projectLinkSchema.safeParse({ title: hostOf(url), url })
@@ -242,7 +250,12 @@ export function ProjectFiles({ data, links: initialLinks, today }: ProjectFilesP
       setLinkError(parsed.error.issues.find((issue) => issue.path[0] === 'url')?.message ?? 'Revisa el enlace.')
       return
     }
-    setLinks((list) => [...list, { id: `local-${crypto.randomUUID()}`, ...parsed.data }])
+    const result = await addProjectLinkAction(projectId, parsed.data)
+    if (!result.ok) {
+      setLinkError(result.errors.url ?? result.message ?? 'No pudimos guardar el enlace.')
+      return
+    }
+    setLinks((list) => [...list, result.link])
     setLinkUrl('')
     setLinkError('')
     toast.show({ message: 'Enlace agregado', icon: 'check' })
@@ -315,8 +328,10 @@ export function ProjectFiles({ data, links: initialLinks, today }: ProjectFilesP
                     onDrop={handleDrop}
                   >
                     <LineIcon d="M12 16V4M7 9l5-5 5 5M4 20h16" size={26} strokeWidth={1.8} />
-                    <span className={styles.dropTitle}>Suelta archivos aquí</span>
-                    <span className={styles.hint}>o toca para elegir · hasta {formatBytes(PROJECT_FILE_MAX_BYTES)}</span>
+                    <span className={styles.dropTitle}>{data.storageReady ? 'Suelta archivos aquí' : 'Los archivos llegan pronto'}</span>
+                    <span className={styles.hint}>
+                      {data.storageReady ? `o toca para elegir · hasta ${formatBytes(PROJECT_FILE_MAX_BYTES)}` : 'Mientras tanto, guarda enlaces aquí abajo'}
+                    </span>
                   </button>
 
                   {/* `initial={!calm}`: al llegar por una pestaña los archivos ya están en su lugar; los que se

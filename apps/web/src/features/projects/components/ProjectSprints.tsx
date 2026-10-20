@@ -12,11 +12,11 @@ import { useToast } from '@/components/ui/Toast'
 import { formatRange, type IsoDate } from '@/lib/dates'
 import { DURATION, EASE_OUT, SPRING } from '@/lib/motion'
 
+import { addSprintTaskAction, closeSprintAction, setProjectTaskStatusAction, startSprintAction } from '../actions'
 import {
   addFromBacklog,
   closeSprint,
   daysLeftText,
-  moveTask,
   SPRINT_COLUMNS,
   sprintDays,
   startSprint,
@@ -24,12 +24,13 @@ import {
   type CloseOptions,
   type SprintState,
 } from '../sprint-utils'
-import type { ProjectSprints as ProjectSprintsData } from '../types'
+import type { ProjectSprints as ProjectSprintsData, SprintTask } from '../types'
 
 import styles from './ProjectSprints.module.css'
 import { CloseSprintDrawer, StartSprintDrawer } from './SprintPanel'
 
 type ProjectSprintsProps = {
+  projectId: string
   sprints: ProjectSprintsData
   today: IsoDate
   weekEnd: IsoDate
@@ -52,13 +53,17 @@ function dayClass(position: number, total: number, index: number) {
 }
 
 // La pestaña Sprints (ProyectoSprints.dc.html): el sprint activo, su tablero, el backlog y los
-// cerrados. Hoy todo vive en memoria; la lógica está en sprint-utils.ts.
-export function ProjectSprints({ sprints, today, weekEnd }: ProjectSprintsProps) {
+// cerrados. Empezar, cerrar y agregar tareas se guardan en la API (cerrar es una sola transacción en el
+// servidor) y la pantalla se actualiza con las mismas funciones de sprint-utils.ts cuando la API dice que sí;
+// mover una tarjeta entre columnas se actualiza al instante y vuelve atrás si falla.
+export function ProjectSprints({ projectId, sprints, today, weekEnd }: ProjectSprintsProps) {
   const toast = useToast()
   const calm = useCalmEntry()
   const [state, setState] = useState<SprintState>(sprints)
   const [closeOpen, setCloseOpen] = useState(false)
   const [startOpen, setStartOpen] = useState(false)
+  // Evita mandar dos veces lo mismo si se toca el botón otra vez mientras la API responde.
+  const [busy, setBusy] = useState(false)
 
   const { active, tasks, backlog, closed } = state
   const doneCount = tasks.filter((task) => task.status === 'done').length
@@ -67,22 +72,53 @@ export function ProjectSprints({ sprints, today, weekEnd }: ProjectSprintsProps)
   const days = active ? sprintDays(active, today) : null
   const nextNumber = active ? active.number + 1 : (closed[0]?.number ?? 0) + 1
 
-  const handleClose = (options: CloseOptions) => {
+  const fail = (message: string | undefined, fallback: string) => toast.show({ message: message ?? fallback, icon: 'info' })
+
+  const handleClose = async (options: CloseOptions) => {
+    if (busy) return
+    setBusy(true)
+    const response = await closeSprintAction(projectId, options)
+    setBusy(false)
+    if (!response.ok) return fail(response.message, 'No pudimos cerrar el sprint.')
     const result = closeSprint(state, options, today)
     setState(result.state)
     setCloseOpen(false)
     toast.show({ message: result.message, icon: 'check' })
   }
 
-  const handleStart = (options: { goal: string; weeks: 1 | 2 }) => {
+  const handleStart = async (options: { goal: string; weeks: 1 | 2 }) => {
+    if (busy) return
+    setBusy(true)
+    const response = await startSprintAction(projectId, options)
+    setBusy(false)
+    if (!response.ok) return fail(response.message, 'No pudimos empezar el sprint.')
     setState(startSprint(state, options, today))
     setStartOpen(false)
     toast.show({ message: `Sprint ${nextNumber} empezó hoy`, icon: 'check' })
   }
 
-  const handleAddFromBacklog = (id: string, title: string) => {
-    setState(addFromBacklog(state, id))
+  const handleAddFromBacklog = async (id: string, title: string) => {
+    if (busy) return
+    setBusy(true)
+    const response = await addSprintTaskAction(projectId, id)
+    setBusy(false)
+    if (!response.ok) return fail(response.message, 'No pudimos agregar la tarea al sprint.')
+    setState((current) => addFromBacklog(current, id))
     toast.show({ message: `"${title}" entró al Sprint ${active?.number}`, icon: 'check' })
+  }
+
+  // Mover una tarjeta de columna cambia el estado de la tarea (lo guarda la API de Tareas): se ve al instante y,
+  // si no se pudo guardar, la tarjeta regresa a donde estaba.
+  const handleMove = (task: SprintTask, status: SprintTask['status']) => {
+    const previous = task.status
+    const setStatus = (value: SprintTask['status']) =>
+      setState((current) => ({ ...current, tasks: current.tasks.map((item) => (item.id === task.id ? { ...item, status: value } : item)) }))
+    setStatus(status)
+    void setProjectTaskStatusAction(projectId, task.id, status).then((response) => {
+      if (response.ok) return
+      setStatus(previous)
+      fail(response.message, 'No pudimos mover la tarea.')
+    })
   }
 
   return (
@@ -190,7 +226,7 @@ export function ProjectSprints({ sprints, today, weekEnd }: ProjectSprintsProps)
                                           type="button"
                                           className={styles.move}
                                           aria-label={`Mover "${task.title}" a ${SPRINT_COLUMNS[columnIndex - 1].label}`}
-                                          onClick={() => setState((current) => ({ ...current, tasks: moveTask(current.tasks, task.id, -1) }))}
+                                          onClick={() => handleMove(task, SPRINT_COLUMNS[columnIndex - 1].status)}
                                         >
                                           <LineIcon d="M15 6l-6 6 6 6" size={16} strokeWidth={2} />
                                         </button>
@@ -200,7 +236,7 @@ export function ProjectSprints({ sprints, today, weekEnd }: ProjectSprintsProps)
                                           type="button"
                                           className={styles.move}
                                           aria-label={`Mover "${task.title}" a ${SPRINT_COLUMNS[columnIndex + 1].label}`}
-                                          onClick={() => setState((current) => ({ ...current, tasks: moveTask(current.tasks, task.id, 1) }))}
+                                          onClick={() => handleMove(task, SPRINT_COLUMNS[columnIndex + 1].status)}
                                         >
                                           <LineIcon d="M9 6l6 6-6 6" size={16} strokeWidth={2} />
                                         </button>

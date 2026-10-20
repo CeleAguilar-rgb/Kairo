@@ -15,5 +15,5 @@ export default async function ProjectFilesPage({ params }: ProjectFilesPageProps
   if (!me) redirect('/bienvenida')
   if (!project) notFound()
 
-  return <ProjectFiles data={data} links={project.links} today={todayIn(me.profile.timezone)} />
+  return <ProjectFiles projectId={project.id} data={data} links={project.links} today={todayIn(me.profile.timezone)} />
 }

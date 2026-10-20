@@ -1,5 +1,6 @@
 import { boolean, date, doublePrecision, integer, text, time, timestamp, uuid } from 'drizzle-orm/pg-core'
 import { app, profiles, userColumns } from './_shared'
+import { projects } from './projects'
 
 export const routineKindEnum = app.enum('routine_kind', ['habit', 'meal', 'focus', 'free'])
 export const routineIconEnum = app.enum('routine_icon', ['sun', 'drop', 'pill', 'food', 'cap', 'code', 'pen', 'work', 'moon'])
@@ -100,7 +101,8 @@ export const journalEntries = app
 // siempre es dinero; cuando sí lo es, decisión nuestra no tratarla como columna de Finanzas todavía).
 // Para kind 'milestones'/'project'/'habit' el service siempre recalcula target/current/unit al leer
 // (deriveGoal, igual que hoy en el front): lo guardado en esas columnas para esos tres tipos no se usa.
-// block_id SÍ lleva FK (routine_blocks es de este mismo módulo); project_id no (Proyectos sin tabla).
+// block_id y project_id llevan FK (project_id desde la decisión #41); que el proyecto sea de la misma persona lo
+// revisa GoalsService con el service de Proyectos.
 export const goals = app
   .table('goals', {
     ...userColumns,
@@ -112,7 +114,7 @@ export const goals = app
     current: doublePrecision('current').notNull().default(0),
     unit: text('unit').notNull().default(''),
     blockId: uuid('block_id').references(() => routineBlocks.id, { onDelete: 'set null' }),
-    projectId: uuid('project_id'),
+    projectId: uuid('project_id').references(() => projects.id, { onDelete: 'set null' }),
     dueOn: date('due_on', { mode: 'string' }),
     why: text('why').notNull().default(''),
     achievedOn: date('achieved_on', { mode: 'string' }),

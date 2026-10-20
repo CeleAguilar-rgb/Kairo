@@ -10,10 +10,12 @@ import { Checkbox } from '@/components/ui/Checkbox'
 import { Doodle } from '@/components/ui/Doodle'
 import { CountUp, ProgressBar, ProgressRing } from '@/components/ui/Progress'
 import { Segmented } from '@/components/ui/Segmented'
+import { useToast } from '@/components/ui/Toast'
 import { dayOfMonth, formatDayMonth, formatDuration, formatDueLabel, formatMonthShort, type IsoDate } from '@/lib/dates'
 import { DURATION, EASE_OUT, SPRING } from '@/lib/motion'
 import { useEntering } from '@/lib/use-entering'
 
+import { createProjectTaskAction, saveProjectGoalAction, saveProjectNotesAction, setProjectTaskStatusAction, toggleObjectiveAction } from '../actions'
 import type { ProjectDetail, ProjectTask } from '../types'
 
 import styles from './ProjectSummary.module.css'
@@ -54,16 +56,20 @@ function isSafeUrl(url: string) {
 }
 
 // El Resumen del proyecto (Proyecto.dc.html): de qué trata, objetivos, tareas, avance, detalles,
-// enlaces y notas. Hoy todo vive en memoria: marcar, agregar y escribir se pierde al recargar
-// hasta que existan los endpoints de proyectos.
+// enlaces y notas. Marcar, agregar y escribir se guarda en la API; la pantalla se actualiza al
+// instante y, si algo falla, vuelve atrás y avisa.
 export function ProjectSummary({ project, today, weekEnd }: ProjectSummaryProps) {
   const entering = useEntering()
   const calm = useCalmEntry()
+  const toast = useToast()
   const [objectives, setObjectives] = useState(project.objectives)
   const [tasks, setTasks] = useState(project.tasks)
   const [view, setView] = useState<TaskView>('pending')
   const [newTitle, setNewTitle] = useState('')
+  const [adding, setAdding] = useState(false)
   const [notes, setNotes] = useState(project.notes ?? '')
+  // Lo último que se guardó: las notas solo se mandan al salir del campo si cambiaron.
+  const [savedNotes, setSavedNotes] = useState(project.notes ?? '')
   const [goalOn, setGoalOn] = useState<IsoDate | null>(project.goalOn)
   const [pickingGoal, setPickingGoal] = useState(false)
   // El estado con el que llegó cada tarea: al desmarcarla vuelve a donde estaba (por ejemplo "En curso").
@@ -79,29 +85,70 @@ export function ProjectSummary({ project, today, weekEnd }: ProjectSummaryProps)
 
   const objectivesDone = objectives.filter((objective) => objective.done).length
 
-  const toggleObjective = (id: string) =>
+  const flipObjective = (id: string) =>
     setObjectives((list) => list.map((objective) => (objective.id === id ? { ...objective, done: !objective.done } : objective)))
 
-  const toggleTask = (id: string) =>
-    setTasks((list) =>
-      list.map((task) => {
-        if (task.id !== id) return task
-        if (task.status !== 'done') return { ...task, status: 'done' as const }
-        const before = originalStatus.get(id)
-        return { ...task, status: before && before !== 'done' ? before : ('todo' as const) }
-      }),
-    )
+  // Marca o desmarca al instante y lo guarda; si la API dice que no, lo regresa y avisa.
+  const toggleObjective = (id: string) => {
+    flipObjective(id)
+    void toggleObjectiveAction(project.id, id).then((result) => {
+      if (result.ok) return
+      flipObjective(id)
+      toast.show({ message: result.message ?? 'No pudimos marcar el objetivo.', icon: 'info' })
+    })
+  }
 
-  const handleAddTask = (event: FormEvent) => {
+  const setTaskStatus = (id: string, status: ProjectTask['status']) =>
+    setTasks((list) => list.map((task) => (task.id === id ? { ...task, status } : task)))
+
+  const toggleTask = (id: string) => {
+    const current = tasks.find((task) => task.id === id)
+    if (!current) return
+    const before = originalStatus.get(id)
+    const next: ProjectTask['status'] = current.status !== 'done' ? 'done' : before && before !== 'done' ? before : 'todo'
+    setTaskStatus(id, next)
+    void setProjectTaskStatusAction(project.id, id, next).then((result) => {
+      if (result.ok) return
+      setTaskStatus(id, current.status)
+      toast.show({ message: result.message ?? 'No pudimos actualizar la tarea.', icon: 'info' })
+    })
+  }
+
+  // La tarea se crea en la API y entra a la lista con su id real (como en Tareas): no se inventa un id.
+  const handleAddTask = async (event: FormEvent) => {
     event.preventDefault()
     const title = newTitle.trim()
-    if (!title) return
-    setTasks((list) => [
-      { id: `local-${crypto.randomUUID()}`, title, status: 'todo', subtasksDone: 0, subtasksTotal: 0, dueOn: null },
-      ...list,
-    ])
+    if (!title || adding) return
+    setAdding(true)
+    const result = await createProjectTaskAction(project.id, title)
+    setAdding(false)
+    if (!result.ok) {
+      toast.show({ message: result.message, icon: 'info' })
+      return
+    }
+    setTasks((list) => [result.task, ...list])
     setView('pending')
     setNewTitle('')
+  }
+
+  const handleNotesBlur = async () => {
+    if (notes === savedNotes) return
+    const result = await saveProjectNotesAction(project.id, notes)
+    if (result.ok) {
+      setSavedNotes(notes)
+      return
+    }
+    toast.show({ message: result.message ?? 'No pudimos guardar las notas.', icon: 'info' })
+  }
+
+  const handleGoalChange = async (value: IsoDate | null) => {
+    const previous = goalOn
+    setGoalOn(value)
+    setPickingGoal(false)
+    const result = await saveProjectGoalAction(project.id, value)
+    if (result.ok) return
+    setGoalOn(previous)
+    toast.show({ message: result.errors.goalOn || result.message || 'No pudimos guardar la fecha meta.', icon: 'info' })
   }
 
   const safeLinks = project.links.filter((link) => isSafeUrl(link.url))
@@ -247,6 +294,7 @@ export function ProjectSummary({ project, today, weekEnd }: ProjectSummaryProps)
                 placeholder="Agregar tarea a este proyecto…"
                 value={newTitle}
                 maxLength={200}
+                disabled={adding}
                 onChange={(event) => setNewTitle(event.target.value)}
               />
             </form>
@@ -305,10 +353,7 @@ export function ProjectSummary({ project, today, weekEnd }: ProjectSummaryProps)
                     value={goalOn ?? ''}
                     min={project.startedOn ?? undefined}
                     ref={(element) => element?.focus()}
-                    onChange={(event) => {
-                      setGoalOn(event.target.value || null)
-                      setPickingGoal(false)
-                    }}
+                    onChange={(event) => void handleGoalChange(event.target.value || null)}
                     onBlur={() => setPickingGoal(false)}
                   />
                 ) : (
@@ -363,6 +408,7 @@ export function ProjectSummary({ project, today, weekEnd }: ProjectSummaryProps)
               maxLength={5000}
               placeholder="Ideas, pendientes sueltos, lo que no quieras olvidar…"
               onChange={(event) => setNotes(event.target.value)}
+              onBlur={() => void handleNotesBlur()}
             />
           </Card>
         </motion.div>

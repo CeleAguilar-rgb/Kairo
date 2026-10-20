@@ -1,28 +1,54 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import type { CreateTaskInput, TaskStatus } from '@kairo/shared'
+import { ProjectsService } from '../projects/projects.service'
 import { TasksRepository } from './tasks.repository'
 import type { tasks } from '../../db/schema/tasks'
 
 type TaskRow = typeof tasks.$inferSelect
+type ProjectRef = { id: string; name: string }
 
 @Injectable()
 export class TasksService {
-  constructor(@Inject(TasksRepository) private readonly repository: TasksRepository) {}
+  constructor(
+    @Inject(TasksRepository) private readonly repository: TasksRepository,
+    // El nombre del proyecto y si es de la persona se le piden a su service (modules.md: nunca se lee su tabla).
+    @Inject(ProjectsService) private readonly projectsService: ProjectsService,
+  ) {}
 
   async findAll(userId: string) {
     const rows = await this.repository.findActive(userId)
     const { topLevel, subtasksByParent } = groupByParent(rows)
-    return topLevel.map((task) => toTask(task, subtasksByParent.get(task.id) ?? []))
+    const projects = await this.projectsService.summaries(
+      userId,
+      topLevel.map((task) => task.projectId),
+    )
+    return topLevel.map((task) => toTask(task, subtasksByParent.get(task.id) ?? [], projectOf(task, projects)))
+  }
+
+  // API pública para otros módulos (Sprints): varias tareas por id, de esta persona, con su proyecto. Un id
+  // que no es suyo (o que ya no existe) simplemente no sale.
+  async findByIds(userId: string, ids: string[]) {
+    const { tasks: rows, subtasks } = await this.repository.findByIds(userId, ids)
+    const { subtasksByParent } = groupByParent([...rows, ...subtasks])
+    const projects = await this.projectsService.summaries(
+      userId,
+      rows.map((task) => task.projectId),
+    )
+    return rows.map((task) => toTask(task, subtasksByParent.get(task.id) ?? [], projectOf(task, projects)))
   }
 
   async create(userId: string, input: CreateTaskInput) {
+    // La llave foránea solo garantiza que el proyecto exista: que sea de ESTA persona lo revisa su service.
+    if (input.projectId !== null && !(await this.projectsService.exists(userId, input.projectId))) {
+      throw new BadRequestException({ code: 'PROJECT_NOT_FOUND', message: 'No encontramos ese proyecto.' })
+    }
     const position = await this.repository.countTopLevel(userId)
     const { task, subtasks } = await this.repository.createWithSubtasks(
       userId,
       input,
       position,
     )
-    return toTask(task, subtasks)
+    return this.withProject(userId, task, subtasks)
   }
 
   // Sirve tanto para una tarea (moverla en el tablero, marcarla hecha) como
@@ -36,7 +62,7 @@ export class TasksService {
         message: 'No encontramos esa tarea.',
       })
     }
-    return toTask(result.task, result.subtasks)
+    return this.withProject(userId, result.task, result.subtasks)
   }
 
   // Papelera: la tarea y sus subtareas se van juntas (docs/guides/design.md,
@@ -61,8 +87,18 @@ export class TasksService {
         message: 'No encontramos esa tarea en la papelera.',
       })
     }
-    return toTask(result.task, result.subtasks)
+    return this.withProject(userId, result.task, result.subtasks)
   }
+
+  // Una sola tarea con el nombre de su proyecto.
+  private async withProject(userId: string, task: TaskRow, subtasks: TaskRow[]) {
+    const projects = await this.projectsService.summaries(userId, [task.projectId])
+    return toTask(task, subtasks, projectOf(task, projects))
+  }
+}
+
+function projectOf(task: TaskRow, projects: Map<string, ProjectRef>): ProjectRef | null {
+  return task.projectId ? (projects.get(task.projectId) ?? null) : null
 }
 
 function groupByParent(rows: TaskRow[]) {
@@ -80,10 +116,9 @@ function groupByParent(rows: TaskRow[]) {
   return { topLevel, subtasksByParent }
 }
 
-// project siempre sale null: Proyectos no tiene tabla ni service en la API
-// todavía (decisión #35). Cuando lo tenga, aquí se le pide el nombre por id
-// en vez de leer su tabla (regla de modules.md).
-function toTask(task: TaskRow, subtasks: TaskRow[]) {
+// `project` lo resuelve el service con el de Proyectos (el nombre por id, nunca
+// leyendo su tabla — modules.md). Sale null si la tarea no tiene proyecto.
+function toTask(task: TaskRow, subtasks: TaskRow[], project: ProjectRef | null) {
   return {
     id: task.id,
     title: task.title,
@@ -93,7 +128,7 @@ function toTask(task: TaskRow, subtasks: TaskRow[]) {
     dueOn: task.dueOn,
     doneAt: task.doneAt?.toISOString() ?? null,
     position: task.position,
-    project: null,
+    project,
     subtasks: subtasks.map((subtask) => ({
       id: subtask.id,
       title: subtask.title,

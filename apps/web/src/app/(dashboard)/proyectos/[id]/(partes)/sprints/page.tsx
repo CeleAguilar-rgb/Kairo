@@ -17,5 +17,5 @@ export default async function ProjectSprintsPage({ params }: ProjectSprintsPageP
   const today = todayIn(me.profile.timezone)
   const weekEnd = addDays(startOfWeek(today, me.profile.weekStart), 6)
 
-  return <ProjectSprints sprints={sprints} today={today} weekEnd={weekEnd} />
+  return <ProjectSprints projectId={project.id} sprints={sprints} today={today} weekEnd={weekEnd} />
 }

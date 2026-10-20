@@ -22,6 +22,7 @@ const FIELD_BY_CODE: Record<string, string> = {
   TARGET_REQUIRED: 'target',
   BLOCK_REQUIRED: 'blockId',
   PROJECT_REQUIRED: 'projectId',
+  PROJECT_NOT_FOUND: 'projectId',
 }
 
 function apiFailure(error: unknown, fallback: string): DailyActionResult {

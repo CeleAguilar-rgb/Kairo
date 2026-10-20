@@ -2,6 +2,7 @@ import { BadRequestException, Inject, Injectable, NotFoundException } from '@nes
 import type { GoalInput } from '@kairo/shared'
 import { AccountService } from '../../account/account.service'
 import type { goalLogEntries, goalMilestones, goals } from '../../db/schema/daily'
+import { ProjectsService } from '../projects/projects.service'
 import { todayIn } from './daily-utils'
 import { encodeDailyUndo } from './daily-undo'
 import { GoalsRepository } from './goals.repository'
@@ -19,11 +20,19 @@ export class GoalsService {
   constructor(
     @Inject(GoalsRepository) private readonly repository: GoalsRepository,
     @Inject(AccountService) private readonly accountService: AccountService,
+    // Que el proyecto de una meta exista y sea de la persona lo revisa su service (modules.md).
+    @Inject(ProjectsService) private readonly projectsService: ProjectsService,
   ) {}
 
   async findAll(userId: string) {
     const rows = await this.repository.findAll(userId)
     return Promise.all(rows.map((row) => this.toGoal(userId, row)))
+  }
+
+  private async assertProject(userId: string, projectId: string | null) {
+    if (projectId !== null && !(await this.projectsService.exists(userId, projectId))) {
+      throw new BadRequestException({ code: 'PROJECT_NOT_FOUND', message: 'No encontramos ese proyecto.' })
+    }
   }
 
   // target/current/unit por kind: para 'milestones'/'project'/'habit' el Next.js de en medio los
@@ -39,6 +48,7 @@ export class GoalsService {
     if (input.kind === 'project' && !input.projectId) {
       throw new BadRequestException({ code: 'PROJECT_REQUIRED', message: 'Elige el proyecto.' })
     }
+    if (input.kind === 'project') await this.assertProject(userId, input.projectId)
 
     const target = input.kind === 'number' ? input.target : input.kind === 'habit' ? HABIT_TARGET_PERCENT : input.kind === 'project' ? 100 : 0
     const row = await this.repository.create(userId, {
@@ -62,6 +72,7 @@ export class GoalsService {
   async update(userId: string, id: string, input: GoalInput) {
     const current = await this.repository.findOne(userId, id)
     if (!current) throw this.notFound()
+    if (current.kind === 'project') await this.assertProject(userId, input.projectId)
 
     const row = await this.repository.update(userId, id, {
       title: input.title,

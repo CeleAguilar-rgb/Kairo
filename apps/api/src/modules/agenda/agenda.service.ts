@@ -1,10 +1,12 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import type { DeleteEventInput, EventInput } from '@kairo/shared'
+import { ProjectsService } from '../projects/projects.service'
 import { AgendaRepository } from './agenda.repository'
 import { addDays, wallTimeToMinutes } from './agenda-utils'
 import type { events } from '../../db/schema/agenda'
 
 type EventRow = typeof events.$inferSelect
+type ProjectRef = { id: string; name: string }
 
 // El "token" de Deshacer de un borrado no vive guardado en el servidor
 // (decisión #37, mismo motivo que la 36 en Recordatorios: una Server Action
@@ -32,16 +34,25 @@ function decodeUndo(token: string): UndoAction | null {
 
 @Injectable()
 export class AgendaService {
-  constructor(@Inject(AgendaRepository) private readonly repository: AgendaRepository) {}
+  constructor(
+    @Inject(AgendaRepository) private readonly repository: AgendaRepository,
+    // El nombre del proyecto y si es de la persona se le piden a su service (modules.md: nunca se lee su tabla).
+    @Inject(ProjectsService) private readonly projectsService: ProjectsService,
+  ) {}
 
   async findAll(userId: string) {
     const rows = await this.repository.findAll(userId)
-    return rows.map(toEventRecord)
+    const projects = await this.projectsService.summaries(
+      userId,
+      rows.map((row) => row.projectId),
+    )
+    return rows.map((row) => toEventRecord(row, projectOf(row, projects)))
   }
 
   async create(userId: string, input: EventInput) {
+    await this.assertProject(userId, input.projectId)
     const row = await this.repository.create(userId, { ...toRow(input), until: null, skip: [] })
-    return toEventRecord(row)
+    return this.recordOf(userId, row)
   }
 
   // Edita el evento (si es una serie, toda la serie): until y skip no
@@ -49,9 +60,10 @@ export class AgendaService {
   async update(userId: string, id: string, input: EventInput) {
     const current = await this.repository.findOne(userId, id)
     if (!current) throw this.notFound()
+    await this.assertProject(userId, input.projectId)
     const row = await this.repository.update(userId, id, toRow(input))
     if (!row) throw this.notFound()
-    return toEventRecord(row)
+    return this.recordOf(userId, row)
   }
 
   // Pasa el evento (o solo esa vez de una serie) a otro día, conservando su
@@ -64,7 +76,7 @@ export class AgendaService {
     if (current.repeat === 'none') {
       const row = await this.repository.update(userId, id, { date })
       if (!row) throw this.notFound()
-      return toEventRecord(row)
+      return this.recordOf(userId, row)
     }
 
     await this.repository.update(userId, id, { skip: [...current.skip, occurrence] })
@@ -83,7 +95,7 @@ export class AgendaService {
       skip: [],
       reminder: current.reminder,
     })
-    return toEventRecord(row)
+    return this.recordOf(userId, row)
   }
 
   // "Duplicar": un evento suelto igual, el día que se pida, con "(copia)" en el título.
@@ -105,7 +117,7 @@ export class AgendaService {
       skip: [],
       reminder: current.reminder,
     })
-    return toEventRecord(row)
+    return this.recordOf(userId, row)
   }
 
   // Borra el evento entero, o solo esa vez, o esa y las siguientes. Va a la
@@ -158,12 +170,29 @@ export class AgendaService {
     }
   }
 
+  // Un evento con el nombre de su proyecto.
+  private async recordOf(userId: string, row: EventRow) {
+    const projects = await this.projectsService.summaries(userId, [row.projectId])
+    return toEventRecord(row, projectOf(row, projects))
+  }
+
+  // La llave foránea solo garantiza que el proyecto exista: que sea de ESTA persona lo revisa su service.
+  private async assertProject(userId: string, projectId: string | null) {
+    if (projectId !== null && !(await this.projectsService.exists(userId, projectId))) {
+      throw new BadRequestException({ code: 'PROJECT_NOT_FOUND', message: 'No encontramos ese proyecto.' })
+    }
+  }
+
   private notFound() {
     return new NotFoundException({
       code: 'EVENT_NOT_FOUND',
       message: 'No encontramos ese evento.',
     })
   }
+}
+
+function projectOf(row: EventRow, projects: Map<string, ProjectRef>): ProjectRef | null {
+  return row.projectId ? (projects.get(row.projectId) ?? null) : null
 }
 
 function toRow(input: EventInput) {
@@ -182,10 +211,9 @@ function toRow(input: EventInput) {
   }
 }
 
-// project siempre null: Proyectos no tiene tabla ni service en la API
-// todavía (decisión #37, mismo patrón que la 35 en Tareas y la 36 en
-// Recordatorios).
-function toEventRecord(row: EventRow) {
+// `project` lo resuelve el service con el de Proyectos (decisión #41): el nombre
+// por id, nunca leyendo su tabla. Sale null si el evento no tiene proyecto.
+function toEventRecord(row: EventRow, project: ProjectRef | null) {
   return {
     id: row.id,
     title: row.title,
@@ -196,7 +224,7 @@ function toEventRecord(row: EventRow) {
     endMin: row.endMin,
     notes: row.notes,
     place: row.place,
-    project: null,
+    project,
     repeat: row.repeat,
     reminder: row.reminder,
     until: row.until,
