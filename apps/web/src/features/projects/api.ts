@@ -69,13 +69,16 @@ export async function getProjectSprints(id: string): Promise<ProjectSprints> {
   return toProjectSprints(record, id, tasks)
 }
 
-// Archivos: en modo real todavía no hay (Storage llega como paso aparte, decisión #41), así que la pestaña recibe
-// su estado vacío y sabe que no puede subir nada.
+// Archivos: en modo real ya hay Storage (decisión #44); la API devuelve los archivos del proyecto
+// más lo que ocupan los demás (el espacio es uno solo).
 export async function getProjectFiles(id: string): Promise<ProjectFiles> {
   if (DEMO_MODE) {
     const ctx = await getMockContext()
     await mockDelay()
     return buildFiles(ctx)[id] ?? emptyFiles()
   }
-  return emptyFiles(false)
+  const record = await api.get<{ files: Omit<ProjectFiles['files'][number], 'look'>[]; usedElsewhereBytes: number; quotaBytes: number }>(
+    `/projects/${id}/attachments`,
+  )
+  return { ...record, files: record.files.map((file) => ({ ...file, look: null })) }
 }

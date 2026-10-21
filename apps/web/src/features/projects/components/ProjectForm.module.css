@@ -344,6 +344,17 @@
   inset: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+}
+
+/* El selector de imagen de portada existe pero no se ve: lo abre el botón "Subir mi imagen" */
+.hiddenInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  opacity: 0;
 }
 
 /* Vista previa de la tarjeta */

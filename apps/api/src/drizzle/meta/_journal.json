@@ -71,6 +71,13 @@
       "when": 1792517889383,
       "tag": "0009_school_tables",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1792549906841,
+      "tag": "0010_secret_peter_quill",
+      "breakpoints": true
     }
   ]
 }

@@ -1,6 +1,8 @@
 'use client'
 
 import {
+  classifyProjectFile,
+  COVER_IMAGE_MAX_BYTES,
   PROJECT_COVER_CHOICES,
   PROJECT_KINDS,
   PROJECT_STATUSES,
@@ -14,7 +16,7 @@ import {
 import { motion } from 'motion/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState, useTransition, type FormEvent, type KeyboardEvent } from 'react'
+import { useRef, useState, useTransition, type FormEvent, type KeyboardEvent } from 'react'
 
 import { PageHeading } from '@/components/layout/PageHeading'
 import { Button } from '@/components/ui/Button'
@@ -23,9 +25,11 @@ import { Input } from '@/components/ui/Input'
 import { Segmented } from '@/components/ui/Segmented'
 import { Textarea } from '@/components/ui/Textarea'
 import { useToast } from '@/components/ui/Toast'
+import { formatBytes } from '@/lib/bytes'
 import { EASE_OUT } from '@/lib/motion'
+import { uploadToSignedUrl } from '@/lib/supabase/storage-upload'
 
-import { createProjectAction, updateProjectAction } from '../actions'
+import { confirmCoverUploadAction, createProjectAction, signCoverUploadAction, updateProjectAction } from '../actions'
 import { fieldErrors } from '@/lib/form-errors'
 import { PROJECT_KIND_LABEL, PROJECT_STATUS_LABEL } from '../types'
 
@@ -37,6 +41,8 @@ type ProjectFormProps = {
   // Solo al editar: el proyecto que se edita (para guardar y para volver a su detalle).
   projectId?: string
   initial: ProjectInput
+  // Solo al editar, si ya tenía una portada subida (no una ilustrada): su URL firmada.
+  initialCoverUrl?: string | null
   // Solo al editar: las tareas del proyecto, para la vista previa de la tarjeta.
   taskCounts?: { done: number; total: number }
 }
@@ -79,10 +85,13 @@ const FIELD_ID: Record<string, string> = {
 // El formulario de proyecto (ProyectoEditar.dc.html): crea o edita. Valida con el mismo esquema
 // que vuelve a usar la acción de servidor (packages/shared): aquí para avisar en el momento,
 // allá porque lo que llega del navegador nunca se da por bueno.
-export function ProjectForm({ mode, projectId, initial, taskCounts }: ProjectFormProps) {
+export function ProjectForm({ mode, projectId, initial, initialCoverUrl, taskCounts }: ProjectFormProps) {
   const router = useRouter()
   const toast = useToast()
   const [pending, startTransition] = useTransition()
+  const coverInputRef = useRef<HTMLInputElement>(null)
+  const [coverUrl, setCoverUrl] = useState<string | null>(initialCoverUrl ?? null)
+  const [uploadingCover, setUploadingCover] = useState(false)
 
   const [name, setName] = useState(initial.name)
   const [kind, setKind] = useState<ProjectKind>(initial.kind)
@@ -139,6 +148,47 @@ export function ProjectForm({ mode, projectId, initial, taskCounts }: ProjectFor
     setLinkTitle('')
     setLinkUrl('')
     setLinkError('')
+  }
+
+  // Subir una portada propia necesita un proyecto ya creado (la ruta firmada es "projects/<id>/cover/…");
+  // antes de eso, solo hay portadas ilustradas para elegir.
+  const explainCoverUploadNeedsProject = () => toast.show({ message: 'Primero crea el proyecto; después puedes subir tu propia portada desde Editar.', icon: 'info' })
+
+  // Es inmediata (no espera a "Guardar cambios", igual que las notas y la fecha meta del Resumen):
+  // subir una imagen reemplaza la portada en el momento, aunque se cancele el resto del formulario.
+  const handleCoverFile = async (file: File) => {
+    if (!projectId) return
+    if (classifyProjectFile(file.name) !== 'image') {
+      toast.show({ message: 'Elige una imagen (PNG, JPG, WEBP o GIF).', icon: 'info' })
+      return
+    }
+    if (file.size > COVER_IMAGE_MAX_BYTES) {
+      toast.show({ message: `La imagen pesa más de ${formatBytes(COVER_IMAGE_MAX_BYTES)}.`, icon: 'info' })
+      return
+    }
+    setUploadingCover(true)
+    try {
+      const signed = await signCoverUploadAction(projectId, { name: file.name, mime: file.type || 'image/jpeg', sizeBytes: file.size })
+      if (!signed.ok) {
+        toast.show({ message: signed.message, icon: 'info' })
+        return
+      }
+      const { error } = await uploadToSignedUrl(signed.signed.path, signed.signed.token, file)
+      if (error) {
+        toast.show({ message: 'No pudimos subir la imagen.', icon: 'info' })
+        return
+      }
+      const confirmed = await confirmCoverUploadAction(projectId, signed.signed.path)
+      if (!confirmed.ok) {
+        toast.show({ message: confirmed.message, icon: 'info' })
+        return
+      }
+      setCover(null)
+      setCoverUrl(confirmed.coverUrl)
+      toast.show({ message: 'Portada actualizada.', icon: 'check' })
+    } finally {
+      setUploadingCover(false)
+    }
   }
 
   const handleSubmit = (event: FormEvent) => {
@@ -412,26 +462,45 @@ export function ProjectForm({ mode, projectId, initial, taskCounts }: ProjectFor
               Portada
             </h2>
             <div role="radiogroup" aria-labelledby="form-cover" className={styles.covers}>
+              {coverUrl ? (
+                <button type="button" role="radio" aria-checked={true} aria-label="Tu imagen" className={[styles.coverButton, styles.coverSelected].join(' ')}>
+                  {/* eslint-disable-next-line @next/next/no-img-element -- URL firmada de corta duración, no un asset que next/image deba optimizar */}
+                  <img src={coverUrl} alt="" className={styles.coverArt} />
+                </button>
+              ) : null}
               {choices.map((key) => (
                 <button
                   key={key}
                   type="button"
                   role="radio"
-                  aria-checked={cover === key}
+                  aria-checked={cover === key && !coverUrl}
                   aria-label={`Portada ${COVER_LABEL[key] ?? 'actual'}`}
-                  className={[styles.coverButton, cover === key ? styles.coverSelected : null].filter(Boolean).join(' ')}
-                  onClick={() => setCover(key)}
+                  className={[styles.coverButton, cover === key && !coverUrl ? styles.coverSelected : null].filter(Boolean).join(' ')}
+                  onClick={() => {
+                    setCover(key)
+                    setCoverUrl(null)
+                  }}
                 >
                   <ProjectCover coverKey={key} className={styles.coverArt} />
                 </button>
               ))}
             </div>
-            <Button
-              variant="ghost"
-              onClick={() => toast.show({ message: 'Subir tu propia imagen de portada llega pronto.', icon: 'info' })}
-            >
+            <input
+              ref={coverInputRef}
+              type="file"
+              accept="image/*"
+              className={styles.hiddenInput}
+              aria-label="Elegir una imagen de portada"
+              tabIndex={-1}
+              onChange={(event) => {
+                const file = event.target.files?.[0]
+                event.target.value = ''
+                if (file) void handleCoverFile(file)
+              }}
+            />
+            <Button variant="ghost" onClick={() => (mode === 'edit' ? coverInputRef.current?.click() : explainCoverUploadNeedsProject())} disabled={uploadingCover}>
               <LineIcon d="M12 16V4M7 9l5-5 5 5M4 20h16" size={16} />
-              Subir mi imagen
+              {uploadingCover ? 'Subiendo…' : 'Subir mi imagen'}
             </Button>
           </motion.section>
 
@@ -441,7 +510,12 @@ export function ProjectForm({ mode, projectId, initial, taskCounts }: ProjectFor
             </h2>
             <div className={styles.preview}>
               <div className={styles.previewCover}>
-                {cover ? <ProjectCover coverKey={cover} className={styles.coverArt} /> : null}
+                {coverUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element -- URL firmada de corta duración
+                  <img src={coverUrl} alt="" className={styles.coverArt} />
+                ) : cover ? (
+                  <ProjectCover coverKey={cover} className={styles.coverArt} />
+                ) : null}
                 <span className={[styles.previewKind, styles[`previewKind_${kind}`]].join(' ')}>{PROJECT_KIND_LABEL[kind]}</span>
               </div>
               <div className={styles.previewBody}>

@@ -3,8 +3,12 @@
 import {
   addSprintTaskSchema,
   closeSprintSchema,
+  confirmAttachmentUploadSchema,
+  confirmCoverUploadSchema,
   projectLinkSchema,
   projectSchema,
+  signAttachmentUploadSchema,
+  signCoverUploadSchema,
   startSprintSchema,
   type TaskStatus,
 } from '@kairo/shared'
@@ -15,7 +19,9 @@ import type { Task } from '@/features/tasks'
 import { api, ApiError } from '@/lib/api-client'
 import { fieldErrors } from '@/lib/form-errors'
 
-import type { ProjectDetailRecord, ProjectLink, ProjectObjective, ProjectTask, SprintRecord } from './types'
+import type { ProjectDetailRecord, ProjectFile, ProjectLink, ProjectObjective, ProjectTask, SprintRecord } from './types'
+
+export type SignedUpload = { path: string; token: string }
 
 // Las acciones de Proyectos. Una Server Action es un endpoint público: lo que llega NO se confía, se vuelve a
 // validar con el mismo esquema del front (packages/shared), y ese esquema también es el contrato de la API, que
@@ -154,6 +160,107 @@ export async function addProjectLinkAction(projectId: string, raw: unknown): Pro
     return { ok: true, link }
   } catch (error) {
     return { ok: false, errors: {}, message: error instanceof ApiError ? error.message : 'No pudimos guardar el enlace.' }
+  }
+}
+
+// --- Archivos (pestaña Archivos, Storage, decisión #44) ---------------------------------------------
+// Subir un archivo son dos pasos: esta acción pide la URL firmada, el componente sube el archivo
+// directo a Storage con ella (lib/supabase/storage-upload.ts) y luego confirma con la otra acción.
+
+export async function signAttachmentUploadAction(
+  projectId: string,
+  raw: unknown,
+): Promise<{ ok: true; signed: SignedUpload } | { ok: false; message: string }> {
+  if (!idSchema.safeParse(projectId).success) return { ok: false, message: NOT_FOUND }
+  const parsed = signAttachmentUploadSchema.safeParse(raw)
+  if (!parsed.success) return { ok: false, message: parsed.error.issues[0]?.message ?? 'Revisa el archivo.' }
+  try {
+    const signed = await api.post<SignedUpload>(`/projects/${projectId}/attachments/sign-upload`, parsed.data)
+    return { ok: true, signed }
+  } catch (error) {
+    return { ok: false, message: error instanceof ApiError ? error.message : 'No pudimos preparar la subida.' }
+  }
+}
+
+export async function confirmAttachmentUploadAction(
+  projectId: string,
+  path: string,
+  name: string,
+): Promise<{ ok: true; file: ProjectFile } | { ok: false; message: string }> {
+  if (!idSchema.safeParse(projectId).success) return { ok: false, message: NOT_FOUND }
+  const parsed = confirmAttachmentUploadSchema.safeParse({ path, name })
+  if (!parsed.success) return { ok: false, message: 'No pudimos guardar el archivo.' }
+  try {
+    const file = await api.post<Omit<ProjectFile, 'look'>>(`/projects/${projectId}/attachments/confirm`, parsed.data)
+    refresh(projectId)
+    return { ok: true, file: { ...file, look: null } }
+  } catch (error) {
+    return { ok: false, message: error instanceof ApiError ? error.message : 'No pudimos guardar el archivo.' }
+  }
+}
+
+export async function removeAttachmentAction(projectId: string, id: string): Promise<ProjectActionResult> {
+  if (!idSchema.safeParse(projectId).success || !idSchema.safeParse(id).success) return failure('No encontramos ese archivo.')
+  try {
+    await api.delete(`/projects/${projectId}/attachments/${id}`)
+    refresh(projectId)
+    return { ok: true, id }
+  } catch (error) {
+    return apiFailure(error, 'No pudimos borrar el archivo.')
+  }
+}
+
+export async function restoreAttachmentAction(projectId: string, id: string): Promise<ProjectActionResult> {
+  if (!idSchema.safeParse(projectId).success || !idSchema.safeParse(id).success) return failure('No encontramos ese archivo.')
+  try {
+    await api.post(`/projects/${projectId}/attachments/${id}/restore`, {})
+    refresh(projectId)
+    return { ok: true, id }
+  } catch (error) {
+    return apiFailure(error, 'No pudimos recuperar el archivo.')
+  }
+}
+
+// La URL firmada de descarga se pide al momento (expira en minutos): nunca se guarda.
+export async function attachmentDownloadUrlAction(projectId: string, id: string): Promise<{ ok: true; url: string } | { ok: false; message: string }> {
+  if (!idSchema.safeParse(projectId).success || !idSchema.safeParse(id).success) return { ok: false, message: 'No encontramos ese archivo.' }
+  try {
+    const result = await api.get<{ url: string }>(`/projects/${projectId}/attachments/${id}/download`)
+    return { ok: true, url: result.url }
+  } catch (error) {
+    return { ok: false, message: error instanceof ApiError ? error.message : 'No pudimos preparar la descarga.' }
+  }
+}
+
+// --- Portada subida ("Subir mi imagen" de ProyectoEditar.dc.html) -----------------------------------
+// Mismo patrón en dos pasos. Es inmediata, no espera a "Guardar cambios" (igual que las notas y la
+// fecha meta del Resumen): subir una imagen reemplaza la portada en el momento.
+
+export async function signCoverUploadAction(
+  projectId: string,
+  raw: unknown,
+): Promise<{ ok: true; signed: SignedUpload } | { ok: false; message: string }> {
+  if (!idSchema.safeParse(projectId).success) return { ok: false, message: NOT_FOUND }
+  const parsed = signCoverUploadSchema.safeParse(raw)
+  if (!parsed.success) return { ok: false, message: parsed.error.issues[0]?.message ?? 'Elige una imagen.' }
+  try {
+    const signed = await api.post<SignedUpload>(`/projects/${projectId}/cover/sign-upload`, parsed.data)
+    return { ok: true, signed }
+  } catch (error) {
+    return { ok: false, message: error instanceof ApiError ? error.message : 'No pudimos preparar la subida.' }
+  }
+}
+
+export async function confirmCoverUploadAction(projectId: string, path: string): Promise<{ ok: true; coverUrl: string | null } | { ok: false; message: string }> {
+  if (!idSchema.safeParse(projectId).success) return { ok: false, message: NOT_FOUND }
+  const parsed = confirmCoverUploadSchema.safeParse({ path })
+  if (!parsed.success) return { ok: false, message: 'No pudimos guardar la portada.' }
+  try {
+    const project = await api.post<{ coverUrl: string | null }>(`/projects/${projectId}/cover/confirm`, parsed.data)
+    refresh(projectId)
+    return { ok: true, coverUrl: project.coverUrl }
+  } catch (error) {
+    return { ok: false, message: error instanceof ApiError ? error.message : 'No pudimos guardar la portada.' }
   }
 }
 

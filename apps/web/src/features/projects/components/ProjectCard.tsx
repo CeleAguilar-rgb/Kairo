@@ -21,7 +21,12 @@ export function ProjectCard({ project, nextText }: ProjectCardProps) {
   return (
     <Link href={`/proyectos/${project.id}`} className={styles.card} aria-label={`Abrir ${project.name}`}>
       <div className={styles.cover}>
-        {coverKey ? <ProjectCover coverKey={coverKey} className={styles.art} /> : null}
+        {coverKey ? (
+          <ProjectCover coverKey={coverKey} className={styles.art} />
+        ) : project.coverUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element -- URL firmada de corta duración, no un asset que next/image deba optimizar
+          <img src={project.coverUrl} alt="" className={styles.art} />
+        ) : null}
         <span className={[styles.kind, styles[`kind_${project.kind}`]].join(' ')}>{PROJECT_KIND_LABEL[project.kind]}</span>
         {project.status !== 'active' ? (
           <span className={styles.status}>

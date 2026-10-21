@@ -11,6 +11,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "invite:initial": "tsx --env-file=.env src/auth/invite-initial-user.ts",
+    "storage:create-bucket": "tsx --env-file=.env src/common/storage/create-bucket.ts",
     "test:e2e": "node --experimental-vm-modules --env-file=.env node_modules/jest/bin/jest.js --config test/jest-e2e.json --runInBand"
   },
   "dependencies": {

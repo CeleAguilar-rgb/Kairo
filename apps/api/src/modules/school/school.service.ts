@@ -3,6 +3,7 @@ import type { CreateSubjectBodyInput, EventInput, SubjectGradesInput, TermInput 
 import { AccountService } from '../../account/account.service'
 import type { schoolTerms, subjects } from '../../db/schema/school'
 import { AgendaService } from '../agenda/agenda.service'
+import { AttachmentsService } from '../attachments/attachments.service'
 import { ProjectsService } from '../projects/projects.service'
 import { SprintsService } from '../sprints/sprints.service'
 import { TasksService } from '../tasks/tasks.service'
@@ -26,6 +27,7 @@ export class SchoolService {
     @Inject(AgendaService) private readonly agendaService: AgendaService,
     @Inject(TasksService) private readonly tasksService: TasksService,
     @Inject(SprintsService) private readonly sprintsService: SprintsService,
+    @Inject(AttachmentsService) private readonly attachmentsService: AttachmentsService,
     @Inject(AccountService) private readonly accountService: AccountService,
   ) {}
 
@@ -157,6 +159,7 @@ export class SchoolService {
     await this.tasksService.deleteByProject(userId, projectId)
     await this.agendaService.deleteByProject(userId, projectId)
     await this.sprintsService.deleteByProject(userId, projectId)
+    await this.attachmentsService.deleteByProject(userId, projectId)
     await this.projectsService.softDelete(userId, projectId)
     if (subjectId) await this.repository.softDeleteSubject(userId, subjectId)
   }

@@ -7,6 +7,9 @@ import { DEMO_MODE } from '@/lib/demo'
 const envSchema = z.object({
   NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().min(1),
+  // El nombre del bucket no es secreto (va en cualquier URL firmada); lo necesita el navegador
+  // para subir un archivo directo a Storage con la URL firmada que da la API (security.md #7).
+  NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET: z.string().min(1),
 })
 
 // En modo demo (lib/demo.ts) no hay .env: valores de relleno que nunca se
@@ -16,4 +19,6 @@ export const env = envSchema.parse({
     process.env.NEXT_PUBLIC_SUPABASE_URL ?? (DEMO_MODE ? 'http://demo.invalid' : undefined),
   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY:
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? (DEMO_MODE ? 'demo' : undefined),
+  NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET:
+    process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET ?? (DEMO_MODE ? 'demo' : undefined),
 })

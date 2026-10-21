@@ -5,6 +5,7 @@ import { JwtGuard } from './auth/jwt.guard'
 import { DbModule } from './common/db/db.module'
 import { SupabaseModule } from './common/supabase/supabase.module'
 import { AgendaModule } from './modules/agenda/agenda.module'
+import { AttachmentsModule } from './modules/attachments/attachments.module'
 import { DailyModule } from './modules/daily/daily.module'
 import { FinanceModule } from './modules/finance/finance.module'
 import { ProjectsModule } from './modules/projects/projects.module'
@@ -19,6 +20,7 @@ import { TasksModule } from './modules/tasks/tasks.module'
     SupabaseModule,
     AccountModule,
     ProjectsModule,
+    AttachmentsModule,
     TasksModule,
     SprintsModule,
     RemindersModule,

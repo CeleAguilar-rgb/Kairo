@@ -3,7 +3,6 @@ import { notFound, redirect } from 'next/navigation'
 import { ProjectFiles } from '@/features/projects'
 import { getProject, getProjectFiles } from '@/features/projects/api'
 import { getMe } from '@/lib/account/api'
-import { todayIn } from '@/lib/dates'
 
 type ProjectFilesPageProps = { params: Promise<{ id: string }> }
 
@@ -15,5 +14,5 @@ export default async function ProjectFilesPage({ params }: ProjectFilesPageProps
   if (!me) redirect('/bienvenida')
   if (!project) notFound()
 
-  return <ProjectFiles projectId={project.id} data={data} links={project.links} today={todayIn(me.profile.timezone)} />
+  return <ProjectFiles projectId={project.id} data={data} links={project.links} />
 }

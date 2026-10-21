@@ -33,6 +33,7 @@ export default async function EditProjectPage({ params }: EditProjectPageProps) 
         mode="edit"
         projectId={project.id}
         initial={initial}
+        initialCoverUrl={project.coverUrl}
         taskCounts={{ done: project.doneCount, total: project.taskCount }}
       />
     </PageEnter>

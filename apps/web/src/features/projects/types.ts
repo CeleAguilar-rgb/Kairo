@@ -21,6 +21,9 @@ export type Project = {
   status: ProjectStatus
   description: string | null
   coverPath: string | null
+  // Null si la portada es ilustrada (el front la dibuja con `coverKeyOf`) o si no hay portada. Si la
+  // persona subió su propia imagen, la API la resuelve aquí a una URL firmada (bucket privado).
+  coverUrl: string | null
   startedOn: IsoDate | null
   goalOn: IsoDate | null
   progress: number
@@ -164,7 +167,4 @@ export type ProjectFiles = {
   // Lo que ocupan los archivos de los demás proyectos y escritos (el espacio es uno solo).
   usedElsewhereBytes: number
   quotaBytes: number
-  // ¿Ya se pueden subir archivos de verdad? Storage llega como paso aparte (decisión #41): mientras tanto, en modo
-  // real la pestaña no finge guardar nada. En el demo sigue la subida de ejemplo.
-  storageReady: boolean
 }

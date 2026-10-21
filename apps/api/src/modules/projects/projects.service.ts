@@ -1,6 +1,7 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
-import type { ProjectInput, ProjectLinkInput } from '@kairo/shared'
+import { classifyProjectFile, COVER_IMAGE_MAX_BYTES, type ProjectInput, type ProjectLinkInput, type SignCoverUploadInput } from '@kairo/shared'
 import { z } from 'zod'
+import { StorageService } from '../../common/storage/storage.service'
 import type { projectLinks, projectObjectives, projects } from '../../db/schema/projects'
 import { ProjectsRepository, type ProjectFields } from './projects.repository'
 
@@ -8,16 +9,20 @@ type ProjectRow = typeof projects.$inferSelect
 type ObjectiveRow = typeof projectObjectives.$inferSelect
 type LinkRow = typeof projectLinks.$inferSelect
 
-// Mientras no exista la subida de imágenes, la portada es una de las ilustradas y se guarda como
-// "preset:<clave>" (el front dibuja esa ilustración). Una ruta de Storage tendrá otro prefijo cuando llegue
-// el paso de Archivos.
+// La portada ilustrada se guarda como "preset:<clave>" (el front dibuja esa ilustración); una imagen
+// subida por la persona se guarda como "storage:<ruta>" (decisión #44) y la API la resuelve a una
+// URL firmada (`coverUrl`) antes de responder, porque el bucket es privado.
 const COVER_PREFIX = 'preset:'
+const STORAGE_PREFIX = 'storage:'
 
 const isUuid = (value: string) => z.uuid().safeParse(value).success
 
 @Injectable()
 export class ProjectsService {
-  constructor(@Inject(ProjectsRepository) private readonly repository: ProjectsRepository) {}
+  constructor(
+    @Inject(ProjectsRepository) private readonly repository: ProjectsRepository,
+    @Inject(StorageService) private readonly storage: StorageService,
+  ) {}
 
   // --- API pública para otros módulos (modules.md: nunca leen la tabla de proyectos) ---------------------
 
@@ -49,7 +54,7 @@ export class ProjectsService {
 
   async findAll(userId: string) {
     const rows = await this.repository.findAll(userId)
-    return rows.map(toProject)
+    return Promise.all(rows.map((row) => this.toProjectWithCover(row)))
   }
 
   async findOne(userId: string, id: string) {
@@ -64,9 +69,50 @@ export class ProjectsService {
   }
 
   async update(userId: string, id: string, input: ProjectInput) {
+    // Elegir una portada ilustrada desde el formulario reemplaza cualquier imagen subida antes (y
+    // borra su archivo de Storage): la portada es una sola, y "Guardar cambios" manda sobre lo que
+    // haya quedado del botón "Subir mi imagen".
+    const current = await this.repository.findOne(userId, id)
+    if (!current) throw this.notFound()
+    const previousStoragePath = storagePathOf(current.coverPath)
     const project = await this.repository.updateWithLists(userId, id, fieldsOf(input), input.objectives, input.links)
     if (!project) throw this.notFound()
+    if (previousStoragePath && previousStoragePath !== storagePathOf(project.coverPath)) {
+      await this.storage.remove([previousStoragePath])
+    }
     return this.detailOf(userId, project)
+  }
+
+  // --- Portada subida (decisión #44: "Subir mi imagen" de ProyectoEditar.dc.html) -------------------------
+
+  // Paso 1: pide la URL firmada. Es inmediata (no espera a "Guardar cambios", igual que las notas y
+  // la fecha meta): subir una imagen reemplaza la portada en el momento.
+  async signCoverUpload(userId: string, id: string, input: SignCoverUploadInput) {
+    const project = await this.repository.findOne(userId, id)
+    if (!project) throw this.notFound()
+    if (classifyProjectFile(input.name) !== 'image') {
+      throw new BadRequestException({ code: 'FILE_TYPE_NOT_ALLOWED', message: 'Elige una imagen (PNG, JPG, WEBP o GIF).' })
+    }
+    if (input.sizeBytes > COVER_IMAGE_MAX_BYTES) {
+      throw new BadRequestException({ code: 'FILE_TOO_LARGE', message: 'La imagen pesa más de lo permitido.' })
+    }
+    const path = this.storage.buildPath(userId, `projects/${id}/cover`, input.name)
+    return this.storage.createSignedUploadUrl(path)
+  }
+
+  // Paso 2: ya se subió. Se vuelve a preguntar a Storage qué hay en esa ruta (nunca se confía en lo
+  // que diga la petición) y la portada anterior subida (si había una) se borra de Storage.
+  async confirmCoverUpload(userId: string, id: string, path: string) {
+    const project = await this.repository.findOne(userId, id)
+    if (!project) throw this.notFound()
+    if (!path.startsWith(`${userId}/projects/${id}/cover/`)) throw this.notFound()
+
+    await this.storage.confirmUpload(path)
+    const previousStoragePath = storagePathOf(project.coverPath)
+    const row = await this.repository.setCoverPath(userId, id, `${STORAGE_PREFIX}${path}`)
+    if (!row) throw this.notFound()
+    if (previousStoragePath) await this.storage.remove([previousStoragePath])
+    return this.toProjectWithCover(row)
   }
 
   // Las notas del Resumen: vacías se guardan como nulas.
@@ -102,13 +148,30 @@ export class ProjectsService {
   }
 
   private async detailOf(userId: string, project: ProjectRow) {
-    const [objectives, links] = await Promise.all([this.repository.findObjectives(userId, project.id), this.repository.findLinks(userId, project.id)])
-    return { ...toProject(project), notes: project.notes, objectives: objectives.map(toObjective), links: links.map(toLink) }
+    const [objectives, links, base] = await Promise.all([
+      this.repository.findObjectives(userId, project.id),
+      this.repository.findLinks(userId, project.id),
+      this.toProjectWithCover(project),
+    ])
+    return { ...base, notes: project.notes, objectives: objectives.map(toObjective), links: links.map(toLink) }
+  }
+
+  // El bucket es privado: una portada subida (`storage:<ruta>`) se resuelve a una URL firmada de
+  // corta duración antes de responder. Una ilustrada no toca Storage (el front ya sabe dibujarla).
+  private async toProjectWithCover(row: ProjectRow) {
+    const storagePath = storagePathOf(row.coverPath)
+    const coverUrl = storagePath ? await this.storage.createSignedDownloadUrl(storagePath, 600) : null
+    return { ...toProject(row), coverUrl }
   }
 
   private notFound() {
     return new NotFoundException({ code: 'PROJECT_NOT_FOUND', message: 'No encontramos ese proyecto.' })
   }
+}
+
+// La ruta de Storage detrás de una portada subida, o null si es ilustrada o no hay portada.
+function storagePathOf(coverPath: string | null): string | null {
+  return coverPath?.startsWith(STORAGE_PREFIX) ? coverPath.slice(STORAGE_PREFIX.length) : null
 }
 
 // Del formulario a las columnas: una descripción vacía es nula y la portada es "preset:<clave>".

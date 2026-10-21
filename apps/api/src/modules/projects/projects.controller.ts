@@ -1,5 +1,7 @@
 import { Body, Controller, Get, Inject, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common'
 import {
+  type ConfirmCoverUploadInput,
+  confirmCoverUploadSchema,
   type ProjectGoalDateInput,
   projectGoalDateSchema,
   type ProjectInput,
@@ -8,6 +10,8 @@ import {
   type ProjectNotesInput,
   projectNotesSchema,
   projectSchema,
+  type SignCoverUploadInput,
+  signCoverUploadSchema,
 } from '@kairo/shared'
 import { CurrentUser } from '../../auth/current-user.decorator'
 import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
@@ -58,6 +62,24 @@ export class ProjectsController {
     @Body(new ZodValidationPipe(projectGoalDateSchema)) body: ProjectGoalDateInput,
   ) {
     return this.projectsService.setGoalDate(userId, id, body.goalOn)
+  }
+
+  @Post(':id/cover/sign-upload')
+  signCoverUpload(
+    @CurrentUser() userId: string,
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body(new ZodValidationPipe(signCoverUploadSchema)) body: SignCoverUploadInput,
+  ) {
+    return this.projectsService.signCoverUpload(userId, id, body)
+  }
+
+  @Post(':id/cover/confirm')
+  confirmCoverUpload(
+    @CurrentUser() userId: string,
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body(new ZodValidationPipe(confirmCoverUploadSchema)) body: ConfirmCoverUploadInput,
+  ) {
+    return this.projectsService.confirmCoverUpload(userId, id, body.path)
   }
 
   @Post(':id/links')

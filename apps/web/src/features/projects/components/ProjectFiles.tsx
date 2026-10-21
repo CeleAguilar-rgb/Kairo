@@ -13,8 +13,9 @@ import { useToast } from '@/components/ui/Toast'
 import { formatBytes } from '@/lib/bytes'
 import { dayOfMonth, formatMonthShort, type IsoDate } from '@/lib/dates'
 import { DURATION, EASE_OUT, SPRING } from '@/lib/motion'
+import { uploadToSignedUrl } from '@/lib/supabase/storage-upload'
 
-import { addProjectLinkAction } from '../actions'
+import { addProjectLinkAction, attachmentDownloadUrlAction, confirmAttachmentUploadAction, removeAttachmentAction, restoreAttachmentAction, signAttachmentUploadAction } from '../actions'
 import type { ProjectFile, ProjectFiles as ProjectFilesData, ProjectLink } from '../types'
 
 import styles from './ProjectFiles.module.css'
@@ -23,16 +24,15 @@ type ProjectFilesProps = {
   projectId: string
   data: ProjectFilesData
   links: ProjectLink[]
-  today: IsoDate
 }
 
 type Filter = 'all' | 'image' | 'doc'
 
-// Un archivo de esta sesión puede traer la vista previa real de la imagen (una URL local del
-// navegador); los de ejemplo se dibujan. Con Storage, todas serán URLs firmadas de la API.
-type LocalFile = ProjectFile & { previewUrl?: string; blob?: File }
+// Un archivo recién subido en esta sesión trae la vista previa real de la imagen (una URL local
+// del navegador, libre); los que ya traía el proyecto no.
+type LocalFile = ProjectFile & { previewUrl?: string }
 
-type Upload = { id: string; name: string; sizeBytes: number; duration: number }
+type Upload = { id: string; name: string; sizeBytes: number; cancelled: boolean }
 
 const ACCEPT = PROJECT_FILE_EXTENSIONS.map((extension) => `.${extension}`).join(',')
 
@@ -112,14 +112,13 @@ function Thumb({ file }: { file: LocalFile }) {
 }
 
 // La pestaña Archivos (ProyectoArchivos.dc.html): los archivos del proyecto, sus enlaces y el espacio.
-// Los enlaces sí se guardan (son del proyecto). Los archivos todavía no: en el demo la subida es de ejemplo
-// (lo que subes se lee, pero no se guarda y se pierde al recargar) y en modo real avisa que llega pronto, hasta
-// que exista Storage (`data.storageReady`, decisión #41).
-export function ProjectFiles({ projectId, data, links: initialLinks, today }: ProjectFilesProps) {
+// Subir es de verdad (decisión #44): la API firma la subida, el navegador habla directo con Storage
+// con esa URL (la única excepción a "nunca directo" de architecture.md) y luego se confirma.
+export function ProjectFiles({ projectId, data, links: initialLinks }: ProjectFilesProps) {
   const toast = useToast()
   const calm = useCalmEntry()
   const inputRef = useRef<HTMLInputElement>(null)
-  const timers = useRef(new Map<string, ReturnType<typeof setTimeout>>())
+  const cancelled = useRef(new Set<string>())
   const previews = useRef(new Set<string>())
 
   const [files, setFiles] = useState<LocalFile[]>(data.files)
@@ -131,12 +130,11 @@ export function ProjectFiles({ projectId, data, links: initialLinks, today }: Pr
   const [linkUrl, setLinkUrl] = useState('')
   const [linkError, setLinkError] = useState('')
 
-  // Al salir de la pantalla: se cancelan las subidas en curso y se liberan las vistas previas.
+  // Al salir de la pantalla: se liberan las vistas previas (las subidas en curso simplemente
+  // terminan de fondo; no hay nada que limpiar en el navegador si nadie espera el resultado).
   useEffect(() => {
-    const pending = timers.current
     const urls = previews.current
     return () => {
-      pending.forEach((timer) => clearTimeout(timer))
       urls.forEach((url) => URL.revokeObjectURL(url))
     }
   }, [])
@@ -148,25 +146,37 @@ export function ProjectFiles({ projectId, data, links: initialLinks, today }: Pr
   const shown = files.filter((file) => filter === 'all' || file.kind === filter)
   const showUploads = filter !== 'image'
 
-  const finishUpload = (upload: Upload, source: File, kind: ProjectFile['kind']) => {
-    timers.current.delete(upload.id)
+  // Un archivo: pide la URL firmada, sube los bytes directo a Storage y confirma. La API vuelve a
+  // revisar tipo, tamaño y espacio en cada paso (nunca se confía en lo que diga el navegador); esto
+  // solo evita subir lo que ya se sabe que se va a rechazar.
+  const uploadOne = async (upload: Upload, source: File, kind: ProjectFile['kind']) => {
+    const fail = (message: string) => {
+      setUploads((list) => list.filter((item) => item.id !== upload.id))
+      if (!cancelled.current.has(upload.id)) toast.show({ message, icon: 'info' })
+      cancelled.current.delete(upload.id)
+    }
+
+    const signed = await signAttachmentUploadAction(projectId, { name: source.name, mime: source.type || 'application/octet-stream', sizeBytes: source.size })
+    if (!signed.ok) return fail(signed.message)
+    if (cancelled.current.has(upload.id)) return fail('')
+
+    const { error } = await uploadToSignedUrl(signed.signed.path, signed.signed.token, source)
+    if (error) return fail(`No pudimos subir "${source.name}".`)
+    if (cancelled.current.has(upload.id)) return fail('')
+
+    const confirmed = await confirmAttachmentUploadAction(projectId, signed.signed.path, source.name)
+    if (!confirmed.ok) return fail(confirmed.message)
+
     const previewUrl = kind === 'image' ? URL.createObjectURL(source) : undefined
     if (previewUrl) previews.current.add(previewUrl)
     setUploads((list) => list.filter((item) => item.id !== upload.id))
-    setFiles((list) => [
-      { id: upload.id, name: upload.name, kind, sizeBytes: upload.sizeBytes, uploadedOn: today, look: null, previewUrl, blob: source },
-      ...list,
-    ])
-    toast.show({ message: `"${upload.name}" se subió`, icon: 'check' })
+    setFiles((list) => [{ ...confirmed.file, previewUrl }, ...list])
+    toast.show({ message: `"${source.name}" se subió`, icon: 'check' })
   }
 
-  // Revisa cada archivo (tipo, tamaño y espacio) y empieza a "subir" los que pasan. La API vuelve a
-  // validar esto antes de firmar la subida: aquí solo se evita subir lo que se va a rechazar.
+  // Revisa cada archivo (tipo, tamaño y espacio) antes de empezar a subirlo: un adelanto de lo que
+  // la API va a revisar de todos modos, para no hacer esperar a alguien por algo que va a rechazar.
   const addFiles = (list: FileList | File[]) => {
-    if (!data.storageReady) {
-      toast.show({ message: 'Subir archivos llega pronto. Mientras tanto, guarda enlaces.', icon: 'info' })
-      return
-    }
     let reserved = usedTotal + uploading
     for (const source of Array.from(list)) {
       const kind = classifyProjectFile(source.name)
@@ -188,17 +198,16 @@ export function ProjectFiles({ projectId, data, links: initialLinks, today }: Pr
         continue
       }
       reserved += source.size
-      // La subida de ejemplo tarda más cuanto más pesa el archivo, entre 1.2 y 4 segundos.
-      const duration = Math.min(4000, Math.max(1200, source.size / 1024 / 2))
-      const upload: Upload = { id: `local-${crypto.randomUUID()}`, name: source.name, sizeBytes: source.size, duration }
+      const upload: Upload = { id: `local-${crypto.randomUUID()}`, name: source.name, sizeBytes: source.size, cancelled: false }
       setUploads((current) => [upload, ...current])
-      timers.current.set(upload.id, setTimeout(() => finishUpload(upload, source, kind), duration))
+      void uploadOne(upload, source, kind)
     }
   }
 
+  // No hay forma de abortar una subida ya en curso contra Storage: esto solo deja de esperarla (se
+  // quita de la lista ya mismo) y silencia el aviso de éxito o error cuando la subida termine de fondo.
   const cancelUpload = (upload: Upload) => {
-    clearTimeout(timers.current.get(upload.id))
-    timers.current.delete(upload.id)
+    cancelled.current.add(upload.id)
     setUploads((list) => list.filter((item) => item.id !== upload.id))
     toast.show({ message: 'Subida cancelada', icon: 'info' })
   }
@@ -209,35 +218,44 @@ export function ProjectFiles({ projectId, data, links: initialLinks, today }: Pr
     if (event.dataTransfer.files.length > 0) addFiles(event.dataTransfer.files)
   }
 
-  const handleDownload = (file: LocalFile) => {
-    if (!file.blob) {
-      toast.show({ message: `Descargando ${file.name}`, icon: 'info' })
+  const handleDownload = async (file: LocalFile) => {
+    const result = await attachmentDownloadUrlAction(projectId, file.id)
+    if (!result.ok) {
+      toast.show({ message: result.message, icon: 'info' })
       return
     }
-    // Un archivo subido en esta sesión sí se puede descargar de verdad (es el mismo que se eligió).
-    const url = URL.createObjectURL(file.blob)
     const link = document.createElement('a')
-    link.href = url
+    link.href = result.url
     link.download = file.name
     link.click()
-    URL.revokeObjectURL(url)
   }
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (!toDelete) return
     const removed = toDelete
+    setToDelete(null)
+    const result = await removeAttachmentAction(projectId, removed.id)
+    if (!result.ok) {
+      toast.show({ message: result.message ?? 'No pudimos borrar el archivo.', icon: 'info' })
+      return
+    }
     const position = files.findIndex((file) => file.id === removed.id)
     setFiles((list) => list.filter((file) => file.id !== removed.id))
-    setToDelete(null)
     toast.show({
       message: `${removed.name} se fue a la papelera`,
       icon: 'trash',
-      onUndo: () =>
+      onUndo: async () => {
+        const restored = await restoreAttachmentAction(projectId, removed.id)
+        if (!restored.ok) {
+          toast.show({ message: restored.message ?? 'No pudimos recuperar el archivo.', icon: 'info' })
+          return
+        }
         setFiles((list) => {
           const next = [...list]
           next.splice(Math.min(position, next.length), 0, removed)
           return next
-        }),
+        })
+      },
     })
   }
 
@@ -328,10 +346,8 @@ export function ProjectFiles({ projectId, data, links: initialLinks, today }: Pr
                     onDrop={handleDrop}
                   >
                     <LineIcon d="M12 16V4M7 9l5-5 5 5M4 20h16" size={26} strokeWidth={1.8} />
-                    <span className={styles.dropTitle}>{data.storageReady ? 'Suelta archivos aquí' : 'Los archivos llegan pronto'}</span>
-                    <span className={styles.hint}>
-                      {data.storageReady ? `o toca para elegir · hasta ${formatBytes(PROJECT_FILE_MAX_BYTES)}` : 'Mientras tanto, guarda enlaces aquí abajo'}
-                    </span>
+                    <span className={styles.dropTitle}>Suelta archivos aquí</span>
+                    <span className={styles.hint}>o toca para elegir · hasta {formatBytes(PROJECT_FILE_MAX_BYTES)}</span>
                   </button>
 
                   {/* `initial={!calm}`: al llegar por una pestaña los archivos ya están en su lugar; los que se
@@ -352,7 +368,7 @@ export function ProjectFiles({ projectId, data, links: initialLinks, today }: Pr
                             <div className={[styles.thumb, styles.thumbUploading].join(' ')}>
                               <span className={styles.hint}>Subiendo…</span>
                               <div className={styles.progressTrack}>
-                                <div className={styles.progressFill} style={{ animationDuration: `${upload.duration}ms` }} />
+                                <div className={styles.progressFill} />
                               </div>
                             </div>
                             <div className={styles.fileFoot}>

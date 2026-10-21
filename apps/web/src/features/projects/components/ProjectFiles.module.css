@@ -271,7 +271,8 @@
   color: var(--text);
 }
 
-/* La barra de una subida en curso: se llena durante lo que dura la subida de ejemplo */
+/* La barra de una subida en curso: no se sabe cuánto va a durar (es una subida real), así que es
+   indeterminada en vez de llenarse hasta un tiempo fijo. */
 .progressTrack {
   width: 100%;
   height: 6px;
@@ -282,17 +283,18 @@
 
 .progressFill {
   height: 100%;
+  width: 40%;
   border-radius: 6px;
   background: var(--accent-ink);
-  animation: fill-up linear both;
+  animation: indeterminate 1.1s ease-in-out infinite;
 }
 
-@keyframes fill-up {
+@keyframes indeterminate {
   from {
-    width: 0;
+    transform: translateX(-100%);
   }
   to {
-    width: 100%;
+    transform: translateX(250%);
   }
 }
 
@@ -498,7 +500,8 @@
 @media (prefers-reduced-motion: reduce) {
   .progressFill {
     animation: none;
-    width: 64%;
+    width: 100%;
+    opacity: 0.6;
   }
 }
 

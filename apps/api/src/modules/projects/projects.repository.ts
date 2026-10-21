@@ -194,6 +194,15 @@ export class ProjectsRepository {
     return row
   }
 
+  async setCoverPath(userId: string, id: string, coverPath: string) {
+    const [row] = await this.db
+      .update(projects)
+      .set({ coverPath, updatedAt: new Date() })
+      .where(and(eq(projects.id, id), eq(projects.userId, userId), isNull(projects.deletedAt)))
+      .returning()
+    return row
+  }
+
   async setGoalOn(userId: string, id: string, goalOn: string | null) {
     const [row] = await this.db
       .update(projects)
