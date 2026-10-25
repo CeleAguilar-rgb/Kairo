@@ -5,7 +5,7 @@ import type { OptionTone } from '../types'
 import colors from './WritingColors.module.css'
 import styles from './Tone.module.css'
 
-// Una etiqueta de color ("En curso", "Sudria", "Auralun"): el color sale de su clave, no de un hex.
+// Una etiqueta de color ("En curso", "Sudria", "Aurelun"): el color sale de su clave, no de un hex.
 export function Chip({ tone, size = 'md', children }: { tone: OptionTone; size?: 'sm' | 'md'; children: ReactNode }) {
   return <span className={[styles.chip, size === 'sm' ? styles.sm : null, colors[`tone_${tone}`]].filter(Boolean).join(' ')}>{children}</span>
 }

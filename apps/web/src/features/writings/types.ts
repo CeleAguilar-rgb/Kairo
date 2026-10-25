@@ -1,11 +1,11 @@
-import type { FieldType, OptionTone, PageKind, PageStatus, StoryColor, StoryKind, TiptapDoc } from '@kairo/shared'
+import type { FieldKind, FieldType, NoteTemplateFieldType, NoteTemplateKey, OptionTone, PageKind, PageStatus, StoryColor, StoryKind, TiptapDoc } from '@kairo/shared'
 
 import type { IsoDate } from '@/lib/dates'
 
 // Las tablas de Escritos de docs/guides/data-model.md (camelCase). Lo que el canvas pide y la base de datos
 // todavía no tiene (eras, regiones, especies, etiquetas de notas, registro diario de palabras…) está marcado
 // con "FALTA EN LA BASE" y listado en la nota de sesión, para la migración.
-export type { OptionTone, PageKind, PageStatus, StoryColor, StoryKind }
+export type { FieldKind, NoteTemplateFieldType, NoteTemplateKey, OptionTone, PageKind, PageStatus, StoryColor, StoryKind }
 
 export const STORY_KIND_LABEL: Record<StoryKind, string> = {
   story: 'Historia',
@@ -51,7 +51,7 @@ export type WritingPage = {
   wordCount: number
   // Igual que Proyectos: "preset:<clave>" mientras no exista la subida de imágenes (ver coverPresetOf).
   coverPath: string | null
-  // FALTA EN LA BASE: la etiqueta de una nota ("Auralun", "Ideas", "Trabajo").
+  // FALTA EN LA BASE: la etiqueta de una nota ("Aurelun", "Ideas", "Trabajo").
   tag: string | null
   position: number
   characterIds: string[]
@@ -160,11 +160,40 @@ export type World = {
   hasMap: boolean
 }
 
+// --- Plantillas de notas (note_templates, decisión #45) ------------------------------------------
+
+export type FieldOption = { id: string; label: string; tone: OptionTone }
+
+// Un campo de una plantilla: "de vista corta" (kind 'field', sale arriba y en la tarjeta, con un `type`) o
+// "para rellenar" (kind 'section', una sección con pregunta guía `hint`, se escribe en el cuerpo de la página).
+// `options` solo se usa en los de tipo 'select'; se llena sola la primera vez que alguien elige un valor nuevo
+// (igual que las columnas de selección de Personajes), el editor de plantilla no la edita.
+export type TemplateField = {
+  id: string
+  kind: FieldKind
+  // 'role' y 'home' son los únicos que la app lee hoy (agrupar Protagonistas/Antagonistas y especies por región).
+  key: string | null
+  name: string
+  type: NoteTemplateFieldType
+  hint: string
+  options: FieldOption[]
+}
+
+// Las 3 plantillas de fábrica (`key`: character/species/place) no se pueden borrar; una plantilla sin `key` es
+// una sección extra del mundo (Magia, Objetos…) con su propia pestaña (Paso 12, todavía no existe).
+export type NoteTemplate = {
+  id: string
+  worldId: string
+  key: NoteTemplateKey | null
+  name: string
+  color: OptionTone
+  fields: TemplateField[]
+  position: number
+}
+
 // --- Personajes ---------------------------------------------------------------------------------
 
 export type CharacterFieldType = FieldType
-
-export type FieldOption = { id: string; label: string; tone: OptionTone }
 
 // `character_fields` de data-model.md: las columnas de la base de personajes. Reino, Rol y Era vienen de fábrica.
 export type CharacterField = {

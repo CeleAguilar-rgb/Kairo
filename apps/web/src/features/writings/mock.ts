@@ -7,10 +7,10 @@ import { addDays, startOfWeek } from '@/lib/dates'
 import type { MockContext } from '@/lib/mock/context'
 
 import { callout, doc, gallery, heading, para, picture, quote, tasks, toggle } from './mock-docs'
-import type { Character, CharacterField, Story, World, WritingPage } from './types'
+import type { Character, CharacterField, NoteTemplate, Story, TemplateField, World, WritingPage } from './types'
 
 // Datos de ejemplo de Escritos, armados relativos a "hoy" (igual que Finanzas y Día a día) con la historia y el
-// mundo del canvas (EscritosInicio, Escritos, Pagina, BaseDatos): Auralun, "Un cuento de amores y dragones" y los
+// mundo del canvas (EscritosInicio, Escritos, Pagina, BaseDatos): Aurelun, "Un cuento de amores y dragones" y los
 // personajes. Cuando llegue la API de Escritos, mock.ts y mock-store.ts desaparecen y api.ts llama a
 // `api.get('/writings/...')`; los componentes reciben la misma forma de datos.
 
@@ -18,6 +18,7 @@ export type WritingsSeed = {
   stories: Story[]
   pages: WritingPage[]
   worlds: World[]
+  noteTemplates: NoteTemplate[]
   characterFields: CharacterField[]
   characters: Character[]
   // Palabras escritas por día (FALTA EN LA BASE: un registro diario; mientras tanto vive aquí).
@@ -95,7 +96,7 @@ export function buildWritingsSeed(ctx: MockContext): WritingsSeed {
       id: 'pg-cua-1',
       storyId: NOTEBOOK_ID,
       kind: 'page',
-      title: 'Pendientes de Auralun',
+      title: 'Pendientes de Aurelun',
       content: doc(
         tasks([
           ['Revisar nombres de los reinos', true],
@@ -139,12 +140,12 @@ export function buildWritingsSeed(ctx: MockContext): WritingsSeed {
       id: 'pg-nota-1',
       storyId: null,
       kind: 'note',
-      title: 'Mapa de Auralun (boceto)',
+      title: 'Mapa de Aurelun (boceto)',
       content: doc(para('Primer boceto de dónde queda cada región. Falta Nocturnia completa.'), picture('/escritos/mapa.svg', 'Boceto del mapa')),
       status: 'none',
       position: 0,
       coverPath: 'preset:map',
-      tag: 'Auralun',
+      tag: 'Aurelun',
       dayOffset: -1,
       time: '12:30',
     }),
@@ -152,7 +153,7 @@ export function buildWritingsSeed(ctx: MockContext): WritingsSeed {
       id: 'pg-nota-2',
       storyId: null,
       kind: 'note',
-      title: 'Pendientes de Auralun',
+      title: 'Pendientes de Aurelun',
       content: doc(
         tasks([
           ['Revisar nombres de los reinos', true],
@@ -162,7 +163,7 @@ export function buildWritingsSeed(ctx: MockContext): WritingsSeed {
       ),
       status: 'none',
       position: 1,
-      tag: 'Auralun',
+      tag: 'Aurelun',
       dayOffset: -4,
       time: '10:15',
     }),
@@ -175,7 +176,7 @@ export function buildWritingsSeed(ctx: MockContext): WritingsSeed {
       status: 'none',
       position: 2,
       coverPath: 'preset:mood',
-      tag: 'Auralun',
+      tag: 'Aurelun',
       dayOffset: -6,
       time: '20:00',
     }),
@@ -200,7 +201,7 @@ export function buildWritingsSeed(ctx: MockContext): WritingsSeed {
       status: 'none',
       position: 4,
       coverPath: 'preset:photo',
-      tag: 'Auralun',
+      tag: 'Aurelun',
       dayOffset: -18,
       time: '17:40',
     }),
@@ -221,19 +222,19 @@ export function buildWritingsSeed(ctx: MockContext): WritingsSeed {
   const ERA_EVENTS: Record<string, [string, string][]> = {
     'era-1': [
       ['Separación cósmica', 'La luna y el sol son separados, porque juntos creaban caos en el universo.'],
-      ['Nacimiento de Auralun', 'La Luna encuentra Auralun y, desde su duelo, crea a todas las especies. Después deja de intervenir.'],
+      ['Nacimiento de Aurelun', 'La Luna encuentra Aurelun y, desde su duelo, crea a todas las especies. Después deja de intervenir.'],
       ['Surge Cross', 'Nace Cross, hija de un cambiaformas y un hada. Su existencia provoca desequilibrio emocional.'],
-      ['Corrupción de Cross', 'Discriminada por su naturaleza, encuentra refugio en la magia Auralun y es corrompida por el odio a las razas favoritas de la Luna.'],
+      ['Corrupción de Cross', 'Discriminada por su naturaleza, encuentra refugio en la magia Aurelun y es corrompida por el odio a las razas favoritas de la Luna.'],
       ['La era de Cross', 'El odio se expande por las razas; un mundo de paz se vuelve matar o morir.'],
       ['Años de guerra I', 'Hadas y cambiaformas se unen para acabar con Cross; ambas razas pierden a miles.'],
-      ['Intervención de la Luna', 'Cross es derrotada pero su alma se esconde en el mundo. La Luna separa Auralun: nacen Vadronia y Nocturnia.'],
+      ['Intervención de la Luna', 'Cross es derrotada pero su alma se esconde en el mundo. La Luna separa Aurelun: nacen Vadronia y Nocturnia.'],
       ['Hadas y cambiaformas ocultos', 'Las hadas se esconden en los bosques del este de Vadronia; los cambiaformas, en el Bosque de los Susurros, hasta su extinción.'],
     ],
     'era-2': [
       ['El rey Krandalf', 'Los humanos unifican Vadronia bajo una monarquía y eligen a Krandalf como rey.'],
       ['Encuentro con el alma de Cross', 'En un viaje, Krandalf encuentra la cueva donde yace el alma de Cross, que se apodera de él.'],
       ['Guerra de los Tres Siglos', 'Oprimidos por su tiranía, los habitantes se alzan en una guerra larga y sin esperanza.'],
-      ['Los humanos descubren la magia Auralun', 'Al minar encuentran piedras con fragmentos de luna. Krandalf confisca todos los avances para su ejército.'],
+      ['Los humanos descubren la magia Aurelun', 'Al minar encuentran piedras con fragmentos de luna. Krandalf confisca todos los avances para su ejército.'],
       ['Nacimiento de los Bellmore', 'En el bosque del este nacen Kain, Cain, Kori y Coil; las hadas los bendicen con un fragmento de luna partido en cuatro.'],
       ['La marcha hacia el sur', 'Los hermanos forman un ejército y marchan al castillo del rey; aparecen los dragones de Krandalf.'],
       ['Confrontación final', 'Kain lo hiere con el arma de la poción; Kori, al ver que no basta, le clava su espada.'],
@@ -247,15 +248,15 @@ export function buildWritingsSeed(ctx: MockContext): WritingsSeed {
   const worlds: World[] = [
     {
       id: WORLD_ID,
-      name: 'Auralun',
+      name: 'Aurelun',
       description: '"Aure", dorado o brillante; "lun", la luna. Un mundo que valora la luz de la luna como fuente de poder y sabiduría.',
       coverPath: null,
       hasMap: false,
       eras: [
-        { id: 'era-1', number: 'I', name: 'Era Lunar', shortName: 'Lunar', summary: 'Origen de Auralun y división en Vadronia y Nocturnia.', note: 'quedará por encima hasta terminar la historia de Vadronia', events: events('era-1') },
+        { id: 'era-1', number: 'I', name: 'Era Lunar', shortName: 'Lunar', summary: 'Origen de Aurelun y división en Vadronia y Nocturnia.', note: 'quedará por encima hasta terminar la historia de Vadronia', events: events('era-1') },
         { id: 'era-2', number: 'II', name: 'Era del Filo Interno / Herederos Caídos', shortName: 'Filo Interno', summary: 'Historia de Vadronia, guerras internas y fundación de los cuatro reinos.', note: 'corregir cuando haya ideas claras', events: events('era-2') },
         { id: 'era-3', number: 'III', name: 'Era del Letargo Dorado', shortName: 'Letargo Dorado', summary: 'Miles de años de paz y desarrollo humano. Historia de Jericó y Eleanor; tal vez más historias humanas.', note: '', events: [] },
-        { id: 'era-4', number: 'IV', name: 'Era de las Sombras Reconocidas', shortName: 'Sombras Reconocidas', summary: 'Desastre mestizo, historia de Nocturnia y crisis que afecta a todo Auralun.', note: 'nose', events: [] },
+        { id: 'era-4', number: 'IV', name: 'Era de las Sombras Reconocidas', shortName: 'Sombras Reconocidas', summary: 'Desastre mestizo, historia de Nocturnia y crisis que afecta a todo Aurelun.', note: 'nose', events: [] },
       ],
       regions: [
         {
@@ -272,7 +273,7 @@ export function buildWritingsSeed(ctx: MockContext): WritingsSeed {
           id: 'reg-nocturnia',
           name: 'Nocturnia',
           tagline: 'Vigilada por cambiaformas',
-          description: 'Hogar de vampiros, hombres lobo y brujas, las hadas traidoras que probaron la magia Auralun. En el Bosque de los Susurros se escondieron los últimos cambiaformas.',
+          description: 'Hogar de vampiros, hombres lobo y brujas, las hadas traidoras que probaron la magia Aurelun. En el Bosque de los Susurros se escondieron los últimos cambiaformas.',
           kingdoms: [],
           peoples: ['Vampiros', 'Hombres lobo', 'Brujas', 'Cambiaformas'],
           dark: true,
@@ -287,8 +288,8 @@ export function buildWritingsSeed(ctx: MockContext): WritingsSeed {
         { id: 'lo-5', title: 'Los Bellmore y Krandalf', eraId: 'era-2', regionId: 'reg-vadronia' },
       ],
       ideas: [
-        { id: 'id-1', title: 'Historia de Nocturnia', summary: 'El desastre mestizo y la crisis que afecta a todo Auralun.', eraId: 'era-4', regionId: 'reg-nocturnia' },
-        { id: 'id-2', title: 'Crisis mestiza', summary: 'Lo que le pasa a Auralun entero cuando las razas se mezclan.', eraId: 'era-4', regionId: null },
+        { id: 'id-1', title: 'Historia de Nocturnia', summary: 'El desastre mestizo y la crisis que afecta a todo Aurelun.', eraId: 'era-4', regionId: 'reg-nocturnia' },
+        { id: 'id-2', title: 'Crisis mestiza', summary: 'Lo que le pasa a Aurelun entero cuando las razas se mezclan.', eraId: 'era-4', regionId: null },
       ],
       species: [
         { id: 'sp-1', name: 'Hadas', regionId: 'reg-vadronia', description: 'Las criaturas más cercanas a la Luna. Vigilan Vadronia; las pocas que quedan se esconden en los bosques del este.' },
@@ -296,12 +297,92 @@ export function buildWritingsSeed(ctx: MockContext): WritingsSeed {
         { id: 'sp-3', name: 'Cambiaformas', regionId: 'reg-nocturnia', description: 'Vigilan Nocturnia. Llevados a la extinción por la unión de brujas, vampiros y hombres lobo.' },
         { id: 'sp-4', name: 'Vampiros', regionId: 'reg-nocturnia', description: 'Habitantes de Nocturnia.' },
         { id: 'sp-5', name: 'Hombres lobo', regionId: 'reg-nocturnia', description: 'Habitantes de Nocturnia.' },
-        { id: 'sp-6', name: 'Brujas', regionId: 'reg-nocturnia', description: 'Hadas traidoras que probaron la magia Auralun.' },
+        { id: 'sp-6', name: 'Brujas', regionId: 'reg-nocturnia', description: 'Hadas traidoras que probaron la magia Aurelun.' },
         { id: 'sp-7', name: 'Dragones', regionId: 'reg-vadronia', description: 'Aparecen del lado de Krandalf en la marcha hacia el sur.' },
       ],
       rules: [
-        { id: 'ru-1', title: 'Magia Auralun', text: 'fragmentos de luna de las hadas caídas en la guerra de Cross. Pocos seres los poseen; los humanos los encuentran en piedras al minar.' },
+        { id: 'ru-1', title: 'Magia Aurelun', text: 'fragmentos de luna de las hadas caídas en la guerra de Cross. Pocos seres los poseen; los humanos los encuentran en piedras al minar.' },
         { id: 'ru-2', title: 'Armas sagradas', text: 'los Bellmore sellan su poder en cuatro armas que pasan de generación en generación.' },
+      ],
+    },
+  ]
+
+  // Las 3 plantillas de fábrica del mundo (decisión #45), de EscritosPlantilla.dc.html. `shortField` es un campo
+  // "de vista corta" (sale arriba y en la tarjeta); `fillField` es una sección "para rellenar" con su pregunta guía.
+  const shortField = (id: string, name: string, type: TemplateField['type'], key: string | null = null): TemplateField => ({ id, kind: 'field', key, name, type, hint: '', options: [] })
+  const fillField = (id: string, name: string, hint: string): TemplateField => ({ id, kind: 'section', key: null, name, type: 'text', hint, options: [] })
+
+  const PERSONAJE_TPL = `${WORLD_ID}-tpl-character`
+  const ESPECIE_TPL = `${WORLD_ID}-tpl-species`
+  const LUGAR_TPL = `${WORLD_ID}-tpl-place`
+
+  const noteTemplates: NoteTemplate[] = [
+    {
+      id: PERSONAJE_TPL,
+      worldId: WORLD_ID,
+      key: 'character',
+      name: 'Personaje',
+      color: 'warm',
+      position: 0,
+      fields: [
+        shortField(`${PERSONAJE_TPL}-f1`, 'Nombre completo', 'text'),
+        shortField(`${PERSONAJE_TPL}-f2`, 'Edad', 'text'),
+        shortField(`${PERSONAJE_TPL}-f3`, 'Especie', 'link'),
+        shortField(`${PERSONAJE_TPL}-f4`, 'Lugar de origen', 'link'),
+        // 'role': la app lo lee para armar "Protagonistas/Antagonistas" en la pestaña Personajes (decisión #45).
+        shortField(`${PERSONAJE_TPL}-f5`, 'Rol en la historia', 'text', 'role'),
+        shortField(`${PERSONAJE_TPL}-f6`, 'Era', 'era'),
+        fillField(`${PERSONAJE_TPL}-s1`, 'Qué quiere', '¿Qué busca en la historia?'),
+        fillField(`${PERSONAJE_TPL}-s2`, 'Qué lo mueve', '¿Por qué lo quiere?'),
+        fillField(`${PERSONAJE_TPL}-s3`, 'A qué le teme', 'Su miedo más grande'),
+        fillField(`${PERSONAJE_TPL}-s4`, 'Personalidad', 'Lo bueno y lo malo, en pocas palabras'),
+        fillField(`${PERSONAJE_TPL}-s5`, 'Relaciones', 'Familia, pareja, amigos y enemigos'),
+      ],
+    },
+    {
+      id: ESPECIE_TPL,
+      worldId: WORLD_ID,
+      key: 'species',
+      name: 'Especie',
+      color: 'muted',
+      position: 1,
+      fields: [
+        // 'home': la app lo lee para agrupar especies por región en la pestaña Especies (decisión #45).
+        shortField(`${ESPECIE_TPL}-f1`, 'Dónde vive', 'link', 'home'),
+        shortField(`${ESPECIE_TPL}-f2`, 'Cuánto vive', 'text'),
+        shortField(`${ESPECIE_TPL}-f3`, 'Poderes', 'text'),
+        shortField(`${ESPECIE_TPL}-f4`, 'Debilidad', 'text'),
+        fillField(`${ESPECIE_TPL}-s1`, 'Origen', '¿De dónde vienen? ¿Quién los creó?'),
+        fillField(`${ESPECIE_TPL}-s2`, 'Ciclo de vida', 'Nacimiento, crecimiento, reproducción y muerte'),
+        fillField(`${ESPECIE_TPL}-s3`, 'Apariencia', 'Altura, rasgos, coloración'),
+        fillField(`${ESPECIE_TPL}-s4`, 'Sociedad y cultura', 'Organización, líderes, festividades, rituales'),
+        fillField(`${ESPECIE_TPL}-s5`, 'Rol en el mundo', '¿Aliados, enemigos, dioses, civilización antigua?'),
+      ],
+    },
+    {
+      id: LUGAR_TPL,
+      worldId: WORLD_ID,
+      key: 'place',
+      name: 'Lugar',
+      color: 'soft',
+      position: 2,
+      fields: [
+        // El canvas (EscritosPlantilla.dc.html) trata "tipo de lugar" como un atributo fijo aparte; la decisión #45
+        // dice que es un campo de la plantilla, así que se agrega acá (campo de selección, no estaba en el canvas).
+        { id: `${LUGAR_TPL}-f0`, kind: 'field', key: null, name: 'Tipo de lugar', type: 'select', hint: '', options: [
+          { id: 'region', label: 'Región', tone: 'ink' },
+          { id: 'reino', label: 'Reino', tone: 'warm' },
+          { id: 'bosque', label: 'Bosque', tone: 'muted' },
+          { id: 'castillo', label: 'Castillo', tone: 'soft' },
+          { id: 'mercado', label: 'Mercado', tone: 'accent' },
+        ] },
+        shortField(`${LUGAR_TPL}-f1`, 'Quién gobierna', 'text'),
+        shortField(`${LUGAR_TPL}-f2`, 'Quién vive', 'link'),
+        shortField(`${LUGAR_TPL}-f3`, 'Clima', 'text'),
+        shortField(`${LUGAR_TPL}-f4`, 'Fundado en', 'era'),
+        fillField(`${LUGAR_TPL}-s1`, 'Historia', '¿Qué ha pasado aquí?'),
+        fillField(`${LUGAR_TPL}-s2`, 'Cultura y costumbres', 'Cómo vive la gente, qué celebra'),
+        fillField(`${LUGAR_TPL}-s3`, 'Lugares importantes', 'Castillos, mercados, bosques…'),
       ],
     },
   ]
@@ -356,7 +437,7 @@ export function buildWritingsSeed(ctx: MockContext): WritingsSeed {
     character('azrael', 'Príncipe Azrael', 'estria', 'Realeza', 'Era III'),
     character('alaida', 'Princesa Alaida', 'estria', 'Realeza', 'Era III'),
     character('adeline', 'Princesa Adeline', 'estria', 'Realeza', 'Era III'),
-    character('luna', 'Luna (Luneryss)', 'historicos', 'Deidad', 'Era I', 'Encuentra Auralun y, desde su duelo, crea a todas las especies. Separa el mundo en Vadronia y Nocturnia para proteger a sus especies.'),
+    character('luna', 'Luna (Luneryss)', 'historicos', 'Deidad', 'Era I', 'Encuentra Aurelun y, desde su duelo, crea a todas las especies. Separa el mundo en Vadronia y Nocturnia para proteger a sus especies.'),
     character('cross', 'Cross', 'historicos', 'Antagonista', 'Era I', 'Hija de un cambiaformas y un hada. Corrompida por el odio, su alma sobrevive escondida en el mundo y vuelve a través de Krandalf.'),
     character('krandalf', 'Rey Krandalf', 'historicos', 'Rey de Vadronia', 'Era II', 'Primer rey de Vadronia unificada; poseído por el alma de Cross. Muere liberado diciendo "Lo siento".'),
     character('kain', 'Kain Bellmore', 'historicos', 'Hermano Bellmore', 'Era II', 'Hiere a Krandalf con el arma que contenía la poción.'),
@@ -374,5 +455,5 @@ export function buildWritingsSeed(ctx: MockContext): WritingsSeed {
     if (date < ctx.today) wordsByDay[date] = WEEK_PATTERN[index]
   }
 
-  return { stories, pages, worlds, characterFields, characters, wordsByDay, dailyGoal: DEFAULT_DAILY_WORD_GOAL }
+  return { stories, pages, worlds, noteTemplates, characterFields, characters, wordsByDay, dailyGoal: DEFAULT_DAILY_WORD_GOAL }
 }

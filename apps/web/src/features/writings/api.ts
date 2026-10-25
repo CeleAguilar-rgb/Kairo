@@ -83,7 +83,7 @@ export async function getBooks(): Promise<BookView[]> {
   })
 }
 
-// Una página para el editor, con su ruta de migas ("Escritos / Auralun / Un cuento… / 0.- Antecedentes"). null si
+// Una página para el editor, con su ruta de migas ("Escritos / Aurelun / Un cuento… / 0.- Antecedentes"). null si
 // no existe.
 export async function getPageEditor(id: string): Promise<PageEditorView | null> {
   await mockDelay()

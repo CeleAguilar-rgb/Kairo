@@ -1,4 +1,4 @@
-import type { FieldType, StoryColor, StoryKind } from '@kairo/shared'
+import type { FieldType, NoteTemplateFieldType, StoryColor, StoryKind } from '@kairo/shared'
 
 // Lo visual de Escritos que no es lógica: los trazos de los íconos (del canvas) y las etiquetas. Los colores no
 // están aquí: cada pieza los toma de una variable semántica según su clave (WritingColors.module.css).
@@ -48,4 +48,14 @@ export const FIELD_TYPE_ICON: Record<FieldType, string> = {
   number: 'M5 9h14M5 15h14M10 4L8 20M16 4l-2 16',
   select: 'M9 6l6 6-6 6',
   date: 'M3 5h18v16H3zM3 10h18',
+}
+
+// Cómo se llama cada tipo de campo en el editor de plantillas (EscritosPlantilla.dc.html, decisión #45).
+export const NOTE_TEMPLATE_FIELD_TYPE_LABEL: Record<NoteTemplateFieldType, string> = {
+  text: 'Texto corto',
+  link: 'Vínculo a otra nota',
+  era: 'Era',
+  select: 'Selección',
+  number: 'Número',
+  date: 'Fecha',
 }

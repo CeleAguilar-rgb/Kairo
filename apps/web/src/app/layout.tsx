@@ -20,6 +20,11 @@ const gochiHand = Gochi_Hand({
 export const metadata: Metadata = {
   title: 'Kairo',
   description: 'Dashboard personal para organizar la vida en un solo lugar',
+  // El ícono de pestaña y el de "agregar a inicio": assets ya exportados del canvas en public/kairo-logo/.
+  icons: {
+    icon: { url: '/kairo-logo/kairo-favicon.svg', type: 'image/svg+xml' },
+    apple: '/kairo-logo/kairo-app-claro-512.png',
+  },
 }
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {

@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { FIELD_TYPES, MAX_PAGE_TITLE, PAGE_STATUSES, STORY_COLORS, STORY_KINDS } from './constants'
+import { FIELD_TYPES, MAX_PAGE_TITLE, NOTE_TEMPLATE_FIELD_TYPES, PAGE_STATUSES, STORY_COLORS, STORY_KINDS } from './constants'
 import { isValidTiptapDoc, type TiptapDoc } from './tiptap'
 
 // Un id que llega de la pantalla. En los datos de ejemplo no son uuid (igual que en las demás secciones); con la
@@ -64,3 +64,14 @@ export type CharacterInput = z.infer<typeof characterSchema>
 
 // Agregar una columna ("Propiedad" en la base de personajes): solo se elige el tipo; el nombre se pone solo.
 export const fieldTypeSchema = z.enum(FIELD_TYPES)
+
+// --- Plantillas de notas (note_templates, decisión #45) --------------------------------------------
+
+// El nombre de una plantilla o de uno de sus campos (EscritosPlantilla.dc.html: "Nombre de la plantilla",
+// el nombre de cada fila de "Vista corta" o "Para rellenar").
+export const templateNameSchema = z.string().trim().min(1, 'Ponle un nombre.').max(40, 'Máximo 40 caracteres.')
+
+export const templateFieldTypeSchema = z.enum(NOTE_TEMPLATE_FIELD_TYPES)
+
+// La pregunta guía de una sección "Para rellenar" (opcional, EscritosPlantilla.dc.html).
+export const templateFieldHintSchema = z.string().trim().max(120, 'Máximo 120 caracteres.')

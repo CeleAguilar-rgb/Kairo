@@ -36,5 +36,23 @@ export const MAX_ATTR_LENGTH = 2000
 
 // Los tipos de columna de la base de personajes (`character_fields.type`, data-model.md). El canvas ofrece también
 // "Casilla", "Relación" y "Archivo": quedan fuera hasta que el modelo de datos los incluya (nota de sesión).
+// Reemplazado por NOTE_TEMPLATE_FIELD_TYPES (decisión #45: `character_fields` desaparece, sus columnas pasan a
+// ser los campos de la plantilla `character`). Sigue aquí porque el panel de Personajes todavía no se migró.
 export const FIELD_TYPES = ['text', 'select', 'number', 'date'] as const
 export type FieldType = (typeof FIELD_TYPES)[number]
+
+// Las 3 plantillas de fábrica de un mundo (decisión #45): no se pueden borrar, solo renombrar y cambiar sus
+// campos. Una plantilla sin `key` es una sección extra (Magia, Objetos…) con su propia pestaña.
+export const NOTE_TEMPLATE_KEYS = ['character', 'species', 'place'] as const
+export type NoteTemplateKey = (typeof NOTE_TEMPLATE_KEYS)[number]
+
+// Un campo de plantilla es "de vista corta" (sale arriba y en la tarjeta) o "para rellenar" (una sección con
+// una pregunta guía, se escribe en el cuerpo de la página). `note_templates.fields[].kind`.
+export const FIELD_KINDS = ['field', 'section'] as const
+export type FieldKind = (typeof FIELD_KINDS)[number]
+
+// Los tipos de un campo de plantilla (`note_templates.fields[].type`, data-model.md): texto corto, vínculo a
+// otro personaje o nota ("ficha" en el canvas), una era del mundo, selección de una lista, número o fecha.
+// Solo tiene sentido en un campo `kind: 'field'`; uno `kind: 'section'` no lo usa.
+export const NOTE_TEMPLATE_FIELD_TYPES = ['text', 'link', 'era', 'select', 'number', 'date'] as const
+export type NoteTemplateFieldType = (typeof NOTE_TEMPLATE_FIELD_TYPES)[number]

@@ -107,7 +107,7 @@ export function coverPresetOf(coverPath: string | null): CoverPreset | null {
 
 // FALTA EN LA BASE: las etiquetas de notas. Mientras tanto son texto libre y estas tres tienen su color; las
 // demás se pintan neutras.
-const TAG_TONES: Record<string, OptionTone> = { Auralun: 'ink', Ideas: 'warm', Trabajo: 'soft' }
+const TAG_TONES: Record<string, OptionTone> = { Aurelun: 'ink', Ideas: 'warm', Trabajo: 'soft' }
 export const NO_TAG_LABEL = 'Sin etiqueta'
 export const tagToneOf = (tag: string | null): OptionTone => (tag ? (TAG_TONES[tag] ?? 'muted') : 'muted')
 
