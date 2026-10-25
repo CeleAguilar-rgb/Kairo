@@ -76,9 +76,9 @@
     },
     "Escritos.dc.html": {
       "expand": "fill",
-      "h": 1200,
+      "h": 1400,
       "is_interactive": true,
-      "title": "Escritos · espacio Auralun",
+      "title": "Escritos · espacio Aurelun",
       "w": 1440,
       "x": 3040,
       "y": 1420
@@ -100,6 +100,15 @@
       "w": 1440,
       "x": 4560,
       "y": 10920
+    },
+    "Estados.dc.html": {
+      "expand": "fill",
+      "h": 1560,
+      "is_interactive": true,
+      "title": "Cargando, guardando, sin conexión y errores",
+      "w": 1440,
+      "x": 3040,
+      "y": 15500
     },
     "EventoDetalle.dc.html": {
       "expand": "fill",
@@ -179,8 +188,8 @@
       "is_interactive": true,
       "title": "Inicio (se arma con tus secciones)",
       "w": 1440,
-      "x": 0,
-      "y": -520
+      "x": -525,
+      "y": -1302
     },
     "Mas.dc.html": {
       "expand": "fill",
@@ -208,6 +217,78 @@
       "w": 1440,
       "x": 6080,
       "y": 5980
+    },
+    "ModoOscuro.dc.html": {
+      "expand": "fill",
+      "h": 1060,
+      "is_interactive": true,
+      "title": "Modo oscuro · paleta y reglas",
+      "w": 1440,
+      "x": 1520,
+      "y": 17560
+    },
+    "OscuroAgenda.dc.html": {
+      "expand": "fill",
+      "h": 1294,
+      "is_interactive": true,
+      "title": "Oscuro · Agenda",
+      "w": 1440,
+      "x": 6080,
+      "y": 17560
+    },
+    "OscuroEscritosInicio.dc.html": {
+      "expand": "fill",
+      "h": 1200,
+      "is_interactive": true,
+      "title": "Oscuro · Escritos",
+      "w": 1440,
+      "x": 9120,
+      "y": 17560
+    },
+    "OscuroFinResumen.dc.html": {
+      "expand": "fill",
+      "h": 1500,
+      "is_interactive": true,
+      "title": "Oscuro · Finanzas",
+      "w": 1440,
+      "x": 7600,
+      "y": 17560
+    },
+    "OscuroMain.dc.html": {
+      "expand": "fill",
+      "h": 1640,
+      "is_interactive": true,
+      "title": "Oscuro · Inicio",
+      "w": 1440,
+      "x": 3040,
+      "y": 17560
+    },
+    "OscuroTareas.dc.html": {
+      "expand": "fill",
+      "h": 1355,
+      "is_interactive": true,
+      "title": "Oscuro · Tareas",
+      "w": 1440,
+      "x": 4560,
+      "y": 17560
+    },
+    "OscuroTelMain.dc.html": {
+      "expand": "fill",
+      "h": 844,
+      "is_interactive": true,
+      "title": "Oscuro · Teléfono · Inicio",
+      "w": 390,
+      "x": 12160,
+      "y": 17560
+    },
+    "OscuroTemporadas.dc.html": {
+      "expand": "fill",
+      "h": 1360,
+      "is_interactive": true,
+      "title": "Oscuro · Temporadas",
+      "w": 1440,
+      "x": 10640,
+      "y": 17560
     },
     "Pagina.dc.html": {
       "expand": "fill",
@@ -245,6 +326,15 @@
       "x": 4560,
       "y": 0
     },
+    "ProyectoArchivos.dc.html": {
+      "expand": "fill",
+      "h": 1060,
+      "is_interactive": true,
+      "title": "Proyecto · Archivos y enlaces",
+      "w": 1440,
+      "x": 1520,
+      "y": 15500
+    },
     "ProyectoEditar.dc.html": {
       "expand": "fill",
       "h": 1446,
@@ -253,6 +343,15 @@
       "w": 1440,
       "x": 0,
       "y": 2960
+    },
+    "ProyectoSprints.dc.html": {
+      "expand": "fill",
+      "h": 1200,
+      "is_interactive": true,
+      "title": "Proyecto · Sprints (tablero, backlog, cerrar sprint)",
+      "w": 1440,
+      "x": 0,
+      "y": 15500
     },
     "Proyectos.dc.html": {
       "expand": "fill",
@@ -289,6 +388,15 @@
       "w": 1440,
       "x": 0,
       "y": 12680
+    },
+    "Respaldo.dc.html": {
+      "expand": "fill",
+      "h": 1140,
+      "is_interactive": true,
+      "title": "Respaldo y exportar",
+      "w": 1440,
+      "x": 4560,
+      "y": 15500
     },
     "RutinaEditar.dc.html": {
       "expand": "fill",
@@ -389,51 +497,6 @@
       "x": 450,
       "y": 14100
     },
-    "Vacios.dc.html": {
-      "expand": "fill",
-      "h": 1000,
-      "is_interactive": true,
-      "title": "Estados vacíos",
-      "w": 1440,
-      "x": 6206,
-      "y": 3086
-    },
-    "ProyectoSprints.dc.html": {
-      "expand": "fill",
-      "h": 1200,
-      "is_interactive": true,
-      "title": "Proyecto · Sprints (tablero, backlog, cerrar sprint)",
-      "w": 1440,
-      "x": 0,
-      "y": 15500
-    },
-    "ProyectoArchivos.dc.html": {
-      "expand": "fill",
-      "h": 1060,
-      "is_interactive": true,
-      "title": "Proyecto · Archivos y enlaces",
-      "w": 1440,
-      "x": 1520,
-      "y": 15500
-    },
-    "Estados.dc.html": {
-      "expand": "fill",
-      "h": 1560,
-      "is_interactive": true,
-      "title": "Cargando, guardando, sin conexión y errores",
-      "w": 1440,
-      "x": 3040,
-      "y": 15500
-    },
-    "Respaldo.dc.html": {
-      "expand": "fill",
-      "h": 1140,
-      "is_interactive": true,
-      "title": "Respaldo y exportar",
-      "w": 1440,
-      "x": 4560,
-      "y": 15500
-    },
     "Temporadas.dc.html": {
       "expand": "fill",
       "h": 1360,
@@ -443,77 +506,149 @@
       "x": 0,
       "y": 17560
     },
-    "ModoOscuro.dc.html": {
+    "Vacios.dc.html": {
       "expand": "fill",
-      "h": 1180,
+      "h": 1000,
       "is_interactive": true,
-      "title": "Modo oscuro · paleta y reglas",
+      "title": "Estados vacíos",
+      "w": 1440,
+      "x": 6206,
+      "y": 3086
+    },
+    "EscritosRegion.dc.html": {
+      "expand": "fill",
+      "h": 1520,
+      "is_interactive": true,
+      "title": "Aurelun · Regiones: detalle en panel (Vadronia)",
+      "w": 1440,
+      "x": 0,
+      "y": 19660
+    },
+    "EscritosPersonaje.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "title": "Aurelun · Personaje con foto en panel",
       "w": 1440,
       "x": 1520,
-      "y": 17560
+      "y": 19660
     },
-    "OscuroMain.dc.html": {
+    "EscritosEspecie.dc.html": {
       "expand": "fill",
-      "h": 1640,
+      "h": 1030,
       "is_interactive": true,
-      "title": "Oscuro · Inicio",
+      "title": "Aurelun · Especies con doodles (Hadas)",
       "w": 1440,
       "x": 3040,
-      "y": 17560
+      "y": 19660
     },
-    "OscuroTareas.dc.html": {
+    "EscritosLinea.dc.html": {
       "expand": "fill",
-      "h": 1355,
+      "h": 1610,
       "is_interactive": true,
-      "title": "Oscuro · Tareas",
+      "title": "Aurelun · Línea del tiempo: evento con notas",
       "w": 1440,
       "x": 4560,
-      "y": 17560
+      "y": 19660
     },
-    "OscuroAgenda.dc.html": {
+    "EscritosHistoria.dc.html": {
       "expand": "fill",
-      "h": 1294,
+      "h": 1280,
       "is_interactive": true,
-      "title": "Oscuro · Agenda",
+      "title": "Aurelun · Historias: lista, arcos y capítulo",
+      "w": 1440,
+      "x": 0,
+      "y": 21640
+    },
+    "EscritosMagia.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "is_interactive": true,
+      "title": "Aurelun · Sección Magia y menú Más",
+      "w": 1440,
+      "x": 1520,
+      "y": 21640
+    },
+    "EscritosPlantilla.dc.html": {
+      "expand": "fill",
+      "h": 1030,
+      "is_interactive": true,
+      "title": "Aurelun · Editar plantilla (Especie)",
+      "w": 1440,
+      "x": 3040,
+      "y": 21640
+    },
+    "EscritosResumen.dc.html": {
+      "expand": "fill",
+      "h": 2200,
+      "is_interactive": true,
+      "title": "Aurelun · Resumen: sinopsis y recuadros",
+      "w": 1440,
+      "x": 4560,
+      "y": 21640
+    },
+    "EscritosPaginaRegion.dc.html": {
+      "expand": "fill",
+      "h": 1150,
+      "is_interactive": true,
+      "title": "Aurelun · Página completa de una región",
+      "w": 1440,
+      "x": 0,
+      "y": 23960
+    },
+    "EscritosPaginaEvento.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "is_interactive": true,
+      "title": "Aurelun · Página completa de un evento",
+      "w": 1440,
+      "x": 1520,
+      "y": 23960
+    },
+    "EscritosPestanas.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "title": "Aurelun · Personalizar pestañas",
+      "w": 1440,
+      "x": 3040,
+      "y": 23960
+    },
+    "EscritosContadores.dc.html": {
+      "expand": "fill",
+      "h": 1000,
+      "is_interactive": true,
+      "title": "Aurelun · Personalizar contadores",
+      "w": 1440,
+      "x": 4560,
+      "y": 23960
+    },
+    "EscritosPortada.dc.html": {
+      "expand": "fill",
+      "h": 1150,
+      "is_interactive": true,
+      "title": "Aurelun · Portada con imagen (editando)",
       "w": 1440,
       "x": 6080,
-      "y": 17560
+      "y": 23960
     },
-    "OscuroFinResumen.dc.html": {
+    "EscritosPaginaEspecie.dc.html": {
       "expand": "fill",
-      "h": 1500,
+      "h": 1150,
       "is_interactive": true,
-      "title": "Oscuro · Finanzas",
+      "title": "Aurelun · Página de Hadas con doodle de portada",
       "w": 1440,
       "x": 7600,
-      "y": 17560
+      "y": 23960
     },
-    "OscuroEscritosInicio.dc.html": {
+    "EscritosCapitulo.dc.html": {
       "expand": "fill",
-      "h": 1200,
+      "h": 1150,
       "is_interactive": true,
-      "title": "Oscuro · Escritos",
+      "title": "Aurelun · Capítulo abierto para escribir",
       "w": 1440,
       "x": 9120,
-      "y": 17560
-    },
-    "OscuroTemporadas.dc.html": {
-      "expand": "fill",
-      "h": 1360,
-      "is_interactive": true,
-      "title": "Oscuro · Temporadas",
-      "w": 1440,
-      "x": 10640,
-      "y": 17560
-    },
-    "OscuroTelMain.dc.html": {
-      "expand": "fill",
-      "h": 844,
-      "is_interactive": true,
-      "title": "Oscuro · Teléfono · Inicio",
-      "w": 390,
-      "x": 12160,
-      "y": 17560
+      "y": 23960
     }
   },
   "createdOnFiles": {
@@ -548,6 +683,14 @@
       "w": 240,
       "x": 0,
       "y": 10660
+    },
+    "flujo-faltaba": {
+      "kind": "title1",
+      "maxW": 6000,
+      "text": "Lo que faltaba: sprints y archivos de proyecto, cargas y errores, respaldo",
+      "w": 240,
+      "x": 0,
+      "y": 15240
     },
     "flujo-fin": {
       "kind": "title1",
@@ -589,21 +732,21 @@
       "x": 0,
       "y": 13840
     },
-    "flujo-faltaba": {
-      "kind": "title1",
-      "maxW": 6000,
-      "text": "Lo que faltaba: sprints y archivos de proyecto, cargas y errores, respaldo",
-      "w": 240,
-      "x": 0,
-      "y": 15240
-    },
     "flujo-temp": {
       "kind": "title1",
-      "maxW": 12560,
+      "maxW": 8000,
       "text": "Temporadas (una por mes) y modo oscuro",
       "w": 240,
       "x": 0,
       "y": 17300
+    },
+    "flujo-fichas": {
+      "kind": "title1",
+      "maxW": 6000,
+      "text": "Aurelun: resumen, panel y página completa, eras con notas, historias y pestañas a tu gusto",
+      "w": 240,
+      "x": 0,
+      "y": 19400
     }
   },
   "order": [
@@ -663,8 +806,23 @@
     "OscuroFinResumen.dc.html",
     "OscuroEscritosInicio.dc.html",
     "OscuroTemporadas.dc.html",
-    "OscuroTelMain.dc.html"
+    "OscuroTelMain.dc.html",
+    "EscritosRegion.dc.html",
+    "EscritosPersonaje.dc.html",
+    "EscritosEspecie.dc.html",
+    "EscritosLinea.dc.html",
+    "EscritosHistoria.dc.html",
+    "EscritosMagia.dc.html",
+    "EscritosPlantilla.dc.html",
+    "EscritosResumen.dc.html",
+    "EscritosPaginaRegion.dc.html",
+    "EscritosPaginaEvento.dc.html",
+    "EscritosPestanas.dc.html",
+    "EscritosContadores.dc.html",
+    "EscritosPortada.dc.html",
+    "EscritosPaginaEspecie.dc.html",
+    "EscritosCapitulo.dc.html"
   ],
   "pages": [],
   "title": "Kairo"
-}
+}

@@ -12,39 +12,39 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Outfit:wght@300;400;500;600&amp;display=swap">
 <style>
 body{margin:0}
-a{color:#f1ebe2}a:hover{color:#cfc6ba}
+a{color:#ede9e2}a:hover{color:#c4beb5}
 .wrap{padding:26px 44px 56px;box-sizing:border-box}
 @media (max-width:720px){.wrap{padding:14px 12px 40px}.topnav{order:3;width:100%}.hide-sm{display:none!important}}
 .pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:inherit;font-weight:500;cursor:pointer;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease}
-.pill-dark{background:#352e28;color:#f1ebe2;box-shadow:0 10px 22px -8px rgba(0,0,0,0.60)}
-.pill-dark:hover{transform:translateY(-1px);color:#f1ebe2}
-.pill-ghost{background:transparent;border:1px solid #5a5149;color:#f1ebe2}
-.pill-ghost:hover{background:#322b26}
-.pill-danger{background:#c4573f;color:#231e1b}
-.pill-danger:hover{transform:translateY(-1px);color:#231e1b}
+.pill-dark{background:#b7b1f5;color:#17151f;box-shadow:0 10px 22px -8px rgba(0,0,0,0.35)}
+.pill-dark:hover{transform:translateY(-1px);color:#17151f}
+.pill-ghost{background:transparent;border:1px solid rgba(237,233,226,.16);color:#ede9e2}
+.pill-ghost:hover{background:#2d2b29}
+.pill-danger{background:#c4573f;color:#1c1b19}
+.pill-danger:hover{transform:translateY(-1px);color:#1c1b19}
 .navlink{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s ease}
-.navlink:hover{background:rgba(241,235,226,0.06)}
+.navlink:hover{background:rgba(237,233,226,0.06)}
 .icon{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;border:0;background:transparent;color:inherit;cursor:pointer;flex-shrink:0}
-.icon:hover{background:rgba(241,235,226,0.07)}
+.icon:hover{background:rgba(237,233,226,0.07)}
 .h2i{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;flex-shrink:0}
-.card{background:#231e1b;border:1px solid #463e36;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:18px}
+.card{background:#1e1d1b;border:1px solid rgba(237,233,226,.10);border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:18px}
 .field{display:flex;flex-direction:column;gap:6px}
 .lbl{font-weight:500;font-size:14px}
-.inp{box-sizing:border-box;width:100%;min-height:48px;padding:0 14px;border-radius:14px;border:1px solid #5a5149;background:#231e1b;font:inherit;color:#f1ebe2;transition:border-color .2s ease}
-.inp::placeholder{color:#a39a8e}
+.inp{box-sizing:border-box;width:100%;min-height:48px;padding:0 14px;border-radius:14px;border:1px solid rgba(237,233,226,.16);background:#1e1d1b;font:inherit;color:#ede9e2;transition:border-color .2s ease}
+.inp::placeholder{color:#9a958d}
 .inp:focus{outline:2px solid #a59ff0;outline-offset:1px}
 textarea.inp{padding:12px 14px;resize:vertical;line-height:1.55}
 .inp.bad{border-color:#f0a08c}
-.hint{font-size:13px;color:#b0a69a}
+.hint{font-size:13px;color:#b3ada4}
 .err{font-size:13px;color:#f0a08c;display:flex;align-items:center;gap:6px}
 .seg{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .2s ease,color .2s ease}
 .squig{stroke-dasharray:320;animation:draw .9s .2s ease-out both}
 @keyframes draw{from{stroke-dashoffset:320}to{stroke-dashoffset:0}}
 .pill:focus-visible,.navlink:focus-visible,.icon:focus-visible,.seg:focus-visible{outline:2px solid #a59ff0;outline-offset:3px}
 @media (prefers-reduced-motion:reduce){.squig{animation:none}.pill,.seg,.inp{transition:none}.pill:hover{transform:none}}
-.ftabs{display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(34,30,27,0.7);border:1px solid #463e36;align-self:flex-start;overflow-x:auto;max-width:100%;box-sizing:border-box}.ftab{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border-radius:999px;text-decoration:none;white-space:nowrap;font-weight:500}.ftab:focus-visible{outline:2px solid #a59ff0;outline-offset:2px}
+.ftabs{display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(28,27,25,0.7);border:1px solid rgba(237,233,226,.10);align-self:flex-start;overflow-x:auto;max-width:100%;box-sizing:border-box}.ftab{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border-radius:999px;text-decoration:none;white-space:nowrap;font-weight:500}.ftab:focus-visible{outline:2px solid #a59ff0;outline-offset:2px}
 /*common*/
-@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#231e1b!important;box-shadow:0 18px 40px -16px rgba(0,0,0,0.60);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #a59ff0;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
+@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#1e1d1b!important;box-shadow:0 18px 40px -16px rgba(0,0,0,0.35);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #a59ff0;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
 .chk{position:relative}.chk::after{content:"";position:absolute;inset:-10px}
 .dotbtn{position:relative}.dotbtn::after{content:"";position:absolute;inset:-4px}
 .bar{transition:none!important;transform-origin:left center;animation:barIn .7s cubic-bezier(.3,.7,.2,1) both}
@@ -62,30 +62,32 @@ textarea.inp{padding:12px 14px;resize:vertical;line-height:1.55}
 .mcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%}
 .bars{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;gap:5px}
 .bar2{width:min(22px,40%);border-radius:7px 7px 3px 3px;transform-origin:bottom;animation:wbarIn .6s cubic-bezier(.3,.7,.2,1) both}
-.mv{display:flex;align-items:center;gap:12px;min-height:56px;border-top:1px solid #3a332d}
+.mv{display:flex;align-items:center;gap:12px;min-height:56px;border-top:1px solid rgba(237,233,226,.08)}
 .ci{width:38px;height:38px;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
-.track{height:8px;border-radius:999px;background:#302a25;overflow:hidden}
-.mon{all:unset;box-sizing:border-box;width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid #463e36;background:#231e1b}
+.track{height:8px;border-radius:999px;background:#2d2b29;overflow:hidden}
+.mon{all:unset;box-sizing:border-box;width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid rgba(237,233,226,.10);background:#1e1d1b}
 .mon:focus-visible{outline:2px solid #a59ff0;outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.bar2{animation:none}}
+[style*="rgba(237,233,226,.10)"]{box-shadow:inset 0 1px 0 rgba(255,255,255,.05)!important}
+.pill-dark:hover{color:#17151f!important}
 </style>
 </helmet>
-<div style="min-height: 100vh; background: radial-gradient(1200px 600px at 85% -10%, #1b1815 0%, rgba(31,27,24,0.0) 60%), #131110; color: #f1ebe2; font-family: 'Outfit', system-ui, sans-serif; color-scheme: dark; font-size: 15px; line-height: 1.5; position: relative; overflow-x: hidden">
+<div style="min-height: 100vh; background: radial-gradient(1200px 600px at 85% -10%, #161514 0%, rgba(23,22,21,0.0) 60%), #131211; color: #ede9e2; font-family: 'Outfit', system-ui, sans-serif; color-scheme: dark; font-size: 15px; line-height: 1.5; position: relative; overflow-x: hidden">
 <div class="wrap" style="display: flex; flex-direction: column; gap: 20px">
 <header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
 <a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Gochi Hand', cursive; font-size: 28px; text-decoration: none; line-height: 1">
-<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#f1ebe2" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#a59ff0" stroke="#f1ebe2" stroke-width="3.5"></circle></svg>
+<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#ede9e2" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#a59ff0" stroke="#ede9e2" stroke-width="3.5"></circle></svg>
 kairo</a>
-<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(34,30,27,0.7); border: 1px solid #463e36">
-<a class="navlink nb" href="Main.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
-<a class="navlink nb" href="Tareas.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
-<a class="navlink nx" href="Proyectos.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
-<a class="navlink nb" href="Agenda.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
-<a class="navlink nx" href="FinResumen.dc.html" aria-current="page" style="background: #352e28; color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
-<a class="navlink nx" href="EscritosInicio.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
-<a class="navlink nb" href="DiaADia.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
-<a class="navlink nmore" href="Mas.dc.html" aria-current="page" style="background: #352e28; color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
-</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #231e1b; border: 1px solid #463e36; flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#f1ebe2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#a59ff0"></path></svg></a><!--/AV-->
+<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(28,27,25,0.7); border: 1px solid rgba(237,233,226,.10)">
+<a class="navlink nb" href="Main.dc.html" style="color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
+<a class="navlink nb" href="Tareas.dc.html" style="color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
+<a class="navlink nx" href="Proyectos.dc.html" style="color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
+<a class="navlink nb" href="Agenda.dc.html" style="color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
+<a class="navlink nx" href="FinResumen.dc.html" aria-current="page" style="background: #2a2824; color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
+<a class="navlink nx" href="EscritosInicio.dc.html" style="color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
+<a class="navlink nb" href="DiaADia.dc.html" style="color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
+<a class="navlink nmore" href="Mas.dc.html" aria-current="page" style="background: #2a2824; color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
+</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #1e1d1b; border: 1px solid rgba(237,233,226,.10); flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#ede9e2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#a59ff0"></path></svg></a><!--/AV-->
 <a class="pill pill-dark" href="FinMovimientos.dc.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Movimiento</a>
 </header>
 <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap">
@@ -97,7 +99,7 @@ kairo</a>
 <button class="mon" type="button" aria-label="Mes siguiente" onClick="{{next}}" disabled="{{nextDis}}" style="{{nextStyle}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
 </div>
 </div>
-<nav class="ftabs" aria-label="Finanzas"><a class="ftab" href="FinResumen.dc.html" aria-current="page" style="background: #352e28; color: #f1ebe2">Resumen</a><a class="ftab" href="FinMovimientos.dc.html" style="color: #f1ebe2">Movimientos</a><a class="ftab" href="FinAhorros.dc.html" style="color: #f1ebe2">Ahorros y deudas</a><a class="ftab" href="Finanzas.dc.html" style="color: #f1ebe2">Membresías</a><a class="ftab" href="FinPresupuesto.dc.html" style="color: #f1ebe2">Presupuesto</a></nav>
+<nav class="ftabs" aria-label="Finanzas"><a class="ftab" href="FinResumen.dc.html" aria-current="page" style="background: #2a2824; color: #ede9e2">Resumen</a><a class="ftab" href="FinMovimientos.dc.html" style="color: #ede9e2">Movimientos</a><a class="ftab" href="FinAhorros.dc.html" style="color: #ede9e2">Ahorros y deudas</a><a class="ftab" href="Finanzas.dc.html" style="color: #ede9e2">Membresías</a><a class="ftab" href="FinPresupuesto.dc.html" style="color: #ede9e2">Presupuesto</a></nav>
 </div>
 
 <div class="g12">
@@ -112,12 +114,12 @@ kairo</a>
 <section class="card s7" aria-labelledby="h-ch" style="gap: 10px">
 <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap">
 <h2 id="h-ch" style="margin: 0; font-size: 20px; font-weight: 500">Ingresos y gastos</h2>
-<div style="display: flex; gap: 14px; font-size: 13px; color: #cfc6ba"><span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 4px; background: #a59ff0"></span>Ingresos</span><span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 4px; background: #352e28"></span>Gastos</span></div>
+<div style="display: flex; gap: 14px; font-size: 13px; color: #c4beb5"><span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 4px; background: #a59ff0"></span>Ingresos</span><span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 4px; background: #2a2824"></span>Gastos</span></div>
 </div>
 <div class="chart" role="img" aria-label="{{chartLabel}}">
 <sc-for list="{{months}}" as="m" hint-placeholder-count="6">
 <div class="mcol">
-<span style="font-size: 12px; color: #b0a69a; white-space: nowrap">{{m.net}}</span>
+<span style="font-size: 12px; color: #b3ada4; white-space: nowrap">{{m.net}}</span>
 <div class="bars"><div class="bar2" style="{{m.inc}}"></div><div class="bar2" style="{{m.exp}}"></div></div>
 <span style="{{m.labelStyle}}">{{m.l}}</span>
 </div>
@@ -139,9 +141,9 @@ kairo</a>
 <section class="card s4" aria-labelledby="h-aho" style="gap: 14px">
 <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px"><h2 id="h-aho" style="margin: 0; font-size: 20px; font-weight: 500">Ahorros</h2><a href="FinAhorros.dc.html" style="font-size: 14px">Ver todos</a></div>
 <sc-for list="{{savings}}" as="a" hint-placeholder-count="2">
-<div style="display: flex; flex-direction: column; gap: 6px; padding: 12px 14px; border-radius: 18px; background: #2d2723">
-<div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-weight: 500">{{a.name}}</span><span style="font-size: 13px; color: #b0a69a">{{a.pct}}</span></div>
-<div class="track" style="background: #423a33"><div style="{{a.w}}"><div class="bar" style="height: 100%; border-radius: 999px; background: #a59ff0"></div></div></div>
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 12px 14px; border-radius: 18px; background: #262523">
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-weight: 500">{{a.name}}</span><span style="font-size: 13px; color: #b3ada4">{{a.pct}}</span></div>
+<div class="track" style="background: #3a3835"><div style="{{a.w}}"><div class="bar" style="height: 100%; border-radius: 999px; background: #a59ff0"></div></div></div>
 <span class="hint">{{a.sub}}</span>
 </div>
 </sc-for>
@@ -150,9 +152,9 @@ kairo</a>
 <section class="card s4" aria-labelledby="h-deu" style="gap: 14px">
 <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px"><h2 id="h-deu" style="margin: 0; font-size: 20px; font-weight: 500">Deudas</h2><a href="FinAhorros.dc.html" style="font-size: 14px">Ver todas</a></div>
 <sc-for list="{{debts}}" as="d" hint-placeholder-count="2">
-<div style="display: flex; flex-direction: column; gap: 6px; padding: 12px 14px; border-radius: 18px; background: #2d2723">
+<div style="display: flex; flex-direction: column; gap: 6px; padding: 12px 14px; border-radius: 18px; background: #262523">
 <div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-weight: 500">{{d.name}}</span><span style="font-size: 13px; font-weight: 500">{{d.left}}</span></div>
-<div class="track" style="background: #423a33"><div style="{{d.w}}"><div class="bar" style="height: 100%; border-radius: 999px; background: #352e28"></div></div></div>
+<div class="track" style="background: #3a3835"><div style="{{d.w}}"><div class="bar" style="height: 100%; border-radius: 999px; background: #2a2824"></div></div></div>
 <span class="hint">{{d.sub}}</span>
 </div>
 </sc-for>
@@ -162,7 +164,7 @@ kairo</a>
 <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px"><h2 id="h-cob" style="margin: 0; font-size: 20px; font-weight: 500">Próximos cobros</h2><a href="Finanzas.dc.html" style="font-size: 14px">Membresías</a></div>
 <sc-for list="{{charges}}" as="c" hint-placeholder-count="4">
 <div style="display: flex; align-items: center; gap: 12px; min-height: 44px">
-<span style="width: 44px; font-size: 13px; color: #b0a69a">{{c.d}}</span><span style="flex: 1; font-weight: 500">{{c.n}}</span><span class="hint">{{c.card}}</span><span style="font-weight: 500; width: 60px; text-align: right">{{c.a}}</span>
+<span style="width: 44px; font-size: 13px; color: #b3ada4">{{c.d}}</span><span style="flex: 1; font-weight: 500">{{c.n}}</span><span class="hint">{{c.card}}</span><span style="font-weight: 500; width: 60px; text-align: right">{{c.a}}</span>
 </div>
 </sc-for>
 </section>
@@ -181,7 +183,7 @@ kairo</a>
 <section class="card s4" aria-labelledby="h-cat" style="gap: 12px">
 <h2 id="h-cat" style="margin: 0; font-size: 20px; font-weight: 500">¿En qué se fue?</h2>
 <div style="display: flex; height: 18px; border-radius: 999px; overflow: hidden; gap: 2px" role="img" aria-label="{{catLabel}}"><sc-for list="{{cats}}" as="c" hint-placeholder-count="5"><span style="{{c.seg}}"></span></sc-for></div>
-<sc-for list="{{cats}}" as="c" hint-placeholder-count="5"><div style="display: flex; align-items: center; gap: 10px; font-size: 14px"><span style="{{c.dot}}"></span><span style="flex: 1">{{c.n}}</span><span style="color: #b0a69a; font-size: 17px">{{c.p}}</span><span style="font-weight: 500; width: 64px; text-align: right">{{c.a}}</span></div></sc-for>
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="5"><div style="display: flex; align-items: center; gap: 10px; font-size: 14px"><span style="{{c.dot}}"></span><span style="flex: 1">{{c.n}}</span><span style="color: #b3ada4; font-size: 17px">{{c.p}}</span><span style="font-weight: 500; width: 64px; text-align: right">{{c.a}}</span></div></sc-for>
 </section>
 </div>
 </div>
@@ -201,10 +203,10 @@ class Component extends DCLogic {
     var IC = { inc: 'M12 19V5M6 11l6-6 6 6', exp: 'M12 5v14M6 13l6 6 6-6', bal: 'M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7zM4 7l11-3v3', sav: 'M5 11a7 7 0 0 1 13-3h2v4h-1.5a7 7 0 0 1-2.5 4v3h-3v-2h-3v2H7v-3.5A7 7 0 0 1 5 11zM10 6V4' };
     var bal = M.inc - M.exp - M.sav;
     var stats = [
-      { label: 'Ingresos', value: fmt(M.inc), sub: 'Sueldo y un trabajo extra', icon: IC.inc, cardStyle: 'gap: 10px;', icStyle: 'background: #2c2628; color: #c9c4f7;', labelStyle: 'color: #cfc6ba;', subStyle: 'font-size: 13px; color: #b0a69a;' },
-      { label: 'Gastos', value: fmt(M.exp), sub: Math.round(M.exp / M.inc * 100) + '% de lo que entró', icon: IC.exp, cardStyle: 'gap: 10px;', icStyle: 'background: #322b26; color: #f1ebe2;', labelStyle: 'color: #cfc6ba;', subStyle: 'font-size: 13px; color: #b0a69a;' },
-      { label: 'Apartado a ahorros', value: fmt(M.sav), sub: 'Fondo de emergencia', icon: IC.sav, cardStyle: 'gap: 10px;', icStyle: 'background: #3a322c; color: #f1ebe2;', labelStyle: 'color: #cfc6ba;', subStyle: 'font-size: 13px; color: #b0a69a;' },
-      { label: 'Te queda', value: fmt(bal), sub: M.note, icon: IC.bal, cardStyle: 'gap: 10px; background: #352e28; color: #f1ebe2; border-color: #f1ebe2;', icStyle: 'background: #4a4039; color: #a59ff0;', labelStyle: 'color: #c9bfb3;', subStyle: 'font-size: 13px; color: #c9bfb3;' }
+      { label: 'Ingresos', value: fmt(M.inc), sub: 'Sueldo y un trabajo extra', icon: IC.inc, cardStyle: 'gap: 10px;', icStyle: 'background: #27252b; color: #c9c4f7;', labelStyle: 'color: #c4beb5;', subStyle: 'font-size: 13px; color: #b3ada4;' },
+      { label: 'Gastos', value: fmt(M.exp), sub: Math.round(M.exp / M.inc * 100) + '% de lo que entró', icon: IC.exp, cardStyle: 'gap: 10px;', icStyle: 'background: #2d2b29; color: #ede9e2;', labelStyle: 'color: #c4beb5;', subStyle: 'font-size: 13px; color: #b3ada4;' },
+      { label: 'Apartado a ahorros', value: fmt(M.sav), sub: 'Fondo de emergencia', icon: IC.sav, cardStyle: 'gap: 10px;', icStyle: 'background: #3a3326; color: #ede9e2;', labelStyle: 'color: #c4beb5;', subStyle: 'font-size: 13px; color: #b3ada4;' },
+      { label: 'Te queda', value: fmt(bal), sub: M.note, icon: IC.bal, cardStyle: 'gap: 10px; background: #2a2824; color: #ede9e2; border-color: #ede9e2;', icStyle: 'background: #36332f; color: #a59ff0;', labelStyle: 'color: #c4beb5;', subStyle: 'font-size: 13px; color: #c4beb5;' }
     ];
     var H = [['May', 17800, 14100], ['Jun', 17800, 16900], ['Jul', 18500, 13200], ['Ago', 18500, 15800], ['Sep', 18500, 15120], ['Oct', 18500, 9240]];
     var max = 20000;
@@ -212,21 +214,21 @@ class Component extends DCLogic {
       var cur = (st.m === 0 && i === 5) || (st.m === 1 && i === 4);
       return { l: h[0], net: '+' + Math.round((h[1] - h[2]) / 1000 * 10) / 10 + 'k',
         inc: 'height: ' + (h[1] / max * 100) + '%; background: #a59ff0; animation-delay: ' + (i * 50) + 'ms;' + (cur ? '' : ' opacity: .55;'),
-        exp: 'height: ' + (h[2] / max * 100) + '%; background: #352e28; animation-delay: ' + (i * 50 + 25) + 'ms;' + (cur ? '' : ' opacity: .55;'),
-        labelStyle: 'font-size: 13px; ' + (cur ? 'font-weight: 600;' : 'color: #b0a69a;') };
+        exp: 'height: ' + (h[2] / max * 100) + '%; background: #2a2824; animation-delay: ' + (i * 50 + 25) + 'ms;' + (cur ? '' : ' opacity: .55;'),
+        labelStyle: 'font-size: 13px; ' + (cur ? 'font-weight: 600;' : 'color: #b3ada4;') };
     });
     var B = st.m === 0 ? [['Súper y comida', 2600, 4000], ['Comida fuera', 1680, 1500], ['Transporte', 640, 1200], ['Membresías', 1099, 1400], ['Salidas', 900, 2000]] : [['Súper y comida', 3900, 4000], ['Comida fuera', 2100, 1500], ['Transporte', 1180, 1200], ['Membresías', 1099, 1400], ['Salidas', 2300, 2000]];
     var budget = B.map(function (b) {
       var r = b[1] / b[2], over = r > 1, warn = r >= .8 && !over;
       return { name: b[0], amt: fmt(b[1]) + ' de ' + fmt(b[2]) + (over ? ' · te pasaste' : ''),
-        amtStyle: over ? 'color: #f0a08c; font-weight: 500;' : 'color: #b0a69a;',
+        amtStyle: over ? 'color: #f0a08c; font-weight: 500;' : 'color: #b3ada4;',
         w: 'height: 100%; width: ' + Math.min(100, Math.round(r * 100)) + '%;',
-        barStyle: 'height: 100%; border-radius: 999px; background: ' + (over ? '#c4573f' : warn ? '#7a5146' : '#352e28') + ';' };
+        barStyle: 'height: 100%; border-radius: 999px; background: ' + (over ? '#c4573f' : warn ? '#7a5146' : '#2a2824') + ';' };
     });
-    var CAT = [['Súper y comida', 2600, '#f1ebe2'], ['Comida fuera', 1680, '#a59ff0'], ['Membresías', 1099, '#a59ff0'], ['Salidas', 900, '#c9a79c'], ['Transporte y otros', 2961, '#423a33']];
+    var CAT = [['Súper y comida', 2600, '#ede9e2'], ['Comida fuera', 1680, '#a59ff0'], ['Membresías', 1099, '#a59ff0'], ['Salidas', 900, '#c9a79c'], ['Transporte y otros', 2961, '#34322f']];
     var tot = CAT.reduce(function (a, c) { return a + c[1]; }, 0);
     var cats = CAT.map(function (c) { var p = c[1] / tot; return { n: c[0], a: fmt(c[1]), p: Math.round(p * 100) + '%', seg: 'flex: ' + p + '; background: ' + c[2] + ';', dot: 'width: 12px; height: 12px; border-radius: 4px; background: ' + c[2] + ';' }; });
-    var MV = { inc: ['background: #2c2628; color: #c9c4f7;', 'M12 19V5M6 11l6-6 6 6'], food: ['background: #3a322c; color: #f1ebe2;', 'M4 3v8a3 3 0 0 0 3 3v7M7 3v5M10 3v8a3 3 0 0 1-3 3M17 21V3c-2 1-3 4-3 8h3'], cart: ['background: #322b26; color: #f1ebe2;', 'M3 4h3l2.5 11h10L21 7H7.5M10 20a1 1 0 1 0 0-.1M18 20a1 1 0 1 0 0-.1'], sav: ['background: #3a322c; color: #f1ebe2;', 'M5 11a7 7 0 0 1 13-3h2v4h-1.5a7 7 0 0 1-2.5 4v3h-3v-2h-3v2H7v-3.5A7 7 0 0 1 5 11z'], debt: ['background: #352e28; color: #f1ebe2;', 'M4 7h16v10H4zM4 11h16']};
+    var MV = { inc: ['background: #27252b; color: #c9c4f7;', 'M12 19V5M6 11l6-6 6 6'], food: ['background: #3a3326; color: #ede9e2;', 'M4 3v8a3 3 0 0 0 3 3v7M7 3v5M10 3v8a3 3 0 0 1-3 3M17 21V3c-2 1-3 4-3 8h3'], cart: ['background: #2d2b29; color: #ede9e2;', 'M3 4h3l2.5 11h10L21 7H7.5M10 20a1 1 0 1 0 0-.1M18 20a1 1 0 1 0 0-.1'], sav: ['background: #3a3326; color: #ede9e2;', 'M5 11a7 7 0 0 1 13-3h2v4h-1.5a7 7 0 0 1-2.5 4v3h-3v-2h-3v2H7v-3.5A7 7 0 0 1 5 11z'], debt: ['background: #2a2824; color: #ede9e2;', 'M4 7h16v10H4zM4 11h16']};
     var moves = [
       ['food', 'Tacos con amigos', 'Comida fuera · Débito ••4417 · hoy', -320],
       ['debt', 'Pago tarjeta de crédito', 'Deuda · desde Débito ••4417 · ayer', -1500],

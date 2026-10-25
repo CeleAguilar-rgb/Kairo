@@ -12,30 +12,30 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Outfit:wght@300;400;500;600&amp;display=swap">
 <style>
 body{margin:0}
-a{color:#f1ebe2}a:hover{color:#cfc6ba}
+a{color:#ede9e2}a:hover{color:#c4beb5}
 .wrap{padding:26px 44px 56px;box-sizing:border-box}
 @media (max-width:720px){.wrap{padding:14px 12px 40px}.topnav{order:3;width:100%}.hide-sm{display:none!important}}
 .pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:0;font:inherit;font-weight:500;cursor:pointer;text-decoration:none;transition:transform .2s ease,background .2s ease,color .2s ease}
-.pill-dark{background:#352e28;color:#f1ebe2;box-shadow:0 10px 22px -8px rgba(0,0,0,0.60)}
-.pill-dark:hover{transform:translateY(-1px);color:#f1ebe2}
-.pill-ghost{background:transparent;border:1px solid #5a5149;color:#f1ebe2}
-.pill-ghost:hover{background:#322b26}
-.pill-danger{background:#c4573f;color:#231e1b}
-.pill-danger:hover{transform:translateY(-1px);color:#231e1b}
+.pill-dark{background:#b7b1f5;color:#17151f;box-shadow:0 10px 22px -8px rgba(0,0,0,0.35)}
+.pill-dark:hover{transform:translateY(-1px);color:#17151f}
+.pill-ghost{background:transparent;border:1px solid rgba(237,233,226,.16);color:#ede9e2}
+.pill-ghost:hover{background:#2d2b29}
+.pill-danger{background:#c4573f;color:#1c1b19}
+.pill-danger:hover{transform:translateY(-1px);color:#1c1b19}
 .navlink{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .2s ease}
-.navlink:hover{background:rgba(241,235,226,0.06)}
+.navlink:hover{background:rgba(237,233,226,0.06)}
 .icon{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:999px;border:0;background:transparent;color:inherit;cursor:pointer;flex-shrink:0}
-.icon:hover{background:rgba(241,235,226,0.07)}
+.icon:hover{background:rgba(237,233,226,0.07)}
 .h2i{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:12px;flex-shrink:0}
-.card{background:#231e1b;border:1px solid #463e36;border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:18px}
+.card{background:#1e1d1b;border:1px solid rgba(237,233,226,.10);border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:18px}
 .field{display:flex;flex-direction:column;gap:6px}
 .lbl{font-weight:500;font-size:14px}
-.inp{box-sizing:border-box;width:100%;min-height:48px;padding:0 14px;border-radius:14px;border:1px solid #5a5149;background:#231e1b;font:inherit;color:#f1ebe2;transition:border-color .2s ease}
-.inp::placeholder{color:#a39a8e}
+.inp{box-sizing:border-box;width:100%;min-height:48px;padding:0 14px;border-radius:14px;border:1px solid rgba(237,233,226,.16);background:#1e1d1b;font:inherit;color:#ede9e2;transition:border-color .2s ease}
+.inp::placeholder{color:#9a958d}
 .inp:focus{outline:2px solid #a59ff0;outline-offset:1px}
 textarea.inp{padding:12px 14px;resize:vertical;line-height:1.55}
 .inp.bad{border-color:#f0a08c}
-.hint{font-size:13px;color:#b0a69a}
+.hint{font-size:13px;color:#b3ada4}
 .err{font-size:13px;color:#f0a08c;display:flex;align-items:center;gap:6px}
 .seg{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;cursor:pointer;font-weight:500;white-space:nowrap;transition:background .2s ease,color .2s ease}
 .squig{stroke-dasharray:320;animation:draw .9s .2s ease-out both}
@@ -43,7 +43,7 @@ textarea.inp{padding:12px 14px;resize:vertical;line-height:1.55}
 .pill:focus-visible,.navlink:focus-visible,.icon:focus-visible,.seg:focus-visible{outline:2px solid #a59ff0;outline-offset:3px}
 @media (prefers-reduced-motion:reduce){.squig{animation:none}.pill,.seg,.inp{transition:none}.pill:hover{transform:none}}
 /*common*/
-@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#231e1b!important;box-shadow:0 18px 40px -16px rgba(0,0,0,0.60);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #a59ff0;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
+@media (max-width:720px){.topnav{position:fixed!important;left:10px;right:10px;bottom:10px;z-index:60;order:0!important;width:auto!important;justify-content:space-around!important;background:#1e1d1b!important;box-shadow:0 18px 40px -16px rgba(0,0,0,0.35);padding:6px!important;overflow:visible!important;border-radius:24px!important}.topnav .navlink{flex-direction:column;gap:2px;min-height:54px;padding:0 2px;flex:1;justify-content:center;border-radius:18px;font-size:11px;font-weight:500}.topnav .nx{display:none}.wrap{padding-bottom:116px!important}.toast{bottom:96px!important}}.topnav .nmore{display:none}@media (max-width:720px){.topnav .nmore{display:inline-flex}}@media (min-width:721px) and (max-width:1320px){.topnav .navlink{padding:0 10px;gap:6px}}.avlink:focus-visible{outline:2px solid #a59ff0;outline-offset:3px}@media (max-width:720px){.avlink{display:none!important}}.scrim{z-index:65}.drawer{z-index:70}
 .chk{position:relative}.chk::after{content:"";position:absolute;inset:-10px}
 .dotbtn{position:relative}.dotbtn::after{content:"";position:absolute;inset:-4px}
 .bar{transition:none!important;transform-origin:left center;animation:barIn .7s cubic-bezier(.3,.7,.2,1) both}
@@ -52,7 +52,7 @@ textarea.inp{padding:12px 14px;resize:vertical;line-height:1.55}
 @keyframes wbarIn{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 @media (prefers-reduced-motion:reduce){.bar,.wbar{animation:none}}
 
-.tabs{display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(34,30,27,0.7);border:1px solid #463e36;align-self:flex-start;overflow-x:auto;max-width:100%;box-sizing:border-box}
+.tabs{display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(28,27,25,0.7);border:1px solid rgba(237,233,226,.10);align-self:flex-start;overflow-x:auto;max-width:100%;box-sizing:border-box}
 .tb{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;cursor:pointer;font-weight:500;white-space:nowrap}
 .tb:focus-visible{outline:2px solid #a59ff0}
 .cnt{font-size:12px;padding:0 7px;border-radius:999px}
@@ -62,55 +62,57 @@ textarea.inp{padding:12px 14px;resize:vertical;line-height:1.55}
 .book:hover{transform:translateY(-2px)}
 .book:focus-visible{outline:2px solid #a59ff0;outline-offset:2px}
 .spine{width:64px;height:88px;border-radius:6px 14px 14px 6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:300;font-size:30px;box-shadow:inset 7px 0 0 rgba(0,0,0,.22)}
-.track{height:7px;border-radius:999px;background:#302a25;overflow:hidden}
-.chap{display:flex;align-items:center;gap:14px;min-height:56px;border-top:1px solid #3a332d;text-decoration:none;color:#f1ebe2}
+.track{height:7px;border-radius:999px;background:#2d2b29;overflow:hidden}
+.chap{display:flex;align-items:center;gap:14px;min-height:56px;border-top:1px solid rgba(237,233,226,.08);text-decoration:none;color:#ede9e2}
 .chap:focus-visible{outline:2px solid #a59ff0}
 .st{display:inline-flex;align-items:center;min-height:26px;padding:0 12px;border-radius:999px;font-size:12px;font-weight:500;white-space:nowrap}
 .notes{columns:3 260px;column-gap:16px}
-.note{break-inside:avoid;display:flex;flex-direction:column;margin-bottom:16px;border-radius:22px;overflow:hidden;background:#231e1b;border:1px solid #463e36;text-decoration:none;color:#f1ebe2;animation:nIn .4s cubic-bezier(.3,.7,.2,1) both;transition:transform .2s ease,box-shadow .2s ease}
-.note:hover{transform:translateY(-2px);box-shadow:0 16px 28px -20px rgba(0,0,0,0.65)}
+.note{break-inside:avoid;display:flex;flex-direction:column;margin-bottom:16px;border-radius:22px;overflow:hidden;background:#1e1d1b;border:1px solid rgba(237,233,226,.10);text-decoration:none;color:#ede9e2;animation:nIn .4s cubic-bezier(.3,.7,.2,1) both;transition:transform .2s ease,box-shadow .2s ease}
+.note:hover{transform:translateY(-2px);box-shadow:0 16px 28px -20px rgba(0,0,0,0.35)}
 .note:focus-visible{outline:2px solid #a59ff0;outline-offset:2px}
 @keyframes nIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .chars{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
-.ch{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;border-radius:22px;background:#231e1b;border:1px solid #463e36;text-align:center;text-decoration:none;color:#f1ebe2}
+.ch{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;border-radius:22px;background:#1e1d1b;border:1px solid rgba(237,233,226,.10);text-align:center;text-decoration:none;color:#ede9e2}
 .ch:focus-visible{outline:2px solid #a59ff0}
-.av{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:24px;border:2px solid #f1ebe2}
-.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:150px;border-radius:22px;border:2px dashed #5a5149;color:#cfc6ba;text-align:center;padding:16px;margin-bottom:16px;break-inside:avoid;cursor:pointer;background:transparent;font:inherit;width:100%;box-sizing:border-box}
+.av{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:24px;border:2px solid #ede9e2}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:150px;border-radius:22px;border:2px dashed rgba(237,233,226,.16);color:#c4beb5;text-align:center;padding:16px;margin-bottom:16px;break-inside:avoid;cursor:pointer;background:transparent;font:inherit;width:100%;box-sizing:border-box}
 .drop:focus-visible{outline:2px solid #a59ff0}
 .pane{animation:pane .3s ease both}
 @keyframes pane{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.book,.note{transition:none;animation:none}.book:hover,.note:hover{transform:none}.pane{animation:none}}
+[style*="rgba(237,233,226,.10)"]{box-shadow:inset 0 1px 0 rgba(255,255,255,.05)!important}
+.pill-dark:hover{color:#17151f!important}
 </style>
 </helmet>
-<div style="min-height: 100vh; background: radial-gradient(1200px 600px at 85% -10%, #1b1815 0%, rgba(31,27,24,0.0) 60%), #131110; color: #f1ebe2; font-family: 'Outfit', system-ui, sans-serif; color-scheme: dark; font-size: 15px; line-height: 1.5; position: relative; overflow-x: hidden">
+<div style="min-height: 100vh; background: radial-gradient(1200px 600px at 85% -10%, #161514 0%, rgba(23,22,21,0.0) 60%), #131211; color: #ede9e2; font-family: 'Outfit', system-ui, sans-serif; color-scheme: dark; font-size: 15px; line-height: 1.5; position: relative; overflow-x: hidden">
 <div class="wrap" style="display: flex; flex-direction: column; gap: 20px">
 <header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
 <a href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 8px; font-family: 'Gochi Hand', cursive; font-size: 28px; text-decoration: none; line-height: 1">
-<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#f1ebe2" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#a59ff0" stroke="#f1ebe2" stroke-width="3.5"></circle></svg>
+<svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="#ede9e2" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="#a59ff0" stroke="#ede9e2" stroke-width="3.5"></circle></svg>
 kairo</a>
-<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(34,30,27,0.7); border: 1px solid #463e36">
-<a class="navlink nb" href="Main.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
-<a class="navlink nb" href="Tareas.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
-<a class="navlink nx" href="Proyectos.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
-<a class="navlink nb" href="Agenda.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
-<a class="navlink nx" href="FinResumen.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
-<a class="navlink nx" href="EscritosInicio.dc.html" aria-current="page" style="background: #352e28; color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
-<a class="navlink nb" href="DiaADia.dc.html" style="color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
-<a class="navlink nmore" href="Mas.dc.html" aria-current="page" style="background: #352e28; color: #f1ebe2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
-</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #231e1b; border: 1px solid #463e36; flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#f1ebe2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#a59ff0"></path></svg></a><!--/AV-->
+<nav class="topnav" aria-label="Secciones" style="display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(28,27,25,0.7); border: 1px solid rgba(237,233,226,.10)">
+<a class="navlink nb" href="Main.dc.html" style="color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7"></path><path d="M6 10v10h12V10"></path></svg><span class="nl">Inicio</span></a>
+<a class="navlink nb" href="Tareas.dc.html" style="color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"></rect><path d="M8.5 12l2.5 2.5 4.5-5"></path></svg><span class="nl">Tareas</span></a>
+<a class="navlink nx" href="Proyectos.dc.html" style="color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"></path></svg><span class="nl">Proyectos</span></a>
+<a class="navlink nb" href="Agenda.dc.html" style="color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span class="nl">Agenda</span></a>
+<a class="navlink nx" href="FinResumen.dc.html" style="color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a1 1 0 0 1-1-1V7z"></path><path d="M4 7l11-3v3"></path><circle cx="16" cy="13.5" r="1.2"></circle></svg><span class="nl">Finanzas</span></a>
+<a class="navlink nx" href="EscritosInicio.dc.html" aria-current="page" style="background: #2a2824; color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path><path d="M12 6l6 6"></path></svg><span class="nl">Escritos</span></a>
+<a class="navlink nb" href="DiaADia.dc.html" style="color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><span class="nl">Día a día</span></a>
+<a class="navlink nmore" href="Mas.dc.html" aria-current="page" style="background: #2a2824; color: #ede9e2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.6"></circle><circle cx="12" cy="12" r="1.6"></circle><circle cx="19" cy="12" r="1.6"></circle></svg><span class="nl">Más</span></a>
+</nav><!--AV--><a class="avlink" href="Perfil.dc.html" aria-label="Mi perfil" style="order: 9; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #1e1d1b; border: 1px solid rgba(237,233,226,.10); flex-shrink: 0"><svg width="24" height="24" viewBox="0 0 40 40" fill="none" stroke="#ede9e2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l3.6 8.2 8.9.8-6.7 5.9 2 8.7L20 25l-7.8 4.6 2-8.7-6.7-5.9 8.9-.8L20 6z" fill="#a59ff0"></path></svg></a><!--/AV-->
 <a class="pill pill-dark" href="Pagina.dc.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path></svg>Escribir</a>
 </header>
 
 <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap">
 <div style="display: flex; flex-direction: column; gap: 2px">
-<div style="display: flex; align-items: flex-start; gap: 10px"><h1 style="margin: 0; font-family: 'Gochi Hand', cursive; font-weight: 400; font-size: clamp(52px, 12vw, 72px); line-height: 1">Escritos</h1><svg width="34" height="34" viewBox="0 0 40 40" fill="none" stroke="#f1ebe2" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" style="margin-top: 10px"><path d="M21 20.4c.6-1.8-1.6-2.8-3-1.6-1.8 1.6-.4 4.6 2 4.8 3.4.2 5.2-3.6 3.6-6.6-2-3.6-7.2-3.6-9.6-.4-2.8 3.8-.6 9.6 4.2 10.6 5.4 1.2 10.2-3 10-8.4"></path></svg></div>
+<div style="display: flex; align-items: flex-start; gap: 10px"><h1 style="margin: 0; font-family: 'Gochi Hand', cursive; font-weight: 400; font-size: clamp(52px, 12vw, 72px); line-height: 1">Escritos</h1><svg width="34" height="34" viewBox="0 0 40 40" fill="none" stroke="#ede9e2" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" style="margin-top: 10px"><path d="M21 20.4c.6-1.8-1.6-2.8-3-1.6-1.8 1.6-.4 4.6 2 4.8 3.4.2 5.2-3.6 3.6-6.6-2-3.6-7.2-3.6-9.6-.4-2.8 3.8-.6 9.6 4.2 10.6 5.4 1.2 10.2-3 10-8.4"></path></svg></div>
 <svg width="230" height="14" viewBox="0 0 300 16" fill="none" aria-hidden="true" style="max-width: 100%"><path class="squig" d="M3 10c22-8 40 6 64-1s40-8 62 0 44 7 66-1 46-6 72 3 30-3 30-3" stroke="#a59ff0" stroke-width="5" stroke-linecap="round"></path></svg>
-<span style="color: #b0a69a; font-size: 17px">1 mundo, 1 historia, {{noteCount}} notas y 11 personajes.</span>
+<span style="color: #b3ada4; font-size: 17px">1 mundo, 1 historia, {{noteCount}} notas y 11 personajes.</span>
 </div>
-<div style="display: flex; align-items: center; gap: 18px; padding: 14px 18px; border-radius: 22px; background: #231e1b; border: 1px solid #463e36">
+<div style="display: flex; align-items: center; gap: 18px; padding: 14px 18px; border-radius: 22px; background: #1e1d1b; border: 1px solid rgba(237,233,226,.10)">
 <div style="display: flex; flex-direction: column"><span style="font-size: 30px; font-weight: 300; line-height: 1">2,140</span><span class="hint">palabras esta semana · meta 500 al día</span></div>
 <div style="display: flex; gap: 5px; align-items: flex-end" role="img" aria-label="Palabras por día: lunes a miércoles escribiste, jueves aún no">
-<sc-for list="{{week}}" as="w" hint-placeholder-count="7"><div style="display: flex; flex-direction: column; align-items: center; gap: 4px"><span class="wbar" style="{{w.bar}}"></span><span style="font-size: 11px; color: #b0a69a">{{w.d}}</span></div></sc-for>
+<sc-for list="{{week}}" as="w" hint-placeholder-count="7"><div style="display: flex; flex-direction: column; align-items: center; gap: 4px"><span class="wbar" style="{{w.bar}}"></span><span style="font-size: 11px; color: #b3ada4">{{w.d}}</span></div></sc-for>
 </div>
 </div>
 </div>
@@ -126,19 +128,19 @@ kairo</a>
 <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; text-align: left"><span style="font-size: 17px; font-weight: 500; line-height: 1.25">{{b.name}}</span><span class="hint">{{b.sub}}</span><span class="track"><span style="{{b.w}}"></span></span><span class="hint" style="font-size: 12px">{{b.words}}</span></span>
 </button>
 </sc-for>
-<button type="button" style="all: unset; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 64px; border-radius: 24px; border: 2px dashed #5a5149; cursor: pointer; font-weight: 500"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Nueva historia o cuaderno</button>
+<button type="button" style="all: unset; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 64px; border-radius: 24px; border: 2px dashed rgba(237,233,226,.16); cursor: pointer; font-weight: 500"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Nueva historia o cuaderno</button>
 </div>
 <section class="card" aria-labelledby="h-book" style="gap: 16px; padding: 26px">
 <div style="display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: flex-start">
 <div style="display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 240px"><span class="hint">{{cur.kicker}}</span><h2 id="h-book" style="margin: 0; font-size: 30px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.15">{{cur.name}}</h2></div>
 <a class="pill pill-dark" href="Pagina.dc.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6L9 21H3v-6L14 4z"></path></svg>Seguir escribiendo</a>
 </div>
-<p style="margin: 0; font-size: 16px; line-height: 1.65; color: #cfc6ba; max-width: 640px">{{cur.desc}}</p>
+<p style="margin: 0; font-size: 16px; line-height: 1.65; color: #c4beb5; max-width: 640px">{{cur.desc}}</p>
 <div style="display: flex; flex-direction: column"><h3 style="margin: 0 0 6px; font-size: 15px; font-weight: 600">{{cur.listTitle}}</h3>
-<sc-for list="{{cur.items}}" as="c" hint-placeholder-count="3"><a class="chap" href="Pagina.dc.html"><span style="font-weight: 500; font-size: 15px; width: 34px; color: #a39a8e">{{c.n}}</span><span style="flex: 1; min-width: 0; font-weight: 500">{{c.name}}</span><span class="hint hide-sm">{{c.words}}</span><span class="st" style="{{c.stStyle}}">{{c.st}}</span></a></sc-for>
+<sc-for list="{{cur.items}}" as="c" hint-placeholder-count="3"><a class="chap" href="Pagina.dc.html"><span style="font-weight: 500; font-size: 15px; width: 34px; color: #9a958d">{{c.n}}</span><span style="flex: 1; min-width: 0; font-weight: 500">{{c.name}}</span><span class="hint hide-sm">{{c.words}}</span><span class="st" style="{{c.stStyle}}">{{c.st}}</span></a></sc-for>
 </div>
 <sc-if value="{{cur.hasChars}}" hint-placeholder-val="{{true}}">
-<div style="display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-size: 15px; font-weight: 600">Personajes en esta historia</h3><div style="display: flex; gap: 8px; flex-wrap: wrap"><sc-for list="{{leads}}" as="p" hint-placeholder-count="2"><a href="BaseDatos.dc.html" style="display: inline-flex; align-items: center; gap: 8px; padding: 4px 14px 4px 4px; border-radius: 999px; background: #2d2723; text-decoration: none; color: #f1ebe2"><span style="{{p.av}}">{{p.i}}</span>{{p.n}}</a></sc-for></div></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><h3 style="margin: 0; font-size: 15px; font-weight: 600">Personajes en esta historia</h3><div style="display: flex; gap: 8px; flex-wrap: wrap"><sc-for list="{{leads}}" as="p" hint-placeholder-count="2"><a href="BaseDatos.dc.html" style="display: inline-flex; align-items: center; gap: 8px; padding: 4px 14px 4px 4px; border-radius: 999px; background: #262523; text-decoration: none; color: #ede9e2"><span style="{{p.av}}">{{p.i}}</span>{{p.n}}</a></sc-for></div></div>
 </sc-if>
 </section>
 </div>
@@ -146,15 +148,15 @@ kairo</a>
 
 <sc-if value="{{tNotas}}" hint-placeholder-val="{{false}}">
 <div class="pane notes">
-<button class="drop" type="button" onClick="{{addNote}}"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#f1ebe2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="9" width="30" height="24" rx="5" fill="#2c2628"></rect><path d="M5 27l9-8 7 6 5-4 9 7"></path><circle cx="26" cy="16" r="2.5"></circle></svg><span style="font-weight: 500">Nueva nota</span><span class="hint">Escribe, o arrastra una imagen aquí</span></button>
+<button class="drop" type="button" onClick="{{addNote}}"><svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#ede9e2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="9" width="30" height="24" rx="5" fill="#27252b"></rect><path d="M5 27l9-8 7 6 5-4 9 7"></path><circle cx="26" cy="16" r="2.5"></circle></svg><span style="font-weight: 500">Nueva nota</span><span class="hint">Escribe, o arrastra una imagen aquí</span></button>
 <sc-for list="{{notes}}" as="n" hint-placeholder-count="6">
 <a class="note" href="Pagina.dc.html" style="{{n.delay}}">
-<sc-if value="{{n.isMap}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 300 180" width="100%" aria-hidden="true" style="display: block; background: #3a322c"><path d="M30 120c20-40 60-60 90-50s40 40 70 30 50-50 80-40" fill="none" stroke="#f1ebe2" stroke-width="2.2" stroke-dasharray="6 6"></path><path d="M40 60c15-15 40-18 55-5 10 9 4 25-12 28-20 4-50-6-43-23zM180 110c18-12 46-8 56 8 7 11-4 24-22 24-26 0-48-18-34-32z" fill="#a59ff0" stroke="#f1ebe2" stroke-width="2"></path><text x="68" y="72" text-anchor="middle" font-family="Gochi Hand, cursive" font-size="13" fill="#f1ebe2">Vadronia</text><text x="208" y="129" text-anchor="middle" font-family="Gochi Hand, cursive" font-size="13" fill="#f1ebe2">Nocturnia</text><path d="M255 30l6 12 13 2-9 9 2 13-12-6-12 6 2-13-9-9 13-2z" fill="#231e1b" stroke="#f1ebe2" stroke-width="1.8"></path></svg></sc-if>
-<sc-if value="{{n.isMood}}" hint-placeholder-val="{{false}}"><div aria-hidden="true" style="display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 70px 70px; gap: 4px; padding: 4px; background: #231e1b"><span style="grid-row: span 2; border-radius: 16px 4px 4px 16px; background: linear-gradient(160deg, #352e28, #7c74e0 70%, #a59ff0)"></span><span style="border-radius: 4px 16px 4px 4px; background: #3a322c"></span><span style="border-radius: 4px 4px 16px 4px; background: linear-gradient(135deg, #5b53b8, #2c2628)"></span></div></sc-if>
-<sc-if value="{{n.isPhoto}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 300 200" width="100%" aria-hidden="true" style="display: block"><rect width="300" height="200" fill="#2c2628"></rect><circle cx="225" cy="58" r="22" fill="#231e1b"></circle><path d="M0 160l70-70 50 45 40-35 80 70v30H0z" fill="#c9c4f7"></path><path d="M0 175l90-50 70 40 60-30 80 40v25H0z" fill="#f1ebe2"></path></svg></sc-if>
+<sc-if value="{{n.isMap}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 300 180" width="100%" aria-hidden="true" style="display: block; background: #3a3326"><path d="M30 120c20-40 60-60 90-50s40 40 70 30 50-50 80-40" fill="none" stroke="#ede9e2" stroke-width="2.2" stroke-dasharray="6 6"></path><path d="M40 60c15-15 40-18 55-5 10 9 4 25-12 28-20 4-50-6-43-23zM180 110c18-12 46-8 56 8 7 11-4 24-22 24-26 0-48-18-34-32z" fill="#a59ff0" stroke="#ede9e2" stroke-width="2"></path><text x="68" y="72" text-anchor="middle" font-family="Gochi Hand, cursive" font-size="13" fill="#ede9e2">Vadronia</text><text x="208" y="129" text-anchor="middle" font-family="Gochi Hand, cursive" font-size="13" fill="#ede9e2">Nocturnia</text><path d="M255 30l6 12 13 2-9 9 2 13-12-6-12 6 2-13-9-9 13-2z" fill="#1c1b19" stroke="#ede9e2" stroke-width="1.8"></path></svg></sc-if>
+<sc-if value="{{n.isMood}}" hint-placeholder-val="{{false}}"><div aria-hidden="true" style="display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 70px 70px; gap: 4px; padding: 4px; background: #1e1d1b"><span style="grid-row: span 2; border-radius: 16px 4px 4px 16px; background: linear-gradient(160deg, #2a2824, #8a83e6 70%, #a59ff0)"></span><span style="border-radius: 4px 16px 4px 4px; background: #3a3326"></span><span style="border-radius: 4px 4px 16px 4px; background: linear-gradient(135deg, #5f58bf, #27252b)"></span></div></sc-if>
+<sc-if value="{{n.isPhoto}}" hint-placeholder-val="{{false}}"><svg viewBox="0 0 300 200" width="100%" aria-hidden="true" style="display: block"><rect width="300" height="200" fill="#27252b"></rect><circle cx="225" cy="58" r="22" fill="#1c1b19"></circle><path d="M0 160l70-70 50 45 40-35 80 70v30H0z" fill="#c9c4f7"></path><path d="M0 175l90-50 70 40 60-30 80 40v25H0z" fill="#ede9e2"></path></svg></sc-if>
 <div style="display: flex; flex-direction: column; gap: 6px; padding: 14px 16px 16px">
 <span style="font-weight: 500">{{n.t}}</span>
-<sc-if value="{{n.hasText}}" hint-placeholder-val="{{true}}"><span style="color: #cfc6ba; font-size: 14px; line-height: 1.55">{{n.text}}</span></sc-if>
+<sc-if value="{{n.hasText}}" hint-placeholder-val="{{true}}"><span style="color: #c4beb5; font-size: 14px; line-height: 1.55">{{n.text}}</span></sc-if>
 <sc-if value="{{n.hasList}}" hint-placeholder-val="{{false}}"><div style="display: flex; flex-direction: column; gap: 4px"><sc-for list="{{n.list}}" as="l" hint-placeholder-count="3"><span style="display: flex; gap: 8px; align-items: center; font-size: 14px"><span style="{{l.box}}"></span><span style="{{l.txt}}">{{l.t}}</span></span></sc-for></div></sc-if>
 <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap"><span class="st" style="{{n.tagStyle}}">{{n.tag}}</span><sc-if value="{{n.hasImg}}" hint-placeholder-val="{{false}}"><span class="hint" style="display: inline-flex; align-items: center; gap: 4px; font-size: 12px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M3 16l5-5 4 4 3-3 6 6"></path></svg>{{n.imgs}}</span></sc-if><span style="flex: 1"></span><span class="hint" style="font-size: 12px">{{n.when}}</span></div>
 </div>
@@ -172,11 +174,11 @@ kairo</a>
 
 <sc-if value="{{tMundos}}" hint-placeholder-val="{{false}}">
 <div class="pane" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px">
-<a href="Escritos.dc.html" style="position: relative; border-radius: 32px; overflow: hidden; background: #352e28; color: #f1ebe2; min-height: 260px; display: flex; align-items: flex-end; text-decoration: none; box-shadow: 0 30px 60px -36px rgba(0,0,0,0.85)">
-<svg width="100%" height="100%" viewBox="0 0 600 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position: absolute; inset: 0"><circle cx="470" cy="90" r="54" fill="#e6dccb"></circle><circle cx="448" cy="78" r="54" fill="#f1ebe2"></circle><g fill="#f1ebe2"><circle cx="80" cy="40" r="2"></circle><circle cx="180" cy="90" r="1.5"></circle><circle cx="300" cy="30" r="2"></circle><circle cx="360" cy="140" r="1.5"></circle><circle cx="560" cy="200" r="2"></circle></g></svg>
-<div style="position: relative; padding: 24px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: #c9bfb3">Mundo · desde tu Notion</span><span style="font-family: 'Gochi Hand', cursive; font-size: 72px; line-height: .95; color: #e6dccb">Auralun</span><span style="color: #c9bfb3">2 regiones · 4 reinos · 4 eras · 7 especies</span></div>
+<a href="Escritos.dc.html" style="position: relative; border-radius: 32px; overflow: hidden; background: #2a2824; color: #ede9e2; min-height: 260px; display: flex; align-items: flex-end; text-decoration: none; box-shadow: 0 30px 60px -36px rgba(0,0,0,0.35)">
+<svg width="100%" height="100%" viewBox="0 0 600 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position: absolute; inset: 0"><circle cx="470" cy="90" r="54" fill="#e6d6b4"></circle><circle cx="448" cy="78" r="54" fill="#ede9e2"></circle><g fill="#ede9e2"><circle cx="80" cy="40" r="2"></circle><circle cx="180" cy="90" r="1.5"></circle><circle cx="300" cy="30" r="2"></circle><circle cx="360" cy="140" r="1.5"></circle><circle cx="560" cy="200" r="2"></circle></g></svg>
+<div style="position: relative; padding: 24px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: #c4beb5">Mundo · desde tu Notion</span><span style="font-family: 'Gochi Hand', cursive; font-size: 72px; line-height: .95; color: #e6d6b4">Aurelun</span><span style="color: #c4beb5">2 regiones · 4 reinos · 4 eras · 7 especies</span></div>
 </a>
-<button type="button" style="all: unset; box-sizing: border-box; min-height: 260px; border-radius: 32px; border: 2px dashed #5a5149; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; cursor: pointer; text-align: center; padding: 20px"><svg width="44" height="44" viewBox="0 0 40 40" fill="none" stroke="#f1ebe2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="20" cy="20" r="13" fill="#2c2628"></circle><path d="M7 20h26M20 7c4 4 6 8.5 6 13s-2 9-6 13c-4-4-6-8.5-6-13s2-9 6-13z"></path></svg><span style="font-weight: 500">Nuevo mundo</span><span class="hint">Regiones, eras, personajes y especies</span></button>
+<button type="button" style="all: unset; box-sizing: border-box; min-height: 260px; border-radius: 32px; border: 2px dashed rgba(237,233,226,.16); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; cursor: pointer; text-align: center; padding: 20px"><svg width="44" height="44" viewBox="0 0 40 40" fill="none" stroke="#ede9e2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="20" cy="20" r="13" fill="#27252b"></circle><path d="M7 20h26M20 7c4 4 6 8.5 6 13s-2 9-6 13c-4-4-6-8.5-6-13s2-9 6-13z"></path></svg><span style="font-weight: 500">Nuevo mundo</span><span class="hint">Regiones, eras, personajes y especies</span></button>
 </div>
 </sc-if>
 </div>
@@ -188,39 +190,39 @@ class Component extends DCLogic {
   renderVals() {
     var self = this, st = this.state;
     var W = [[620, 'L'], [880, 'M'], [640, 'M'], [0, 'J'], [0, 'V'], [0, 'S'], [0, 'D']];
-    var week = W.map(function (w, i) { var h = Math.max(4, Math.round(w[0] / 900 * 40)); return { d: w[1], bar: 'display: block; width: 12px; height: ' + h + 'px; border-radius: 6px; background: ' + (w[0] ? (i === 1 ? '#352e28' : '#5b53b8') : '#302a25') + '; animation-delay: ' + (i * 60) + 'ms;' }; });
+    var week = W.map(function (w, i) { var h = Math.max(4, Math.round(w[0] / 900 * 40)); return { d: w[1], bar: 'display: block; width: 12px; height: ' + h + 'px; border-radius: 6px; background: ' + (w[0] ? (i === 1 ? '#2a2824' : '#5f58bf') : '#2d2b29') + '; animation-delay: ' + (i * 60) + 'ms;' }; });
     var N = [
-      { t: 'Mapa de Auralun (boceto)', text: 'Primer boceto de dónde queda cada región. Falta Nocturnia completa.', tag: 'Auralun', kind: 'map', imgs: '1 imagen', when: 'ayer' },
-      { t: 'Pendientes de Auralun', list: [['Revisar nombres de los reinos', 1], ['Decidir Nordria o Nodria', 0], ['Página de Nocturnia', 0]], tag: 'Auralun', when: 'lun 5' },
-      { t: 'Colores de Nordria', text: 'Paleta para la corte del norte: noche, oro viejo y lavanda.', tag: 'Auralun', kind: 'mood', imgs: '3 imágenes', when: 'sáb 3' },
+      { t: 'Mapa de Aurelun (boceto)', text: 'Primer boceto de dónde queda cada región. Falta Nocturnia completa.', tag: 'Aurelun', kind: 'map', imgs: '1 imagen', when: 'ayer' },
+      { t: 'Pendientes de Aurelun', list: [['Revisar nombres de los reinos', 1], ['Decidir Nordria o Nodria', 0], ['Página de Nocturnia', 0]], tag: 'Aurelun', when: 'lun 5' },
+      { t: 'Colores de Nordria', text: 'Paleta para la corte del norte: noche, oro viejo y lavanda.', tag: 'Aurelun', kind: 'mood', imgs: '3 imágenes', when: 'sáb 3' },
       { t: 'Frases sueltas', text: 'Aquí van las frases que se te ocurren para usarlas después.', tag: 'Ideas', when: '30 sep' },
-      { t: 'Referencia de paisaje', text: 'Montañas al atardecer para el viaje hacia Nordria.', tag: 'Auralun', kind: 'photo', imgs: '1 imagen', when: '28 sep' },
+      { t: 'Referencia de paisaje', text: 'Montañas al atardecer para el viaje hacia Nordria.', tag: 'Aurelun', kind: 'photo', imgs: '1 imagen', when: '28 sep' },
       { t: 'Arquitectura de bots', text: 'Módulos separados: entrada, cerebro, salidas. Plantilla base para nuevos bots.', tag: 'Trabajo', when: '25 sep' }
     ];
     for (var x = 0; x < st.extra; x++) N.unshift({ t: 'Nota nueva', text: 'Toca para escribir o agregar imágenes.', tag: 'Sin etiqueta', when: 'ahora' });
-    var TS = { Auralun: 'background: #352e28; color: #e6dccb;', Ideas: 'background: #3a322c; color: #f1ebe2;', Trabajo: 'background: #2c2628; color: #c9c4f7;', 'Sin etiqueta': 'background: #322b26; color: #cfc6ba;' };
-    var notes = N.map(function (n, i) { return { t: n.t, text: n.text || '', hasText: !!n.text, hasList: !!n.list, list: (n.list || []).map(function (l) { return { t: l[0], box: 'width: 14px; height: 14px; border-radius: 5px; flex-shrink: 0; ' + (l[1] ? 'background: #5b53b8;' : 'border: 1.5px solid #6e655c;'), txt: l[1] ? 'color: #a39a8e; text-decoration: line-through;' : '' }; }), tag: n.tag, tagStyle: TS[n.tag], isMap: n.kind === 'map', isMood: n.kind === 'mood', isPhoto: n.kind === 'photo', hasImg: !!n.kind, imgs: n.imgs || '', when: n.when, delay: 'animation-delay: ' + (i * 50) + 'ms;' }; });
+    var TS = { Aurelun: 'background: #2a2824; color: #e6d6b4;', Ideas: 'background: #3a3326; color: #ede9e2;', Trabajo: 'background: #27252b; color: #c9c4f7;', 'Sin etiqueta': 'background: #2d2b29; color: #c4beb5;' };
+    var notes = N.map(function (n, i) { return { t: n.t, text: n.text || '', hasText: !!n.text, hasList: !!n.list, list: (n.list || []).map(function (l) { return { t: l[0], box: 'width: 14px; height: 14px; border-radius: 5px; flex-shrink: 0; ' + (l[1] ? 'background: #5f58bf;' : 'border: 1.5px solid rgba(237,233,226,.22);'), txt: l[1] ? 'color: #9a958d; text-decoration: line-through;' : '' }; }), tag: n.tag, tagStyle: TS[n.tag], isMap: n.kind === 'map', isMood: n.kind === 'mood', isPhoto: n.kind === 'photo', hasImg: !!n.kind, imgs: n.imgs || '', when: n.when, delay: 'animation-delay: ' + (i * 50) + 'ms;' }; });
     var B = {
-      cuento: { name: 'Un cuento de amores y dragones', ini: 'C', kicker: 'Historia · Auralun · Era III · Letargo Dorado', sub: 'Historia · 3 capítulos', words: '1,253 de 30,000 palabras', frac: .04, spine: 'background: #352e28; color: #e6dccb;', desc: 'Historia de Jericó (Sudria) y Eleanor (Nordria) en los miles de años de paz tras la fundación de los cuatro reinos.', listTitle: 'Capítulos', chars: true,
+      cuento: { name: 'Un cuento de amores y dragones', ini: 'C', kicker: 'Historia · Aurelun · Era III · Letargo Dorado', sub: 'Historia · 3 capítulos', words: '1,253 de 30,000 palabras', frac: .04, spine: 'background: #2a2824; color: #e6d6b4;', desc: 'Historia de Jericó (Sudria) y Eleanor (Nordria) en los miles de años de paz tras la fundación de los cuatro reinos.', listTitle: 'Capítulos', chars: true,
         items: [['0', '0.- Antecedentes de Vadronia', '1,253 palabras', 'En curso'], ['I', 'I.- Jericó', '—', 'Pendiente'], ['?', 'Una noche de constelaciones', '—', 'Sin estado']] },
-      ideas: { name: 'Cuaderno de ideas', ini: 'I', kicker: 'Cuaderno · notas sueltas', sub: 'Cuaderno · 12 páginas', words: '3,410 palabras', frac: .3, spine: 'background: #5b53b8; color: #f1ebe2;', desc: 'Lo que se te ocurre y no quieres perder: frases, ideas de proyectos y referencias con imágenes.', listTitle: 'Páginas recientes', chars: false,
-        items: [['1', 'Pendientes de Auralun', '3 casillas', 'Lista'], ['2', 'Frases sueltas', '640 palabras', 'Abierta'], ['3', 'Referencias visuales', '4 imágenes', 'Galería']] }
+      ideas: { name: 'Cuaderno de ideas', ini: 'I', kicker: 'Cuaderno · notas sueltas', sub: 'Cuaderno · 12 páginas', words: '3,410 palabras', frac: .3, spine: 'background: #5f58bf; color: #ede9e2;', desc: 'Lo que se te ocurre y no quieres perder: frases, ideas de proyectos y referencias con imágenes.', listTitle: 'Páginas recientes', chars: false,
+        items: [['1', 'Pendientes de Aurelun', '3 casillas', 'Lista'], ['2', 'Frases sueltas', '640 palabras', 'Abierta'], ['3', 'Referencias visuales', '4 imágenes', 'Galería']] }
     };
-    var SS = { 'En curso': 'background: #352e28; color: #f1ebe2;', 'Pendiente': 'background: #3a322c; color: #f1ebe2;', 'Sin estado': 'background: #322b26; color: #b0a69a;', 'Lista': 'background: #2c2628; color: #c9c4f7;', 'Abierta': 'background: #322b26; color: #cfc6ba;', 'Galería': 'background: #5b53b8; color: #f1ebe2;' };
-    var books = ['cuento', 'ideas'].map(function (k) { var b = B[k], on = st.book === k; return { name: b.name, ini: b.ini, sub: b.sub, words: b.words, spine: b.spine, on: on ? 'true' : 'false', w: 'display: block; height: 100%; width: ' + Math.max(4, b.frac * 100) + '%; border-radius: 999px; background: #352e28;', style: on ? 'background: #231e1b; box-shadow: 0 0 0 2px #f1ebe2;' : 'background: #2d2723;', pick: function () { self.setState({ book: k }); } }; });
+    var SS = { 'En curso': 'background: #2a2824; color: #ede9e2;', 'Pendiente': 'background: #3a3326; color: #ede9e2;', 'Sin estado': 'background: #2d2b29; color: #b3ada4;', 'Lista': 'background: #27252b; color: #c9c4f7;', 'Abierta': 'background: #2d2b29; color: #c4beb5;', 'Galería': 'background: #5f58bf; color: #ede9e2;' };
+    var books = ['cuento', 'ideas'].map(function (k) { var b = B[k], on = st.book === k; return { name: b.name, ini: b.ini, sub: b.sub, words: b.words, spine: b.spine, on: on ? 'true' : 'false', w: 'display: block; height: 100%; width: ' + Math.max(4, b.frac * 100) + '%; border-radius: 999px; background: #2a2824;', style: on ? 'background: #1e1d1b; box-shadow: 0 0 0 2px #ede9e2;' : 'background: #262523;', pick: function () { self.setState({ book: k }); } }; });
     var c = B[st.book];
     var cur = { name: c.name, kicker: c.kicker, desc: c.desc, listTitle: c.listTitle, hasChars: c.chars, items: c.items.map(function (i) { return { n: i[0], name: i[1], words: i[2], st: i[3], stStyle: SS[i[3]] }; }) };
-    var KS = { Sudria: 'background: #3a322c; color: #f1ebe2;', Nordria: 'background: #2c2628; color: #c9c4f7;', Ovestria: 'background: #322b26; color: #cfc6ba;', Estria: 'background: #352e28; color: #f1ebe2;' };
-    var AVB = { Sudria: '#e6dccb', Nordria: '#2c2628', Ovestria: '#322b26', Estria: '#cfc6ba' };
+    var KS = { Sudria: 'background: #3a3326; color: #ede9e2;', Nordria: 'background: #27252b; color: #c9c4f7;', Ovestria: 'background: #2d2b29; color: #c4beb5;', Estria: 'background: #2a2824; color: #ede9e2;' };
+    var AVB = { Sudria: '#e6d6b4', Nordria: '#27252b', Ovestria: '#2a2826', Estria: '#d0cbc3' };
     var C = [['Jericó', 'Sudria'], ['Eleanor', 'Nordria'], ['Lasyl', 'Sudria'], ['Rey Heinar', 'Sudria'], ['Rey Gregor', 'Nordria'], ['Príncipe Kain', 'Nordria'], ['Príncipe Orion', 'Ovestria'], ['Príncipe Azrael', 'Estria']];
-    var chars = C.map(function (x) { var n = x[0].replace(/^(Rey|Reina|Príncipe|Princesa) /, ''); return { n: x[0], i: n.charAt(0), k: x[1], kStyle: KS[x[1]], av: 'background: ' + AVB[x[1]] + '; color: ' + (x[1] === 'Estria' ? '#f1ebe2' : '#f1ebe2') + ';' }; });
+    var chars = C.map(function (x) { var n = x[0].replace(/^(Rey|Reina|Príncipe|Princesa) /, ''); return { n: x[0], i: n.charAt(0), k: x[1], kStyle: KS[x[1]], av: 'background: ' + AVB[x[1]] + '; color: ' + (x[1] === 'Estria' ? '#ede9e2' : '#ede9e2') + ';' }; });
     var T = [['hist', 'Historias', '2'], ['notas', 'Notas', String(N.length)], ['chars', 'Personajes', '11'], ['mundos', 'Mundos', '1']];
-    var tabs = T.map(function (t) { var on = st.tab === t[0]; return { name: t[1], n: t[2], sel: on ? 'true' : 'false', pick: function () { self.setState({ tab: t[0] }); }, style: on ? 'background: #352e28; color: #f1ebe2;' : 'color: #f1ebe2;', cStyle: on ? 'background: #5b53b8; color: #f1ebe2;' : 'background: #322b26;' }; });
+    var tabs = T.map(function (t) { var on = st.tab === t[0]; return { name: t[1], n: t[2], sel: on ? 'true' : 'false', pick: function () { self.setState({ tab: t[0] }); }, style: on ? 'background: #2a2824; color: #ede9e2;' : 'color: #ede9e2;', cStyle: on ? 'background: #5f58bf; color: #ede9e2;' : 'background: #2d2b29;' }; });
     return {
       week: week, tabs: tabs, noteCount: N.length,
       tHist: st.tab === 'hist', tNotas: st.tab === 'notas', tChars: st.tab === 'chars', tMundos: st.tab === 'mundos',
       books: books, cur: cur,
-      leads: [{ n: 'Jericó', i: 'J', av: 'width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #3a322c; border: 1.5px solid #f1ebe2; font-weight: 600; font-size: 13px;' }, { n: 'Eleanor', i: 'E', av: 'width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #2c2628; border: 1.5px solid #f1ebe2; font-weight: 600; font-size: 13px;' }],
+      leads: [{ n: 'Jericó', i: 'J', av: 'width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #3a3326; border: 1.5px solid #ede9e2; font-weight: 600; font-size: 13px;' }, { n: 'Eleanor', i: 'E', av: 'width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: #27252b; border: 1.5px solid #ede9e2; font-weight: 600; font-size: 13px;' }],
       notes: notes, addNote: function () { self.setState({ extra: self.state.extra + 1 }); },
       chars: chars
     };
