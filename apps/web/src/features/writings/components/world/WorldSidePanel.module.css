@@ -1,0 +1,107 @@
+/* El panel de la derecha del mundo (Escritos.dc.html: .scrim, .drawer, .dhead, .dbody, .dfoot). Pegado al borde
+   de la pantalla, a diferencia del Drawer general, porque así lo dibuja el canvas de Escritos. */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-scrim);
+  background: var(--scrim);
+}
+
+.panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-drawer);
+  box-sizing: border-box;
+  width: min(520px, 100vw);
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-xl);
+  will-change: transform;
+}
+
+.head {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 64px;
+  padding: var(--space-5) var(--space-6) var(--space-5) var(--space-11);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.kicker {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.crumb {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 36px;
+  padding: 0 var(--space-4);
+  margin-left: calc(var(--space-4) * -1);
+  border-radius: var(--radius-12);
+  font-size: 14px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.crumb:hover {
+  background: var(--surface-raised);
+  color: var(--text);
+}
+
+.close {
+  all: unset;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-12);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.close:hover {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.crumb:focus-visible,
+.close:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+  padding: var(--space-10) var(--space-11) var(--space-12);
+}
+
+.foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-11);
+  border-top: 1px solid var(--border-soft);
+}

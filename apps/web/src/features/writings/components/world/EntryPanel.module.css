@@ -1,0 +1,157 @@
+/* El panel de una ficha (Escritos.dc.html, `d.isNote`) y los botones de su pie, que comparten el panel de eras y el
+   de eventos. */
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-7);
+}
+
+.headerText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.name {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.summary {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--text-muted);
+  white-space: pre-line;
+}
+
+.kids {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.kid {
+  all: unset;
+  box-sizing: border-box;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-5) var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-16);
+  cursor: pointer;
+  transition: border-color var(--duration-base) ease;
+}
+
+.kid:hover {
+  border-color: var(--text);
+}
+
+.kidName {
+  font-weight: 500;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 36px;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-strong);
+}
+
+/* --- Botones del pie -------------------------------------------------------------------------------------- */
+
+.primary,
+.soft,
+.danger {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 var(--space-9);
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--duration-base) ease;
+}
+
+.primary {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+  box-shadow: var(--shadow-sm);
+}
+
+.primary:hover {
+  transform: translateY(-1px);
+  color: var(--text-on-inverted);
+}
+
+.soft {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.soft:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+.danger {
+  min-height: 36px;
+  padding: 0 var(--space-7);
+  background: var(--danger);
+  color: var(--surface);
+}
+
+.primary:focus-visible,
+.soft:focus-visible,
+.danger:focus-visible,
+.external:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.external {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  margin-left: auto;
+  border-radius: var(--radius-12);
+  font-size: 14px;
+  color: var(--accent-ink);
+}
+
+.pushRight {
+  margin-left: auto;
+}
+
+.eraTag {
+  align-self: flex-start;
+  background: var(--accent-warm);
+}
+
+.pageTitle {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1.2;
+}

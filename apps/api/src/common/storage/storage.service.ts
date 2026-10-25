@@ -81,6 +81,23 @@ export class StorageService {
     return data.signedUrl
   }
 
+  // Varias descargas firmadas en una sola llamada a Storage (las fotos de una galería de personajes). Devuelve la
+  // URL de cada ruta; si Storage falla, la ruta se queda sin URL (la pantalla pinta la inicial) en vez de tumbar
+  // la página completa por una imagen.
+  async createSignedDownloadUrls(
+    paths: string[],
+    expiresInSeconds = 600,
+  ): Promise<Map<string, string>> {
+    const urls = new Map<string, string>()
+    const unique = [...new Set(paths)]
+    if (unique.length === 0) return urls
+    const { data } = await this.bucket.createSignedUrls(unique, expiresInSeconds)
+    for (const item of data ?? []) {
+      if (item.path && item.signedUrl && !item.error) urls.set(item.path, item.signedUrl)
+    }
+    return urls
+  }
+
   // "Mejor esfuerzo": si Storage falla al borrar, no vale la pena tumbar la petición completa por
   // un archivo que, como mucho, queda huérfano (lo limpiará el futuro job de la papelera).
   async remove(paths: string[]): Promise<void> {

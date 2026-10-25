@@ -37,7 +37,7 @@ export function StoriesView({ books }: { books: BookView[] }) {
 
   function addPage(book: BookView) {
     startTransition(async () => {
-      const result = await createChapterAction(book.id)
+      const result = await createChapterAction(book.id, book.kind)
       if (!result.ok || !result.id) {
         toast.show({ message: result.ok ? 'No se pudo crear la página.' : (result.message ?? 'No se pudo crear la página.'), icon: 'info' })
         return

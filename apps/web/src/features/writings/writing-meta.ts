@@ -1,4 +1,4 @@
-import type { FieldType, NoteTemplateFieldType, StoryColor, StoryKind } from '@kairo/shared'
+import type { NoteTemplateFieldType, StoryColor, StoryKind } from '@kairo/shared'
 
 // Lo visual de Escritos que no es lógica: los trazos de los íconos (del canvas) y las etiquetas. Los colores no
 // están aquí: cada pieza los toma de una variable semántica según su clave (WritingColors.module.css).
@@ -34,20 +34,14 @@ export const STORY_KIND_OPTION_LABEL: Record<StoryKind, string> = {
   notebook: 'Cuaderno',
 }
 
-// Cómo se llama cada tipo de columna de la base de personajes: en el menú "Propiedad" y como nombre de la columna nueva.
-export const FIELD_TYPE_LABEL: Record<FieldType, string> = {
-  text: 'Texto',
-  number: 'Número',
-  select: 'Selección',
-  date: 'Fecha',
-}
-
-// El trazo del ícono de cada tipo de columna (BaseDatos.dc.html).
-export const FIELD_TYPE_ICON: Record<FieldType, string> = {
+// El trazo del ícono de cada tipo de campo (BaseDatos.dc.html): en el menú "Propiedad" de la base de personajes.
+export const FIELD_TYPE_ICON: Record<NoteTemplateFieldType, string> = {
   text: 'M4 6h16M4 12h16M4 18h10',
   number: 'M5 9h14M5 15h14M10 4L8 20M16 4l-2 16',
   select: 'M9 6l6 6-6 6',
   date: 'M3 5h18v16H3zM3 10h18',
+  link: 'M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1',
+  era: 'M12 3v18M5 8h14M5 16h14',
 }
 
 // Cómo se llama cada tipo de campo en el editor de plantillas (EscritosPlantilla.dc.html, decisión #45).

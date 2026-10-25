@@ -1,0 +1,5 @@
+/* El editor de bloques de una ficha: el menú "/" se ubica relativo a este contenedor. */
+.wrap {
+  position: relative;
+  min-height: 120px;
+}

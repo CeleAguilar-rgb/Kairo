@@ -38,6 +38,10 @@
   /* Color: cálido de apoyo */
   --amber-200: #f3e3c3;
 
+  /* Color: portadas de Escritos (EscritosPortada.dc.html: salvia y calabaza, junto a arena, lavandas y tinta) */
+  --sage-200: #b9d8bf;
+  --peach-300: #f2b48a;
+
   /* Color: error */
   --danger-700: #8c2f1b;
   --danger-on-dark: #f6c8bb;

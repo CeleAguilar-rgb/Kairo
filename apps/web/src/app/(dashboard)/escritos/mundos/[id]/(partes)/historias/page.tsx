@@ -1,14 +1,9 @@
-import { notFound } from 'next/navigation'
+import { StoriesTab } from '@/features/writings'
 
-import { WorldStories } from '@/features/writings'
-import { getWorldStories } from '@/features/writings/api'
+type StoriesPageProps = { searchParams: Promise<{ historia?: string }> }
 
-type StoriesPageProps = { params: Promise<{ id: string }> }
-
-// Mundo → Historias: las historias del mundo con sus capítulos, su material y la próxima por escribir.
-export default async function WorldStoriesPage({ params }: StoriesPageProps) {
-  const { id } = await params
-  const view = await getWorldStories(id)
-  if (!view) notFound()
-  return <WorldStories view={view} />
+// Mundo → Historias. `?historia=` abre una directamente (la usan el Resumen y las menciones).
+export default async function WorldStoriesPage({ searchParams }: StoriesPageProps) {
+  const { historia } = await searchParams
+  return <StoriesTab key={historia ?? 'first'} initialStoryId={historia ?? null} />
 }

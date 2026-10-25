@@ -12,7 +12,7 @@ import { Modal } from '@/components/ui/Modal'
 import { Skeleton } from '@/components/ui/Skeleton'
 import { useToast } from '@/components/ui/Toast'
 
-import { deletePageAction, savePageAction, undoWritingAction } from '../../page-actions'
+import { deletePageAction, savePageAction, setChapterMetaAction, undoWritingAction } from '../../page-actions'
 import { PAGE_STATUS_LABEL, type PageEditorView } from '../../types'
 import { WRITING_ICON } from '../../writing-meta'
 import { formatCount } from '../../writing-utils'
@@ -401,7 +401,7 @@ export function PageEditor({ view }: { view: PageEditorView }) {
           {view.story ? (
             <div className={styles.prop}>
               <span className={styles.propName}>Historia</span>
-              <Link href="/escritos" className={[styles.chip, styles.chipLink].join(' ')}>
+              <Link href={view.crumbs.find((crumb) => crumb.label === view.story?.title)?.href ?? '/escritos'} className={[styles.chip, styles.chipLink].join(' ')}>
                 {view.story.title}
               </Link>
             </div>
@@ -427,13 +427,14 @@ export function PageEditor({ view }: { view: PageEditorView }) {
               </select>
             </div>
           )}
+          {view.chapter ? <ChapterMeta pageId={view.id} meta={view.chapter} /> : null}
           {view.characters.length > 0 ? (
             <div className={styles.prop}>
               <span className={styles.propName}>Personajes</span>
               <div className={styles.chips}>
                 {view.characters.map((character) => (
-                  <Link key={character.id} href={`/escritos/personajes/tabla?abrir=${character.id}`} className={styles.person}>
-                    <Avatar initial={character.initial} tone={character.tone} size={22} />
+                  <Link key={character.id} href={`/escritos/mundos/${character.worldId}/ficha/${character.id}`} className={styles.person}>
+                    <Avatar initial={character.initial} tone={character.tone} size={22} imageUrl={character.imageUrl} />
                     {character.shortName}
                   </Link>
                 ))}
@@ -493,6 +494,46 @@ export function PageEditor({ view }: { view: PageEditorView }) {
         }
       />
     </div>
+  )
+}
+
+// El arco, la era y el punto de vista de un capítulo (EscritosCapitulo.dc.html, decisión #45: columnas fijas del
+// capítulo, no una plantilla). Cada uno se guarda al elegirlo.
+function ChapterMeta({ pageId, meta }: { pageId: string; meta: NonNullable<PageEditorView['chapter']> }) {
+  const toast = useToast()
+  const [, startTransition] = useTransition()
+  const [values, setValues] = useState({ arcId: meta.arcId ?? '', eraId: meta.eraId ?? '', povCharacterId: meta.povCharacterId ?? '' })
+
+  function change(key: keyof typeof values, value: string) {
+    setValues((current) => ({ ...current, [key]: value }))
+    startTransition(async () => {
+      const result = await setChapterMetaAction(pageId, { [key]: value || null })
+      if (!result.ok) toast.show({ message: result.message ?? 'No se pudo guardar.', icon: 'info' })
+    })
+  }
+
+  const select = (key: keyof typeof values, label: string, empty: string, options: { id: string; name: string }[]) => (
+    <div className={styles.prop}>
+      <label htmlFor={`pg-${key}`} className={styles.propName}>
+        {label}
+      </label>
+      <select id={`pg-${key}`} className={styles.statusSelect} value={values[key]} onChange={(event) => change(key, event.target.value)}>
+        <option value="">{empty}</option>
+        {options.map((option) => (
+          <option key={option.id} value={option.id}>
+            {option.name}
+          </option>
+        ))}
+      </select>
+    </div>
+  )
+
+  return (
+    <>
+      {select('arcId', 'Arco', 'Sin arco', meta.arcs)}
+      {meta.eras.length > 0 ? select('eraId', 'Era', 'Sin era', meta.eras) : null}
+      {meta.characters.length > 0 ? select('povCharacterId', 'Punto de vista', 'Sin elegir', meta.characters) : null}
+    </>
   )
 }
 

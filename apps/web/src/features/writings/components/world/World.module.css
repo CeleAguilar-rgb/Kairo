@@ -1,0 +1,526 @@
+/* Lo común de la página de un mundo (Escritos.dc.html): las tarjetas, los chips de vínculo, los botones
+   punteados, las filas de una ficha y los campos de los paneles. Cada pestaña y cada panel lo toman de aquí para
+   que todo el mundo se vea igual; lo que es solo de una pieza vive en su propio módulo. */
+
+.card {
+  box-sizing: border-box;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-10);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-28);
+  background: var(--surface);
+}
+
+.cardHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.cardTitleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+.h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.h2Big {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.subtle {
+  color: var(--text-subtle);
+}
+
+.iconBox {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-12);
+  background: var(--accent-warm);
+  color: var(--text);
+}
+
+.iconBoxSoft {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+/* Dos columnas que se apilan en pantallas angostas (el contenido y su lado). */
+.split {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-7);
+}
+
+.grow {
+  flex: 999 1 520px;
+  min-width: 0;
+}
+
+.side {
+  flex: 1 1 320px;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+@media (max-width: 1080px) {
+  .side {
+    max-width: none;
+  }
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* --- Botones ---------------------------------------------------------------------------------------- */
+
+/* "+ Agregar evento", "Editar plantilla": botón con borde punteado. */
+.ghost {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: 0 var(--space-6);
+  border: 1.5px dashed var(--border-control);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    border-color var(--duration-base) ease,
+    color var(--duration-base) ease;
+}
+
+.ghost:hover {
+  border-color: var(--text-subtle);
+  color: var(--text);
+}
+
+.ghostDanger:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.ghost:focus-visible,
+.chip:focus-visible,
+.iconButton:focus-visible,
+.tile:focus-visible,
+.crumb:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.ghost:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Botón cuadrado de ícono (flechas, cerrar, quitar). */
+.iconButton {
+  all: unset;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-12);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.iconButton::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+}
+
+.iconButton:hover {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.iconButtonDanger:hover {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.iconButton:disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.crumb {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 36px;
+  padding: 0 var(--space-4);
+  margin-left: calc(var(--space-4) * -1);
+  border-radius: var(--radius-12);
+  color: var(--text-muted);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.crumb:hover {
+  background: var(--surface-raised);
+  color: var(--text);
+}
+
+/* --- Chips ------------------------------------------------------------------------------------------ */
+
+/* Un vínculo a otra ficha: lavanda, se pica para abrirla. */
+.chip {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 28px;
+  max-width: 100%;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--duration-base) ease;
+}
+
+.chip:hover {
+  background: var(--accent);
+  color: var(--text);
+}
+
+.chipNeutral {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.chipDashed {
+  border: 1.5px dashed var(--text-subtle);
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* La etiqueta del tipo de una ficha ("Especie", "Reino") y "En borrador". */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tagDraft {
+  border: 1.5px dashed var(--text-subtle);
+  color: var(--text-muted);
+}
+
+/* --- Tarjeta grande que se pica (especies, secciones extra, historias) ------------------------------ */
+
+.tile {
+  all: unset;
+  box-sizing: border-box;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-9);
+  border-radius: var(--radius-22);
+  cursor: pointer;
+  transition:
+    transform var(--duration-base) ease,
+    box-shadow var(--duration-base) ease;
+}
+
+.tile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.tileLight {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.tileDark {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.tileAdd {
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--border-control);
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: var(--space-6);
+}
+
+/* --- Ficha (panel y página completa) ----------------------------------------------------------------- */
+
+.fsec {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.fsecTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.drows {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.drowsOne {
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 480px) {
+  .drows {
+    grid-template-columns: 1fr;
+  }
+}
+
+.drow {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-16);
+  background: var(--surface-raised);
+}
+
+.valueText {
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.drowLabel {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.fill {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-16);
+  background: var(--surface-raised);
+}
+
+.fillEmpty {
+  border: 1.5px dashed var(--border);
+  background: transparent;
+}
+
+.fillTitle {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.fillText {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--text-muted);
+  white-space: pre-line;
+}
+
+.fillHint {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--text-subtle);
+  font-style: italic;
+}
+
+/* --- Campos de los paneles ---------------------------------------------------------------------------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 var(--space-6);
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-14);
+  background: var(--surface);
+  font: inherit;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.inputSm {
+  min-height: 38px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-12);
+  font-size: 14px;
+}
+
+.input:focus {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+  border-color: var(--focus-ring);
+}
+
+.textarea {
+  min-height: 84px;
+  padding: var(--space-4) var(--space-6);
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.addForm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+.addForm > .field {
+  flex: 1 1 200px;
+}
+
+/* Un "+ Enlazar…" que no se ve como un campo más. */
+.linkSelect {
+  box-sizing: border-box;
+  min-height: 30px;
+  padding: 0 var(--space-5);
+  border: 1.5px dashed var(--border-control);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font: inherit;
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.linkSelect:hover {
+  border-color: var(--text-subtle);
+  color: var(--text);
+}
+
+.linkSelect:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* La nota suelta de un evento (amarilla, como un post-it). */
+.enote {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-16);
+  background: var(--accent-warm);
+  line-height: 1.5;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-8) var(--space-9);
+  border-radius: var(--radius-18);
+  background: var(--surface-raised);
+  color: var(--text-muted);
+}
+
+.emptyDashed {
+  border: 2px dashed var(--border-control);
+  background: transparent;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

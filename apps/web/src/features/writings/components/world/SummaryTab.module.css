@@ -1,0 +1,298 @@
+/* Mundo → Resumen (EscritosResumen.dc.html): sinopsis, "Dónde y cuándo", huecos, reglas y recuadros. */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.synopsis {
+  margin: 0;
+  max-width: 92ch;
+  line-height: 1.75;
+  color: var(--text-muted);
+  white-space: pre-line;
+}
+
+.synopsisInput {
+  min-height: 150px;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+}
+
+.swatchStory {
+  background: var(--surface-inverted);
+}
+
+.swatchLore {
+  background: var(--accent);
+}
+
+.swatchIdea {
+  border: 1.5px dashed var(--text-subtle);
+}
+
+/* --- La tabla ------------------------------------------------------------------------------------------ */
+
+.scroll {
+  overflow-x: auto;
+}
+
+.matrix {
+  display: grid;
+  grid-template-columns: 150px repeat(var(--eras), minmax(150px, 1fr));
+  gap: var(--space-3);
+  min-width: 780px;
+}
+
+.eraHead {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-12);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.eraHead:hover {
+  background: var(--surface-raised);
+}
+
+.eraHead:focus-visible,
+.item:focus-visible,
+.moreItems:focus-visible,
+.gapButton:focus-visible,
+.seeAll:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.eraNumber {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-muted);
+}
+
+.eraShort {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.rowHead {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-3) var(--space-1);
+  border-top: 1px solid var(--border-soft);
+}
+
+.rowName {
+  font-weight: 600;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 64px;
+  padding: var(--space-3);
+  border-top: 1px solid var(--border-soft);
+  border-radius: var(--radius-14);
+}
+
+.cellFull {
+  background: var(--surface-raised);
+}
+
+/* Una celda vacía: rayada, como un hueco por llenar. */
+.cellEmpty {
+  background: repeating-linear-gradient(135deg, transparent 0 8px, var(--border-soft) 8px 9px);
+}
+
+.item {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-12);
+  font-size: 13px;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: transform var(--duration-base) ease;
+}
+
+.item:hover {
+  transform: translateY(-1px);
+}
+
+.item_story {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.item_lore {
+  background: var(--accent);
+  color: var(--text);
+}
+
+.item_idea {
+  border: 1.5px dashed var(--text-subtle);
+  color: var(--text-muted);
+}
+
+.moreItems {
+  all: unset;
+  font-size: 12px;
+  color: var(--accent-ink);
+  cursor: pointer;
+}
+
+/* --- Huecos por llenar ------------------------------------------------------------------------------------ */
+
+.gaps {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-10);
+  border-radius: var(--radius-28);
+  background: var(--accent-soft);
+}
+
+.gapsStar {
+  position: absolute;
+  top: -12px;
+  right: 18px;
+  transform: rotate(10deg);
+}
+
+.gapsHint {
+  font-size: 13px;
+  color: var(--accent-ink);
+}
+
+.gap {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-16);
+  background: var(--surface-glass);
+  text-align: left;
+}
+
+.gapButton {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-16);
+  background: var(--surface-glass);
+  cursor: pointer;
+}
+
+.gapButton:hover {
+  background: var(--surface);
+}
+
+.gapBox {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  border: 1.5px solid var(--accent-ink);
+  border-radius: 7px;
+}
+
+.gapText {
+  display: flex;
+  flex-direction: column;
+}
+
+.gapTitle {
+  font-weight: 500;
+}
+
+/* --- Reglas --------------------------------------------------------------------------------------------- */
+
+.rule {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.ruleTitle {
+  font-weight: 600;
+}
+
+.ruleEdit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-16);
+  background: var(--surface-raised);
+}
+
+/* --- Recuadros --------------------------------------------------------------------------------------------- */
+
+.boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: var(--space-7);
+}
+
+.boxTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.seeAll {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 var(--space-4);
+  margin-right: calc(var(--space-4) * -1);
+  border-radius: var(--radius-12);
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.seeAll:hover {
+  background: var(--surface-raised);
+  color: var(--text);
+}
+
+.boxGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}

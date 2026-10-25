@@ -13,6 +13,7 @@ import { RemindersModule } from './modules/reminders/reminders.module'
 import { SchoolModule } from './modules/school/school.module'
 import { SprintsModule } from './modules/sprints/sprints.module'
 import { TasksModule } from './modules/tasks/tasks.module'
+import { WritingsModule } from './modules/writings/writings.module'
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { TasksModule } from './modules/tasks/tasks.module'
     DailyModule,
     FinanceModule,
     SchoolModule,
+    WritingsModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: JwtGuard }],
 })

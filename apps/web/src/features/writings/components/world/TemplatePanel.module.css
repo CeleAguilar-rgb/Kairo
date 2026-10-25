@@ -1,0 +1,221 @@
+/* El editor de plantilla (EscritosPlantilla.dc.html) dentro del panel del mundo: el nombre, las filas de "Vista
+   corta" (nombre + tipo + subir + quitar) y las de "Para rellenar" (nombre + pregunta guía). */
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.nameInput {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 var(--space-6);
+  border: 1px solid transparent;
+  border-radius: var(--radius-14);
+  background: transparent;
+  font: inherit;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.nameInput:hover {
+  border-color: var(--border-soft);
+}
+
+.nameInput:focus {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+  border-color: var(--border-control);
+  background: var(--surface);
+}
+
+.used {
+  margin: 0;
+  padding: 0 var(--space-6);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.sectionHint {
+  margin-top: calc(var(--space-3) * -1);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 170px auto;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.rowInput,
+.rowInputWide {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 38px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-12);
+  border: 1px solid var(--border-control);
+  background: var(--surface);
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.rowInputWide {
+  font-weight: 600;
+}
+
+.rowInput:focus,
+.rowInputWide:focus,
+.rowSelect:focus,
+.hintInput:focus {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+  border-color: var(--border-control);
+}
+
+.rowSelect {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 38px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-12);
+  border: 1px solid var(--border-control);
+  background: var(--surface);
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.rowActions {
+  display: inline-flex;
+}
+
+.sectionRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border-radius: var(--radius-16);
+  background: var(--surface-muted);
+}
+
+.sectionRow .row {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.hintInput {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-12);
+  border: 1px solid var(--border-control);
+  background: var(--surface);
+  font: inherit;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text);
+}
+
+.hintInput::placeholder {
+  color: var(--text-subtle);
+}
+
+.addRow {
+  align-self: flex-start;
+  border: 1.5px dashed var(--border-control);
+  color: var(--text-muted);
+  background: transparent;
+}
+
+.addRow:hover {
+  border-color: var(--text-subtle);
+  color: var(--text);
+}
+
+.foot {
+  display: flex;
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border-soft);
+}
+
+@media (max-width: 480px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .rowSelect {
+    grid-column: 1 / -1;
+  }
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) 0 0;
+}
+
+.optionChip {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 26px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.optionChip:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.optionInput {
+  box-sizing: border-box;
+  width: 140px;
+  min-height: 28px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  border: 1.5px dashed var(--border-control);
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.optionInput:focus {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+.fieldBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}

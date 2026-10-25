@@ -1,15 +1,9 @@
-import { notFound } from 'next/navigation'
+import { CharactersTab } from '@/features/writings'
 
-import { WorldCharacters } from '@/features/writings'
-import { getWorldCharacters } from '@/features/writings/api'
+type CharactersPageProps = { searchParams: Promise<{ reino?: string }> }
 
-type CharactersPageProps = { params: Promise<{ id: string }>; searchParams: Promise<{ reino?: string; personaje?: string }> }
-
-// Mundo → Personajes: filtros por reino, la lista y la ficha del elegido. `?reino=` y `?personaje=` abren el filtro y el
-// personaje directamente (los usan los reinos de Regiones).
-export default async function WorldCharactersPage({ params, searchParams }: CharactersPageProps) {
-  const [{ id }, query] = await Promise.all([params, searchParams])
-  const view = await getWorldCharacters(id, query)
-  if (!view) notFound()
-  return <WorldCharacters key={`${view.initialGroup}-${view.initialCharacterId}`} view={view} />
+// Mundo → Personajes. `?reino=` abre el filtro de un reino directamente.
+export default async function WorldCharactersPage({ searchParams }: CharactersPageProps) {
+  const { reino } = await searchParams
+  return <CharactersTab key={reino ?? 'all'} initialGroup={reino ?? null} />
 }

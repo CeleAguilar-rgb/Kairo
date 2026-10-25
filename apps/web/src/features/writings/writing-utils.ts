@@ -1,19 +1,8 @@
-import { tiptapTextBlocks, tiptapWordCount, walkTiptap, type OptionTone, type TiptapDoc } from '@kairo/shared'
+import { emptyDoc, tiptapTextBlocks, tiptapWordCount, walkTiptap, type OptionTone, type TiptapDoc } from '@kairo/shared'
 
 import { addDays, dayOfMonth, diffDays, formatDayMonth, formatMonthShort, startOfWeek, todayIn, WEEKDAYS_SHORT, weekdayOf, type IsoDate } from '@/lib/dates'
 
-import type {
-  BookView,
-  Character,
-  CharacterChip,
-  CharacterField,
-  NoteCard,
-  PageRow,
-  Story,
-  WeekDay,
-  World,
-  WritingPage,
-} from './types'
+import type { BookView, CharacterChip, CharacterRecord, NoteCard, PageRecord, PageRow, StoryRecord, WeekDay, WritingDay } from './types'
 import { PAGE_STATUS_LABEL } from './types'
 
 // La lógica de Escritos que no es de pantalla ni de servidor: separar el número del título de un capítulo, contar
@@ -97,7 +86,7 @@ const SHAPE_TONE: Record<PageShape, PageRow['chipTone']> = { list: 'soft', galle
 
 export type CoverPreset = 'map' | 'mood' | 'photo'
 
-// Igual que Proyectos: mientras no se puedan subir imágenes, la portada es "preset:<clave>".
+// Igual que Proyectos: la portada ilustrada de una nota rápida es "preset:<clave>".
 export function coverPresetOf(coverPath: string | null): CoverPreset | null {
   if (coverPath === 'preset:map' || coverPath === 'preset:mood' || coverPath === 'preset:photo') return coverPath.slice(7) as CoverPreset
   return null
@@ -105,8 +94,7 @@ export function coverPresetOf(coverPath: string | null): CoverPreset | null {
 
 // --- Etiquetas de las notas ---------------------------------------------------------------------
 
-// FALTA EN LA BASE: las etiquetas de notas. Mientras tanto son texto libre y estas tres tienen su color; las
-// demás se pintan neutras.
+// La etiqueta de una nota es texto libre (`pages.tag`): estas tres tienen su color, las demás se pintan neutras.
 const TAG_TONES: Record<string, OptionTone> = { Aurelun: 'ink', Ideas: 'warm', Trabajo: 'soft' }
 export const NO_TAG_LABEL = 'Sin etiqueta'
 export const tagToneOf = (tag: string | null): OptionTone => (tag ? (TAG_TONES[tag] ?? 'muted') : 'muted')
@@ -137,60 +125,59 @@ export function savedTextOf(updatedAt: string, timeZone: string, now: Date = new
 
 // --- Libros y notas -----------------------------------------------------------------------------
 
-const byUpdatedDesc = (a: WritingPage, b: WritingPage) => b.updatedAt.localeCompare(a.updatedAt)
+const byUpdatedDesc = (a: PageRecord, b: PageRecord) => b.updatedAt.localeCompare(a.updatedAt)
 
-const STATUS_TONE: Record<WritingPage['status'], PageRow['chipTone']> = {
+const STATUS_TONE: Record<PageRecord['status'], PageRow['chipTone']> = {
   in_progress: 'ink',
   pending: 'warm',
   none: 'muted',
   done: 'accent',
 }
 
+// Las páginas de una historia en su orden.
+export const pagesOfStory = (story: StoryRecord, pages: PageRecord[]) => pages.filter((page) => page.storyId === story.id).sort((a, b) => a.position - b.position)
+
 // Las filas de un libro: los capítulos de una historia (con su estado) o las páginas de un cuaderno (con su forma).
-export function rowsOf(story: Story, pages: WritingPage[]): PageRow[] {
-  return pages
-    .filter((page) => page.storyId === story.id)
-    .sort((a, b) => a.position - b.position)
-    .map((page, index) => {
-      const { label, name } = splitTitle(page.title)
-      if (story.kind === 'story') {
-        return {
-          id: page.id,
-          label,
-          title: name,
-          wordsText: page.wordCount > 0 ? plural(page.wordCount, 'palabra', 'palabras') : '—',
-          chipText: PAGE_STATUS_LABEL[page.status],
-          chipTone: STATUS_TONE[page.status],
-        }
-      }
-      const summary = summarize(page.content)
-      const shape = shapeOf(summary)
+export function rowsOf(story: StoryRecord, pages: PageRecord[]): PageRow[] {
+  return pagesOfStory(story, pages).map((page, index) => {
+    const { label, name } = splitTitle(page.title)
+    if (story.kind === 'story') {
       return {
         id: page.id,
-        label: String(index + 1),
-        title: page.title.trim() || 'Sin título',
-        wordsText:
-          shape === 'list' ? plural(summary.tasks, 'casilla', 'casillas') : shape === 'gallery' ? plural(summary.images, 'imagen', 'imágenes') : plural(summary.words, 'palabra', 'palabras'),
-        chipText: SHAPE_LABEL[shape],
-        chipTone: SHAPE_TONE[shape],
+        label,
+        title: name,
+        wordsText: page.wordCount > 0 ? plural(page.wordCount, 'palabra', 'palabras') : '—',
+        chipText: PAGE_STATUS_LABEL[page.status],
+        chipTone: STATUS_TONE[page.status],
       }
-    })
+    }
+    const summary = summarize(page.content ?? emptyDoc())
+    const shape = shapeOf(summary)
+    return {
+      id: page.id,
+      label: String(index + 1),
+      title: page.title.trim() || 'Sin título',
+      wordsText:
+        shape === 'list' ? plural(summary.tasks, 'casilla', 'casillas') : shape === 'gallery' ? plural(summary.images, 'imagen', 'imágenes') : plural(summary.words, 'palabra', 'palabras'),
+      chipText: SHAPE_LABEL[shape],
+      chipTone: SHAPE_TONE[shape],
+    }
+  })
 }
 
-export function storyWords(story: Story, pages: WritingPage[]): number {
+export function storyWords(story: StoryRecord, pages: PageRecord[]): number {
   return pages.filter((page) => page.storyId === story.id).reduce((sum, page) => sum + page.wordCount, 0)
 }
 
+// El estado de un capítulo como chip (también lo usa la pestaña Historias de un mundo).
+export const chapterStatusTone = (status: PageRecord['status']) => STATUS_TONE[status]
+
 // El libro que se ve a la derecha de la lista (EscritosInicio): su resumen, sus capítulos o páginas y los
-// personajes que aparecen en él.
-export function bookViewOf(story: Story, pages: WritingPage[], world: World | null, characters: CharacterChip[]): BookView {
+// personajes que aparecen en él. `context` es lo que se lee de su mundo (nombre y era), si tiene.
+export function bookViewOf(story: StoryRecord, pages: PageRecord[], context: { worldName: string | null; eraLabel: string | null }, characters: CharacterChip[]): BookView {
   const rows = rowsOf(story, pages)
   const words = storyWords(story, pages)
-  const era = world?.eras.find((item) => item.id === story.eraId)
-  const kicker =
-    story.kind === 'story'
-      ? ['Historia', world?.name, era ? `Era ${era.number} · ${era.shortName}` : null].filter(Boolean).join(' · ')
-      : 'Cuaderno'
+  const kicker = story.kind === 'story' ? ['Historia', context.worldName, context.eraLabel].filter(Boolean).join(' · ') : 'Cuaderno'
   const noun = story.kind === 'story' ? ['capítulo', 'capítulos'] : ['página', 'páginas']
   return {
     id: story.id,
@@ -211,12 +198,12 @@ export function bookViewOf(story: Story, pages: WritingPage[], world: World | nu
 }
 
 // Las notas, de la más nueva a la más vieja.
-export function noteCardsOf(pages: WritingPage[], timeZone: string, now: Date = new Date()): NoteCard[] {
+export function noteCardsOf(pages: PageRecord[], timeZone: string, now: Date = new Date()): NoteCard[] {
   return pages
     .filter((page) => page.kind === 'note')
     .sort(byUpdatedDesc)
     .map((page) => {
-      const summary = summarize(page.content)
+      const summary = summarize(page.content ?? emptyDoc())
       return {
         id: page.id,
         title: page.title.trim() || 'Sin título',
@@ -233,20 +220,18 @@ export function noteCardsOf(pages: WritingPage[], timeZone: string, now: Date = 
 
 // --- Personajes ---------------------------------------------------------------------------------
 
-// La columna por la que se agrupan los personajes (los filtros, el tablero y el color del círculo): la primera
-// de tipo selección del mundo. En el canvas es el Reino.
-export const groupingFieldOf = (fields: CharacterField[], worldId: string) => fields.find((field) => field.worldId === worldId && field.type === 'select') ?? null
-
-export function characterChip(character: Character, fields: CharacterField[]): CharacterChip {
-  const field = groupingFieldOf(fields, character.worldId)
-  const option = field?.options.find((item) => item.id === character.values[field.id])
+// Un personaje como chip (círculo con inicial o foto, nombre corto y su reino). El reino y su color los decide el
+// mundo (world-utils.ts, kingdomOf): aquí ya llegan resueltos.
+export function characterChip(character: CharacterRecord, kingdom: { label: string; tone: OptionTone }): CharacterChip {
   return {
     id: character.id,
+    worldId: character.worldId,
     name: character.name,
     shortName: shortNameOf(character.name),
     initial: initialOf(character.name),
-    tone: option?.tone ?? 'muted',
-    kingdomLabel: option?.label ?? '',
+    tone: kingdom.tone,
+    kingdomLabel: kingdom.label,
+    imageUrl: character.imageUrl,
   }
 }
 
@@ -254,24 +239,17 @@ export function characterChip(character: Character, fields: CharacterField[]): C
 
 // Lunes a domingo de la semana de `today`, con las palabras de cada día. Los días que aún no llegan se marcan
 // para no pintarlos como "no escribiste".
-export function weekOf(wordsByDay: Record<IsoDate, number>, today: IsoDate): WeekDay[] {
+export function weekOf(days: WritingDay[], today: IsoDate): WeekDay[] {
+  const byDay = new Map(days.map((item) => [item.day, item.words]))
   const monday = startOfWeek(today, 'monday')
   return Array.from({ length: 7 }, (_, index) => {
     const date = addDays(monday, index)
     return {
       date,
       label: WEEKDAYS_SHORT[weekdayOf(date)].charAt(0),
-      words: wordsByDay[date] ?? 0,
+      words: byDay.get(date) ?? 0,
       isToday: date === today,
       isFuture: diffDays(today, date) > 0,
     }
   })
-}
-
-// El valor de una columna de la base de personajes por su nombre ("Rol", "Era"). Mientras los personajes no
-// tengan columnas fijas en la base de datos, el rol y la era son columnas como cualquier otra.
-export function textValueOf(character: Character, fields: CharacterField[], name: string): string {
-  const field = fields.find((item) => item.worldId === character.worldId && item.name === name)
-  const value = field ? character.values[field.id] : null
-  return typeof value === 'string' ? value : ''
 }

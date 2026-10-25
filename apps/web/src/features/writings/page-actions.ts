@@ -1,75 +1,72 @@
 'use server'
 
-import { pageSaveSchema, tiptapWordCount, writingIdSchema } from '@kairo/shared'
-import { revalidatePath } from 'next/cache'
+import { chapterMetaSchema, pageSaveSchema } from '@kairo/shared'
+import { z } from 'zod'
 
-import { fieldErrors } from '@/lib/form-errors'
-import { mockDelay } from '@/lib/mock/context'
+import { api } from '@/lib/api-client'
 
-import { failure, type WritingActionResult } from './action-result'
-import { addWordsToday, loadWritings, rememberUndo, runUndo } from './mock-store'
+import { apiFailure, invalid, refreshWritings } from './action-errors'
+import { failure, UNDO_KINDS, undoTokenOf, type WritingActionResult } from './action-result'
 
-// Las acciones de una página: guardar lo que se escribe, borrarla y deshacer. Una Server Action es un endpoint
-// público: lo que llega NO se confía, se vuelve a validar con el mismo esquema del front (packages/shared), y el
-// contenido se revisa a fondo (tipos de bloque permitidos, direcciones seguras, tamaño). Con la API, en vez de
-// tocar el almacén de ejemplo llaman a `api.patch('/writings/pages/:id', …)`; el userId lo pone la API con el
-// token (regla 2) y toda consulta filtra por él (regla 3).
+// Las acciones de una página: guardar lo que se escribe, sus datos de capítulo, borrarla y "Deshacer" cualquier
+// borrado de Escritos. El contenido se revisa a fondo (tipos de bloque permitidos, direcciones seguras, tamaño) aquí
+// y otra vez en la API, que es quien cuenta las palabras (el número que mande la pantalla nunca se usa).
 
-// Guarda el título, el estado, la etiqueta y el contenido de una página. Las palabras las cuenta el servidor del
-// contenido que recibe (el número que mande la pantalla nunca se usa). No revalida las demás pantallas: guarda
-// cada pocos segundos mientras se escribe, y las listas leen los datos nuevos al entrar a ellas.
+const idSchema = z.uuid()
+
+// Guarda el título, el estado, la etiqueta y el contenido. No revalida las demás pantallas: guarda cada pocos
+// segundos mientras se escribe, y las listas leen los datos nuevos al entrar a ellas.
 export async function savePageAction(pageId: string, raw: unknown): Promise<WritingActionResult> {
-  if (!writingIdSchema.safeParse(pageId).success) return failure('No encontramos esa página.')
+  if (!idSchema.safeParse(pageId).success) return failure('No encontramos esa página.')
   const parsed = pageSaveSchema.safeParse(raw)
-  if (!parsed.success) return { ok: false, errors: fieldErrors(parsed.error.issues), message: 'No se pudo guardar: el contenido no es válido.' }
+  if (!parsed.success) return invalid(parsed.error.issues, 'No se pudo guardar: el contenido no es válido.')
+  try {
+    const saved = await api.patch<{ id: string; updatedAt: string }>(`/writings/pages/${pageId}`, parsed.data)
+    return { ok: true, id: saved.id, savedAt: saved.updatedAt }
+  } catch (error) {
+    return apiFailure(error, 'No se pudo guardar.')
+  }
+}
 
-  await mockDelay()
-  const { store, ctx } = await loadWritings()
-  const page = store.pages.find((item) => item.id === pageId)
-  if (!page) return failure('No encontramos esa página.')
-
-  const wordCount = tiptapWordCount(parsed.data.content)
-  addWordsToday(store, ctx.today, wordCount - page.wordCount)
-
-  page.title = parsed.data.title
-  page.status = parsed.data.status
-  page.tag = page.kind === 'note' ? parsed.data.tag || null : page.tag
-  page.content = parsed.data.content
-  page.wordCount = wordCount
-  page.updatedAt = new Date().toISOString()
-  return { ok: true, id: page.id, savedAt: page.updatedAt }
+// El arco, la era y el punto de vista de un capítulo.
+export async function setChapterMetaAction(pageId: string, raw: unknown): Promise<WritingActionResult> {
+  if (!idSchema.safeParse(pageId).success) return failure('No encontramos esa página.')
+  const parsed = chapterMetaSchema.safeParse(raw)
+  if (!parsed.success) return invalid(parsed.error.issues)
+  try {
+    await api.patch(`/writings/pages/${pageId}/meta`, parsed.data)
+    refreshWritings()
+    return { ok: true, id: pageId }
+  } catch (error) {
+    return apiFailure(error, 'No se pudo guardar.')
+  }
 }
 
 // Borra una página. Va a la papelera: el aviso trae "Deshacer".
 export async function deletePageAction(pageId: string): Promise<WritingActionResult> {
-  if (!writingIdSchema.safeParse(pageId).success) return failure('No encontramos esa página.')
-
-  await mockDelay()
-  const { store } = await loadWritings()
-  const index = store.pages.findIndex((item) => item.id === pageId)
-  if (index === -1) return failure('No encontramos esa página.')
-
-  const [removed] = store.pages.splice(index, 1)
-  // La ficha de un personaje que apuntaba a esta página se queda sin página (y vuelve a apuntar si se deshace).
-  const orphans = store.characters.filter((character) => character.pageId === pageId)
-  for (const character of orphans) character.pageId = null
-
-  const undoToken = rememberUndo(store, () => {
-    store.pages.splice(Math.min(index, store.pages.length), 0, removed)
-    for (const character of orphans) character.pageId = pageId
-  })
-  revalidatePath('/escritos', 'layout')
-  return { ok: true, id: pageId, undoToken }
+  if (!idSchema.safeParse(pageId).success) return failure('No encontramos esa página.')
+  try {
+    await api.delete(`/writings/pages/${pageId}`)
+    refreshWritings()
+    return { ok: true, id: pageId, undoToken: undoTokenOf('pages', pageId) }
+  } catch (error) {
+    return apiFailure(error, 'No se pudo borrar.')
+  }
 }
 
-// "Deshacer" de cualquier borrado de Escritos (páginas, personajes…): cada acción guarda cómo volver atrás y le
-// da su token al aviso.
-export async function undoWritingAction(token: string): Promise<WritingActionResult> {
-  if (!writingIdSchema.safeParse(token).success) return failure('Ya no se puede deshacer.')
+// "Deshacer" de cualquier borrado de Escritos. El token es "<tipo>:<id>" (action-result.ts): se revisan los dos
+// antes de armar la ruta, así nunca se llama a algo que no sea un "restaurar" de Escritos.
+const undoTokenSchema = z.string().regex(new RegExp(`^(${UNDO_KINDS.join('|')}):[0-9a-f-]{36}$`, 'i'))
 
-  await mockDelay()
-  const { store } = await loadWritings()
-  if (!runUndo(store, token)) return failure('Ya no se puede deshacer.')
-  revalidatePath('/escritos', 'layout')
-  return { ok: true }
+export async function undoWritingAction(token: string): Promise<WritingActionResult> {
+  if (!undoTokenSchema.safeParse(token).success) return failure('Ya no se puede deshacer.')
+  const [kind, id] = token.split(':') as [string, string]
+  if (!idSchema.safeParse(id).success) return failure('Ya no se puede deshacer.')
+  try {
+    await api.post(`/writings/${kind}/${id}/restore`, {})
+    refreshWritings()
+    return { ok: true, id }
+  } catch (error) {
+    return apiFailure(error, 'Ya no se puede deshacer.')
+  }
 }

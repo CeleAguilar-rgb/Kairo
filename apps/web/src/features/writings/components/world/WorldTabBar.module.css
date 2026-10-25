@@ -1,0 +1,155 @@
+/* La barra de pestañas de un mundo y su menú "Más" (Escritos.dc.html, .tabs y .pop). Las pestañas en sí usan los
+   estilos de WritingsTabs.module.css, así se ven igual que las de Inicio de Escritos. */
+.wrap {
+  position: relative;
+  align-self: flex-start;
+  max-width: 100%;
+  display: flex;
+}
+
+.moreButton {
+  all: unset;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 var(--space-7);
+  border-radius: var(--radius-pill);
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.moreButton:hover {
+  background: var(--surface-hover);
+}
+
+.moreButton:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.moreOpen {
+  background: var(--surface-muted);
+}
+
+.pop {
+  position: absolute;
+  top: calc(100% + var(--space-3));
+  right: 0;
+  z-index: var(--z-popover);
+  box-sizing: border-box;
+  width: 300px;
+  max-width: calc(100vw - var(--space-11));
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-22);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+  transform-origin: top right;
+}
+
+.popLabel {
+  padding: var(--space-2) var(--space-4) var(--space-1);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.popRow {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.popItem {
+  all: unset;
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-14);
+  color: var(--text);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.popItem:hover {
+  background: var(--surface-raised);
+}
+
+.popItem:focus-visible,
+.pin:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.popNew {
+  color: var(--text-muted);
+}
+
+.popIcon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.popIconDashed {
+  border: 1.5px dashed var(--text-subtle);
+}
+
+.popName {
+  flex: 1;
+  min-width: 0;
+  font-weight: 500;
+}
+
+.popCount {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.pin {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-12);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.pin:hover {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.popEmpty {
+  padding: var(--space-3) var(--space-4);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.popFoot {
+  padding: var(--space-1) var(--space-4) var(--space-2);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-muted);
+}

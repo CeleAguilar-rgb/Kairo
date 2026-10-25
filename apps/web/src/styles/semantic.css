@@ -44,6 +44,7 @@
  * --surface-inverted-glass  bloque translúcido dentro de --surface-inverted (bloque actual de la rutina)
  * --accent-glow             fila seleccionada dentro de --surface-inverted (pendiente abierto)
  * --scrim                    velo detrás de paneles laterales y modales (no está en el PDF; sale del canvas)
+ * --cover-sage, --cover-peach  dos colores de portada de Escritos (salvia y calabaza) que no tienen otro uso; también marcan los arcos de una historia (no están en el PDF; salen de EscritosPortada.dc.html)
  * --mood-1 … --mood-5       escala del ánimo del Diario, de "muy mal" a "muy bien" (caritas y mapa del mes; no está en el PDF; sale de Diario.dc.html)
  *
  * --success: pendiente. El PDF no define un verde — "lavanda" ya cubre

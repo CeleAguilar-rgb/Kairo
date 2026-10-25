@@ -1,88 +1,59 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import type { FieldValue } from '@kairo/shared'
+import Link from 'next/link'
 import { useId, useState, useTransition } from 'react'
 
 import { LineIcon } from '@/components/ui/Card'
 import { Drawer } from '@/components/ui/Drawer'
 import { useToast } from '@/components/ui/Toast'
 
-import { deleteCharacterAction, openCharacterPageAction, updateCharacterAction } from '../character-actions'
-import { inputValue } from '../database-utils'
-import type { CharacterField, CharacterRow } from '../types'
-import { WRITING_ICON } from '../writing-meta'
+import { deleteEntryAction, updateEntryAction } from '../entry-actions'
 import { undoWritingAction } from '../page-actions'
+import type { CharacterDbView, CharacterRow, TemplateField } from '../types'
+import { WRITING_ICON } from '../writing-meta'
 
-import { Chip } from './Tone'
 import styles from './CharacterPeek.module.css'
+import { Chip } from './Tone'
 
 type CharacterPeekProps = {
   // El personaje abierto, o null si el panel está cerrado.
   character: CharacterRow | null
-  fields: CharacterField[]
+  view: CharacterDbView
   onClose: () => void
 }
 
-// El panel lateral de un personaje (BaseDatos.dc.html): su nombre, sus columnas, las historias donde aparece y su
-// ficha. Todo se puede cambiar aquí mismo y se guarda al salir de cada campo. "Abrir como página" abre su ficha
-// completa en el editor.
-export function CharacterPeek({ character, fields, onClose }: CharacterPeekProps) {
+// El panel lateral de un personaje (BaseDatos.dc.html): su nombre, sus columnas (los campos de la plantilla
+// Personaje), las historias donde aparece y su resumen. Todo se cambia aquí mismo y cada campo se guarda solo al
+// salir de él (o al elegir). "Abrir como página" lleva a su página completa en el mundo.
+export function CharacterPeek({ character, view, onClose }: CharacterPeekProps) {
   return (
     <Drawer open={character !== null} onClose={onClose} title={character ? character.name : 'Personaje'} hideTitle width="lg">
       {/* Aparte a propósito: Drawer lo desmonta al cerrarse, y la `key` hace que cada personaje empiece con sus datos. */}
-      {character ? <PeekForm key={character.id} character={character} fields={fields} onClose={onClose} /> : null}
+      {character ? <PeekForm key={character.id} character={character} view={view} onClose={onClose} /> : null}
     </Drawer>
   )
 }
 
-function PeekForm({ character, fields, onClose }: { character: CharacterRow; fields: CharacterField[]; onClose: () => void }) {
-  const router = useRouter()
+function PeekForm({ character, view, onClose }: { character: CharacterRow; view: CharacterDbView; onClose: () => void }) {
   const toast = useToast()
   const baseId = useId()
   const [pending, startTransition] = useTransition()
-
   const [name, setName] = useState(character.name)
-  const [description, setDescription] = useState(character.description)
-  // Lo que se escribe en cada columna (como texto del campo), por id de columna.
-  const [drafts, setDrafts] = useState<Record<string, string>>(() => Object.fromEntries(fields.map((field) => [field.id, inputValue(field, character.values[field.id])])))
-  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [summary, setSummary] = useState(character.summary)
   const [confirming, setConfirming] = useState(false)
 
-  // Manda al servidor lo que hay en el panel. Solo se llama al salir de un campo (o al elegir una fecha), no en cada tecla.
-  function save(next: { name?: string; description?: string; drafts?: Record<string, string> } = {}) {
-    const nextName = next.name ?? name
-    const nextDrafts = next.drafts ?? drafts
-    const values: Record<string, string | number | null> = {}
-    for (const field of fields) {
-      const text = (nextDrafts[field.id] ?? '').trim()
-      // Un número también viaja como texto: el servidor lo convierte y avisa si no es un número.
-      values[field.id] = text === '' ? null : text
-    }
+  // Solo viaja lo que cambió: un campo a la vez.
+  function save(patch: Record<string, unknown>) {
     startTransition(async () => {
-      const result = await updateCharacterAction(character.id, { name: nextName, description: next.description ?? description, values })
-      if (!result.ok) {
-        setErrors(result.errors)
-        if (result.message) toast.show({ message: result.message, icon: 'info' })
-        return
-      }
-      setErrors({})
-    })
-  }
-
-  function openAsPage() {
-    startTransition(async () => {
-      const result = await openCharacterPageAction(character.id)
-      if (!result.ok || !result.id) {
-        toast.show({ message: result.ok ? 'No se pudo abrir la ficha.' : (result.message ?? 'No se pudo abrir la ficha.'), icon: 'info' })
-        return
-      }
-      router.push(`/escritos/paginas/${result.id}`)
+      const result = await updateEntryAction('character', character.id, patch)
+      if (!result.ok) toast.show({ message: result.message ?? 'No se pudo guardar.', icon: 'info' })
     })
   }
 
   function handleDelete() {
     startTransition(async () => {
-      const result = await deleteCharacterAction(character.id)
+      const result = await deleteEntryAction('character', character.id)
       if (!result.ok) {
         setConfirming(false)
         toast.show({ message: result.message ?? 'No se pudo borrar al personaje.', icon: 'info' })
@@ -97,10 +68,10 @@ function PeekForm({ character, fields, onClose }: { character: CharacterRow; fie
   return (
     <div className={styles.peek}>
       <div className={styles.bar}>
-        <button type="button" className={styles.asPage} onClick={openAsPage} disabled={pending}>
+        <Link href={`/escritos/mundos/${view.worldId}/ficha/${character.id}`} className={styles.asPage}>
           <LineIcon d="M14 4h6v6M20 4l-8 8M10 6H4v14h14v-6" size={14} strokeWidth={2} />
           Abrir como página
-        </button>
+        </Link>
         <div className={styles.barActions}>
           <button type="button" className={[styles.icon, styles.iconDanger].join(' ')} aria-label="Borrar personaje" onClick={() => setConfirming(true)}>
             <LineIcon d={WRITING_ICON.trash} />
@@ -117,32 +88,25 @@ function PeekForm({ character, fields, onClose }: { character: CharacterRow; fie
         </label>
         <input
           id={`${baseId}-name`}
-          className={[styles.name, errors.name ? styles.invalid : null].filter(Boolean).join(' ')}
+          className={[styles.name, !name.trim() ? styles.invalid : null].filter(Boolean).join(' ')}
           value={name}
           maxLength={80}
           autoComplete="off"
           onChange={(event) => setName(event.target.value)}
-          onBlur={() => (name.trim() ? save() : setErrors({ name: 'Ponle un nombre.' }))}
+          onBlur={() => {
+            if (name.trim() && name.trim() !== character.name) save({ name: name.trim() })
+          }}
         />
-        {errors.name ? <span className={styles.error}>{errors.name}</span> : null}
+        {!name.trim() ? <span className={styles.error}>Ponle un nombre.</span> : null}
 
         <div className={styles.props}>
-          {fields.map((field) => (
+          {view.fields.map((field) => (
             <div key={field.id} className={styles.prop}>
               <label htmlFor={`${baseId}-${field.id}`} className={styles.propName}>
-                {field.name}
+                {field.name || 'Campo nuevo'}
               </label>
               <div className={styles.propValue}>
-                <FieldInput
-                  id={`${baseId}-${field.id}`}
-                  field={field}
-                  value={drafts[field.id] ?? ''}
-                  invalid={Boolean(errors[field.id])}
-                  onChange={(value) => setDrafts((current) => ({ ...current, [field.id]: value }))}
-                  // Una fecha se guarda al elegirla; lo demás, al salir del campo.
-                  onCommit={(value) => save({ drafts: { ...drafts, [field.id]: value ?? drafts[field.id] ?? '' } })}
-                />
-                {errors[field.id] ? <span className={styles.error}>{errors[field.id]}</span> : null}
+                <FieldInput id={`${baseId}-${field.id}`} selfId={character.id} field={field} value={character.values[field.id]} view={view} onSave={(value) => save({ values: { [field.id]: value } })} />
               </div>
             </div>
           ))}
@@ -161,25 +125,27 @@ function PeekForm({ character, fields, onClose }: { character: CharacterRow; fie
         </div>
 
         <div className={styles.sheet}>
-          <label htmlFor={`${baseId}-description`} className={styles.propName}>
-            Contenido de la ficha
+          <label htmlFor={`${baseId}-summary`} className={styles.propName}>
+            Resumen
           </label>
           <textarea
-            id={`${baseId}-description`}
+            id={`${baseId}-summary`}
             className={styles.description}
-            value={description}
+            value={summary}
             rows={5}
             maxLength={2000}
-            placeholder="Escribe aquí quién es: su historia, cómo es, qué quiere. Para algo más largo, ábrela como página."
-            onChange={(event) => setDescription(event.target.value)}
-            onBlur={() => save()}
+            placeholder="Quién es, en dos o tres líneas. Su ficha completa (qué quiere, a qué le teme…) está en su página."
+            onChange={(event) => setSummary(event.target.value)}
+            onBlur={() => {
+              if (summary.trim() !== character.summary) save({ summary: summary.trim() })
+            }}
           />
         </div>
 
         {confirming ? (
           <div className={styles.confirm} role="alertdialog" aria-labelledby={`${baseId}-confirm`}>
             <span id={`${baseId}-confirm`} className={styles.confirmText}>
-              ¿Borrar a {character.name}? Va a la papelera y se quita de las historias donde aparece.
+              ¿Borrar a {character.name}? Va a la papelera 30 días.
             </span>
             <div className={styles.confirmActions}>
               <button type="button" className={styles.ghost} onClick={() => setConfirming(false)}>
@@ -198,56 +164,77 @@ function PeekForm({ character, fields, onClose }: { character: CharacterRow; fie
 
 type FieldInputProps = {
   id: string
-  field: CharacterField
-  value: string
-  invalid: boolean
-  onChange: (value: string) => void
-  // Pide guardar. `value` viene cuando el valor nuevo todavía no está en el estado (una fecha recién elegida).
-  onCommit: (value?: string) => void
+  selfId: string
+  field: TemplateField
+  value: FieldValue | undefined
+  view: CharacterDbView
+  onSave: (value: FieldValue) => void
 }
 
-// El campo de una columna según su tipo. La selección es un texto con sugerencias (las opciones que ya existen): si se
-// escribe una que no existe, se crea.
-function FieldInput({ id, field, value, invalid, onChange, onCommit }: FieldInputProps) {
-  const listId = `${id}-options`
-  const className = [styles.input, invalid ? styles.invalid : null].filter(Boolean).join(' ')
+// El campo de una columna según su tipo: texto o número (se guarda al salir), fecha, selección y era (al elegir) y
+// vínculo (chips que se quitan y un "+ Enlazar…").
+function FieldInput({ id, selfId, field, value, view, onSave }: FieldInputProps) {
+  const [draft, setDraft] = useState(value === null || value === undefined || Array.isArray(value) ? '' : String(value))
 
   if (field.type === 'date') {
+    return <input id={id} className={styles.input} type="date" value={typeof value === 'string' ? value : ''} onChange={(event) => onSave(event.target.value || null)} />
+  }
+  if (field.type === 'select' || field.type === 'era') {
+    const options = field.type === 'select' ? field.options.map((option) => ({ id: option.id, label: option.label })) : view.eraOptions
     return (
-      <input
-        id={id}
-        className={className}
-        type="date"
-        value={value}
-        onChange={(event) => {
-          onChange(event.target.value)
-          onCommit(event.target.value)
-        }}
-      />
+      <select id={id} className={styles.input} value={typeof value === 'string' ? value : ''} onChange={(event) => onSave(event.target.value || null)}>
+        <option value="">—</option>
+        {options.map((option) => (
+          <option key={option.id} value={option.id}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    )
+  }
+  if (field.type === 'link') {
+    const ids = Array.isArray(value) ? value.filter((item) => view.names[item]) : []
+    return (
+      <span className={styles.stories}>
+        {ids.map((item) => (
+          <button key={item} type="button" className={styles.linkChip} aria-label={`Quitar ${view.names[item]}`} onClick={() => onSave(ids.filter((other) => other !== item))}>
+            <Chip tone="soft">{view.names[item]} ✕</Chip>
+          </button>
+        ))}
+        <select id={id} className={styles.input} value="" onChange={(event) => event.target.value && onSave([...ids, event.target.value])}>
+          <option value="">+ Enlazar…</option>
+          {view.linkOptions
+            .filter((option) => option.id !== selfId && !ids.includes(option.id))
+            .map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.label}
+              </option>
+            ))}
+        </select>
+      </span>
     )
   }
   return (
-    <>
-      <input
-        id={id}
-        className={className}
-        type="text"
-        inputMode={field.type === 'number' ? 'decimal' : undefined}
-        list={field.type === 'select' ? listId : undefined}
-        value={value}
-        maxLength={field.type === 'select' ? 40 : 80}
-        autoComplete="off"
-        placeholder="—"
-        onChange={(event) => onChange(event.target.value)}
-        onBlur={() => onCommit()}
-      />
-      {field.type === 'select' ? (
-        <datalist id={listId}>
-          {field.options.map((option) => (
-            <option key={option.id} value={option.label} />
-          ))}
-        </datalist>
-      ) : null}
-    </>
+    <input
+      id={id}
+      className={styles.input}
+      type="text"
+      inputMode={field.type === 'number' ? 'decimal' : undefined}
+      value={draft}
+      maxLength={300}
+      autoComplete="off"
+      placeholder="—"
+      onChange={(event) => setDraft(event.target.value)}
+      onBlur={() => {
+        const clean = draft.trim()
+        if (field.type === 'number') {
+          const parsed = clean === '' ? null : Number(clean.replace(',', '.'))
+          if (parsed !== null && !Number.isFinite(parsed)) return
+          if (parsed !== (value ?? null)) onSave(parsed)
+          return
+        }
+        if (clean !== (value ?? '')) onSave(clean || null)
+      }}
+    />
   )
 }

@@ -1,0 +1,209 @@
+/* Mundo → Línea del tiempo (EscritosLinea.dc.html): los botones de era, la era elegida y sus eventos. */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.eras {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+  gap: var(--space-4);
+}
+
+.era {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-height: 118px;
+  padding: var(--space-7);
+  border-radius: var(--radius-22);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    background var(--duration-base) ease,
+    color var(--duration-base) ease,
+    box-shadow var(--duration-base) ease;
+}
+
+.era:focus-visible,
+.eventButton:focus-visible,
+.editEra:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.eraOn {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+  box-shadow: var(--shadow-featured);
+}
+
+.eraAdd {
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  box-shadow: none;
+  border: 2px dashed var(--border-control);
+  color: var(--text-muted);
+}
+
+.eraNumber {
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.eraName {
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.eraCount {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  padding: var(--space-11);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-28);
+  background: var(--surface);
+}
+
+.panelHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.panelTitles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  max-width: 680px;
+}
+
+.summary {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-muted);
+}
+
+.note {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 32px;
+  padding: 0 var(--space-6);
+  border-radius: var(--radius-pill);
+  background: var(--accent-warm);
+  font-size: 13px;
+}
+
+.editEra {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 40px;
+  padding: 0 var(--space-9);
+  border-radius: var(--radius-pill);
+  background: var(--surface-muted);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.editEra:hover {
+  background: var(--border);
+}
+
+.events {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.event {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: var(--space-6);
+}
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dot {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 14px;
+  height: 14px;
+  margin-top: 4px;
+  border: 2px solid var(--text);
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.dotEdge {
+  border: 0;
+  background: var(--surface-inverted);
+}
+
+.line {
+  flex: 1;
+  width: 2px;
+  margin-top: 4px;
+  background: var(--border);
+}
+
+.eventBody {
+  min-width: 0;
+  padding-bottom: var(--space-8);
+}
+
+.eventButton {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  max-width: 84ch;
+  padding: var(--space-2) var(--space-5);
+  margin: calc(var(--space-2) * -1) calc(var(--space-5) * -1);
+  border-radius: var(--radius-14);
+  cursor: pointer;
+}
+
+.eventButton:hover {
+  background: var(--surface-raised);
+}
+
+.eventTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.eventText {
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.eventMeta {
+  font-size: 13px;
+  color: var(--accent-ink);
+}

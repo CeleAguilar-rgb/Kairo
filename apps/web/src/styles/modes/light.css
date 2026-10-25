@@ -46,6 +46,9 @@
   --accent-glow: var(--tint-lavender-14);
   --scrim: var(--tint-ink-28);
 
+  --cover-sage: var(--sage-200);
+  --cover-peach: var(--peach-300);
+
   --mood-1: var(--sand-300);
   --mood-2: var(--sand-100);
   --mood-3: var(--lavender-100);

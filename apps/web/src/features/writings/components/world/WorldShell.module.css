@@ -1,0 +1,31 @@
+/* La ruta de migas del mundo y el contenedor de cada pestaña (Escritos.dc.html, debajo del encabezado). */
+.crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.crumbLink {
+  color: var(--text-muted);
+}
+
+.crumbHere {
+  color: var(--text);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.database {
+  color: var(--accent-ink);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}

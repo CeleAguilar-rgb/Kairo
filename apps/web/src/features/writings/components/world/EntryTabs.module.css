@@ -1,0 +1,150 @@
+/* Personajes, Especies y las secciones extra de un mundo (EscritosPersonaje, EscritosEspecie, EscritosMagia). */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.filter {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 40px;
+  padding: 0 var(--space-7);
+  border-radius: var(--radius-pill);
+  background: var(--surface-glass);
+  box-shadow: inset 0 0 0 1px var(--border);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.filterOn {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+  box-shadow: none;
+}
+
+.filterCount {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.addDark {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 44px;
+  padding: 0 var(--space-9);
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform var(--duration-base) ease;
+}
+
+.addDark:hover {
+  transform: translateY(-1px);
+}
+
+.filter:focus-visible,
+.addDark:focus-visible,
+.person:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.people {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: var(--space-3);
+}
+
+.person {
+  all: unset;
+  box-sizing: border-box;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-18);
+  background: var(--surface-glass);
+  box-shadow: inset 0 0 0 1px var(--border);
+  cursor: pointer;
+  transition: background var(--duration-base) ease;
+}
+
+.person:hover {
+  background: var(--surface);
+}
+
+.personText {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.personName {
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tall {
+  min-height: 210px;
+}
+
+.mid {
+  min-height: 170px;
+}
+
+.tileTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.tagWarm {
+  background: var(--accent-warm);
+  color: var(--text);
+}
+
+.tagDark {
+  background: var(--surface-inverted-muted);
+  color: var(--accent);
+}
+
+.tileName {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.tileText {
+  line-height: 1.55;
+  opacity: 0.9;
+}
+
+.tileFoot {
+  margin-top: auto;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.tileFootDark {
+  color: var(--text-on-inverted-muted);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+}

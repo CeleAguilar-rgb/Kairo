@@ -1,14 +1,18 @@
-import type { WorldHeaderView } from '../types'
+import { LineIcon } from '@/components/ui/Card'
+
 import { formatCount } from '../writing-utils'
+import type { WorldStat } from '../world-utils'
 
 import styles from './WorldHero.module.css'
 
+type WorldHeroProps = { name: string; description: string; stats: WorldStat[]; onEditStats: () => void }
+
 // La portada de un mundo (Escritos.dc.html): una tarjeta oscura con su luna, su nombre a mano, de qué trata y las
-// cifras (eras, regiones, reinos, especies, personajes). Vive en el layout del mundo, así que al cambiar de
-// pestaña no se vuelve a pintar.
-export function WorldHero({ world }: { world: WorldHeaderView }) {
+// cifras que se eligieron (eras, regiones, reinos…); el lápiz de al lado abre "Contadores". Vive en el layout del
+// mundo, así que al cambiar de pestaña no se vuelve a pintar.
+export function WorldHero({ name, description, stats, onEditStats }: WorldHeroProps) {
   return (
-    <section className={styles.hero} aria-label={world.name}>
+    <section className={styles.hero} aria-label={name}>
       <svg className={styles.sky} viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <g fill="var(--text-on-inverted)" opacity="0.55">
           <circle cx="120" cy="40" r="1.6" />
@@ -32,16 +36,19 @@ export function WorldHero({ world }: { world: WorldHeaderView }) {
       <div className={styles.content}>
         <div className={styles.titles}>
           <span className={styles.kicker}>Mundo</span>
-          <h1 className={styles.name}>{world.name}</h1>
-          {world.description ? <p className={styles.description}>{world.description}</p> : null}
+          <h1 className={styles.name}>{name}</h1>
+          {description ? <p className={styles.description}>{description}</p> : null}
         </div>
         <div className={styles.stats}>
-          {world.stats.map((stat) => (
-            <span key={stat.label} className={styles.stat}>
+          {stats.map((stat) => (
+            <span key={stat.id} className={styles.stat}>
               <span className={styles.statValue}>{formatCount(stat.value)}</span>
               <span className={styles.statLabel}>{stat.label}</span>
             </span>
           ))}
+          <button type="button" className={styles.editStats} aria-label="Elegir qué contar" onClick={onEditStats}>
+            <LineIcon d="M14 4l6 6L9 21H3v-6L14 4z" size={16} />
+          </button>
         </div>
       </div>
     </section>

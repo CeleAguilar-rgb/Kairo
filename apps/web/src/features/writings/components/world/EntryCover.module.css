@@ -1,0 +1,194 @@
+/* La portada de una ficha (EscritosPortada.dc.html): la franja, sus fondos y la barra para cambiarla. */
+.band {
+  position: relative;
+  height: 170px;
+  overflow: hidden;
+  border-radius: 32px;
+  background: var(--surface-muted);
+}
+
+.tall {
+  height: 260px;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.position_0 {
+  object-position: center top;
+}
+
+.position_1 {
+  object-position: center center;
+}
+
+.position_2 {
+  object-position: center bottom;
+}
+
+.region {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.doodle {
+  position: absolute;
+  right: 8%;
+  top: 50%;
+  transform: translateY(-50%) rotate(-6deg);
+  opacity: 0.9;
+}
+
+/* El dibujo automático va sobre un degradado del color de su plantilla. */
+.auto_ink {
+  background: linear-gradient(120deg, var(--surface-inverted) 0%, var(--surface-inverted-muted) 60%, var(--accent-ink) 100%);
+}
+
+.auto_accent {
+  background: linear-gradient(120deg, var(--accent) 0%, var(--accent) 40%, var(--surface) 100%);
+}
+
+.auto_soft {
+  background: linear-gradient(120deg, var(--accent-soft) 0%, var(--accent-soft) 40%, var(--surface) 100%);
+}
+
+.auto_warm {
+  background: linear-gradient(120deg, var(--accent-warm) 0%, var(--accent-warm) 40%, var(--surface) 100%);
+}
+
+.auto_muted {
+  background: linear-gradient(120deg, var(--surface-muted) 0%, var(--surface-muted) 40%, var(--surface) 100%);
+}
+
+.autoNight {
+  background: linear-gradient(120deg, var(--surface-inverted) 0%, var(--surface-inverted-muted) 60%, var(--accent-ink) 100%);
+}
+
+/* Los 6 colores de portada. */
+.color_sand {
+  background: var(--accent-warm);
+}
+
+.color_lavender_soft {
+  background: var(--accent-soft);
+}
+
+.color_lavender {
+  background: var(--accent);
+}
+
+.color_sage {
+  background: var(--cover-sage);
+}
+
+.color_peach {
+  background: var(--cover-peach);
+}
+
+.color_ink {
+  background: var(--surface-inverted);
+}
+
+.bar {
+  position: absolute;
+  right: var(--space-6);
+  bottom: var(--space-6);
+  box-sizing: border-box;
+  max-width: calc(100% - var(--space-12));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border-radius: var(--radius-20);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.barButton,
+.barIcon {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-12);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.barIcon {
+  padding: 0;
+  width: 36px;
+  justify-content: center;
+}
+
+.barButton:hover,
+.barIcon:hover {
+  background: var(--surface-muted);
+}
+
+.barButton:disabled,
+.barIcon:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.swatch {
+  all: unset;
+  position: relative;
+  box-sizing: border-box;
+  width: 26px;
+  height: 26px;
+  margin: 0 2px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--border-control);
+  cursor: pointer;
+}
+
+.swatch::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+}
+
+.swatchOn {
+  box-shadow:
+    0 0 0 2px var(--surface),
+    0 0 0 4px var(--text);
+}
+
+.barButton:focus-visible,
+.barIcon:focus-visible,
+.swatch:focus-visible,
+.addCover:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.addCover {
+  all: unset;
+  box-sizing: border-box;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: 0 var(--space-6);
+  border: 1.5px dashed var(--border-control);
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  color: var(--text-muted);
+  cursor: pointer;
+}

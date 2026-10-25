@@ -99,6 +99,31 @@
   color: var(--text-on-inverted-soft);
 }
 
+.editStats {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: 44px;
+  min-height: 44px;
+  border-radius: var(--radius-18);
+  background: var(--surface-inverted-glass);
+  border: 1px solid var(--border-inverted);
+  color: var(--text-on-inverted-soft);
+  cursor: pointer;
+}
+
+.editStats:hover {
+  color: var(--text-on-inverted);
+}
+
+.editStats:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
 @media (max-width: 720px) {
   .name {
     font-size: 72px;

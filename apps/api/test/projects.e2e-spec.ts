@@ -246,9 +246,9 @@ describe('Proyectos y Sprints (e2e)', () => {
     it('el contrato con el front: la forma exacta de la lista y del detalle', async () => {
       const keys = (value: object) => Object.keys(value).sort()
       const list = (await get(userA, '/v1/projects').expect(200)).body as ProjectJson[]
-      expect(keys(list[0]!)).toEqual(['coverPath', 'description', 'goalOn', 'id', 'kind', 'name', 'startedOn', 'status'])
+      expect(keys(list[0]!)).toEqual(['coverPath', 'coverUrl', 'description', 'goalOn', 'id', 'kind', 'name', 'startedOn', 'status'])
       const detail = (await get(userA, `/v1/projects/${list[0]!.id}`).expect(200)).body as ProjectJson
-      expect(keys(detail)).toEqual(['coverPath', 'description', 'goalOn', 'id', 'kind', 'links', 'name', 'notes', 'objectives', 'startedOn', 'status'])
+      expect(keys(detail)).toEqual(['coverPath', 'coverUrl', 'description', 'goalOn', 'id', 'kind', 'links', 'name', 'notes', 'objectives', 'startedOn', 'status'])
       if (detail.objectives[0]) expect(keys(detail.objectives[0])).toEqual(['done', 'id', 'text'])
       if (detail.links[0]) expect(keys(detail.links[0])).toEqual(['id', 'title', 'url'])
     })

@@ -1,6 +1,6 @@
 'use client'
 
-import { FIELD_TYPES, type FieldType } from '@kairo/shared'
+import { NOTE_TEMPLATE_FIELD_TYPES, type NoteTemplateFieldType } from '@kairo/shared'
 import { motion } from 'motion/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -14,11 +14,11 @@ import { Segmented } from '@/components/ui/Segmented'
 import { useToast } from '@/components/ui/Toast'
 import { fadeUp, staggerList } from '@/lib/motion'
 
-import { addFieldAction, createCharacterAction, deleteFieldAction } from '../character-actions'
+import { createCharacterAction } from '../entry-actions'
+import { updateTemplateAction } from '../world-actions'
 import { displayValue, optionFor, subline } from '../database-utils'
-import { undoWritingAction } from '../page-actions'
-import type { CharacterDbView, CharacterField, CharacterRow } from '../types'
-import { FIELD_TYPE_ICON, FIELD_TYPE_LABEL, WRITING_ICON } from '../writing-meta'
+import type { CharacterDbView, CharacterRow, TemplateField } from '../types'
+import { FIELD_TYPE_ICON, NOTE_TEMPLATE_FIELD_TYPE_LABEL, WRITING_ICON } from '../writing-meta'
 import { plural } from '../writing-utils'
 
 import { CharacterPeek } from './CharacterPeek'
@@ -51,7 +51,7 @@ export function CharactersDatabase({ view }: { view: CharacterDbView }) {
 
   function addCharacter() {
     startTransition(async () => {
-      const result = await createCharacterAction(view.worldId)
+      const result = await createCharacterAction(view.worldId, { name: 'Personaje nuevo' })
       if (!result.ok || !result.id) {
         toast.show({ message: result.ok ? 'No se pudo crear al personaje.' : (result.message ?? 'No se pudo crear al personaje.'), icon: 'info' })
         return
@@ -62,24 +62,30 @@ export function CharactersDatabase({ view }: { view: CharacterDbView }) {
     })
   }
 
-  function addField(type: FieldType) {
+  // Una propiedad nueva es un campo más de la plantilla Personaje del mundo (decisión #45): se ve también en la
+  // ficha de cada personaje. La plantilla se guarda completa, con el campo al final de la vista corta.
+  function addField(type: NoteTemplateFieldType) {
     setMenuOpen(false)
+    const field: TemplateField = { id: crypto.randomUUID(), kind: 'field', key: null, name: NOTE_TEMPLATE_FIELD_TYPE_LABEL[type], type, hint: '', options: [] }
+    const sections = view.allFields.filter((item) => item.kind === 'section')
+    const shorts = view.allFields.filter((item) => item.kind === 'field')
     startTransition(async () => {
-      const result = await addFieldAction(view.worldId, type)
+      const result = await updateTemplateAction(view.templateId, { fields: [...shorts, field, ...sections] })
       if (!result.ok) toast.show({ message: result.message ?? 'No se pudo agregar la propiedad.', icon: 'info' })
-      else toast.show({ message: `Propiedad "${FIELD_TYPE_LABEL[type]}" agregada. Se llena desde el panel de cada personaje.`, icon: 'check' })
+      else toast.show({ message: `Propiedad "${field.name}" agregada. Renómbrala o dale opciones desde la plantilla del mundo.`, icon: 'check' })
     })
   }
 
-  function removeField(field: CharacterField) {
+  // Quitar una columna la quita de la plantilla; lo escrito no se borra y "Deshacer" la devuelve igual que estaba.
+  function removeField(field: TemplateField) {
+    const previous = view.allFields
     startTransition(async () => {
-      const result = await deleteFieldAction(field.id)
+      const result = await updateTemplateAction(view.templateId, { fields: previous.filter((item) => item.id !== field.id) })
       if (!result.ok) {
         toast.show({ message: result.message ?? 'No se pudo quitar la propiedad.', icon: 'info' })
         return
       }
-      const token = result.undoToken
-      toast.show({ message: `Se quitó la propiedad "${field.name}"`, icon: 'trash', onUndo: token ? () => void undoWritingAction(token) : undefined })
+      toast.show({ message: `Se quitó la propiedad "${field.name}"`, icon: 'trash', onUndo: () => void updateTemplateAction(view.templateId, { fields: previous }) })
     })
   }
 
@@ -144,10 +150,10 @@ export function CharactersDatabase({ view }: { view: CharacterDbView }) {
                 {menuOpen ? (
                   <div className={styles.menu} role="menu">
                     <span className={styles.menuHint}>Tipo de propiedad</span>
-                    {FIELD_TYPES.map((type) => (
+                    {NOTE_TEMPLATE_FIELD_TYPES.map((type) => (
                       <button key={type} type="button" role="menuitem" className={styles.menuItem} onClick={() => addField(type)}>
                         <LineIcon d={FIELD_TYPE_ICON[type]} size={16} />
-                        {FIELD_TYPE_LABEL[type]}
+                        {NOTE_TEMPLATE_FIELD_TYPE_LABEL[type]}
                       </button>
                     ))}
                   </div>
@@ -156,11 +162,11 @@ export function CharactersDatabase({ view }: { view: CharacterDbView }) {
             </div>
 
             {view.rows.length === 0 ? (
-              <EmptyState id="characters-empty" title="Todavía no hay personajes" description="Cada personaje tiene su nombre, su reino, su rol y su ficha. Empieza con el primero." doodle="heart" />
+              <EmptyState id="characters-empty" title="Todavía no hay personajes" description="Cada personaje tiene su nombre, los campos de su plantilla y su ficha. Empieza con el primero." doodle="heart" />
             ) : rows.length === 0 ? (
               <p className={styles.none}>Nadie en este grupo todavía.</p>
             ) : mode === 'table' ? (
-              <Table fields={view.fields} rows={rows} activeId={openId} onOpen={setOpenId} onRemoveField={removeField} />
+              <Table fields={view.fields} names={view.names} rows={rows} activeId={openId} onOpen={setOpenId} onRemoveField={removeField} />
             ) : mode === 'gallery' ? (
               <Gallery fields={view.fields} groupField={groupField} rows={rows} onOpen={setOpenId} />
             ) : (
@@ -177,22 +183,22 @@ export function CharactersDatabase({ view }: { view: CharacterDbView }) {
         </motion.div>
       </motion.div>
 
-      <CharacterPeek character={opened} fields={view.fields} onClose={() => setOpenId(null)} />
+      <CharacterPeek character={opened} view={view} onClose={() => setOpenId(null)} />
     </div>
   )
 }
 
 // El valor de una columna en la tabla: una etiqueta de color para las selecciones, texto para lo demás, "—" si está vacío.
-function Cell({ field, row }: { field: CharacterField; row: CharacterRow }) {
+function Cell({ field, row, names }: { field: TemplateField; row: CharacterRow; names: Record<string, string> }) {
   const option = optionFor(field, row.values[field.id])
   if (option) return <Chip tone={option.tone}>{option.label}</Chip>
-  const text = displayValue(field, row.values[field.id])
+  const text = displayValue(field, row.values[field.id], names)
   return <span className={text ? undefined : styles.hint}>{text || '—'}</span>
 }
 
-type TableProps = { fields: CharacterField[]; rows: CharacterRow[]; activeId: string | null; onOpen: (id: string) => void; onRemoveField: (field: CharacterField) => void }
+type TableProps = { fields: TemplateField[]; names: Record<string, string>; rows: CharacterRow[]; activeId: string | null; onOpen: (id: string) => void; onRemoveField: (field: TemplateField) => void }
 
-function Table({ fields, rows, activeId, onOpen, onRemoveField }: TableProps) {
+function Table({ fields, names, rows, activeId, onOpen, onRemoveField }: TableProps) {
   return (
     <div className={styles.tableWrap}>
       <table className={styles.table}>
@@ -203,7 +209,7 @@ function Table({ fields, rows, activeId, onOpen, onRemoveField }: TableProps) {
               <th key={field.id} scope="col">
                 <span className={styles.columnHead}>
                   {field.name}
-                  {!field.builtIn ? (
+                  {!field.key ? (
                     <button type="button" className={styles.removeColumn} aria-label={`Quitar la propiedad ${field.name}`} onClick={() => onRemoveField(field)}>
                       <LineIcon d={WRITING_ICON.close} size={12} strokeWidth={2.4} />
                     </button>
@@ -224,7 +230,7 @@ function Table({ fields, rows, activeId, onOpen, onRemoveField }: TableProps) {
               </td>
               {fields.map((field) => (
                 <td key={field.id}>
-                  <Cell field={field} row={row} />
+                  <Cell field={field} row={row} names={names} />
                 </td>
               ))}
               <td>
@@ -238,7 +244,7 @@ function Table({ fields, rows, activeId, onOpen, onRemoveField }: TableProps) {
   )
 }
 
-type GalleryProps = { fields: CharacterField[]; groupField: CharacterField | null; rows: CharacterRow[]; onOpen: (id: string) => void }
+type GalleryProps = { fields: TemplateField[]; groupField: TemplateField | null; rows: CharacterRow[]; onOpen: (id: string) => void }
 
 function Gallery({ fields, groupField, rows, onOpen }: GalleryProps) {
   return (
@@ -248,7 +254,14 @@ function Gallery({ fields, groupField, rows, onOpen }: GalleryProps) {
         const role = subline(row, fields)
         return (
           <button key={row.id} type="button" className={styles.galleryCard} onClick={() => onOpen(row.id)}>
-            <span className={[styles.cover, colors[`tone_${row.tone}`]].join(' ')}>{row.initial}</span>
+            <span className={[styles.cover, colors[`tone_${row.tone}`]].join(' ')}>
+              {row.imageUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element -- URL firmada de corta duración, no un asset que next/image deba optimizar
+                <img src={row.imageUrl} alt="" className={styles.coverImage} />
+              ) : (
+                row.initial
+              )}
+            </span>
             <span className={styles.galleryBody}>
               <span className={styles.galleryName}>{row.name}</span>
               <span className={styles.galleryChips}>
@@ -263,7 +276,7 @@ function Gallery({ fields, groupField, rows, onOpen }: GalleryProps) {
   )
 }
 
-type BoardProps = { fields: CharacterField[]; groupField: CharacterField | null; rows: CharacterRow[]; filter: string; onOpen: (id: string) => void }
+type BoardProps = { fields: TemplateField[]; groupField: TemplateField | null; rows: CharacterRow[]; filter: string; onOpen: (id: string) => void }
 
 // El tablero: una columna por opción de la columna de grupo (Reino) y, si hay personajes sin grupo, una de "Sin …".
 function Board({ fields, groupField, rows, filter, onOpen }: BoardProps) {
@@ -283,7 +296,7 @@ function Board({ fields, groupField, rows, filter, onOpen }: BoardProps) {
           {column.rows.map((row) => (
             <button key={row.id} type="button" className={styles.boardCard} onClick={() => onOpen(row.id)}>
               <span className={styles.boardName}>
-                <Avatar initial={row.initial} tone={row.tone} size={24} />
+                <Avatar initial={row.initial} tone={row.tone} size={24} imageUrl={row.imageUrl} />
                 {row.name}
               </span>
               {subline(row, fields) ? <span className={styles.hintSmall}>{subline(row, fields)}</span> : null}
