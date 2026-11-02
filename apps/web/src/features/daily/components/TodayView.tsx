@@ -7,6 +7,7 @@ import { useCalmEntry } from '@/components/layout/SectionPanel'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { useToast } from '@/components/ui/Toast'
+import { useFocus } from '@/features/focus'
 import { minutesNowIn, minutesToWallTime } from '@/lib/dates'
 import { EASE_OUT } from '@/lib/motion'
 
@@ -56,6 +57,7 @@ function applyOptimistic(day: RoutineDay, action: OptimisticAction): RoutineDay 
 // bloque pasa por una acción de servidor; la fila reacciona al instante y la lista real la reemplaza.
 export function TodayView({ day, streaks, meals, nowIso, timeZone, hourFormat, dateText }: TodayViewProps) {
   const toast = useToast()
+  const focus = useFocus()
   const calm = useCalmEntry()
   const [, startTransition] = useTransition()
   const [now, setNow] = useState(nowIso)
@@ -121,7 +123,7 @@ export function TodayView({ day, streaks, meals, nowIso, timeZone, hourFormat, d
               hourFormat={hourFormat}
               onToggle={handleToggle}
               onCompleteTask={handleTask}
-              onPomodoro={() => toast.show({ message: 'El pomodoro llega con Música y enfoque.', icon: 'info' })}
+              onPomodoro={(title) => focus.focusOnTask({ id: null, title })}
             />
           </motion.section>
 

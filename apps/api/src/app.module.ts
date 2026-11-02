@@ -8,6 +8,7 @@ import { AgendaModule } from './modules/agenda/agenda.module'
 import { AttachmentsModule } from './modules/attachments/attachments.module'
 import { DailyModule } from './modules/daily/daily.module'
 import { FinanceModule } from './modules/finance/finance.module'
+import { FocusModule } from './modules/focus/focus.module'
 import { ProjectsModule } from './modules/projects/projects.module'
 import { RemindersModule } from './modules/reminders/reminders.module'
 import { SchoolModule } from './modules/school/school.module'
@@ -30,6 +31,7 @@ import { WritingsModule } from './modules/writings/writings.module'
     FinanceModule,
     SchoolModule,
     WritingsModule,
+    FocusModule,
   ],
   providers: [{ provide: APP_GUARD, useClass: JwtGuard }],
 })

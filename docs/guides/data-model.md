@@ -108,7 +108,7 @@ Escuela solo guarda lo suyo (decisión #43). **Una materia es un proyecto `schoo
 
 | Tabla | Columnas | Relaciones / notas |
 |---|---|---|
-| focus_sessions | kind (`work`, `break`), started_at, minutes | → tasks (opcional) |
+| focus_sessions | kind (`work`, `break`), started_at, minutes (1 a 180), task_id | → tasks (opcional, con FK `ON DELETE SET NULL`: si la tarea se borra los minutos no se pierden; ser de la misma persona lo revisa `FocusService` con el service de Tareas). Una fila por **tramo del pomodoro que terminó** (los puntos del día, los minutos de la semana y los minutos por proyecto **no son columnas**: salen de estas filas y los arma el Next.js, decisión #38). Migración `0013`. |
 | backups | kind (`automatic`, `manual`), sections, storage_path, size_bytes | Fase posterior (exportar y respaldo). |
 
 ## Reglas de datos

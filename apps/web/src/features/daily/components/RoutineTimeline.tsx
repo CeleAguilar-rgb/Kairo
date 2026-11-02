@@ -31,7 +31,8 @@ type RoutineTimelineProps = {
   hourFormat: '12h' | '24h'
   onToggle: (block: RoutineBlockToday) => void
   onCompleteTask: (block: RoutineBlockToday) => void
-  onPomodoro: () => void
+  // Recibe lo que toca ahora en ese bloque (el siguiente pendiente, o el área si no hay): en eso se enfoca el reproductor.
+  onPomodoro: (title: string) => void
 }
 
 // La línea de tiempo de hoy (DiaADia.dc.html): cada bloque con su hora, su ícono y su casilla, una raya
@@ -140,7 +141,7 @@ function FocusCard({
   hourFormat,
   onCompleteTask,
   onPomodoro,
-}: RowProps & { info: FocusInfo; onCompleteTask: (block: RoutineBlockToday) => void; onPomodoro: () => void }) {
+}: RowProps & { info: FocusInfo; onCompleteTask: (block: RoutineBlockToday) => void; onPomodoro: (title: string) => void }) {
   const nextTask = info.tasks[info.doneCount] ?? null
   const elapsed = Math.max(0, nowMinutes - startMinutes(block))
   const total = endMinutes(block) - startMinutes(block)
@@ -192,7 +193,7 @@ function FocusCard({
         </div>
 
         <div className={styles.focusActions}>
-          <button type="button" className={styles.pomodoro} onClick={onPomodoro}>
+          <button type="button" className={styles.pomodoro} onClick={() => onPomodoro(nextTask ?? info.areaLabel)}>
             <LineIcon d={['M12 5a8 8 0 1 0 0 16 8 8 0 0 0 0-16z', 'M12 9v4l2 2M10 2h4']} size={16} strokeWidth={2} />
             Iniciar pomodoro
           </button>

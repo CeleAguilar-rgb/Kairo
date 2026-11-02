@@ -4,6 +4,7 @@ import { DoodlesProvider } from '@/components/layout/Doodles'
 import { NavigationProvider, PageFrame } from '@/components/layout/Navigation'
 import { ToastProvider } from '@/components/ui/Toast'
 import { FocusProvider } from '@/features/focus'
+import { getFocusSetup } from '@/features/focus/api'
 import { getMe } from '@/lib/account/api'
 import { DEMO_MODE } from '@/lib/demo'
 import { createClient } from '@/lib/supabase/server'
@@ -29,11 +30,14 @@ export default async function DashboardLayout({
   const me = await getMe()
   if (!me) redirect('/bienvenida')
 
+  // Lo que necesita el reproductor de Enfoque: los pomodoros de hoy y las tareas en las que puede enfocarse.
+  const focus = await getFocusSetup()
+
   return (
     <ToastProvider>
       <DoodlesProvider>
         <NavigationProvider>
-          <FocusProvider>
+          <FocusProvider sessionsToday={focus.sessionsToday} tasks={focus.tasks}>
             <div className={styles.shell}>
               <Topnav profile={me.profile} sections={me.sections} />
               <PageFrame className={styles.content}>{children}</PageFrame>

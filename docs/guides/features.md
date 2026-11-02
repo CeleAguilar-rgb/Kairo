@@ -52,8 +52,11 @@ Fuente: el documento "Mi tablero · Funcionalidades y base de datos" del usuario
 
 - Estilo de libro: Historias (lomos con capítulos y estado), Notas (tarjetas con imágenes), Personajes y Mundos.
 - Páginas con bloques al estilo Notion (Tiptap): menú "/", encabezados, listas, imagen, galería y portada.
-- Base de datos de personajes en tabla, galería o tablero, con propiedades propias.
+- Base de datos de personajes en tabla, galería o tablero, con propiedades propias (son los campos de la plantilla Personaje).
 - Palabras escritas en la semana contra una meta.
+- **Mundos** (decisiones #45 a #47): cada mundo tiene un Resumen (sinopsis, tabla "Dónde y cuándo" de cada región en cada era, huecos por llenar, reglas del mundo), Línea del tiempo (eras y eventos con quién y dónde), Regiones (lugares dentro de lugares y mapa), Historias (arcos, capítulos, elenco y material), Personajes y Especies.
+- **Fichas con plantilla editable**: personajes, especies, lugares y secciones extra (Magia, Objetos…, o una propia) siguen una plantilla con campos cortos (texto, vínculo a otra ficha, era, selección, número, fecha) y secciones para rellenar. Cada ficha muestra quién la menciona, se abre en un panel lateral o como página completa con portada y bloques, y puede tener foto.
+- Cada mundo elige qué pestañas van en la barra (el resto, en "Más") y qué contadores se ven en su portada.
 
 ## Escuela
 
@@ -62,7 +65,7 @@ Fuente: el documento "Mi tablero · Funcionalidades y base de datos" del usuario
 
 ## Música, enfoque y atajos
 
-- Reproductor flotante con el pomodoro y la tarea en curso. Spotify es **fase posterior** (integraciones).
+- Reproductor flotante con el pomodoro y la tarea en curso. Cada tramo que termina se guarda: los puntos de hoy ("2 de 4") salen de ahí, se puede enfocar en una tarea real (también desde su detalle o desde un bloque de la rutina) y el Resumen de un proyecto suma los minutos de la semana. Spotify es **fase posterior** (integraciones).
 - Buscar con Ctrl+K, panel de avisos y captura rápida.
 
 ## Lo que aplica a todo

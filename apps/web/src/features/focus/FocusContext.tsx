@@ -1,9 +1,12 @@
 'use client'
 
-import { createContext, useContext, useMemo, useState, type ReactNode } from 'react'
+import { createContext, useContext, useEffect, useEffectEvent, useMemo, useState, type ReactNode } from 'react'
 
-import { FOCUS_SONGS, FOCUS_TASK_OPTIONS } from './mock'
-import type { FocusMode } from './types'
+import { useToast } from '@/components/ui/Toast'
+
+import { recordFocusSessionAction } from './actions'
+import { FOCUS_SONGS } from './mock'
+import type { FocusMode, FocusTask } from './types'
 import { useFocusTimer } from './use-focus-timer'
 import { FocusPlayer } from './components/FocusPlayer'
 
@@ -12,12 +15,13 @@ type FocusContextValue = {
   setMode: (mode: FocusMode) => void
   expanded: boolean
   setExpanded: (expanded: boolean) => void
+  // El título de la tarea en la que se enfoca ("" si no hay ninguna).
   task: string
   cycleTask: () => void
-  // Para que otro módulo (el botón "Pomodoro" del detalle de tarea) abra el
-  // reproductor ya enfocado en una tarea real, sin importar sus archivos
-  // internos — solo este hook (docs/guides/modules.md).
-  focusOnTask: (title: string) => void
+  // Para que otro módulo (el botón "Pomodoro" del detalle de tarea o de un bloque de la rutina) abra el
+  // reproductor ya enfocado en algo, sin importar sus archivos internos — solo este hook (docs/guides/modules.md).
+  // Con `id` el tiempo se le guarda a esa tarea; sin él (un texto suelto) solo se guarda el tiempo.
+  focusOnTask: (task: FocusTask) => void
   withMusic: boolean
   toggleWithMusic: () => void
   timer: ReturnType<typeof useFocusTimer>
@@ -37,21 +41,42 @@ export function useFocus() {
   return context
 }
 
+type FocusProviderProps = {
+  children: ReactNode
+  // Los pomodoros de trabajo que ya van hoy y las tareas en las que se puede enfocar, de la API (getFocusSetup).
+  sessionsToday: number
+  tasks: FocusTask[]
+}
+
 // El reproductor flotante como contexto: vive montado una sola vez en el
 // layout del dashboard (sobrevive a cambiar de pantalla, igual que
 // ToastProvider/DoodlesProvider) y expone useFocus() para que otros módulos
 // — como el botón "Pomodoro" de Tareas — puedan abrirlo y enfocarlo en algo.
-export function FocusProvider({ children }: { children: ReactNode }) {
-  const timer = useFocusTimer()
+// Cada tramo que termina (trabajo o descanso) se guarda en la API.
+export function FocusProvider({ children, sessionsToday, tasks }: FocusProviderProps) {
+  const toast = useToast()
+  const timer = useFocusTimer(sessionsToday)
   const [mode, setMode] = useState<FocusMode>('focus')
   const [expanded, setExpanded] = useState(false)
   const [taskIndex, setTaskIndex] = useState(0)
-  const [customTask, setCustomTask] = useState<string | null>(null)
+  const [custom, setCustom] = useState<FocusTask | null>(null)
   const [withMusic, setWithMusic] = useState(true)
   const [songIndex, setSongIndex] = useState(0)
   const [playing, setPlaying] = useState(true)
 
-  const task = customTask ?? FOCUS_TASK_OPTIONS[taskIndex]
+  const current = custom ?? tasks[taskIndex] ?? null
+
+  // Guardar el tramo que acaba de terminar, con la tarea de ese momento. useEffectEvent: el efecto depende solo de
+  // que terminó uno nuevo (`seq`) y no se vuelve a disparar al cambiar de tarea.
+  const save = useEffectEvent((done: NonNullable<typeof timer.state.lastCompleted>) => {
+    void recordFocusSessionAction({ kind: done.kind, startedAt: done.startedAt, minutes: done.minutes, taskId: current?.id ?? null }).then((result) => {
+      if (!result.ok) toast.show({ message: result.message, icon: 'info' })
+    })
+  })
+  const completed = timer.state.lastCompleted
+  useEffect(() => {
+    if (completed) save(completed)
+  }, [completed])
 
   const api = useMemo<FocusContextValue>(
     () => ({
@@ -59,18 +84,18 @@ export function FocusProvider({ children }: { children: ReactNode }) {
       setMode,
       expanded,
       setExpanded,
-      task,
+      task: current?.title ?? '',
       cycleTask: () => {
-        setCustomTask(null)
-        setTaskIndex((current) => (current + 1) % FOCUS_TASK_OPTIONS.length)
+        setCustom(null)
+        setTaskIndex((index) => (tasks.length === 0 ? 0 : (index + 1) % tasks.length))
       },
-      focusOnTask: (title) => {
-        setCustomTask(title)
+      focusOnTask: (task) => {
+        setCustom(task)
         setMode('focus')
         setExpanded(true)
       },
       withMusic,
-      toggleWithMusic: () => setWithMusic((current) => !current),
+      toggleWithMusic: () => setWithMusic((value) => !value),
       timer: {
         ...timer,
         toggleRun: () => {
@@ -82,15 +107,15 @@ export function FocusProvider({ children }: { children: ReactNode }) {
       },
       song: FOCUS_SONGS[songIndex],
       playing,
-      togglePlay: () => setPlaying((current) => !current),
-      nextSong: () => setSongIndex((current) => (current + 1) % FOCUS_SONGS.length),
-      prevSong: () => setSongIndex((current) => (current + FOCUS_SONGS.length - 1) % FOCUS_SONGS.length),
+      togglePlay: () => setPlaying((value) => !value),
+      nextSong: () => setSongIndex((index) => (index + 1) % FOCUS_SONGS.length),
+      prevSong: () => setSongIndex((index) => (index + FOCUS_SONGS.length - 1) % FOCUS_SONGS.length),
       playPlaylist: () => {
         setSongIndex(0)
         setPlaying(true)
       },
     }),
-    [mode, expanded, task, withMusic, timer, songIndex, playing],
+    [mode, expanded, current, tasks.length, withMusic, timer, songIndex, playing],
   )
 
   return (

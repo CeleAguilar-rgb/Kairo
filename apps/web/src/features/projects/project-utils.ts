@@ -44,7 +44,8 @@ function toProjectTask(task: Task): ProjectTask {
   return { id: task.id, title: task.title, status: task.status, subtasksDone: subtasksDone(task), subtasksTotal: task.subtasks.length, dueOn: task.dueOn }
 }
 
-export function toProjectDetail(record: ProjectDetailRecord, allTasks: Task[], sprints: ProjectSprintsRecord): ProjectDetail {
+// `focusMinutesWeek`: los minutos de pomodoro de esta semana en tareas de este proyecto (los suma Enfoque).
+export function toProjectDetail(record: ProjectDetailRecord, allTasks: Task[], sprints: ProjectSprintsRecord, focusMinutesWeek: number): ProjectDetail {
   return {
     ...withTaskStats(record, allTasks),
     notes: record.notes,
@@ -52,8 +53,7 @@ export function toProjectDetail(record: ProjectDetailRecord, allTasks: Task[], s
     links: record.links,
     tasks: tasksOfProject(allTasks, record.id).map(toProjectTask),
     currentSprint: sprints.active ? { number: sprints.active.number, endsOn: sprints.active.endsOn } : null,
-    // Los minutos de pomodoro de la semana vienen del módulo de Enfoque, que todavía no tiene backend.
-    focusMinutesWeek: 0,
+    focusMinutesWeek,
   }
 }
 

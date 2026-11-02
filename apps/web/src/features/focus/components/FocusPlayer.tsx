@@ -1,11 +1,12 @@
 'use client'
 
+import { FOCUS_DOTS } from '@kairo/shared'
 import { AnimatePresence, motion } from 'motion/react'
 
 import { SPRING } from '@/lib/motion'
 
 import { useFocus } from '../FocusContext'
-import { FOCUS_MAX_SESSIONS, FOCUS_PLAYLISTS, FOCUS_PRESETS } from '../mock'
+import { FOCUS_PLAYLISTS, FOCUS_PRESETS } from '../mock'
 
 import styles from './FocusPlayer.module.css'
 
@@ -39,7 +40,7 @@ export function FocusPlayer() {
     state.phase === 'break'
       ? 'Descanso'
       : state.running
-        ? `Enfoque · ${state.sessionsToday + 1} de ${FOCUS_MAX_SESSIONS}`
+        ? `Enfoque · ${state.sessionsToday + 1} de ${FOCUS_DOTS}`
         : state.secondsLeft === 0
           ? '¡Listo! Toca para descansar'
           : 'En pausa'
@@ -48,7 +49,8 @@ export function FocusPlayer() {
   // sigue corriendo aunque hayas cambiado a la pestaña Música mientras tanto
   // (Reproductor.dc.html: pillFocus).
   const pillFocus = mode === 'focus' || state.running
-  const pillTitle = pillFocus ? `${clock} · ${task}` : song.title
+  const taskText = task || 'lo que estás haciendo'
+  const pillTitle = pillFocus ? `${clock} · ${taskText}` : song.title
   const pillSub = pillFocus ? (playing ? `♪ ${song.title} · ${song.playlist}` : state.running ? 'Enfoque' : 'Enfoque en pausa') : `${song.playlist} · Spotify`
   const pillActionPlaying = pillFocus ? state.running : playing
 
@@ -113,8 +115,8 @@ export function FocusPlayer() {
                   </div>
                 </div>
 
-                <div className={styles.dots} aria-label={`${state.sessionsToday} de ${FOCUS_MAX_SESSIONS} sesiones hechas hoy`}>
-                  {Array.from({ length: FOCUS_MAX_SESSIONS }, (_, index) => (
+                <div className={styles.dots} aria-label={`${state.sessionsToday} de ${FOCUS_DOTS} sesiones hechas hoy`}>
+                  {Array.from({ length: FOCUS_DOTS }, (_, index) => (
                     <span
                       key={index}
                       className={index < state.sessionsToday ? styles.dotDone : index === state.sessionsToday ? styles.dotCurrent : styles.dotPending}
@@ -129,7 +131,7 @@ export function FocusPlayer() {
                   </svg>
                   <span className={styles.taskText}>
                     <span className={styles.taskLabel}>Enfocado en</span>
-                    <span className={styles.taskName}>{task}</span>
+                    <span className={styles.taskName}>{taskText}</span>
                   </span>
                   <span className={styles.taskChange}>Cambiar</span>
                 </button>

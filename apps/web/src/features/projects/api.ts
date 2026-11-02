@@ -2,6 +2,7 @@ import 'server-only'
 
 import { cache } from 'react'
 
+import { getFocusMinutesByProject } from '@/features/focus/api'
 import { listTasks } from '@/features/tasks/api'
 import { api, ApiError } from '@/lib/api-client'
 import { DEMO_MODE } from '@/lib/demo'
@@ -46,12 +47,13 @@ export const getProject = cache(async (id: string): Promise<ProjectDetail | null
     return buildProjectDetails(ctx).find((project) => project.id === id) ?? null
   }
   try {
-    const [record, sprints, tasks] = await Promise.all([
+    const [record, sprints, tasks, focusMinutes] = await Promise.all([
       api.get<ProjectDetailRecord>(`/projects/${id}`),
       api.get<ProjectSprintsRecord>(`/projects/${id}/sprints`),
       loadTasks(),
+      getFocusMinutesByProject(),
     ])
-    return toProjectDetail(record, tasks, sprints)
+    return toProjectDetail(record, tasks, sprints, focusMinutes.get(id) ?? 0)
   } catch (error) {
     if (error instanceof ApiError && error.status === 404) return null
     throw error

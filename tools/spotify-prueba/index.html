@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prueba de Spotify para Kairo</title>
+<style>
+  :root { --bg: #f3eee6; --card: #fffdf9; --ink: #1f1c19; --muted: #6b645b; --line: #e6ded2; --accent: #6a62d6; --ok: #2f6b3a; --bad: #8c2f1b; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px 16px 64px; display: flex; flex-direction: column; gap: 16px; }
+  h1 { margin: 0; font-size: 26px; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+  h2 { margin: 0; font-size: 16px; }
+  p { margin: 0; color: var(--muted); }
+  label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
+  input { font: inherit; padding: 10px 12px; border: 1px solid #d8cfc2; border-radius: 12px; background: #fff; color: var(--ink); }
+  button { font: inherit; font-weight: 600; padding: 10px 16px; border: 0; border-radius: 999px; background: var(--ink); color: var(--bg); cursor: pointer; }
+  button.ghost { background: transparent; color: var(--ink); border: 1px solid #d8cfc2; }
+  button:disabled { opacity: .45; cursor: default; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  code { background: #f0eadf; padding: 2px 6px; border-radius: 6px; word-break: break-all; }
+  ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  li { display: flex; gap: 10px; align-items: baseline; }
+  .mark { width: 1.4em; font-weight: 700; text-align: center; color: var(--muted); }
+  .ok .mark { color: var(--ok); } .bad .mark { color: var(--bad); }
+  .detail { color: var(--muted); font-size: 13px; }
+  pre { margin: 0; max-height: 260px; overflow: auto; background: #1f1c19; color: #e9e3da; padding: 12px; border-radius: 14px; font: 12px/1.5 ui-monospace, monospace; white-space: pre-wrap; }
+  .now { font-weight: 600; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Prueba de Spotify para Kairo</h1>
+  <p>Comprueba, con tu cuenta Premium, si el reproductor de Spotify dentro de una página (Web Playback SDK) funciona en modo desarrollo. No toca Kairo ni guarda nada: el token vive solo en esta pestaña.</p>
+
+  <section>
+    <h2>1. Tu app de Spotify</h2>
+    <p>Crea una app en <code>developer.spotify.com/dashboard</code>, marca <b>Web Playback SDK</b> y <b>Web API</b>, y agrega esta dirección de retorno exacta:</p>
+    <p><code id="redirect"></code></p>
+    <label>Client ID (no es un secreto; no hace falta el Client Secret)
+      <input id="clientId" type="text" autocomplete="off" spellcheck="false" placeholder="pega aquí el Client ID">
+    </label>
+    <div class="row"><button id="login">Iniciar sesión con Spotify</button><span class="detail" id="loginState"></span></div>
+  </section>
+
+  <section>
+    <h2>2. Lo que se comprueba</h2>
+    <ol id="checks"></ol>
+  </section>
+
+  <section>
+    <h2>3. Reproducir</h2>
+    <label>Canción, playlist o álbum (pega el enlace de Spotify)
+      <input id="uri" type="text" autocomplete="off" spellcheck="false" placeholder="https://open.spotify.com/playlist/...">
+    </label>
+    <div class="row">
+      <button id="play" disabled>Reproducir aquí</button>
+      <button id="toggle" class="ghost" disabled>Pausar / reanudar</button>
+      <button id="prev" class="ghost" disabled>Anterior</button>
+      <button id="next" class="ghost" disabled>Siguiente</button>
+    </div>
+    <p class="now" id="now">Nada sonando.</p>
+  </section>
+
+  <section>
+    <h2>4. Pruebas de la Web API (lo que usaría Kairo para listar tus playlists)</h2>
+    <div class="row"><button id="apiMe" class="ghost" disabled>GET /me</button><button id="apiLists" class="ghost" disabled>GET /me/playlists</button></div>
+  </section>
+
+  <section>
+    <h2>Registro</h2>
+    <pre id="log"></pre>
+  </section>
+</main>
+
+<script>
+'use strict'
+const SCOPES = ['streaming', 'user-read-email', 'user-read-private', 'user-read-playback-state', 'user-modify-playback-state', 'playlist-read-private']
+const REDIRECT = location.origin + '/callback'
+const $ = (id) => document.getElementById(id)
+const state = { token: null, deviceId: null, player: null }
+
+// --- Registro y lista de comprobaciones --------------------------------------------------------------
+const CHECKS = [
+  ['login', 'Sesión iniciada y token recibido'],
+  ['drm', 'Este navegador trae DRM (Widevine), que Spotify exige para sonar'],
+  ['sdk', 'El SDK de Spotify cargó'],
+  ['connect', 'player.connect() respondió'],
+  ['ready', 'Apareció el dispositivo del navegador (evento ready)'],
+  ['play', 'La música empezó a sonar aquí'],
+  ['me', 'Web API: GET /me'],
+  ['lists', 'Web API: GET /me/playlists'],
+]
+const marks = {}
+function renderChecks() {
+  $('checks').replaceChildren(...CHECKS.map(([key, text]) => {
+    const li = document.createElement('li')
+    const mark = document.createElement('span'); mark.className = 'mark'; mark.textContent = '·'
+    const label = document.createElement('span'); label.textContent = text
+    const detail = document.createElement('span'); detail.className = 'detail'
+    li.append(mark, label, detail)
+    marks[key] = { li, mark, detail }
+    return li
+  }))
+}
+function check(key, ok, detail = '') {
+  const item = marks[key]
+  item.li.className = ok ? 'ok' : 'bad'
+  item.mark.textContent = ok ? '✓' : '✗'
+  item.detail.textContent = detail
+}
+function log(line) {
+  const box = $('log')
+  box.textContent += `[${new Date().toLocaleTimeString()}] ${line}\n`
+  box.scrollTop = box.scrollHeight
+}
+
+// --- Inicio de sesión (OAuth con PKCE: sin Client Secret en el navegador) --------------------------------
+const b64url = (bytes) => btoa(String.fromCharCode(...new Uint8Array(bytes))).replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '')
+const randomString = (n) => b64url(crypto.getRandomValues(new Uint8Array(n)))
+
+async function login() {
+  const clientId = $('clientId').value.trim()
+  if (!clientId) return log('Pega primero el Client ID.')
+  localStorage.setItem('kairo-spotify-client', clientId)
+  const verifier = randomString(48)
+  const challenge = b64url(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier)))
+  const stateValue = randomString(12)
+  sessionStorage.setItem('pkce', JSON.stringify({ verifier, state: stateValue, clientId }))
+  const params = new URLSearchParams({ response_type: 'code', client_id: clientId, scope: SCOPES.join(' '), redirect_uri: REDIRECT, code_challenge_method: 'S256', code_challenge: challenge, state: stateValue })
+  location.href = 'https://accounts.spotify.com/authorize?' + params
+}
+
+async function finishLogin(code, returnedState) {
+  const saved = JSON.parse(sessionStorage.getItem('pkce') || 'null')
+  history.replaceState({}, '', '/')
+  if (!saved || saved.state !== returnedState) return log('El inicio de sesión no coincide con el que empezó esta pestaña. Intenta de nuevo.')
+  const response = await fetch('https://accounts.spotify.com/api/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ client_id: saved.clientId, grant_type: 'authorization_code', code, redirect_uri: REDIRECT, code_verifier: saved.verifier }),
+  })
+  const body = await response.json()
+  if (!response.ok) return log('Spotify no dio el token: ' + JSON.stringify(body))
+  state.token = body.access_token
+  // Solo en esta pestaña (sessionStorage): así recargar la página no pide iniciar sesión otra vez.
+  sessionStorage.setItem('token', JSON.stringify({ value: body.access_token, until: Date.now() + body.expires_in * 1000 - 60000 }))
+  sessionStorage.removeItem('pkce')
+  log('Token recibido (dura ' + Math.round(body.expires_in / 60) + ' minutos).')
+}
+
+// --- Web API -----------------------------------------------------------------------------------------
+async function api(path, options = {}) {
+  const response = await fetch('https://api.spotify.com/v1' + path, { ...options, headers: { Authorization: 'Bearer ' + state.token, 'Content-Type': 'application/json' } })
+  let body = null
+  try { body = await response.json() } catch { /* sin cuerpo */ }
+  return { status: response.status, ok: response.ok, body }
+}
+
+// Acepta enlaces de playlist, álbum o canción (también los que traen "intl-es/" en medio) y los URI "spotify:…".
+function uriFrom(text) {
+  const match = /open\.spotify\.com\/(?:intl-[a-z-]+\/)?(playlist|album|track)\/([A-Za-z0-9]+)/.exec(text) || /spotify:(playlist|album|track):([A-Za-z0-9]+)/.exec(text)
+  return match ? { type: match[1], uri: `spotify:${match[1]}:${match[2]}` } : null
+}
+
+// --- Reproductor ----------------------------------------------------------------------------------------
+function startPlayer() {
+  state.player = new Spotify.Player({ name: 'Kairo (prueba)', getOAuthToken: (give) => give(state.token), volume: 0.6 })
+  const p = state.player
+  let connected = false
+  p.addListener('ready', ({ device_id }) => { state.deviceId = device_id; check('ready', true, 'id ' + device_id.slice(0, 8) + '…'); $('play').disabled = false; log('Dispositivo listo: ' + device_id) })
+  p.addListener('not_ready', ({ device_id }) => log('El dispositivo se desconectó: ' + device_id))
+  for (const kind of ['initialization_error', 'authentication_error', 'account_error', 'playback_error']) {
+    p.addListener(kind, (error) => { log(kind + ': ' + JSON.stringify(error)); if (kind === 'account_error') check('ready', false, 'La cuenta no es Premium o no tiene permiso') })
+  }
+  p.addListener('player_state_changed', (s) => {
+    if (!s) { log('Estado: ninguno (el dispositivo ya no tiene nada cargado)'); return }
+    const track = s.track_window.current_track
+    // Un renglón por cada cambio: así se ve si empieza, avanza unos segundos y se pausa, o nunca avanza.
+    log(`Estado: ${s.paused ? 'PAUSADO' : 'sonando'} · posición ${Math.round(s.position / 1000)} s de ${Math.round(s.duration / 1000)} s · ${s.loading ? 'cargando' : 'listo'} · ${track.name}`)
+    $('now').textContent = (s.paused ? '⏸ ' : '▶ ') + track.name + ' — ' + track.artists.map((a) => a.name).join(', ')
+    if (!s.paused) check('play', true, 'sonando en el navegador')
+  })
+  p.connect().then((ok) => { connected = true; check('connect', ok, ok ? '' : 'Spotify dijo que no se pudo conectar'); log('connect() → ' + ok) })
+  setTimeout(() => { if (!connected) { check('connect', false, 'sigue sin responder después de 10 s'); log('connect() no responde. Es el síntoma que reportó alguien de la comunidad de Spotify en 2026.') } }, 10000)
+}
+
+async function play() {
+  const found = uriFrom($('uri').value)
+  if (!found) return log('Pega el enlace de una canción, playlist o álbum de Spotify.')
+  // Los navegadores no dejan sonar hasta que la persona toca algo: esto lo "desbloquea".
+  state.player.activateElement()
+  // Una canción se manda como `uris`; una playlist o un álbum, como `context_uri`.
+  const body = found.type === 'track' ? { uris: [found.uri] } : { context_uri: found.uri }
+  const result = await api('/me/player/play?device_id=' + state.deviceId, { method: 'PUT', body: JSON.stringify(body) })
+  log('PUT /me/player/play → ' + result.status + (result.body ? ' ' + JSON.stringify(result.body) : ''))
+  if (!result.ok) check('play', false, 'respuesta ' + result.status)
+  else for (const id of ['toggle', 'prev', 'next']) $(id).disabled = false
+  // Cuánto tarda en pasar algo: se anota qué dice Spotify del dispositivo 3 segundos después.
+  setTimeout(async () => {
+    const now = await api('/me/player')
+    log('Spotify dice (3 s después): ' + (now.status === 204 ? 'no hay reproducción activa' : `dispositivo "${now.body?.device?.name}", sonando=${now.body?.is_playing}, restricciones=${JSON.stringify(now.body?.actions?.disallows ?? {})}`))
+  }, 3000)
+}
+
+async function boot() {
+  $('redirect').textContent = REDIRECT
+  $('clientId').value = localStorage.getItem('kairo-spotify-client') || ''
+  renderChecks()
+  // Sin Widevine el SDK conecta pero el dispositivo nunca aparece (no hay error visible). Chrome, Edge y Firefox
+  // lo traen; el navegador de algunas apps (Electron) y los de código abierto sin DRM, no.
+  navigator.requestMediaKeySystemAccess('com.widevine.alpha', [{ initDataTypes: ['cenc'], audioCapabilities: [{ contentType: 'audio/mp4; codecs="mp4a.40.2"' }] }])
+    .then(() => check('drm', true))
+    .catch(() => check('drm', false, 'Abre esta misma dirección en Chrome o Edge'))
+  $('login').addEventListener('click', login)
+  const query = new URLSearchParams(location.search)
+  if (location.pathname === '/callback') {
+    if (query.get('error')) log('Spotify respondió: ' + query.get('error'))
+    else if (query.get('code')) await finishLogin(query.get('code'), query.get('state'))
+  }
+  if (!state.token) {
+    const saved = JSON.parse(sessionStorage.getItem('token') || 'null')
+    if (saved && saved.until > Date.now()) { state.token = saved.value; log('Sesión recuperada de esta pestaña.') }
+  }
+  if (!state.token) { $('loginState').textContent = 'Todavía sin iniciar sesión.'; return }
+  check('login', true)
+  $('loginState').textContent = 'Sesión iniciada.'
+  $('apiMe').disabled = false; $('apiLists').disabled = false
+  $('apiMe').addEventListener('click', async () => { const r = await api('/me'); check('me', r.ok, r.ok ? (r.body.product === 'premium' ? 'cuenta Premium' : 'cuenta: ' + r.body.product) : 'respuesta ' + r.status); log('GET /me → ' + r.status + (r.ok ? '' : ' ' + JSON.stringify(r.body))) })
+  $('apiLists').addEventListener('click', async () => { const r = await api('/me/playlists?limit=5'); check('lists', r.ok, r.ok ? r.body.items.length + ' playlists' : 'respuesta ' + r.status); log('GET /me/playlists → ' + r.status + (r.ok ? '' : ' ' + JSON.stringify(r.body))) })
+  $('play').addEventListener('click', play)
+  $('toggle').addEventListener('click', () => state.player.togglePlay())
+  $('prev').addEventListener('click', () => state.player.previousTrack())
+  $('next').addEventListener('click', () => state.player.nextTrack())
+  // El SDK avisa cuando termina de cargar; este script ya está listo antes o después.
+  window.onSpotifyWebPlaybackSDKReady = () => { check('sdk', true); startPlayer() }
+  const script = document.createElement('script')
+  script.src = 'https://sdk.scdn.co/spotify-player.js'
+  script.onerror = () => check('sdk', false, 'No se pudo descargar el SDK (¿bloqueador de anuncios?)')
+  document.body.append(script)
+}
+boot()
+</script>
+</body>
+</html>

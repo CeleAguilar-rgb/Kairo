@@ -8,13 +8,11 @@ export const FOCUS_PRESETS: FocusPreset[] = [
   { workMinutes: 15, breakMinutes: 3 },
 ]
 
-// El máximo de sesiones que cuentan los puntos del día (el canvas también usa 4).
-export const FOCUS_MAX_SESSIONS = 4
+// Los pomodoros que ya van hechos hoy en el modo demo (el canvas arranca con 1 de 4).
+export const FOCUS_DEMO_SESSIONS_TODAY = 1
 
-// "Enfocado en {{task}}": tareas de ejemplo para probar el botón "Cambiar".
-// Igual que en el canvas, es una lista fija por ahora — cuando exista el
-// backend de Enfoque, esto se pide al service de Tareas (docs/guides/modules.md),
-// nunca importando sus archivos internos.
+// "Enfocado en {{task}}": tareas de ejemplo del modo demo. Con la API, las tareas
+// salen de la lista real de Tareas (api.ts, getFocusSetup).
 export const FOCUS_TASK_OPTIONS = [
   'Revisar requisitos de inscripción',
   'Terminar el diseño del dashboard',

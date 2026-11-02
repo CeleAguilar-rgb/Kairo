@@ -305,7 +305,7 @@ export function TaskDetailDrawer({
                 </motion.span>
               </AnimatePresence>
             </Button>
-            <Button variant="ghost" onClick={() => focus.focusOnTask(task.title)}>
+            <Button variant="ghost" onClick={() => focus.focusOnTask({ id: task.id, title: task.title })}>
               <svg
                 width="16"
                 height="16"

@@ -19,6 +19,10 @@ Cómo leerlos (para Claude Code):
 
 `canvas.json` es el índice: el título de cada pantalla y cómo están agrupadas.
 
+## Lo que el front hace y el canvas no
+
+Cuando el front agrega algo que el canvas no dibuja, se anota en [`diferencias-con-el-canvas.md`](diferencias-con-el-canvas.md) para llevarlo al canvas y que vuelva a mandar él.
+
 ## Mantenerlos al día
 
 El canvas manda. Cuando el usuario lo edite, hay que volver a copiar aquí las pantallas que cambiaron (se le puede pedir a Claude desde el chat de claude.ai, que sí tiene acceso al canvas).
