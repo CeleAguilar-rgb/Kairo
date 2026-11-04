@@ -26,8 +26,8 @@ Para los módulos que todavía no tienen backend (todos salvo Cuenta e Inicio + 
 | user_sections | section, enabled, position, in_bottom_nav | Qué módulos tiene activos cada usuario y en qué orden. `in_bottom_nav` es para el teléfono (fase posterior). |
 | home_cards | card, enabled, position | Tarjetas de Inicio ("Ajustar mi Inicio"). |
 | connections | provider (`notion`, `canva`, `spotify`, `claude`), status, token_ref, connected_at | Fase posterior. El token vive cifrado (Vault), aquí solo la referencia. |
-| notifications | title, body, link, read_at, source_type, source_id | Avisos dentro de la app. |
-| push_subscriptions | endpoint, p256dh, auth, user_agent, last_used_at | Suscripciones de Web Push del navegador. |
+| notifications | title, body, link, read_at, source_type (`reminder`, `membership`, `budget`, `debt`, `system`), source_id, dedupe_key | Avisos dentro de la app. `dedupe_key` + `user_id` es único: el mismo aviso no se crea dos veces (decisión #50). Los crean las tareas programadas; la persona solo los marca leídos. |
+| push_subscriptions | endpoint, p256dh, auth, user_agent, last_used_at | Suscripciones de Web Push del navegador. `user_id` + `endpoint` es único (activar dos veces solo actualiza las llaves). Desactivar borra la fila de verdad. |
 | login_codes | session_id, code_hash, expires_at, attempts, used_at | Segundo paso de login. Sin `deleted_at`; un job limpia los vencidos. |
 | verified_sessions | session_id, verified_at, user_agent, ip_hint | Sesiones que ya pasaron el código. Base de la lista "sesiones abiertas". |
 

@@ -2,14 +2,15 @@
 
 > Léelo al empezar cada sesión. Actualízalo al terminar. Máximo ~60 líneas: es un resumen, no un diario. El detalle va en `sessions/`.
 
-**Última actualización:** 2026-10-25 · Escritos y Enfoque completos (backend y conexión), pendientes de probar en el navegador
+**Última actualización:** 2026-11-03 · "Lo global" construido (Papelera, Ctrl+K, captura rápida, avisos con Web Push y tareas programadas); faltan los adornos de temporada y probar los avisos en el navegador
 
 ## Fase actual
 
-**Fase 0 (base): completa. Fase 1a (front de cada módulo, con datos dummy fieles al canvas): completa** — los 8 módulos tienen su pantalla (Tareas, Proyectos, Agenda, Recordatorios, Día a día, Finanzas, Escritos, Enfoque y Escuela). Falta "lo global" (Buscar Ctrl+K, avisos, captura rápida, Papelera), que el propio `docs/guides/roadmap.md` agrupa con la Fase 1b, no con la 1a. **Fase 1b: Tareas, Recordatorios, Agenda, Día a día, Finanzas, Proyectos, Escuela, Archivos, Escritos y Enfoque ya están construidos.** Orden que sigue (decisión #41): **lo global**. La música (Spotify) sigue en fase posterior. Escritos (canvas nuevo "Aurelun", decisiones #45 a #47) se construyó entero el 2026-10-25 y **falta probarlo en el navegador con una cuenta real**.
+**Fase 0 (base): completa. Fase 1a (front de cada módulo, con datos dummy fieles al canvas): completa** — los 8 módulos tienen su pantalla (Tareas, Proyectos, Agenda, Recordatorios, Día a día, Finanzas, Escritos, Enfoque y Escuela). Falta "lo global" (Buscar Ctrl+K, avisos, captura rápida, Papelera), que el propio `docs/guides/roadmap.md` agrupa con la Fase 1b, no con la 1a. **Fase 1b: Tareas, Recordatorios, Agenda, Día a día, Finanzas, Proyectos, Escuela, Archivos, Escritos y Enfoque ya están construidos.** Orden que sigue (decisión #41): **lo global**, ya construido salvo los adornos de temporada. La música (Spotify) sigue en fase posterior. Escritos (canvas nuevo "Aurelun", decisiones #45 a #47) se construyó entero el 2026-10-25 y **falta probarlo en el navegador con una cuenta real**.
 
 ## Lo último que se hizo
 
+- **2026-11-03 · Lo global terminado: avisos, tareas programadas y su front.** Papelera, Ctrl+K y captura rápida (2 de noviembre) más lo que estaba a medias: `NotificationsModule` y `JobsModule` registrados, `POST /v1/internal/jobs/minute|daily` con `X-Job-Secret` (404 sin él), `pnpm jobs:run`, cobros de membresías anotados solos, avisos de presupuesto, `cron.sql` escrito sin aplicar, y el front de la campana (panel Hoy/Ayer/Antes, Web Push con `public/sw.js`). Decisiones #49 a #52. Se corrigió el test de Día a día que fallaba de 18:00 a 24:00 hora de México (calculaba "hoy" en UTC). Los e2e de la API van completos. **Los avisos no se han visto en el navegador con una cuenta real.** Detalle en `sessions/2026-11-02-lo-global.md`.
 - **2026-10-25 · Enfoque conectado a su backend real + revisión de Spotify.** Migración `0013` (`focus_sessions`), módulo de Nest `focus/` (`POST/GET /v1/focus/sessions`, 9 e2e) y el reloj guarda cada tramo que termina completo. Los puntos de hoy salen de las sesiones, el reproductor usa tus tareas reales, el botón "Pomodoro" de una tarea guarda el tiempo en ella, "Iniciar pomodoro" de la rutina ya abre el reproductor y el Resumen de un proyecto suma los minutos de la semana. Decisión #48. Spotify: desde febrero de 2026 exige Premium al desarrollador y limita las apps a 5 usuarios; no se construyó, queda por decidir (ver la nota de sesión). Detalle en `sessions/2026-10-25-enfoque-backend.md`.
 - **2026-10-25 · Escritos completo: backend, front del canvas nuevo y conexión.** A pedido explícito ("aplica todos los cambios de escritos… deja funcional esta parte"). Migraciones `0011` (9 tablas) y `0012` aplicadas; módulo de Nest `writings/` en cuatro áreas (mundos y plantillas, fichas, línea del tiempo, historias y páginas) con `test/writings.e2e-spec.ts` (26 tests). El front lee una sola biblioteca (`GET /writings/library`) y la página de un mundo se rehízo sobre el canvas en `features/writings/components/world/`: pestañas personalizables con "Más" y secciones extra, un panel lateral para fichas, eras, eventos, plantillas, pestañas y contadores, páginas completas con portada y bloques, fotos y mapa por Storage. El demo de Escritos ahora solo se mira. Decisión #47. Detalle en `sessions/2026-10-25-escritos-backend.md`.
 - **2026-10-25 · Arranca el front nuevo de Escritos (Pasos 1 y 2) + se resuelve el bloqueo de `kairo_api`.** Se corrigió el nombre del mundo ("Aurelun"), se sembraron las plantillas de fábrica y la contraseña de `kairo_api` se renovó, con lo que quedó aplicada la migración `0010` (Archivos) y se conectó el favicon. El resto del plan se terminó el mismo día (ver arriba). Detalle en `sessions/2026-10-25-escritos-plantillas.md`.
@@ -24,7 +25,7 @@
 
 ## Siguiente paso
 
-**EN PAUSA (2026-11-02): "lo global" a medias, sin commit.** Papelera, Ctrl+K y captura rápida están hechos; avisos, Web Push y tareas programadas, a medias. Qué falta, en orden: `sessions/2026-11-02-lo-global.md`.
+**Probar los avisos en el navegador con tu cuenta:** correr `pnpm jobs:run minute` en `apps/api` (solo crea avisos de tus recordatorios pendientes) y revisar la campana, "Marcar todo como leído" y "Activar" los avisos del navegador. **Después, decidir los adornos de temporada** (`Temporadas.dc.html`, 11 temporadas): es lo único de "lo global" que falta. Con eso la Fase 1b queda completa y lo que sigue es **desplegar** (revisar `"type": "module"` y `pnpm build && pnpm start` de la API, aplicar `src/jobs/cron.sql` en Supabase).
 
 **Probar Escritos y Enfoque en el navegador con tu cuenta** (qué recorrer está en las notas `sessions/2026-10-25-escritos-backend.md` y `-enfoque-backend.md`). Después, **lo global**: Papelera, Ctrl+K, avisos, captura rápida y tareas programadas.
 
@@ -55,6 +56,4 @@ Siguen pendientes de antes: probar Archivos en el navegador, revisar Finanzas, P
 - `apps/api/package.json` no tiene `"type": "module"` y nunca se probó `pnpm build && pnpm start` (solo `tsx watch` en dev). Como `@nestjs/common` es ESM-only, el build de producción probablemente necesite ese campo. Revisar antes de desplegar.
 - Dos tareas de Auth que son del usuario, no de código: pegar `recover-password.html` en el dashboard de Supabase (Authentication → Email Templates), y confirmar ahí que la sesión dura 30 días (decisión #8).
 
-## Pendiente dentro del paso 2 (componentes de `components/ui/`)
-
-- `modes/dark.css` no existe (fase posterior), aunque el PDF ya trae los valores oscuros documentados.
+- `modes/dark.css` no existe (fase posterior); el PDF ya trae los valores oscuros.

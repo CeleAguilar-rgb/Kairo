@@ -97,8 +97,9 @@ src/
 │   ├── filters/                 # Formato uniforme de errores
 │   ├── crypto/                  # Cifrado de campos sensibles (AES-256-GCM) y hash de PIN/códigos
 │   ├── db/                      # Conexión de Drizzle como proveedor de Nest (DbModule)
-│   └── trash/                   # Utilidades de papelera (soft delete)
-├── jobs/                        # Tareas programadas (ver abajo)
+│   ├── trash/                   # Papelera: contrato `TrashSource`, `TrashRegistry` (global) y consultas genéricas
+│   └── search/                  # Ctrl+K: contrato `SearchSource` y `SearchRegistry` (global)
+├── jobs/                        # Tareas programadas (ver abajo): controller, service, run-jobs.ts y cron.sql
 ├── modules/
 │   └── <modulo>/
 │       ├── <modulo>.module.ts
@@ -157,6 +158,8 @@ La lógica vive en la API, pero **quien la dispara es Supabase Cron** (`pg_cron`
 - Supabase Cron los llama con un header secreto (`X-Job-Secret`, valor en variables de entorno de ambos lados). Sin ese header correcto, responden 404.
 - **Cada minuto:** recordatorios y pagos que ya tocan → notificación en la app (tabla `notifications`) y Web Push al navegador. Respetan las horas de silencio del perfil.
 - **Una vez al día:** borrar definitivamente lo que lleva más de 30 días en la papelera (y sus archivos); limpiar códigos de login vencidos.
+- **Cómo está hecho (decisión #52):** `JobsController` valida el secreto (404 si falla) y `JobsService` le pide su parte a cada módulo por su API pública (`<módulo>.jobs.ts`); no lee ninguna tabla. Cada parte corre aparte. Para correrlas a mano: `pnpm jobs:run minute` o `pnpm jobs:run daily` (en `apps/api`). `src/jobs/cron.sql` tiene la configuración de `pg_cron` y **no está aplicada**: se corre una vez en Supabase cuando la API esté desplegada.
+- **Papelera y búsqueda** no conocen los módulos: cada uno aporta un adaptador (`<módulo>.trash.ts`, `<módulo>.search.ts`) que se anota en el registro (decisión #49).
 - Cada ejecución procesa en lotes pequeños y termina rápido. Si quedan pendientes, los toma la siguiente.
 - Deben ser **idempotentes**: si un aviso se dispara dos veces, no se envía dos veces (marcar `notified_at` dentro de la misma transacción).
 - La configuración de `pg_cron` se guarda como migración SQL en el repo, nunca solo a mano en el panel.

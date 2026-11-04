@@ -15,7 +15,9 @@ function authHeader(user: TestUser) {
   return { Authorization: `Bearer ${user.accessToken}` }
 }
 
-const TODAY = new Date().toISOString().slice(0, 10)
+// "Hoy" en la zona del perfil de prueba (la de por defecto, profiles.timezone), no en UTC: de las 18:00 a la medianoche
+// en México, UTC ya está en el día siguiente y la API (que usa la zona del perfil) y el test no coincidirían.
+const TODAY = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Mexico_City', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date())
 // 0 = lunes … 6 = domingo (mismo índice que routines.days): para que el bloque de hoy "aplique" sin
 // importar qué día corra el test.
 const DAYS_ALL_ON = [true, true, true, true, true, true, true]

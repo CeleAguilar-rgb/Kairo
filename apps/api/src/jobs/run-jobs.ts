@@ -1,6 +1,7 @@
 import 'reflect-metadata'
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from '../app.module'
+import { DB } from '../common/db/db.module'
 import { JOB_NAMES, type JobName, JobsService } from './jobs.service'
 
 // Correr una tarea programada a mano, sin Supabase Cron (en desarrollo): `pnpm jobs:run minute` o `pnpm jobs:run daily`.
@@ -14,6 +15,8 @@ async function main() {
   try {
     console.log(JSON.stringify(await app.get(JobsService).run(name), null, 2))
   } finally {
+    // El pool de conexiones mantiene vivo el proceso: sin cerrarlo, el script imprime y se queda esperando.
+    await app.get<{ $client: { end: () => Promise<void> } }>(DB).$client.end()
     await app.close()
   }
 }

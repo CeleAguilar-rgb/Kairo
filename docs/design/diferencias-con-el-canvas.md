@@ -2,6 +2,25 @@
 
 Lo que el front hace y las pantallas de `screens/` **no dibujan** (o dibujan distinto). Sirve para llevarlo al canvas en claude.ai y que vuelva a mandar él. Al subirlo al canvas, bórralo de aquí.
 
+## Lo global (2026-11-02 y 03, decisiones #49 a #52)
+
+**Papelera**
+- Sin el **contador del menú** del avatar (el canvas lo dibuja; aquí es solo el enlace "Papelera").
+- Un quinto filtro, **"Otros"**, para lo de Agenda, Recordatorios y Día a día (el canvas solo trae Proyectos, Tareas, Escritos y Finanzas).
+- Lo que se borró junto con otra cosa se cuenta dentro de ella ("y sus 4 tareas") y vuelve junto.
+- **Borrar proyecto**: el menú "···" del detalle tiene "Borrar proyecto" con diálogo, y después lleva a la galería de Proyectos (el canvas dibuja una tarjeta "está en la papelera"). **Sin "Duplicar" ni "Archivar"**.
+- Las rutinas y sus bloques no van a la papelera (conservan su "Deshacer").
+
+**Avisos (la campana)**
+- Fila **"Avisos en este navegador"** con "Activar" / "Desactivar" para Web Push (el canvas no la dibuja).
+- Estados que el canvas no trae: **vacío** ("No tienes avisos todavía…"), **cargando** y el aviso de que el navegador los bloqueó.
+- Cada aviso puede llevar una segunda línea con el detalle ("$2,340 de $2,000 este mes.").
+- Picar un aviso lo marca leído y **lleva a su pantalla**.
+
+**Buscar y captura rápida (+)**
+- El reproductor de Enfoque se corrió a la **izquierda del "+"** para que no se encimen.
+- El gasto rápido ("Tacos 250") cae en la categoría **"Otros"**; el recordatorio rápido, en la siguiente hora en punto o mañana a las 9:00.
+
 ## Escritos (2026-10-25, decisiones #45 a #47)
 
 **Mundo: portada y pestañas**

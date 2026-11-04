@@ -99,11 +99,12 @@ export class RemindersRepository {
   // Tarea programada (de todas las personas, por eso sin userId): los pendientes que ya tocan y no se han avisado.
   // Solo los que tocaron después de `since`: uno que se quedó sin avisar hace una semana ya no sirve como aviso.
   findDue(now: Date, since: Date, limit: number) {
+    // Un fragmento `sql` no sabe de qué tipo son las fechas que se le comparan: van como texto con el tipo a la vista.
     const dueAt = sql<Date>`coalesce(${reminders.snoozedTo}, ${reminders.remindAt})`
     return this.db
       .select({ id: reminders.id, userId: reminders.userId, title: reminders.title, dueAt: dueAt.mapWith(reminders.remindAt) })
       .from(reminders)
-      .where(and(isNull(reminders.deletedAt), isNull(reminders.doneAt), isNull(reminders.notifiedAt), lte(dueAt, now), gt(dueAt, since)))
+      .where(and(isNull(reminders.deletedAt), isNull(reminders.doneAt), isNull(reminders.notifiedAt), lte(dueAt, sql`${now.toISOString()}::timestamptz`), gt(dueAt, sql`${since.toISOString()}::timestamptz`)))
       .orderBy(asc(dueAt))
       .limit(limit)
   }

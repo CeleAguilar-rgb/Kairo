@@ -66,7 +66,10 @@ Fuente: el documento "Mi tablero · Funcionalidades y base de datos" del usuario
 ## Música, enfoque y atajos
 
 - Reproductor flotante con el pomodoro y la tarea en curso. Cada tramo que termina se guarda: los puntos de hoy ("2 de 4") salen de ahí, se puede enfocar en una tarea real (también desde su detalle o desde un bloque de la rutina) y el Resumen de un proyecto suma los minutos de la semana. Spotify es **fase posterior** (integraciones).
-- Buscar con Ctrl+K, panel de avisos y captura rápida.
+- **Buscar (Ctrl+K o la lupa):** tareas, proyectos, eventos, recordatorios, metas, movimientos, membresías y escritos; agrupa por sección, se maneja con el teclado y ofrece "Crear tarea" con lo escrito.
+- **Avisos (la campana):** Hoy / Ayer / Antes, "Marcar todo como leído" y, si la persona lo activa, avisos del navegador (Web Push) aunque Kairo esté cerrado. Llegan por: un recordatorio que toca, un cobro de membresía que es mañana, y el presupuesto al 80 % o al pasarse. Respetan las horas de silencio.
+- **Captura rápida (+):** tarea, evento (todo el día), gasto ("Tacos 250"), recordatorio y nota, sin salir de la pantalla.
+- **Papelera (menú del avatar):** lo borrado de todas las secciones, con filtros, "Restaurar" y "Borrar para siempre"; a los 30 días se borra solo. Borrar un proyecto se lleva sus tareas, eventos, sprints y archivos y vuelve junto.
 
 ## Lo que aplica a todo
 
