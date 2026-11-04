@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common'
 import { AccountModule } from '../../account/account.module'
+import { NotificationsModule } from '../notifications/notifications.module'
 import { BudgetController } from './budget.controller'
 import { BudgetService } from './budget.service'
 import { CardsRepository } from './cards.repository'
@@ -19,13 +20,17 @@ import { SettingsRepository } from './settings.repository'
 import { TransactionsController } from './transactions.controller'
 import { TransactionsRepository } from './transactions.repository'
 import { TransactionsService } from './transactions.service'
+import { FinanceJobs } from './finance.jobs'
+import { FinanceTrash } from './finance.trash'
+import { FinanceSearch } from './finance.search'
 
 // Un solo módulo de Nest para las 5 pestañas de Finanzas (movimientos, ahorros y deudas, membresías y
 // tarjetas, presupuesto, más las lecturas del Resumen): modules.md habla de módulos por sección de la UI, y
 // las cinco viven bajo una sola ("finance" en el registro del front), con su propio controller/service cada
-// una para no amontonar todo en un archivo (mismo criterio que DailyModule).
+// una para no amontonar todo en un archivo (mismo criterio que DailyModule). Exporta FinanceJobs para las tareas
+// programadas (src/jobs): los cobros de membresías y los avisos de presupuesto.
 @Module({
-  imports: [AccountModule],
+  imports: [AccountModule, NotificationsModule],
   controllers: [
     RecordsController,
     TransactionsController,
@@ -48,6 +53,10 @@ import { TransactionsService } from './transactions.service'
     DebtsRepository,
     MembershipsRepository,
     SettingsRepository,
+    FinanceTrash,
+    FinanceSearch,
+    FinanceJobs,
   ],
+  exports: [FinanceJobs],
 })
 export class FinanceModule {}

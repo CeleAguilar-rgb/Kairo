@@ -108,6 +108,7 @@
 
 .iconButton {
   all: unset;
+  position: relative;
   box-sizing: border-box;
   width: 44px;
   height: 44px;
@@ -120,6 +121,19 @@
   transition:
     background var(--duration-base) ease,
     color var(--duration-base) ease;
+}
+
+/* Atajos.dc.html: .badge (hay avisos sin leer). */
+.badge {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 9px;
+  height: 9px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: var(--danger);
+  border: 2px solid var(--surface);
 }
 
 .iconButton:hover {

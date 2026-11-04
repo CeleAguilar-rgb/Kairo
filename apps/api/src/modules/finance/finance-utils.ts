@@ -19,6 +19,11 @@ export function firstOfNextMonth(today: IsoDate): IsoDate {
   return new Date(Date.UTC(year, month, 1)).toISOString().slice(0, 10)
 }
 
+export function addDays(date: IsoDate, days: number): IsoDate {
+  const [year, month, day] = date.split('-').map(Number)
+  return new Date(Date.UTC(year!, month! - 1, day! + days)).toISOString().slice(0, 10)
+}
+
 export const monthStartOf = (date: IsoDate): IsoDate => `${date.slice(0, 7)}-01`
 
 // "$1,250" si no hay centavos, "$1,250.50" si sí: el mismo texto que formatMoney del front, para los mensajes
@@ -37,3 +42,20 @@ export function formatMoney(cents: number, currency = 'MXN'): string {
 
 // "Usar lo real" (Presupuesto): lo gastado, redondeado hacia arriba a $50.
 export const roundUpToFiftyPesos = (cents: number): number => Math.ceil(cents / 5_000) * 5_000
+
+// Lo gastado de cada categoría de gasto viva. Un gasto cuya categoría ya no está (en la papelera o purgada) se cuenta
+// en "Otros", igual que en la pantalla. Lo usan "Usar lo real" y los avisos de presupuesto (finance.jobs.ts).
+export function spentPerCategory(
+  live: { id: string; kind: string; key: string | null }[],
+  spent: { categoryId: string | null; cents: number }[],
+  fallbackKey: string,
+): Map<string, number> {
+  const expenseIds = new Set(live.filter((category) => category.kind === 'expense').map((category) => category.id))
+  const fallback = live.find((category) => category.key === fallbackKey)
+  const spentBy = new Map<string, number>()
+  for (const row of spent) {
+    const id = row.categoryId && expenseIds.has(row.categoryId) ? row.categoryId : fallback?.id
+    if (id) spentBy.set(id, (spentBy.get(id) ?? 0) + row.cents)
+  }
+  return spentBy
+}

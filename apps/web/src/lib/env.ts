@@ -10,6 +10,9 @@ const envSchema = z.object({
   // El nombre del bucket no es secreto (va en cualquier URL firmada); lo necesita el navegador
   // para subir un archivo directo a Storage con la URL firmada que da la API (security.md #7).
   NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET: z.string().min(1),
+  // La llave PÚBLICA de Web Push (no es secreta: el navegador la necesita para suscribirse). Opcional: sin ella, el
+  // panel de avisos no ofrece activarlos en el navegador.
+  NEXT_PUBLIC_VAPID_PUBLIC_KEY: z.string().min(1).optional(),
 })
 
 // En modo demo (lib/demo.ts) no hay .env: valores de relleno que nunca se
@@ -21,4 +24,5 @@ export const env = envSchema.parse({
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? (DEMO_MODE ? 'demo' : undefined),
   NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET:
     process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET ?? (DEMO_MODE ? 'demo' : undefined),
+  NEXT_PUBLIC_VAPID_PUBLIC_KEY: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || undefined,
 })

@@ -55,5 +55,7 @@ export const api = {
     request<T>(path, { method: 'POST', body: JSON.stringify(data) }),
   patch: <T>(path: string, data: unknown) =>
     request<T>(path, { method: 'PATCH', body: JSON.stringify(data) }),
-  delete: <T>(path: string) => request<T>(path, { method: 'DELETE' }),
+  // Con cuerpo solo cuando la ruta lo pide (desactivar los avisos de un navegador manda su `endpoint`).
+  delete: <T>(path: string, data?: unknown) =>
+    request<T>(path, data === undefined ? { method: 'DELETE' } : { method: 'DELETE', body: JSON.stringify(data) }),
 }

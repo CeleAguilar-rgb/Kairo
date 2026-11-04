@@ -70,4 +70,13 @@ export class MembershipsRepository {
       .set({ deletedAt: null })
       .where(and(eq(memberships.id, id), eq(memberships.userId, userId)))
   }
+
+  // Tarea programada (finance.jobs.ts): las activas de todas las personas, por eso sin userId.
+  findActiveOfEveryone() {
+    return this.db
+      .select()
+      .from(memberships)
+      .where(and(eq(memberships.status, 'active'), isNull(memberships.deletedAt)))
+      .orderBy(asc(memberships.userId))
+  }
 }

@@ -1,6 +1,6 @@
 'use server'
 
-import { financeIdSchema, financeUndoTokenSchema, transactionSchema } from '@kairo/shared'
+import { financeIdSchema, financeUndoTokenSchema, quickExpenseSchema, transactionSchema } from '@kairo/shared'
 import { revalidatePath } from 'next/cache'
 
 import { api } from '@/lib/api-client'
@@ -8,7 +8,7 @@ import { fieldErrors } from '@/lib/form-errors'
 
 import { apiFailure } from './action-errors'
 import { failure, type FinanceActionResult } from './action-result'
-import type { Transaction } from './types'
+import type { FinanceRecords, Transaction } from './types'
 
 // Las acciones de Movimientos. Una Server Action es un endpoint público: lo que llega NO se confía, se vuelve a
 // validar con el mismo esquema del front (packages/shared), y ese esquema también es el contrato de
@@ -39,6 +39,22 @@ export async function saveTransactionAction(transactionId: string | null, raw: u
     return { ok: true, id: transaction.id }
   } catch (error) {
     return apiFailure(error, 'No pudimos guardar el movimiento. Intenta de nuevo.')
+  }
+}
+
+// Captura rápida (Atajos.dc.html, "+" → Gasto: "Tacos 250"): un gasto en "Otros", sin tarjeta. Quien lo quiera en
+// otra categoría lo corrige después en Movimientos ("Más opciones" lleva ahí). "Otros" se busca por su `key`, que
+// la API pone a las categorías de arranque; su id es distinto en cada persona.
+export async function quickExpenseAction(raw: unknown): Promise<FinanceActionResult> {
+  const parsed = quickExpenseSchema.safeParse(raw)
+  if (!parsed.success) return { ok: false, errors: fieldErrors(parsed.error.issues) }
+  try {
+    const records = await api.get<FinanceRecords>(`/finance/records?from=${parsed.data.occurredOn}`)
+    const other = records.categories.find((category) => category.key === 'other')
+    if (!other) return failure('Abre Finanzas una vez para crear tus categorías y vuelve a intentarlo.')
+    return saveTransactionAction(null, { kind: 'expense', ...parsed.data, note: '', categoryId: other.id, cardId: null, savingId: null, debtId: null, repeatMonthly: false })
+  } catch (error) {
+    return apiFailure(error, 'No pudimos guardar el gasto. Intenta de nuevo.')
   }
 }
 

@@ -3,12 +3,14 @@ import { ProjectsModule } from '../projects/projects.module'
 import { AgendaController } from './agenda.controller'
 import { AgendaRepository } from './agenda.repository'
 import { AgendaService } from './agenda.service'
+import { AgendaTrash } from './agenda.trash'
+import { AgendaSearch } from './agenda.search'
 
 // Escuela le pide a AgendaService las clases de una materia (eventos semanales con su proyecto); por eso lo exporta.
 @Module({
   imports: [ProjectsModule],
   controllers: [AgendaController],
-  providers: [AgendaService, AgendaRepository],
+  providers: [AgendaService, AgendaRepository, AgendaTrash, AgendaSearch],
   exports: [AgendaService],
 })
 export class AgendaModule {}

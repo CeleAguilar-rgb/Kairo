@@ -169,8 +169,9 @@ export class ProjectsService {
   }
 }
 
-// La ruta de Storage detrás de una portada subida, o null si es ilustrada o no hay portada.
-function storagePathOf(coverPath: string | null): string | null {
+// La ruta de Storage detrás de una portada subida, o null si es ilustrada o no hay portada. La usa también el
+// adaptador de papelera (projects.trash.ts), para borrar el archivo al borrar el proyecto para siempre.
+export function storagePathOf(coverPath: string | null): string | null {
   return coverPath?.startsWith(STORAGE_PREFIX) ? coverPath.slice(STORAGE_PREFIX.length) : null
 }
 

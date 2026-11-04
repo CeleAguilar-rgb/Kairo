@@ -1,6 +1,7 @@
 .dock {
   position: fixed;
-  right: var(--space-9);
+  /* A la izquierda del "+" de captura rápida (60px + un respiro), que ocupa la esquina (Atajos.dc.html). */
+  right: calc(var(--space-9) + 72px);
   bottom: var(--space-9);
   z-index: 55;
   display: flex;

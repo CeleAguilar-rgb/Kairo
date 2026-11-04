@@ -5,3 +5,5 @@ export { TaskDetailDrawer } from './components/TaskDetailDrawer'
 export { TasksView } from './components/TasksView'
 export type { Task, TaskStatus, TaskPriority, Subtask } from './types'
 export { tasksModule } from './module'
+// Para la captura rápida y "Crear tarea" de Ctrl+K (features/shortcuts).
+export { createTask } from './actions'

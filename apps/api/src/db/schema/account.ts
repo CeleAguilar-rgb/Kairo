@@ -1,4 +1,4 @@
-import { boolean, integer, text, timestamp, uuid } from 'drizzle-orm/pg-core'
+import { boolean, index, integer, text, timestamp, uniqueIndex, uuid } from 'drizzle-orm/pg-core'
 import { app, profiles, userColumns } from './_shared'
 
 // Mismos ids que MODULE_IDS en packages/shared/src/modules.ts y la tabla de docs/guides/modules.md.
@@ -55,27 +55,44 @@ export const connections = app
   })
   .enableRLS()
 
+// Los avisos del panel (Atajos.dc.html). Los crea la tarea programada; `dedupe_key` hace que crearlos sea
+// idempotente (architecture.md: "si un aviso se dispara dos veces, no se envía dos veces"): el mismo aviso
+// (`budget80:<categoría>:<mes>`, `reminder:<id>:<momento>`) choca con el índice único y no se inserta otra vez.
 export const notifications = app
-  .table('notifications', {
-    ...userColumns,
-    title: text('title').notNull(),
-    body: text('body'),
-    link: text('link'),
-    readAt: timestamp('read_at', { withTimezone: true }),
-    sourceType: text('source_type').notNull(),
-    sourceId: uuid('source_id'),
-  })
+  .table(
+    'notifications',
+    {
+      ...userColumns,
+      title: text('title').notNull(),
+      body: text('body'),
+      link: text('link'),
+      readAt: timestamp('read_at', { withTimezone: true }),
+      sourceType: text('source_type').notNull(),
+      sourceId: uuid('source_id'),
+      dedupeKey: text('dedupe_key'),
+    },
+    (table) => [
+      uniqueIndex('notifications_user_dedupe_uq').on(table.userId, table.dedupeKey),
+      index('notifications_user_created_idx').on(table.userId, table.createdAt),
+    ],
+  )
   .enableRLS()
 
+// Un navegador donde la persona activó los avisos (Web Push). Un mismo navegador se suscribe una sola vez: volver a
+// activarlo actualiza su fila (índice único por persona y `endpoint`).
 export const pushSubscriptions = app
-  .table('push_subscriptions', {
-    ...userColumns,
-    endpoint: text('endpoint').notNull(),
-    p256dh: text('p256dh').notNull(),
-    auth: text('auth').notNull(),
-    userAgent: text('user_agent'),
-    lastUsedAt: timestamp('last_used_at', { withTimezone: true }),
-  })
+  .table(
+    'push_subscriptions',
+    {
+      ...userColumns,
+      endpoint: text('endpoint').notNull(),
+      p256dh: text('p256dh').notNull(),
+      auth: text('auth').notNull(),
+      userAgent: text('user_agent'),
+      lastUsedAt: timestamp('last_used_at', { withTimezone: true }),
+    },
+    (table) => [uniqueIndex('push_subscriptions_user_endpoint_uq').on(table.userId, table.endpoint)],
+  )
   .enableRLS()
 
 // Sin deleted_at: un job borra los vencidos (docs/guides/data-model.md).

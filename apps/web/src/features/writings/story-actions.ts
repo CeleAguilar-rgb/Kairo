@@ -57,10 +57,14 @@ export async function deleteStoryAction(storyId: string): Promise<WritingActionR
   }
 }
 
-// "Nueva nota": una nota rápida en blanco (EscritosInicio).
-export async function createNoteAction(): Promise<WritingActionResult> {
+// "Nueva nota": una nota rápida en blanco (EscritosInicio). La captura rápida ("+" → Nota) le pone de título la idea.
+const noteTitleSchema = z.string().trim().min(1).max(200)
+
+export async function createNoteAction(rawTitle?: unknown): Promise<WritingActionResult> {
+  const title = rawTitle === undefined ? 'Nota nueva' : noteTitleSchema.safeParse(rawTitle).data
+  if (!title) return failure('Escribe tu idea.')
   try {
-    const created = await api.post<{ id: string }>('/writings/pages', { kind: 'note', storyId: null, title: 'Nota nueva' })
+    const created = await api.post<{ id: string }>('/writings/pages', { kind: 'note', storyId: null, title })
     refreshWritings()
     return { ok: true, id: created.id }
   } catch (error) {

@@ -3,3 +3,5 @@ export { RemindersCard } from './components/RemindersCard'
 export { RemindersView } from './components/RemindersView'
 export type { Reminder } from './types'
 export { remindersModule } from './module'
+// Para la captura rápida (features/shortcuts).
+export { createReminderAction } from './actions'

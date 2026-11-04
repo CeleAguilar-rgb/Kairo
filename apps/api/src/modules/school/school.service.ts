@@ -7,6 +7,7 @@ import { AttachmentsService } from '../attachments/attachments.service'
 import { ProjectsService } from '../projects/projects.service'
 import { SprintsService } from '../sprints/sprints.service'
 import { TasksService } from '../tasks/tasks.service'
+import { TrashService } from '../trash/trash.service'
 import { firstOnOrAfter, gradeFromColumn, gradeToColumn, todayIn } from './school-utils'
 import { SchoolRepository, type GradeColumns } from './school.repository'
 
@@ -29,6 +30,7 @@ export class SchoolService {
     @Inject(SprintsService) private readonly sprintsService: SprintsService,
     @Inject(AttachmentsService) private readonly attachmentsService: AttachmentsService,
     @Inject(AccountService) private readonly accountService: AccountService,
+    @Inject(TrashService) private readonly trashService: TrashService,
   ) {}
 
   // --- Periodos ---------------------------------------------------------------------------------------
@@ -145,16 +147,16 @@ export class SchoolService {
     return toSubject(row, project)
   }
 
-  // Borrar una materia manda a la papelera todo lo suyo (design.md, "Borrar": entregas, clases del horario y
-  // calificaciones). Si se interrumpe a la mitad, volver a pedirlo termina el trabajo: cada paso es idempotente y
-  // la fila de la materia es lo último, así que sigue a la vista mientras falte algo.
+  // Borrar una materia es mandar su proyecto a la papelera: la Papelera se lleva con él, a la misma hora, sus
+  // entregas, clases del horario, sprints, archivos y la fila de la materia (design.md, "Borrar"). Así "Restaurar"
+  // (o el "Deshacer" del aviso) la devuelve completa.
   async deleteSubject(userId: string, id: string): Promise<void> {
     const subject = await this.repository.findSubject(userId, id)
     if (!subject) throw this.subjectNotFound()
-    await this.eraseSubject(userId, subject.projectId, subject.id)
+    await this.trashService.trash(userId, { kind: 'project', id: subject.projectId })
   }
 
-  // De lo que cuelga del proyecto a lo que lo sostiene.
+  // Deshacer una materia que se creó a medias (ver createSubject): de lo que cuelga del proyecto a lo que lo sostiene.
   private async eraseSubject(userId: string, projectId: string, subjectId: string | null) {
     await this.tasksService.deleteByProject(userId, projectId)
     await this.agendaService.deleteByProject(userId, projectId)

@@ -98,3 +98,95 @@
   outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
 }
+
+/* "···" con "Borrar proyecto" (Borrar.dc.html). */
+.moreWrap {
+  position: relative;
+}
+
+.more {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-control);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.more:hover {
+  background: var(--surface-hover);
+}
+
+.more:focus-visible,
+.menuItemDanger:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.menu {
+  position: absolute;
+  right: 0;
+  top: 54px;
+  z-index: var(--z-popover);
+  width: 240px;
+  box-sizing: border-box;
+  padding: var(--space-2);
+  border-radius: var(--radius-18);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  transform-origin: top right;
+}
+
+.menuItemDanger {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-12);
+  color: var(--danger);
+  cursor: pointer;
+}
+
+.menuItemDanger:hover {
+  background: var(--surface-hover);
+}
+
+/* Las tareas que se van con el proyecto, dentro del diálogo. */
+.taskList {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-16);
+  background: var(--surface-muted);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.taskItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: 14px;
+}
+
+.taskBox {
+  width: 14px;
+  height: 14px;
+  border-radius: 5px;
+  border: 1.5px solid var(--text-subtle);
+  flex-shrink: 0;
+}

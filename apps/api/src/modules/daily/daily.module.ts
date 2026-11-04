@@ -15,6 +15,8 @@ import { MealsService } from './meals.service'
 import { RoutinesController } from './routines.controller'
 import { RoutinesRepository } from './routines.repository'
 import { RoutinesService } from './routines.service'
+import { DailyTrash } from './daily.trash'
+import { DailySearch } from './daily.search'
 
 // Un solo módulo de Nest para las 4 áreas de Día a día (rutina, menú, diario, metas): modules.md habla
 // de módulos por sección de la UI, y las 4 viven bajo una sola ("daily" en el registro del front), con
@@ -32,6 +34,8 @@ import { RoutinesService } from './routines.service'
     GoalsService,
     GoalsRepository,
     DailyUndoService,
+    DailyTrash,
+    DailySearch,
   ],
 })
 export class DailyModule {}

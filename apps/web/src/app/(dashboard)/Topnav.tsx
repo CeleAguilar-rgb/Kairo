@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import { DoodleTray } from '@/components/layout/Doodles'
 import { usePendingHref } from '@/components/layout/Navigation'
 import { LineIcon } from '@/components/ui/Card'
-import { useToast } from '@/components/ui/Toast'
+import { NOTIFICATIONS_TRIGGER, useShortcuts } from '@/features/shortcuts'
 import type { Profile, UserSection } from '@/lib/account/api'
 import { getAvatar } from '@/lib/account/avatars'
 import { popover, SPRING } from '@/lib/motion'
@@ -22,8 +22,8 @@ export function Topnav({ profile, sections }: TopnavProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const menuWrapRef = useRef<HTMLDivElement>(null)
   const avatar = getAvatar(profile.avatarPath)
-  const toast = useToast()
   const pendingHref = usePendingHref()
+  const shortcuts = useShortcuts()
 
   // Clic afuera o Escape cierran el menú, como cualquier menú nativo.
   useEffect(() => {
@@ -61,11 +61,6 @@ export function Topnav({ profile, sections }: TopnavProps) {
     )
   // Si ya se hizo clic en otra sección, la píldora viaja hacia ella sin esperar a que cargue.
   const activeId = findActive(visibleModules, pendingHref ?? pathname)
-
-  // Buscar y avisos llegan con la pantalla Atajos; mientras, que el botón responda algo.
-  function soon(what: string) {
-    toast.show({ message: `${what} llega pronto.`, icon: 'info' })
-  }
 
   async function handleSignOut() {
     // Import dinámico: el cliente de Supabase pesa ~65 KB y solo se necesita aquí, al
@@ -158,8 +153,9 @@ export function Topnav({ profile, sections }: TopnavProps) {
           <button
             type="button"
             className={styles.iconButton}
-            aria-label="Buscar"
-            onClick={() => soon('La búsqueda (Ctrl+K)')}
+            aria-label="Buscar (Ctrl+K)"
+            aria-expanded={shortcuts.open === 'search'}
+            onClick={() => shortcuts.toggle('search')}
           >
             <LineIcon
               d={['M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14z', 'M20 20l-3.5-3.5']}
@@ -168,9 +164,20 @@ export function Topnav({ profile, sections }: TopnavProps) {
           </button>
           <button
             type="button"
-            className={styles.iconButton}
-            aria-label="Notificaciones"
-            onClick={() => soon('El panel de avisos')}
+            className={[
+              styles.iconButton,
+              shortcuts.open === 'notifications' ? styles.iconButtonOpen : null,
+            ]
+              .filter(Boolean)
+              .join(' ')}
+            aria-label={
+              shortcuts.unread > 0
+                ? `Avisos, ${shortcuts.unread} sin leer`
+                : 'Avisos'
+            }
+            aria-expanded={shortcuts.open === 'notifications'}
+            {...{ [NOTIFICATIONS_TRIGGER]: '' }}
+            onClick={() => shortcuts.toggle('notifications')}
           >
             <LineIcon
               d={[
@@ -179,6 +186,10 @@ export function Topnav({ profile, sections }: TopnavProps) {
               ]}
               size={20}
             />
+            {/* Atajos.dc.html: .badge, el punto de "hay avisos sin leer". */}
+            {shortcuts.unread > 0 ? (
+              <span className={styles.badge} aria-hidden="true" />
+            ) : null}
           </button>
           <DoodleTray
             buttonClassName={styles.iconButton}
@@ -233,6 +244,15 @@ export function Topnav({ profile, sections }: TopnavProps) {
                   onClick={() => setMenuOpen(false)}
                 >
                   Mi perfil
+                </Link>
+                {/* Perfil.dc.html pone la Papelera en este mismo menú. */}
+                <Link
+                  href="/papelera"
+                  role="menuitem"
+                  className={styles.menuItem}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Papelera
                 </Link>
                 <div className={styles.menuDivider} />
                 <button

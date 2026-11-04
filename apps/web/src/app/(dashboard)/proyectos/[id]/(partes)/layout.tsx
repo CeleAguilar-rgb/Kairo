@@ -32,6 +32,7 @@ export default async function ProjectLayout({ children, params }: ProjectLayoutP
           kind={project.kind}
           status={project.status}
           startedText={project.startedOn ? `Desde el ${formatDayMonth(project.startedOn)}` : null}
+          taskTitles={project.tasks.map((task) => task.title)}
         />
         <ProjectTabs projectId={project.id} />
         <SectionPanel className={styles.panel}>{children}</SectionPanel>

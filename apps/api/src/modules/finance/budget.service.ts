@@ -4,7 +4,7 @@ import { AccountService } from '../../account/account.service'
 import { CategoriesRepository } from './categories.repository'
 import { toCategory } from './finance-mappers'
 import { encodeFinanceUndo } from './finance-undo'
-import { firstOfNextMonth, monthStartOf, roundUpToFiftyPesos, todayIn } from './finance-utils'
+import { firstOfNextMonth, monthStartOf, roundUpToFiftyPesos, spentPerCategory, todayIn } from './finance-utils'
 import { SettingsRepository } from './settings.repository'
 import { TransactionsRepository } from './transactions.repository'
 
@@ -81,13 +81,7 @@ export class BudgetService {
       this.transactionsRepository.spentByCategory(userId, monthStartOf(today), firstOfNextMonth(today)),
     ])
 
-    const expenseIds = new Set(live.filter((category) => category.kind === 'expense').map((category) => category.id))
-    const fallback = live.find((category) => category.key === FALLBACK_CATEGORY_KEY)
-    const spentBy = new Map<string, number>()
-    for (const row of spent) {
-      const id = row.categoryId && expenseIds.has(row.categoryId) ? row.categoryId : fallback?.id
-      if (id) spentBy.set(id, (spentBy.get(id) ?? 0) + row.cents)
-    }
+    const spentBy = spentPerCategory(live, spent, FALLBACK_CATEGORY_KEY)
 
     const before: { id: string; limitCents: number | null }[] = []
     for (const category of live) {

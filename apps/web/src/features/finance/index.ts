@@ -11,3 +11,5 @@ export { BudgetView } from './components/BudgetView'
 export { cardLabel } from './finance-utils'
 export type { Membership, PaymentCard } from './types'
 export { financeModule } from './module'
+// Para la captura rápida (features/shortcuts).
+export { quickExpenseAction } from './transaction-actions'

@@ -24,6 +24,8 @@
 
 ## Siguiente paso
 
+**EN PAUSA (2026-11-02): "lo global" a medias, sin commit.** Papelera, Ctrl+K y captura rápida están hechos; avisos, Web Push y tareas programadas, a medias. Qué falta, en orden: `sessions/2026-11-02-lo-global.md`.
+
 **Probar Escritos y Enfoque en el navegador con tu cuenta** (qué recorrer está en las notas `sessions/2026-10-25-escritos-backend.md` y `-enfoque-backend.md`). Después, **lo global**: Papelera, Ctrl+K, avisos, captura rápida y tareas programadas.
 
 Siguen pendientes de antes: probar Archivos en el navegador, revisar Finanzas, Proyectos y Escuela a 390 px y con datos reales, y probar Tareas, Recordatorios, Agenda y Día a día reconectados.
@@ -45,7 +47,7 @@ Siguen pendientes de antes: probar Archivos en el navegador, revisar Finanzas, P
 
 ## Bloqueos o problemas abiertos
 
-- **2026-11-01: el proyecto de Supabase no responde** (su dirección `*.supabase.co` no existe en DNS, ni con 8.8.8.8). Lo más probable: el plan gratis lo **pausó tras 7 días sin uso** (lo último fue el 25 de octubre). Hay que reanudarlo desde el panel de Supabase; mientras, ni la API ni los e2e pueden correr.
+- **Supabase (plan gratis) pausa el proyecto tras 7 días sin uso.** Pasó el 2026-11-01: la dirección `*.supabase.co` deja de existir en DNS y la API y los e2e fallan con `fetch failed`. Se reanuda desde el panel de Supabase ("Restore project"); el 2026-11-02 se reanudó y los e2e volvieron a pasar.
 
 - `@nestjs/cli` (generadores `nest generate`, etc.) no se puede usar: bug de `@angular-devkit/schematics` + Node 22. Mientras tanto, los archivos de `apps/api` se escriben a mano. Revisar si una versión futura lo arregla.
 - `drizzle-kit migrate` (la CLI) no muestra el error cuando una migración falla; hay que diagnosticar llamando a `migrate()` de `drizzle-orm` directamente en un script aparte si vuelve a pasar. Revisar si una versión futura lo arregla.

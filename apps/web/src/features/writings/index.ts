@@ -16,3 +16,5 @@ export { CharactersTab, SectionTab, SpeciesTab } from './components/world/EntryT
 export { EntryFullPage, EventFullPage } from './components/world/FullPages'
 export type { BookView, CharacterChip, NoteCard, NoteTemplate, TemplateField, WorldCard, WritingsOverview } from './types'
 export { writingsModule } from './module'
+// Para la captura rápida (features/shortcuts).
+export { createNoteAction } from './story-actions'

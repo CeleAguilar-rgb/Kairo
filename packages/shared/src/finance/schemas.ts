@@ -67,6 +67,17 @@ export const transactionSchema = z
 
 export type TransactionInput = z.infer<typeof transactionSchema>
 
+// La captura rápida de un gasto ("+" → Gasto: "Tacos 250", Atajos.dc.html): solo concepto, monto y día. El resto
+// (categoría "Otros", sin tarjeta) lo pone el Next.js. Va aparte porque zod no deja hacer `.pick()` de un esquema
+// con `superRefine`.
+export const quickExpenseSchema = z.object({
+  concept: z.string().trim().min(1, '¿En qué fue el gasto?').max(80, 'Máximo 80 caracteres.'),
+  amountCents,
+  occurredOn: day,
+})
+
+export type QuickExpenseInput = z.infer<typeof quickExpenseSchema>
+
 // Aportar a un ahorro, retirar de él o registrar un pago de una deuda (los tres campos rápidos de Ahorros
 // y deudas): solo el monto. Se vuelven un movimiento.
 export const moneyAmountSchema = z.object({ amountCents })

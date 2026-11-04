@@ -1,0 +1,183 @@
+/* Atajos.dc.html: .fab, .qcap, .qt */
+.fab {
+  all: unset;
+  box-sizing: border-box;
+  position: fixed;
+  right: var(--space-9);
+  bottom: var(--space-9);
+  z-index: 58;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+}
+
+.fab:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.panel {
+  position: fixed;
+  right: var(--space-9);
+  bottom: 96px;
+  z-index: 58;
+  width: min(380px, calc(100% - 48px));
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  border-radius: var(--radius-28);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  transform-origin: bottom right;
+}
+
+.kinds {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.kind,
+.kindOn {
+  all: unset;
+  box-sizing: border-box;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-1);
+  border-radius: var(--radius-16);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.kind {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.kindOn {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.kind:focus-visible,
+.kindOn:focus-visible,
+.when:focus-visible,
+.whenOn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.input,
+.inputBad {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-14);
+  border: 1px solid var(--border-control);
+  background: var(--surface);
+  font: inherit;
+  color: var(--text);
+}
+
+.inputBad {
+  border-color: var(--danger);
+}
+
+.input:focus,
+.inputBad:focus {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+.error {
+  font-size: 13px;
+  color: var(--danger);
+}
+
+.whens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.when,
+.whenOn {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.when {
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.whenOn {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.more {
+  font-size: 14px;
+  color: var(--text);
+}
+
+@media (max-width: 720px) {
+  /* En teléfono el menú de secciones vive abajo (canvas, .topnav fija): el "+" sube por encima de él. */
+  .fab {
+    bottom: 96px;
+  }
+
+  .panel {
+    bottom: 168px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kind,
+  .kindOn {
+    transition: none;
+  }
+}

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common'
 import type { ReminderRepeat } from '@kairo/shared'
-import { and, asc, eq, isNull, sql } from 'drizzle-orm'
+import { and, asc, eq, gt, inArray, isNull, lte, sql } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 import { DB } from '../../common/db/db.module'
 import { reminders } from '../../db/schema/reminders'
@@ -70,10 +70,11 @@ export class RemindersRepository {
     })
   }
 
+  // Posponer también borra `notifiedAt`: así la tarea programada vuelve a avisar a la hora nueva.
   async snooze(userId: string, id: string, snoozedTo: Date) {
     const [row] = await this.db
       .update(reminders)
-      .set({ snoozedTo })
+      .set({ snoozedTo, notifiedAt: null })
       .where(
         and(
           eq(reminders.id, id),
@@ -93,5 +94,21 @@ export class RemindersRepository {
       .where(and(eq(reminders.id, id), eq(reminders.userId, userId), isNull(reminders.deletedAt)))
       .returning()
     return row
+  }
+
+  // Tarea programada (de todas las personas, por eso sin userId): los pendientes que ya tocan y no se han avisado.
+  // Solo los que tocaron después de `since`: uno que se quedó sin avisar hace una semana ya no sirve como aviso.
+  findDue(now: Date, since: Date, limit: number) {
+    const dueAt = sql<Date>`coalesce(${reminders.snoozedTo}, ${reminders.remindAt})`
+    return this.db
+      .select({ id: reminders.id, userId: reminders.userId, title: reminders.title, dueAt: dueAt.mapWith(reminders.remindAt) })
+      .from(reminders)
+      .where(and(isNull(reminders.deletedAt), isNull(reminders.doneAt), isNull(reminders.notifiedAt), lte(dueAt, now), gt(dueAt, since)))
+      .orderBy(asc(dueAt))
+      .limit(limit)
+  }
+
+  async markNotified(ids: string[], at: Date) {
+    if (ids.length) await this.db.update(reminders).set({ notifiedAt: at }).where(and(inArray(reminders.id, ids), isNull(reminders.notifiedAt)))
   }
 }

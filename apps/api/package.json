@@ -12,6 +12,7 @@
     "db:migrate": "drizzle-kit migrate",
     "invite:initial": "tsx --env-file=.env src/auth/invite-initial-user.ts",
     "storage:create-bucket": "tsx --env-file=.env src/common/storage/create-bucket.ts",
+    "jobs:run": "tsx --env-file=.env src/jobs/run-jobs.ts",
     "test:e2e": "node --experimental-vm-modules --env-file=.env node_modules/jest/bin/jest.js --config test/jest-e2e.json --runInBand"
   },
   "dependencies": {
@@ -25,6 +26,7 @@
     "postgres": "^3.4.9",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
+    "web-push": "3.6.7",
     "zod": "^4.6.6"
   },
   "devDependencies": {
@@ -33,6 +35,7 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^26.6.5",
     "@types/supertest": "^7.2.1",
+    "@types/web-push": "3.6.4",
     "drizzle-kit": "^0.31.11",
     "jest": "^30.5.2",
     "supertest": "^7.3.1",

@@ -3,6 +3,7 @@
 import { useState, useTransition } from 'react'
 
 import { useToast } from '@/components/ui/Toast'
+import { restoreFromTrashAction } from '@/features/trash'
 import { formatDayMonth, formatRange } from '@/lib/dates'
 
 import {
@@ -102,7 +103,15 @@ export function SchoolView({
         failed(result.message, 'No se pudo borrar la materia.')
         return
       }
-      toast.show({ message: `${subject.name} se borró.`, icon: 'trash' })
+      // Borrar una materia manda su proyecto a la papelera con todo lo suyo: "Deshacer" lo devuelve junto.
+      toast.show({
+        message: `${subject.name} se movió a la papelera.`,
+        icon: 'trash',
+        onUndo: async () => {
+          const undone = await restoreFromTrashAction({ kind: 'project', id: subject.projectId })
+          if (!undone.ok) failed(undone.message, 'No se pudo restaurar la materia.')
+        },
+      })
     })
   }
 

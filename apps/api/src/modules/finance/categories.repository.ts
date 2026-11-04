@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { DEFAULT_CATEGORIES, type CategoryColor, type CategoryKind } from '@kairo/shared'
-import { and, asc, eq, isNull, max, sql } from 'drizzle-orm'
+import { and, asc, eq, isNotNull, isNull, max, sql } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 import { DB } from '../../common/db/db.module'
 import { categories } from '../../db/schema/finance'
@@ -50,6 +50,15 @@ export class CategoriesRepository {
         })),
       )
       .onConflictDoNothing()
+  }
+
+  // Tarea programada (avisos de presupuesto): las personas con al menos un límite puesto, de todas.
+  async usersWithLimits(): Promise<string[]> {
+    const rows = await this.db
+      .selectDistinct({ userId: categories.userId })
+      .from(categories)
+      .where(and(eq(categories.kind, 'expense'), isNotNull(categories.monthlyLimitCents), isNull(categories.deletedAt)))
+    return rows.map((row) => row.userId)
   }
 
   // La categoría que recibe los gastos de las que se borran ("Otros"). La busca por su clave.

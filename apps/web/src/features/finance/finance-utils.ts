@@ -1,4 +1,4 @@
-import { FALLBACK_CATEGORY_KEY, FINANCE_MONTHS_BACK } from '@kairo/shared'
+import { FALLBACK_CATEGORY_KEY, FINANCE_MONTHS_BACK, nextChargeOn } from '@kairo/shared'
 
 import { addDays, addMonths, dayOfMonth, daysInMonth, formatMonthShort, weekdayOf, type IsoDate } from '@/lib/dates'
 import { formatMoney } from '@/lib/money'
@@ -372,37 +372,8 @@ export const firstOfNextMonth = (today: IsoDate): IsoDate => addMonths(`${today.
 
 // --- Membresías y tarjetas ------------------------------------------------------------------------
 
-function dateIn(year: number, month: number, day: number): IsoDate {
-  const first = `${year}-${String(month).padStart(2, '0')}-01`
-  const last = daysInMonth(first)
-  return `${year}-${String(month).padStart(2, '0')}-${String(Math.min(day, last)).padStart(2, '0')}`
-}
-
-type ChargeRule = Pick<MembershipRecord, 'cadence' | 'chargeDay' | 'chargeMonth' | 'chargeWeekday'>
-
-// El próximo cobro a partir de hoy (hoy cuenta). No se guarda: se calcula con el día de cobro, así nunca
-// queda en el pasado. Un cobro el día 31 cae el último día en los meses más cortos.
-export function nextChargeOn(rule: ChargeRule, today: IsoDate): IsoDate {
-  const year = Number(today.slice(0, 4))
-  const month = Number(today.slice(5, 7))
-
-  if (rule.cadence === 'weekly') {
-    const weekday = rule.chargeWeekday ?? 0
-    return addDays(today, (weekday - weekdayOf(today) + 7) % 7)
-  }
-
-  const day = rule.chargeDay ?? 1
-  if (rule.cadence === 'yearly') {
-    const chargeMonth = rule.chargeMonth ?? 1
-    const thisYear = dateIn(year, chargeMonth, day)
-    return thisYear >= today ? thisYear : dateIn(year + 1, chargeMonth, day)
-  }
-
-  const thisMonth = dateIn(year, month, day)
-  if (thisMonth >= today) return thisMonth
-  const next = shiftMonth(monthOf(today), 1)
-  return dateIn(Number(next.slice(0, 4)), Number(next.slice(5, 7)), day)
-}
+// El próximo cobro vive en @kairo/shared: la API lo usa también para anotar sola el cobro (decisión #40).
+export { nextChargeOn }
 
 // Lo que cuesta al mes, para el total ("$1,099 en membresías al mes"): lo anual se reparte entre 12 y lo
 // semanal se multiplica por 52 y se reparte entre 12. Se redondea a pesos enteros, como en el canvas.

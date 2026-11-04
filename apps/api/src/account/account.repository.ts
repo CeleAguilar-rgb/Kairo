@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common'
 import type { ModuleId } from '@kairo/shared'
-import { asc, eq } from 'drizzle-orm'
+import { asc, eq, lt } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 import { DB } from '../common/db/db.module'
 import { profiles } from '../db/schema/_shared'
-import { userSections } from '../db/schema/account'
+import { loginCodes, userSections } from '../db/schema/account'
 
 export type SectionRow = {
   section: ModuleId
@@ -64,5 +64,11 @@ export class AccountRepository {
           .values(rows.map((row) => ({ userId, ...row })))
       }
     })
+  }
+
+  // Tarea programada (una vez al día): los códigos de login vencidos, de todas las personas. No llevan deleted_at.
+  async deleteExpiredLoginCodes(before: Date): Promise<number> {
+    const rows = await this.db.delete(loginCodes).where(lt(loginCodes.expiresAt, before)).returning({ id: loginCodes.id })
+    return rows.length
   }
 }

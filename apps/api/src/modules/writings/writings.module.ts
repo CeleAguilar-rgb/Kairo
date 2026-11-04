@@ -13,6 +13,8 @@ import { TimelineService } from './timeline.service'
 import { WorldsController } from './worlds.controller'
 import { WorldsRepository } from './worlds.repository'
 import { WorldsService } from './worlds.service'
+import { WritingsTrash } from './writings.trash'
+import { WritingsSearch } from './writings.search'
 
 // Un solo módulo de Nest para Escritos (una sección de la UI, modules.md), partido en cuatro áreas con su
 // controller/service/repository cada una, igual que Finanzas: mundos y plantillas, fichas (personajes y notas),
@@ -22,6 +24,6 @@ import { WorldsService } from './worlds.service'
 @Module({
   imports: [AccountModule, StorageModule],
   controllers: [WorldsController, EntriesController, TimelineController, StoriesController],
-  providers: [WorldsService, WorldsRepository, EntriesService, EntriesRepository, TimelineService, TimelineRepository, StoriesService, StoriesRepository],
+  providers: [WorldsService, WorldsRepository, EntriesService, EntriesRepository, TimelineService, TimelineRepository, StoriesService, StoriesRepository, WritingsTrash, WritingsSearch],
 })
 export class WritingsModule {}

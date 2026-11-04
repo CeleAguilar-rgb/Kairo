@@ -66,4 +66,9 @@ export class AccountService {
     await this.repository.replaceSections(userId, input.sections)
     return this.getMe(userId)
   }
+
+  // Tarea programada (src/jobs): limpiar los códigos de login vencidos.
+  purgeExpiredLoginCodes(now = new Date()) {
+    return this.repository.deleteExpiredLoginCodes(now)
+  }
 }

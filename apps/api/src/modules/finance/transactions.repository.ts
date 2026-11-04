@@ -47,6 +47,24 @@ export class TransactionsRepository {
     return row
   }
 
+  // El cobro que la tarea programada anota solo (finance.jobs.ts). Es el único lugar que pone `membershipId`.
+  async createMembershipCharge(userId: string, membershipId: string, data: NewTransaction) {
+    const [row] = await this.db.insert(transactions).values({ userId, membershipId, ...data }).returning()
+    if (!row) throw new Error('No se pudo anotar el cobro.')
+    return row
+  }
+
+  // ¿Ya se anotó el cobro de esa membresía ese día? Cuenta también los que están en la papelera: si la persona borró
+  // el cobro automático, no vuelve a aparecer.
+  async hasMembershipCharge(userId: string, membershipId: string, day: string): Promise<boolean> {
+    const [row] = await this.db
+      .select({ id: transactions.id })
+      .from(transactions)
+      .where(and(eq(transactions.userId, userId), eq(transactions.membershipId, membershipId), eq(transactions.occurredOn, day)))
+      .limit(1)
+    return Boolean(row)
+  }
+
   // `membershipId` no está en los campos editables: un movimiento que nació de una membresía conserva su
   // origen aunque se corrija.
   async update(userId: string, id: string, data: NewTransaction) {

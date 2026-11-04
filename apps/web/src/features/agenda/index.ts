@@ -3,3 +3,5 @@ export { AgendaView } from './components/AgendaView'
 export { WeekCard } from './components/WeekCard'
 export type { AgendaEntry, AgendaEvent, EventKind } from './types'
 export { agendaModule } from './module'
+// Para la captura rápida (features/shortcuts).
+export { createEventAction } from './actions'

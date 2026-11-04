@@ -5,6 +5,7 @@ import { NavigationProvider, PageFrame } from '@/components/layout/Navigation'
 import { ToastProvider } from '@/components/ui/Toast'
 import { FocusProvider } from '@/features/focus'
 import { getFocusSetup } from '@/features/focus/api'
+import { ShortcutsProvider } from '@/features/shortcuts'
 import { getMe } from '@/lib/account/api'
 import { DEMO_MODE } from '@/lib/demo'
 import { createClient } from '@/lib/supabase/server'
@@ -38,10 +39,12 @@ export default async function DashboardLayout({
       <DoodlesProvider>
         <NavigationProvider>
           <FocusProvider sessionsToday={focus.sessionsToday} tasks={focus.tasks}>
+          <ShortcutsProvider timeZone={me.profile.timezone} demo={DEMO_MODE}>
             <div className={styles.shell}>
               <Topnav profile={me.profile} sections={me.sections} />
               <PageFrame className={styles.content}>{children}</PageFrame>
             </div>
+          </ShortcutsProvider>
           </FocusProvider>
         </NavigationProvider>
       </DoodlesProvider>

@@ -5,6 +5,7 @@ import { TasksModule } from '../tasks/tasks.module'
 import { SprintsController } from './sprints.controller'
 import { SprintsRepository } from './sprints.repository'
 import { SprintsService } from './sprints.service'
+import { SprintsTrash } from './sprints.trash'
 
 // Sprints depende de Proyectos (¿existe el proyecto y es de la persona?) y de Tareas (qué tareas son de qué
 // proyecto y si están hechas), y ninguno de los dos depende de él: sin dependencias circulares. Por eso es un
@@ -13,7 +14,7 @@ import { SprintsService } from './sprints.service'
 @Module({
   imports: [AccountModule, ProjectsModule, TasksModule],
   controllers: [SprintsController],
-  providers: [SprintsService, SprintsRepository],
+  providers: [SprintsService, SprintsRepository, SprintsTrash],
   exports: [SprintsService],
 })
 export class SprintsModule {}
