@@ -2,6 +2,10 @@
 
 Lo que el front hace y las pantallas de `screens/` **no dibujan** (o dibujan distinto). Sirve para llevarlo al canvas en claude.ai y que vuelva a mandar él. Al subirlo al canvas, bórralo de aquí.
 
+## Reproductor (2026-11-03, decisión #53)
+
+- **Sin el modo Música.** `Reproductor.dc.html` y `TelReproductor.dc.html` dibujan las pestañas Música / Enfoque, el interruptor "Poner \"Para enfocarme\" al empezar", los controles de canciones y "Tus listas". El front solo tiene el pomodoro: el panel lleva el título "Enfoque" y la píldora siempre muestra el reloj.
+
 ## Lo global (2026-11-02 y 03, decisiones #49 a #52)
 
 **Papelera**

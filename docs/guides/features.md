@@ -63,9 +63,9 @@ Fuente: el documento "Mi tablero · Funcionalidades y base de datos" del usuario
 - Antes de empezar: cuenta regresiva y lista de preparación.
 - Durante el semestre: horario, materias, entregas y calificaciones.
 
-## Música, enfoque y atajos
+## Enfoque y atajos
 
-- Reproductor flotante con el pomodoro y la tarea en curso. Cada tramo que termina se guarda: los puntos de hoy ("2 de 4") salen de ahí, se puede enfocar en una tarea real (también desde su detalle o desde un bloque de la rutina) y el Resumen de un proyecto suma los minutos de la semana. Spotify es **fase posterior** (integraciones).
+- Reproductor flotante con el pomodoro y la tarea en curso. Cada tramo que termina se guarda: los puntos de hoy ("2 de 4") salen de ahí, se puede enfocar en una tarea real (también desde su detalle o desde un bloque de la rutina) y el Resumen de un proyecto suma los minutos de la semana. La música se quitó del reproductor (decisión #53).
 - **Buscar (Ctrl+K o la lupa):** tareas, proyectos, eventos, recordatorios, metas, movimientos, membresías y escritos; agrupa por sección, se maneja con el teclado y ofrece "Crear tarea" con lo escrito.
 - **Avisos (la campana):** Hoy / Ayer / Antes, "Marcar todo como leído" y, si la persona lo activa, avisos del navegador (Web Push) aunque Kairo esté cerrado. Llegan por: un recordatorio que toca, un cobro de membresía que es mañana, y el presupuesto al 80 % o al pasarse. Respetan las horas de silencio.
 - **Captura rápida (+):** tarea, evento (todo el día), gasto ("Tacos 250"), recordatorio y nota, sin salir de la pantalla.

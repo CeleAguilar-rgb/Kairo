@@ -5,14 +5,11 @@ import { createContext, useContext, useEffect, useEffectEvent, useMemo, useState
 import { useToast } from '@/components/ui/Toast'
 
 import { recordFocusSessionAction } from './actions'
-import { FOCUS_SONGS } from './mock'
-import type { FocusMode, FocusTask } from './types'
+import type { FocusTask } from './types'
 import { useFocusTimer } from './use-focus-timer'
 import { FocusPlayer } from './components/FocusPlayer'
 
 type FocusContextValue = {
-  mode: FocusMode
-  setMode: (mode: FocusMode) => void
   expanded: boolean
   setExpanded: (expanded: boolean) => void
   // El título de la tarea en la que se enfoca ("" si no hay ninguna).
@@ -22,15 +19,7 @@ type FocusContextValue = {
   // reproductor ya enfocado en algo, sin importar sus archivos internos — solo este hook (docs/guides/modules.md).
   // Con `id` el tiempo se le guarda a esa tarea; sin él (un texto suelto) solo se guarda el tiempo.
   focusOnTask: (task: FocusTask) => void
-  withMusic: boolean
-  toggleWithMusic: () => void
   timer: ReturnType<typeof useFocusTimer>
-  song: { title: string; playlist: string }
-  playing: boolean
-  togglePlay: () => void
-  nextSong: () => void
-  prevSong: () => void
-  playPlaylist: (index: number) => void
 }
 
 const FocusContext = createContext<FocusContextValue | null>(null)
@@ -56,13 +45,9 @@ type FocusProviderProps = {
 export function FocusProvider({ children, sessionsToday, tasks }: FocusProviderProps) {
   const toast = useToast()
   const timer = useFocusTimer(sessionsToday)
-  const [mode, setMode] = useState<FocusMode>('focus')
   const [expanded, setExpanded] = useState(false)
   const [taskIndex, setTaskIndex] = useState(0)
   const [custom, setCustom] = useState<FocusTask | null>(null)
-  const [withMusic, setWithMusic] = useState(true)
-  const [songIndex, setSongIndex] = useState(0)
-  const [playing, setPlaying] = useState(true)
 
   const current = custom ?? tasks[taskIndex] ?? null
 
@@ -80,8 +65,6 @@ export function FocusProvider({ children, sessionsToday, tasks }: FocusProviderP
 
   const api = useMemo<FocusContextValue>(
     () => ({
-      mode,
-      setMode,
       expanded,
       setExpanded,
       task: current?.title ?? '',
@@ -91,31 +74,11 @@ export function FocusProvider({ children, sessionsToday, tasks }: FocusProviderP
       },
       focusOnTask: (task) => {
         setCustom(task)
-        setMode('focus')
         setExpanded(true)
       },
-      withMusic,
-      toggleWithMusic: () => setWithMusic((value) => !value),
-      timer: {
-        ...timer,
-        toggleRun: () => {
-          // Si vas a arrancar un pomodoro y "poner música al empezar" está
-          // prendido, la música también arranca (Reproductor.dc.html:204).
-          if (!timer.state.running && withMusic) setPlaying(true)
-          timer.toggleRun()
-        },
-      },
-      song: FOCUS_SONGS[songIndex],
-      playing,
-      togglePlay: () => setPlaying((value) => !value),
-      nextSong: () => setSongIndex((index) => (index + 1) % FOCUS_SONGS.length),
-      prevSong: () => setSongIndex((index) => (index + FOCUS_SONGS.length - 1) % FOCUS_SONGS.length),
-      playPlaylist: () => {
-        setSongIndex(0)
-        setPlaying(true)
-      },
+      timer,
     }),
-    [mode, expanded, current, tasks.length, withMusic, timer, songIndex, playing],
+    [expanded, current, tasks.length, timer],
   )
 
   return (

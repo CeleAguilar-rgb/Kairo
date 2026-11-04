@@ -15,7 +15,7 @@ Cada sección de Kairo es un **módulo independiente**. El usuario quiere poder 
 | `school` | Escuela | `/escuela` | Periodos, materias, horario, entregas, calificaciones, preparación |
 | `projects` | Proyectos | `/proyectos` | Proyectos, objetivos, enlaces, sprints, archivos |
 | `writings` | Escritos | `/escritos` | Mundos, historias, páginas estilo Notion, personajes |
-| `focus` | Música y enfoque | (flotante) | Pomodoro; Spotify en fase posterior |
+| `focus` | Enfoque | (flotante) | Pomodoro; sin música (decisión #53) |
 
 "Trabajo" y "situaciones personales" no son módulos: el trabajo vive como tipo en proyectos y eventos, y lo personal en el diario.
 

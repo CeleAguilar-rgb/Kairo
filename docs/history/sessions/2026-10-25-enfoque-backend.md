@@ -28,7 +28,7 @@ Revisado en la documentación de Spotify el 2026-10-25:
 
 **Para decidir con la usuaria:** si tiene Spotify Premium y quiere el reproductor propio (Web Playback SDK + OAuth + Vault), si le basta un enlace o embed de su playlist dentro del reproductor, o si lo dejamos como está. Antes de construir nada conviene una prueba de 15 minutos del Web Playback SDK en una app de desarrollo suya.
 
-**Prueba armada (sin correr todavía):** `tools/spotify-prueba/` es una página aparte, **no es parte de Kairo** (`server.mjs` sin dependencias, solo en `127.0.0.1:8765`, e `index.html`). Inicia sesión con OAuth + PKCE (sin Client Secret), el token vive solo en la pestaña, y marca ✓/✗ en cada paso: DRM (Widevine), carga del SDK, `connect()`, dispositivo listo, que suene, `GET /me` y `GET /me/playlists`. Los pasos y cómo leer el resultado están en su `README.md`. Lo tiene que correr la usuaria con su cuenta Premium, en Chrome o Edge (el navegador integrado de algunas apps no trae Widevine).
+**Prueba armada (corrida y borrada el 2026-11-03: ver `2026-11-03-musica.md`):** `tools/spotify-prueba/` es una página aparte, **no es parte de Kairo** (`server.mjs` sin dependencias, solo en `127.0.0.1:8765`, e `index.html`). Inicia sesión con OAuth + PKCE (sin Client Secret), el token vive solo en la pestaña, y marca ✓/✗ en cada paso: DRM (Widevine), carga del SDK, `connect()`, dispositivo listo, que suene, `GET /me` y `GET /me/playlists`. Los pasos y cómo leer el resultado están en su `README.md`. Lo tiene que correr la usuaria con su cuenta Premium, en Chrome o Edge (el navegador integrado de algunas apps no trae Widevine).
 
 ## Archivos o partes importantes que se tocaron
 

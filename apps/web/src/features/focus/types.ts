@@ -1,9 +1,5 @@
 import type { FocusKind } from '@kairo/shared'
 
-// El modo del reproductor flotante (Reproductor.dc.html). Música (Spotify)
-// llega en un paso aparte; este primer paso es solo Enfoque.
-export type FocusMode = 'music' | 'focus'
-
 export type FocusPhase = FocusKind
 
 // Minutos de trabajo y de descanso de cada preset (25/5, 50/10, 15/3 en el canvas).
