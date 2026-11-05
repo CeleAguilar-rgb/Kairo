@@ -26,7 +26,7 @@
 
 ## Siguiente paso
 
-**Probar los avisos en el navegador con tu cuenta:** correr `pnpm jobs:run minute` en `apps/api` (solo crea avisos de tus recordatorios pendientes) y revisar la campana, "Marcar todo como leído" y "Activar" los avisos del navegador. **Después, decidir los adornos de temporada** (`Temporadas.dc.html`, 11 temporadas): es lo único de "lo global" que falta. Con eso la Fase 1b queda completa y lo que sigue es **desplegar** (revisar `"type": "module"` y `pnpm build && pnpm start` de la API, aplicar `src/jobs/cron.sql` en Supabase).
+**Probar los avisos en el navegador con tu cuenta:** correr `pnpm jobs:run minute` en `apps/api` (solo crea avisos de tus recordatorios pendientes) y revisar la campana, "Marcar todo como leído" y "Activar" los avisos del navegador. **Después, decidir los adornos de temporada** (`Temporadas.dc.html`, 11 temporadas): es lo único de "lo global" que falta. Con eso la Fase 1b queda completa y lo que sigue es **desplegar** (la API y el front ya compilan y arrancan, decisión #54; falta decidir `@parcel/watcher`, hacer el push, crear los proyectos en Vercel y aplicar `src/jobs/cron.sql` en Supabase).
 
 **Probar Escritos y Enfoque en el navegador con tu cuenta** (qué recorrer está en las notas `sessions/2026-10-25-escritos-backend.md` y `-enfoque-backend.md`). Después, **lo global**: Papelera, Ctrl+K, avisos, captura rápida y tareas programadas.
 
@@ -53,7 +53,7 @@ Siguen pendientes de antes: probar Archivos en el navegador, revisar Finanzas, P
 - `@nestjs/cli` (generadores `nest generate`, etc.) no se puede usar: bug de `@angular-devkit/schematics` + Node 22. Mientras tanto, los archivos de `apps/api` se escriben a mano. Revisar si una versión futura lo arregla.
 - `drizzle-kit migrate` (la CLI) no muestra el error cuando una migración falla; hay que diagnosticar llamando a `migrate()` de `drizzle-orm` directamente en un script aparte si vuelve a pasar. Revisar si una versión futura lo arregla.
 - `tsx`/esbuild (el toolchain de `apps/api`) no siempre emite la metadata de tipos que Nest usa para inyectar un parámetro de constructor sin `@Inject()` explícito — falla en tiempo de ejecución (`UndefinedDependencyException`) aunque `tsc --noEmit` no marque nada. Pasó con `Reflector` en `jwt.guard.ts`; se resolvió con `@Inject(Reflector)` explícito. Si se escribe otro guard/interceptor/pipe a mano, probarlo corriendo la API, no solo con `tsc`.
-- `apps/api/package.json` no tiene `"type": "module"` y nunca se probó `pnpm build && pnpm start` (solo `tsx watch` en dev). Como `@nestjs/common` es ESM-only, el build de producción probablemente necesite ese campo. Revisar antes de desplegar.
+- **Antes de desplegar** (2026-11-04): `pnpm-workspace.yaml` tiene `'@parcel/watcher': set this to true or false` sin decidir (lo trae jest) y hace que `pnpm install` falle con `ERR_PNPM_IGNORED_BUILDS`, también en Vercel; decidirlo. Quedan 3 vulnerabilidades en la API (`body-parser`/`qs`, de Nest). Los proyectos `kairo-web` y `kairo-api` ya existen en el equipo Hobby (configurados, sin desplegar; ver `architecture.md`); faltan las variables de entorno (las pone la dueña), el `git push` de `main`, decidir "Vercel Authentication" en la API y conectar GitHub.
 - Dos tareas de Auth que son del usuario, no de código: pegar `recover-password.html` en el dashboard de Supabase (Authentication → Email Templates), y confirmar ahí que la sesión dura 30 días (decisión #8).
 
 - `modes/dark.css` no existe (fase posterior); el PDF ya trae los valores oscuros.

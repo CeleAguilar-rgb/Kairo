@@ -127,6 +127,8 @@ src/
 └── index.ts
 ```
 
+**En desarrollo se lee `src/` directo; en producción, `dist/`** (decisión #54). El front (`apps/web/tsconfig.json`) y la API en desarrollo (`apps/api/tsconfig.dev.json`, usado por `tsx` y los scripts con `--tsconfig`) apuntan con `paths` al código fuente; jest lo hace con `moduleNameMapper`. La API desplegada carga `dist/index.js`, que genera `pnpm --filter @kairo/shared build` (el `build` de la API lo corre primero). `tsc --noEmit` usa los tipos de `src/`.
+
 Un esquema se define una sola vez y lo usan el formulario del front y la validación del back. Los tipos se derivan con `z.infer`. Este paquete no importa nada de `apps/`.
 
 ## Datos
@@ -149,6 +151,17 @@ Caso Agenda: cada módulo con fechas (tareas con fecha, pagos de membresías, en
   - cada petición debe terminar rápido (dentro del límite de tiempo de las funciones de Vercel);
   - la conexión a Postgres usa el pooler de Supabase (modo transacción), no conexiones directas largas.
 - Base de datos, Auth, Storage y cron en Supabase (plan gratis).
+- **Cómo quedaron los proyectos (2026-11-04, equipo Hobby `celeaguilarla-6840's projects`, no `Acorde`):**
+
+| | `kairo-web` | `kairo-api` |
+|---|---|---|
+| Carpeta raíz | `apps/web` | `apps/api` |
+| Preset | Next.js | NestJS |
+| Compilar | el de Next | `pnpm build` (compila `shared` y luego la API, decisión #54) |
+| Node | 22.x | 22.x |
+| Región de las funciones | `pdx1` (Portland) | `pdx1` (Portland) |
+
+  La región es la más cercana al Supabase (`us-west-2`, Oregón); la de Vercel por defecto (`iad1`, Virginia) añadiría un viaje a cada consulta. Los dos proyectos se crearon con `vercel project create` y `vercel project update`, **sin conectar GitHub ni desplegar**: los despliegues desde Git están desactivados hasta que estén las variables de entorno. Las variables llevan secretos y las pone la persona dueña (nombres en `apps/api/.env.example` y `apps/web/.env.example`; `DIRECT_URL` no se necesita en producción, solo la usa `drizzle-kit`). **Ojo con "Vercel Authentication"** (`ssoProtection`, activa por defecto): si se deja en la API, ni el Next.js ni Supabase Cron podrán llamarla.
 
 ## Tareas programadas (`apps/api/src/jobs`)
 

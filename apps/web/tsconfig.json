@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@kairo/shared": ["../../packages/shared/src/index.ts"]
     }
   },
   "include": [

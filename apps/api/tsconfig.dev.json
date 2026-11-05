@@ -1,0 +1,11 @@
+{
+  // Solo para DESARROLLO (tsx y los scripts que usan `--tsconfig`): `@kairo/shared` se lee directo de su código fuente,
+  // así no hay que compilarlo cada vez que se edita un esquema. `tsc` (typecheck y build) NO usa este archivo: en
+  // producción la API carga la versión compilada de `shared` (packages/shared/tsconfig.build.json).
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@kairo/shared": ["../../packages/shared/src/index.ts"]
+    }
+  }
+}

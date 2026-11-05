@@ -1,0 +1,14 @@
+{
+  // Solo para PRODUCCIÓN: Node no sabe leer TypeScript, así que la API desplegada carga esta versión compilada
+  // (`main` en package.json). En desarrollo nadie la usa: el front y la API (tsx, jest) leen `src/` directo con
+  // `paths` (apps/web/tsconfig.json y apps/api/tsconfig.dev.json), así que editar un esquema se ve al instante.
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node10",
+    "noEmit": false,
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["src"]
+}
