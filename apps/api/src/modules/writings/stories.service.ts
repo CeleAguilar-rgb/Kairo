@@ -8,10 +8,10 @@ import {
   type StoryCreateInput,
   type StoryUpdateInput,
 } from '@kairo/shared'
-import { AccountService } from '../../account/account.service'
-import { StoriesRepository, type PagePatch, type StoryPatch } from './stories.repository'
-import { assertIdsIn, badRequest, publicFields, todayIn } from './writings-utils'
-import { WorldsService } from './worlds.service'
+import { AccountService } from '../../account/account.service.js'
+import { StoriesRepository, type PagePatch, type StoryPatch } from './stories.repository.js'
+import { assertIdsIn, badRequest, publicFields, todayIn } from './writings-utils.js'
+import { WorldsService } from './worlds.service.js'
 
 // Historias y cuadernos, sus páginas y las palabras escritas por día. La era, el lugar, el elenco y el punto de
 // vista de un capítulo se revisan contra el mundo de la historia (una historia sin mundo no los puede tener).

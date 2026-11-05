@@ -5,17 +5,17 @@ import { eq } from 'drizzle-orm'
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 import { createClient } from '@supabase/supabase-js'
-import { AppModule } from '../src/app.module'
-import { env } from '../src/common/env'
-import { DB } from '../src/common/db/db.module'
-import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter'
-import { StorageService } from '../src/common/storage/storage.service'
-import { profiles } from '../src/db/schema/_shared'
+import { AppModule } from '../src/app.module.js'
+import { env } from '../src/common/env.js'
+import { DB } from '../src/common/db/db.module.js'
+import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter.js'
+import { StorageService } from '../src/common/storage/storage.service.js'
+import { profiles } from '../src/db/schema/_shared.js'
 import {
   createTestUser,
   deleteTestUser,
   type TestUser,
-} from './helpers/test-users'
+} from './helpers/test-users.js'
 
 // El "navegador" de este test: un cliente de Storage normal (no pasa por la API) que recibe una
 // ruta y un token ya firmados y sube los bytes, igual que `uploadToSignedUrl` del SDK en el navegador.

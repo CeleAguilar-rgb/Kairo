@@ -1,6 +1,6 @@
 import { sql } from 'drizzle-orm'
 import { boolean, check, date, integer, text, uuid } from 'drizzle-orm/pg-core'
-import { app, userColumns } from './_shared'
+import { app, userColumns } from './_shared.js'
 
 export const projectKindEnum = app.enum('project_kind', ['work', 'personal', 'school'])
 export const projectStatusEnum = app.enum('project_status', ['active', 'paused', 'done', 'archived'])

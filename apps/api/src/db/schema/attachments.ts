@@ -1,6 +1,6 @@
 import { bigint, text, uuid } from 'drizzle-orm/pg-core'
-import { app, userColumns } from './_shared'
-import { projects } from './projects'
+import { app, userColumns } from './_shared.js'
+import { projects } from './projects.js'
 
 // Archivos de la pestaña Archivos de un proyecto (paso de Storage, decisión #41/#44). `data-model.md`
 // prevé también `page_id` hacia Escritos (`pages`, exactamente una de las dos con un CHECK), pero esa

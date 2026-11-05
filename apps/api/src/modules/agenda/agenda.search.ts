@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { and, desc, eq, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { hit, ModuleSearch } from '../../common/search/module-search'
-import { matches, PER_KIND, SearchRegistry } from '../../common/search/search.registry'
-import { events } from '../../db/schema/agenda'
+import { DB } from '../../common/db/db.module.js'
+import { hit, ModuleSearch } from '../../common/search/module-search.js'
+import { matches, PER_KIND, SearchRegistry } from '../../common/search/search.registry.js'
+import { events } from '../../db/schema/agenda.js'
 
 // Ctrl+K en Agenda: por título. `date` es el día (o el primero de una serie) y `detail` su minuto de inicio.
 @Injectable()

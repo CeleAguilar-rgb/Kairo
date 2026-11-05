@@ -2,11 +2,11 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { TrashKind } from '@kairo/shared'
 import { and, eq, isNotNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { RowsTrash } from '../../common/trash/rows-trash'
-import { deletedAtOf, moveByOwner } from '../../common/trash/trash-queries'
-import { TrashRegistry } from '../../common/trash/trash.registry'
-import { cards, categories, debts, memberships, savingsGoals, transactions } from '../../db/schema/finance'
+import { DB } from '../../common/db/db.module.js'
+import { RowsTrash } from '../../common/trash/rows-trash.js'
+import { deletedAtOf, moveByOwner } from '../../common/trash/trash-queries.js'
+import { TrashRegistry } from '../../common/trash/trash.registry.js'
+import { cards, categories, debts, memberships, savingsGoals, transactions } from '../../db/schema/finance.js'
 
 // Papelera de Finanzas (common/trash/rows-trash.ts). Todo es una fila suelta salvo la tarjeta, que se lleva sus
 // membresías (cards.repository.ts, `deleteWithMemberships`): esas salen dentro de ella y vuelven con ella.

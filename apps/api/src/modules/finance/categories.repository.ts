@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import { DEFAULT_CATEGORIES, type CategoryColor, type CategoryKind } from '@kairo/shared'
 import { and, asc, eq, isNotNull, isNull, max, sql } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { categories } from '../../db/schema/finance'
+import { DB } from '../../common/db/db.module.js'
+import { categories } from '../../db/schema/finance.js'
 
 type NewCategory = { name: string; kind: CategoryKind; color: CategoryColor; monthlyLimitCents: number | null; position: number }
 

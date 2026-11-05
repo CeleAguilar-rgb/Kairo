@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { FocusKind } from '@kairo/shared'
 import { and, asc, eq, gte, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { focusSessions } from '../../db/schema/focus'
+import { DB } from '../../common/db/db.module.js'
+import { focusSessions } from '../../db/schema/focus.js'
 
 export type NewFocusSession = { kind: FocusKind; startedAt: Date; minutes: number; taskId: string | null }
 

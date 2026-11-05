@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { PageKind, PageStatus, StoryArcInput, StoryColor, StoryKind, StoryResourceInput, StoryStatus, TiptapDoc } from '@kairo/shared'
 import { and, asc, eq, getTableColumns, gte, isNull, max, sql } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { pages, stories, writingDays } from '../../db/schema/writings'
+import { DB } from '../../common/db/db.module.js'
+import { pages, stories, writingDays } from '../../db/schema/writings.js'
 
 export type StoryRow = typeof stories.$inferSelect
 export type PageRow = typeof pages.$inferSelect

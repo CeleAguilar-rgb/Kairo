@@ -1,8 +1,8 @@
 import { Controller, Delete, Get, HttpCode, Inject, Param, Post } from '@nestjs/common'
 import { type TrashRef, trashRefSchema } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { TrashService } from './trash.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { TrashService } from './trash.service.js'
 
 // Papelera.dc.html. El tipo y el id van en la ruta y se validan juntos con el esquema compartido (regla 4).
 @Controller('trash')

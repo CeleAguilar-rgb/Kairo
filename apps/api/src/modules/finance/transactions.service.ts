@@ -1,13 +1,13 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { FINANCE_CURRENCY, type TransactionInput } from '@kairo/shared'
-import { CardsRepository } from './cards.repository'
-import { CategoriesRepository } from './categories.repository'
-import { DebtsRepository } from './debts.repository'
-import { toTransaction } from './finance-mappers'
-import { encodeFinanceUndo } from './finance-undo'
-import { formatMoney } from './finance-utils'
-import { SavingsRepository } from './savings.repository'
-import { TransactionsRepository, type NewTransaction } from './transactions.repository'
+import { CardsRepository } from './cards.repository.js'
+import { CategoriesRepository } from './categories.repository.js'
+import { DebtsRepository } from './debts.repository.js'
+import { toTransaction } from './finance-mappers.js'
+import { encodeFinanceUndo } from './finance-undo.js'
+import { formatMoney } from './finance-utils.js'
+import { SavingsRepository } from './savings.repository.js'
+import { TransactionsRepository, type NewTransaction } from './transactions.repository.js'
 
 @Injectable()
 export class TransactionsService {

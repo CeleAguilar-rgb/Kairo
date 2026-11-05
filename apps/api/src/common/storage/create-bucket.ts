@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { PROJECT_FILE_EXTENSIONS, PROJECT_FILE_MAX_BYTES } from '@kairo/shared'
-import { env } from '../env'
+import { env } from '../env.js'
 
 // Script de una sola vez (igual que auth/invite-initial-user.ts): crea el bucket privado de
 // Storage. Correrlo con `pnpm run storage:create-bucket`. Si el bucket ya existe, Supabase

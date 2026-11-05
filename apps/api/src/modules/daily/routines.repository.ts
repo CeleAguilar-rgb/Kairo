@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { RoutineIcon, RoutineKind } from '@kairo/shared'
 import { and, asc, eq, gte, isNull, lte } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { routineBlocks, routineLogs, routines } from '../../db/schema/daily'
+import { DB } from '../../common/db/db.module.js'
+import { routineBlocks, routineLogs, routines } from '../../db/schema/daily.js'
 
 type NewRoutine = { name: string; days: boolean[]; active: boolean }
 type NewBlock = {

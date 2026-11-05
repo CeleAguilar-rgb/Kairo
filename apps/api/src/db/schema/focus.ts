@@ -1,7 +1,7 @@
 import { sql } from 'drizzle-orm'
 import { check, index, integer, timestamp, uuid } from 'drizzle-orm/pg-core'
-import { app, userColumns } from './_shared'
-import { tasks } from './tasks'
+import { app, userColumns } from './_shared.js'
+import { tasks } from './tasks.js'
 
 export const focusKindEnum = app.enum('focus_kind', ['work', 'break'])
 

@@ -1,8 +1,8 @@
 import 'reflect-metadata'
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from '../app.module'
-import { DB } from '../common/db/db.module'
-import { JOB_NAMES, type JobName, JobsService } from './jobs.service'
+import { AppModule } from '../app.module.js'
+import { DB } from '../common/db/db.module.js'
+import { JOB_NAMES, type JobName, JobsService } from './jobs.service.js'
 
 // Correr una tarea programada a mano, sin Supabase Cron (en desarrollo): `pnpm jobs:run minute` o `pnpm jobs:run daily`.
 async function main() {

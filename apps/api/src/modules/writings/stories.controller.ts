@@ -12,9 +12,9 @@ import {
   storyUpdateSchema,
   writingDaysQuerySchema,
 } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { StoriesService } from './stories.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { StoriesService } from './stories.service.js'
 
 const uuid = () => new ParseUUIDPipe()
 

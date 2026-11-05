@@ -1,5 +1,5 @@
 import { boolean, index, integer, text, timestamp, uniqueIndex, uuid } from 'drizzle-orm/pg-core'
-import { app, profiles, userColumns } from './_shared'
+import { app, profiles, userColumns } from './_shared.js'
 
 // Mismos ids que MODULE_IDS en packages/shared/src/modules.ts y la tabla de docs/guides/modules.md.
 // Lista cerrada: agregar un módulo nuevo es una migración (ALTER TYPE ... ADD VALUE) en los dos lados.

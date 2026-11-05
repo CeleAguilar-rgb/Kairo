@@ -12,12 +12,12 @@ import {
   type WorldInput,
   type WorldUpdateInput,
 } from '@kairo/shared'
-import { StorageService } from '../../common/storage/storage.service'
-import { EntriesRepository, type CharacterListRow, type NoteListRow } from './entries.repository'
-import { StoriesRepository } from './stories.repository'
-import { TimelineRepository } from './timeline.repository'
-import { badRequest, publicFields, type WorldRefs } from './writings-utils'
-import { WorldsRepository, type TemplateRow, type WorldRow } from './worlds.repository'
+import { StorageService } from '../../common/storage/storage.service.js'
+import { EntriesRepository, type CharacterListRow, type NoteListRow } from './entries.repository.js'
+import { StoriesRepository } from './stories.repository.js'
+import { TimelineRepository } from './timeline.repository.js'
+import { badRequest, publicFields, type WorldRefs } from './writings-utils.js'
+import { WorldsRepository, type TemplateRow, type WorldRow } from './worlds.repository.js'
 
 // Qué campo especial puede llevar cada plantilla de fábrica: "Rol" solo en Personaje, "Dónde vive" solo en
 // Especie y "Tipo de lugar" solo en Lugar (la app los lee para armar el Resumen, las especies por región y las

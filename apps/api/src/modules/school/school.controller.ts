@@ -7,9 +7,9 @@ import {
   type TermInput,
   termSchema,
 } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { SchoolService } from './school.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { SchoolService } from './school.service.js'
 
 @Controller('school')
 export class SchoolController {

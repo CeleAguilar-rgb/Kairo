@@ -7,9 +7,9 @@ import {
   type SavingGoalInput,
   savingGoalSchema,
 } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { SavingsDebtsService } from './savings-debts.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { SavingsDebtsService } from './savings-debts.service.js'
 
 @Controller('finance')
 export class SavingsDebtsController {

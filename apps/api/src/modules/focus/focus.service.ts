@@ -1,8 +1,8 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common'
 import type { FocusSessionInput } from '@kairo/shared'
-import type { focusSessions } from '../../db/schema/focus'
-import { TasksService } from '../tasks/tasks.service'
-import { FocusRepository } from './focus.repository'
+import type { focusSessions } from '../../db/schema/focus.js'
+import { TasksService } from '../tasks/tasks.service.js'
+import { FocusRepository } from './focus.repository.js'
 
 type SessionRow = typeof focusSessions.$inferSelect
 

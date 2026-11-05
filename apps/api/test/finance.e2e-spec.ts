@@ -6,12 +6,12 @@ import { eq } from 'drizzle-orm'
 // como globales (recomendación oficial de Jest para tests ESM).
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { AppModule } from '../src/app.module'
-import { DB } from '../src/common/db/db.module'
-import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter'
-import { profiles } from '../src/db/schema/_shared'
-import { cards } from '../src/db/schema/finance'
-import { createTestUser, deleteTestUser, type TestUser } from './helpers/test-users'
+import { AppModule } from '../src/app.module.js'
+import { DB } from '../src/common/db/db.module.js'
+import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter.js'
+import { profiles } from '../src/db/schema/_shared.js'
+import { cards } from '../src/db/schema/finance.js'
+import { createTestUser, deleteTestUser, type TestUser } from './helpers/test-users.js'
 
 function authHeader(user: TestUser) {
   return { Authorization: `Bearer ${user.accessToken}` }

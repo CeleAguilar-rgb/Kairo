@@ -1,8 +1,8 @@
 import { sql } from 'drizzle-orm'
 import { boolean, check, date, integer, text, timestamp, uniqueIndex, uuid } from 'drizzle-orm/pg-core'
-import { app, profiles, userColumns } from './_shared'
-import { projects } from './projects'
-import { tasks } from './tasks'
+import { app, profiles, userColumns } from './_shared.js'
+import { projects } from './projects.js'
+import { tasks } from './tasks.js'
 
 export const sprintStatusEnum = app.enum('sprint_status', ['active', 'closed'])
 

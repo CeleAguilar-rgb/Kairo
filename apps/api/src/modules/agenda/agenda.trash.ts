@@ -2,11 +2,11 @@ import { Inject, Injectable, type OnModuleInit } from '@nestjs/common'
 import type { TrashKind } from '@kairo/shared'
 import { and, eq, isNotNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { moveByOwner, purgeByOwner, purgeExpiredRows, purgeRow, restoreRow } from '../../common/trash/trash-queries'
-import { TrashRegistry } from '../../common/trash/trash.registry'
-import type { TrashEntry, TrashParent, TrashSource } from '../../common/trash/trash.types'
-import { events } from '../../db/schema/agenda'
+import { DB } from '../../common/db/db.module.js'
+import { moveByOwner, purgeByOwner, purgeExpiredRows, purgeRow, restoreRow } from '../../common/trash/trash-queries.js'
+import { TrashRegistry } from '../../common/trash/trash.registry.js'
+import type { TrashEntry, TrashParent, TrashSource } from '../../common/trash/trash.types.js'
+import { events } from '../../db/schema/agenda.js'
 
 // Papelera de Agenda (common/trash/trash.types.ts). Una fila es un evento o una serie completa (decisión #37), así
 // que restaurar una serie la devuelve entera. Los eventos de un proyecto (las clases de una materia) se van con él.

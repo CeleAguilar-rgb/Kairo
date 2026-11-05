@@ -5,9 +5,9 @@ import {
   type SnoozeReminderInput,
   snoozeReminderSchema,
 } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { RemindersService } from './reminders.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { RemindersService } from './reminders.service.js'
 
 @Controller('reminders')
 export class RemindersController {

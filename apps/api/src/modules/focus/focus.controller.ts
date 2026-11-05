@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common'
 import { type FocusSessionInput, focusSessionSchema, type FocusSessionsQuery, focusSessionsQuerySchema } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { FocusService } from './focus.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { FocusService } from './focus.service.js'
 
 @Controller('focus')
 export class FocusController {

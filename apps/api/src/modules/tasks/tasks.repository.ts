@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { CreateTaskInput, TaskStatus } from '@kairo/shared'
 import { and, asc, count, eq, inArray, isNotNull, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { tasks } from '../../db/schema/tasks'
+import { DB } from '../../common/db/db.module.js'
+import { tasks } from '../../db/schema/tasks.js'
 
 @Injectable()
 export class TasksRepository {

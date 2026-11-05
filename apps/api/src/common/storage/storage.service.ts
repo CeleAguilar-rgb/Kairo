@@ -6,8 +6,8 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common'
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { env } from '../env'
-import { SUPABASE_ADMIN } from '../supabase/supabase.module'
+import { env } from '../env.js'
+import { SUPABASE_ADMIN } from '../supabase/supabase.module.js'
 
 export type StoredObject = { sizeBytes: number; mime: string }
 

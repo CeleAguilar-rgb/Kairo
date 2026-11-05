@@ -1,8 +1,8 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import type { EraUpdateInput, EventCreateInput, EventUpdateInput, MoveInput } from '@kairo/shared'
-import { publicFields, assertIdsIn, badRequest } from './writings-utils'
-import { TimelineRepository, type EventPatch } from './timeline.repository'
-import { WorldsService } from './worlds.service'
+import { publicFields, assertIdsIn, badRequest } from './writings-utils.js'
+import { TimelineRepository, type EventPatch } from './timeline.repository.js'
+import { WorldsService } from './worlds.service.js'
 
 // La línea del tiempo (EscritosLinea.dc.html): eras que se editan y se reordenan con flechas, y eventos con quién
 // participa, dónde pasa, notas sueltas, causas y consecuencias. Quién y dónde se revisan contra el mismo mundo.

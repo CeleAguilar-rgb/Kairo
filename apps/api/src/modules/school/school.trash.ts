@@ -1,10 +1,10 @@
 import { Inject, Injectable, type OnModuleInit } from '@nestjs/common'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { moveByOwner, purgeByOwner, purgeExpiredRows } from '../../common/trash/trash-queries'
-import { TrashRegistry } from '../../common/trash/trash.registry'
-import type { TrashParent, TrashSource } from '../../common/trash/trash.types'
-import { subjects } from '../../db/schema/school'
+import { DB } from '../../common/db/db.module.js'
+import { moveByOwner, purgeByOwner, purgeExpiredRows } from '../../common/trash/trash-queries.js'
+import { TrashRegistry } from '../../common/trash/trash.registry.js'
+import type { TrashParent, TrashSource } from '../../common/trash/trash.types.js'
+import { subjects } from '../../db/schema/school.js'
 
 // Papelera de Escuela (common/trash/trash.types.ts). Una materia ES un proyecto `school` (decisión #43): en la
 // Papelera sale su proyecto (el front lo nombra "Materia"), y la fila de la materia (profesor, color,

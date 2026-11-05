@@ -1,8 +1,8 @@
 import { Controller, Get, Inject, Query } from '@nestjs/common'
 import { type SearchQuery, searchQuerySchema } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { SearchService } from './search.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { SearchService } from './search.service.js'
 
 // Ctrl+K (Atajos.dc.html).
 @Controller('search')

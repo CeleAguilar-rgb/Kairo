@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { CoverColor, CoverMode, EntryExtraInput, TiptapDoc } from '@kairo/shared'
 import { and, asc, eq, getTableColumns, inArray, isNull, max } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { characters, worldNotes } from '../../db/schema/writings'
+import { DB } from '../../common/db/db.module.js'
+import { characters, worldNotes } from '../../db/schema/writings.js'
 
 export type CharacterRow = typeof characters.$inferSelect
 export type NoteRow = typeof worldNotes.$inferSelect

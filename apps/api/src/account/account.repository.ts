@@ -2,9 +2,9 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { ModuleId } from '@kairo/shared'
 import { asc, eq, lt } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../common/db/db.module'
-import { profiles } from '../db/schema/_shared'
-import { loginCodes, userSections } from '../db/schema/account'
+import { DB } from '../common/db/db.module.js'
+import { profiles } from '../db/schema/_shared.js'
+import { loginCodes, userSections } from '../db/schema/account.js'
 
 export type SectionRow = {
   section: ModuleId

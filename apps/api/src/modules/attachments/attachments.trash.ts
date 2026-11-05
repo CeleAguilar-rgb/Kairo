@@ -2,12 +2,12 @@ import { Inject, Injectable, type OnModuleInit } from '@nestjs/common'
 import type { TrashKind } from '@kairo/shared'
 import { and, eq, isNotNull, lt } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { StorageService } from '../../common/storage/storage.service'
-import { moveByOwner, restoreRow } from '../../common/trash/trash-queries'
-import { TrashRegistry } from '../../common/trash/trash.registry'
-import type { TrashEntry, TrashParent, TrashSource } from '../../common/trash/trash.types'
-import { attachments } from '../../db/schema/attachments'
+import { DB } from '../../common/db/db.module.js'
+import { StorageService } from '../../common/storage/storage.service.js'
+import { moveByOwner, restoreRow } from '../../common/trash/trash-queries.js'
+import { TrashRegistry } from '../../common/trash/trash.registry.js'
+import type { TrashEntry, TrashParent, TrashSource } from '../../common/trash/trash.types.js'
+import { attachments } from '../../db/schema/attachments.js'
 
 // Papelera de Archivos (common/trash/trash.types.ts). A diferencia de las demás, borrar para siempre también borra el
 // archivo de Storage (security.md: "incluidos sus archivos"); por eso aquí no se usa `purgeRow`.

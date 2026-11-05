@@ -1,6 +1,6 @@
 import { Global, Injectable, Module } from '@nestjs/common'
 import type { TrashKind } from '@kairo/shared'
-import type { TrashSource } from './trash.types'
+import type { TrashSource } from './trash.types.js'
 
 // Donde cada módulo anota su adaptador de papelera al arrancar (`onModuleInit`). Es la dependencia "al revés": los
 // módulos conocen el registro, el registro no conoce a ningún módulo, y la Papelera solo habla con el registro. Así

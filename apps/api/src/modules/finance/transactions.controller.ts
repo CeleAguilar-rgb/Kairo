@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Inject, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common'
 import { type TransactionInput, transactionSchema } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { TransactionsService } from './transactions.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { TransactionsService } from './transactions.service.js'
 
 @Controller('finance/transactions')
 export class TransactionsController {

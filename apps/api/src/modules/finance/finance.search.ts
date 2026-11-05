@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { and, desc, eq, isNull, or } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { hit, ModuleSearch } from '../../common/search/module-search'
-import { matches, PER_KIND, SearchRegistry } from '../../common/search/search.registry'
-import { memberships, transactions } from '../../db/schema/finance'
+import { DB } from '../../common/db/db.module.js'
+import { hit, ModuleSearch } from '../../common/search/module-search.js'
+import { matches, PER_KIND, SearchRegistry } from '../../common/search/search.registry.js'
+import { memberships, transactions } from '../../db/schema/finance.js'
 
 // Ctrl+K en Finanzas: movimientos por concepto o nota (el más reciente primero) y membresías por nombre.
 @Injectable()

@@ -1,9 +1,9 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import type { CharacterUpdateInput, CoverInput, NoteCreateInput, NoteUpdateInput, SignCoverUploadInput } from '@kairo/shared'
-import { StorageService } from '../../common/storage/storage.service'
-import { EntriesRepository, type CharacterRow, type EntryPatch, type NoteRow } from './entries.repository'
-import { assertIdsIn, badRequest, mergeValues } from './writings-utils'
-import { assertImage, toCharacter, toNote, WorldsService } from './worlds.service'
+import { StorageService } from '../../common/storage/storage.service.js'
+import { EntriesRepository, type CharacterRow, type EntryPatch, type NoteRow } from './entries.repository.js'
+import { assertIdsIn, badRequest, mergeValues } from './writings-utils.js'
+import { assertImage, toCharacter, toNote, WorldsService } from './worlds.service.js'
 
 type Kind = 'characters' | 'notes'
 

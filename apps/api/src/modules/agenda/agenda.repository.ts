@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { and, eq, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { events } from '../../db/schema/agenda'
+import { DB } from '../../common/db/db.module.js'
+import { events } from '../../db/schema/agenda.js'
 
 type EventInsert = typeof events.$inferInsert
 type EventUpdate = Partial<Omit<EventInsert, 'id' | 'userId'>>

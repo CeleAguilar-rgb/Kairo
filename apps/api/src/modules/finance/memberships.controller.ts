@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Inject, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common'
 import { type CardInput, cardSchema, type MembershipInput, membershipSchema } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { MembershipsService } from './memberships.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { MembershipsService } from './memberships.service.js'
 
 @Controller('finance')
 export class MembershipsController {

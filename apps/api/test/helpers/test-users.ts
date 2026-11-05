@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import { createClient } from '@supabase/supabase-js'
-import { env } from '../../src/common/env'
+import { env } from '../../src/common/env.js'
 
 // Mismo proyecto de Supabase que desarrollo, no uno aparte: usuarios reales,
 // creados con la Admin API y borrados al terminar (afterAll). Así los tests

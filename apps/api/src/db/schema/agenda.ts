@@ -1,6 +1,6 @@
 import { boolean, date, integer, text, uuid } from 'drizzle-orm/pg-core'
-import { app, userColumns } from './_shared'
-import { projects } from './projects'
+import { app, userColumns } from './_shared.js'
+import { projects } from './projects.js'
 
 export const eventKindEnum = app.enum('event_kind', ['work', 'personal', 'school'])
 export const eventRepeatEnum = app.enum('event_repeat', ['none', 'daily', 'weekdays', 'weekly', 'monthly', 'yearly'])

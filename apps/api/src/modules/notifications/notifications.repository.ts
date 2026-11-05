@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { NotificationSource, PushSubscriptionInput } from '@kairo/shared'
 import { and, count, desc, eq, gte, inArray, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { notifications, pushSubscriptions } from '../../db/schema/account'
+import { DB } from '../../common/db/db.module.js'
+import { notifications, pushSubscriptions } from '../../db/schema/account.js'
 
 export type NewNotification = {
   title: string

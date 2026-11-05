@@ -1,10 +1,10 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common'
 import { NOTIFICATION_DAYS, type PushSubscriptionInput } from '@kairo/shared'
 import webpush from 'web-push'
-import { AccountService } from '../../account/account.service'
-import { env } from '../../common/env'
-import { type NewNotification, NotificationsRepository } from './notifications.repository'
-import { isQuietTime } from './quiet-hours'
+import { AccountService } from '../../account/account.service.js'
+import { env } from '../../common/env.js'
+import { type NewNotification, NotificationsRepository } from './notifications.repository.js'
+import { isQuietTime } from './quiet-hours.js'
 
 type NotificationRow = Awaited<ReturnType<NotificationsRepository['findSince']>>[number]
 

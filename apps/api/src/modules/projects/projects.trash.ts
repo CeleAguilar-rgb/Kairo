@@ -2,12 +2,12 @@ import { Inject, Injectable, type OnModuleInit } from '@nestjs/common'
 import type { TrashKind } from '@kairo/shared'
 import { and, eq, isNotNull, isNull, lt } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { StorageService } from '../../common/storage/storage.service'
-import { TrashRegistry } from '../../common/trash/trash.registry'
-import type { TrashEntry, TrashSource } from '../../common/trash/trash.types'
-import { projectLinks, projectObjectives, projects } from '../../db/schema/projects'
-import { storagePathOf } from './projects.service'
+import { DB } from '../../common/db/db.module.js'
+import { StorageService } from '../../common/storage/storage.service.js'
+import { TrashRegistry } from '../../common/trash/trash.registry.js'
+import type { TrashEntry, TrashSource } from '../../common/trash/trash.types.js'
+import { projectLinks, projectObjectives, projects } from '../../db/schema/projects.js'
+import { storagePathOf } from './projects.service.js'
 
 // Papelera de Proyectos (common/trash/trash.types.ts). Un proyecto es lo único que se manda a la papelera DESDE la
 // Papelera (Borrar.dc.html): sus objetivos y enlaces se van con él aquí, y lo de otros módulos (tareas, eventos,

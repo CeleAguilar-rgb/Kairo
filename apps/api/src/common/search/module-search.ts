@@ -1,5 +1,5 @@
 import type { OnModuleInit } from '@nestjs/common'
-import type { SearchHit, SearchRegistry, SearchSource } from './search.registry'
+import type { SearchHit, SearchRegistry, SearchSource } from './search.registry.js'
 
 // Base de los adaptadores de búsqueda (`<módulo>.search.ts`): solo se anota en el registro al arrancar.
 export abstract class ModuleSearch implements SearchSource, OnModuleInit {

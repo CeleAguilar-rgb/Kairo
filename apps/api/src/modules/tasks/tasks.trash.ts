@@ -2,11 +2,11 @@ import { Inject, Injectable, type OnModuleInit } from '@nestjs/common'
 import type { TrashKind } from '@kairo/shared'
 import { and, eq, isNotNull, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { deletedAtOf, moveByOwner, purgeByOwner, purgeExpiredRows, purgeRow } from '../../common/trash/trash-queries'
-import { TrashRegistry } from '../../common/trash/trash.registry'
-import type { TrashEntry, TrashParent, TrashSource } from '../../common/trash/trash.types'
-import { tasks } from '../../db/schema/tasks'
+import { DB } from '../../common/db/db.module.js'
+import { deletedAtOf, moveByOwner, purgeByOwner, purgeExpiredRows, purgeRow } from '../../common/trash/trash-queries.js'
+import { TrashRegistry } from '../../common/trash/trash.registry.js'
+import type { TrashEntry, TrashParent, TrashSource } from '../../common/trash/trash.types.js'
+import { tasks } from '../../db/schema/tasks.js'
 
 // Papelera de Tareas (common/trash/trash.types.ts). Una subtarea nunca sale sola: va y vuelve con su tarea. Las
 // tareas de un proyecto se van con él (Borrar.dc.html: "¿Borrar Bot de marketing y sus 4 tareas?").

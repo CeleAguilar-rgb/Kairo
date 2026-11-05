@@ -1,9 +1,9 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { classifyProjectFile, COVER_IMAGE_MAX_BYTES, type ProjectInput, type ProjectLinkInput, type SignCoverUploadInput } from '@kairo/shared'
 import { z } from 'zod'
-import { StorageService } from '../../common/storage/storage.service'
-import type { projectLinks, projectObjectives, projects } from '../../db/schema/projects'
-import { ProjectsRepository, type ProjectFields } from './projects.repository'
+import { StorageService } from '../../common/storage/storage.service.js'
+import type { projectLinks, projectObjectives, projects } from '../../db/schema/projects.js'
+import { ProjectsRepository, type ProjectFields } from './projects.repository.js'
 
 type ProjectRow = typeof projects.$inferSelect
 type ObjectiveRow = typeof projectObjectives.$inferSelect

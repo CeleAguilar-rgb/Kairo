@@ -1,12 +1,12 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { FALLBACK_CATEGORY_KEY, type BudgetAlertsInput, type BudgetLimitInput, type CategoryInput } from '@kairo/shared'
-import { AccountService } from '../../account/account.service'
-import { CategoriesRepository } from './categories.repository'
-import { toCategory } from './finance-mappers'
-import { encodeFinanceUndo } from './finance-undo'
-import { firstOfNextMonth, monthStartOf, roundUpToFiftyPesos, spentPerCategory, todayIn } from './finance-utils'
-import { SettingsRepository } from './settings.repository'
-import { TransactionsRepository } from './transactions.repository'
+import { AccountService } from '../../account/account.service.js'
+import { CategoriesRepository } from './categories.repository.js'
+import { toCategory } from './finance-mappers.js'
+import { encodeFinanceUndo } from './finance-undo.js'
+import { firstOfNextMonth, monthStartOf, roundUpToFiftyPesos, spentPerCategory, todayIn } from './finance-utils.js'
+import { SettingsRepository } from './settings.repository.js'
+import { TransactionsRepository } from './transactions.repository.js'
 
 // El límite de una categoría es mensual y vale para todos los meses (`categories.monthly_limit_cents`); lo
 // gastado de cada mes se calcula de los movimientos, y el estado de cada fila (ok / cerca / pasado) lo arma el

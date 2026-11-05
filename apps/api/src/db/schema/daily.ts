@@ -1,6 +1,6 @@
 import { boolean, date, doublePrecision, integer, text, time, timestamp, uuid } from 'drizzle-orm/pg-core'
-import { app, profiles, userColumns } from './_shared'
-import { projects } from './projects'
+import { app, profiles, userColumns } from './_shared.js'
+import { projects } from './projects.js'
 
 export const routineKindEnum = app.enum('routine_kind', ['habit', 'meal', 'focus', 'free'])
 export const routineIconEnum = app.enum('routine_icon', ['sun', 'drop', 'pill', 'food', 'cap', 'code', 'pen', 'work', 'moon'])

@@ -1,8 +1,8 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import type { CreateTaskInput, TaskStatus } from '@kairo/shared'
-import { ProjectsService } from '../projects/projects.service'
-import { TasksRepository } from './tasks.repository'
-import type { tasks } from '../../db/schema/tasks'
+import { ProjectsService } from '../projects/projects.service.js'
+import { TasksRepository } from './tasks.repository.js'
+import type { tasks } from '../../db/schema/tasks.js'
 
 type TaskRow = typeof tasks.$inferSelect
 type ProjectRef = { id: string; name: string }

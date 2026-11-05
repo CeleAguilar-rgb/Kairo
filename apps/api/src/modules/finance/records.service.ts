@@ -1,13 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { FALLBACK_CATEGORY_KEY } from '@kairo/shared'
-import { CardsRepository } from './cards.repository'
-import { CategoriesRepository } from './categories.repository'
-import { DebtsRepository } from './debts.repository'
-import { toCard, toCategory, toDebt, toMembership, toSaving, toTransaction } from './finance-mappers'
-import { MembershipsRepository } from './memberships.repository'
-import { SavingsRepository } from './savings.repository'
-import { SettingsRepository } from './settings.repository'
-import { TransactionsRepository } from './transactions.repository'
+import { CardsRepository } from './cards.repository.js'
+import { CategoriesRepository } from './categories.repository.js'
+import { DebtsRepository } from './debts.repository.js'
+import { toCard, toCategory, toDebt, toMembership, toSaving, toTransaction } from './finance-mappers.js'
+import { MembershipsRepository } from './memberships.repository.js'
+import { SavingsRepository } from './savings.repository.js'
+import { SettingsRepository } from './settings.repository.js'
+import { TransactionsRepository } from './transactions.repository.js'
 
 // Las lecturas de Finanzas devuelven hechos crudos (decisión #38): las filas tal cual, más lo ahorrado y lo
 // pagado, que sí salen de un SUM sobre TODOS los movimientos (no solo los de la ventana). Los totales del mes,

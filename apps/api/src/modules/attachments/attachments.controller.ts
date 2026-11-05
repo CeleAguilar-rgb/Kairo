@@ -14,9 +14,9 @@ import {
   signAttachmentUploadSchema,
   type SignAttachmentUploadInput,
 } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { AttachmentsService } from './attachments.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { AttachmentsService } from './attachments.service.js'
 
 @Controller('projects/:projectId/attachments')
 export class AttachmentsController {

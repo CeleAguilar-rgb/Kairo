@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { TransactionKind } from '@kairo/shared'
 import { and, desc, eq, gte, isNotNull, isNull, lt, ne, sql } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { transactions } from '../../db/schema/finance'
+import { DB } from '../../common/db/db.module.js'
+import { transactions } from '../../db/schema/finance.js'
 
 export type NewTransaction = {
   kind: TransactionKind

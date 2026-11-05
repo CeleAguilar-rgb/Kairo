@@ -1,9 +1,9 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
-import { decodeDailyUndo } from './daily-undo'
-import { GoalsRepository } from './goals.repository'
-import { JournalRepository } from './journal.repository'
-import { MealsRepository } from './meals.repository'
-import { RoutinesRepository } from './routines.repository'
+import { decodeDailyUndo } from './daily-undo.js'
+import { GoalsRepository } from './goals.repository.js'
+import { JournalRepository } from './journal.repository.js'
+import { MealsRepository } from './meals.repository.js'
+import { RoutinesRepository } from './routines.repository.js'
 
 // Un solo endpoint de Deshacer para las 4 áreas de Día a día (el front también comparte una sola
 // Server Action pública, undoRoutineAction). Depende de los repositorios directo, no de los otros

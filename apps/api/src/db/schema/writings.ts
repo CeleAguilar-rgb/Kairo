@@ -1,7 +1,7 @@
 import type { CoverColor, CoverMode, EntryExtraInput, StoryArcInput, StoryResourceInput, TemplateFieldInput, TiptapDoc, WorldRuleInput } from '@kairo/shared'
 import { sql } from 'drizzle-orm'
 import { boolean, check, date, index, integer, jsonb, smallint, text, uniqueIndex, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core'
-import { app, userColumns } from './_shared'
+import { app, userColumns } from './_shared.js'
 
 export const storyKindEnum = app.enum('story_kind', ['story', 'notebook'])
 export const storyColorEnum = app.enum('story_color', ['ink', 'lavender', 'sand'])

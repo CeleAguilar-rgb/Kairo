@@ -4,7 +4,8 @@
   "testRegex": ".e2e-spec.ts$",
   "extensionsToTreatAsEsm": [".ts"],
   "moduleNameMapper": {
-    "^@kairo/shared$": "<rootDir>/../../../packages/shared/src/index.ts"
+    "^@kairo/shared$": "<rootDir>/../../../packages/shared/src/index.ts",
+    "^(\\.{1,2}/.*)\\.js$": "$1"
   },
   "transform": {
     "^.+\\.ts$": ["ts-jest", { "tsconfig": "<rootDir>/../tsconfig.spec.json", "useESM": true }]

@@ -9,9 +9,9 @@ import {
   type WeekInput,
   weekSchema,
 } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { MealsService } from './meals.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { MealsService } from './meals.service.js'
 
 @Controller('meal-plans')
 export class MealsController {

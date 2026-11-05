@@ -7,9 +7,9 @@ import {
   type StartSprintInput,
   startSprintSchema,
 } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { SprintsService } from './sprints.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { SprintsService } from './sprints.service.js'
 
 @Controller('projects/:projectId/sprints')
 export class SprintsController {

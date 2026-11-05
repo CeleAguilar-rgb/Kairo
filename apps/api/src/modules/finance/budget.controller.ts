@@ -7,9 +7,9 @@ import {
   type CategoryInput,
   categorySchema,
 } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { BudgetService } from './budget.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { BudgetService } from './budget.service.js'
 
 @Controller('finance/budget')
 export class BudgetController {

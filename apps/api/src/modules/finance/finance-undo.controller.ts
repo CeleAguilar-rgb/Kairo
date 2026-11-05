@@ -1,9 +1,9 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common'
 import { financeUndoTokenSchema } from '@kairo/shared'
 import { z } from 'zod'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { FinanceUndoService } from './finance-undo.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { FinanceUndoService } from './finance-undo.service.js'
 
 const undoSchema = z.object({ token: financeUndoTokenSchema })
 

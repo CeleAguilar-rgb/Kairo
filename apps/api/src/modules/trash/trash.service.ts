@@ -1,7 +1,7 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { TRASH_DAYS, type TrashKind, type TrashRef } from '@kairo/shared'
-import { TrashRegistry } from '../../common/trash/trash.registry'
-import type { TrashEntry, TrashSource } from '../../common/trash/trash.types'
+import { TrashRegistry } from '../../common/trash/trash.registry.js'
+import type { TrashEntry, TrashSource } from '../../common/trash/trash.types.js'
 
 const DAY_MS = 24 * 60 * 60 * 1000
 

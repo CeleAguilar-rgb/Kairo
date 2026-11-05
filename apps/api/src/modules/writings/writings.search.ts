@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { and, eq, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { hit, ModuleSearch } from '../../common/search/module-search'
-import { matches, PER_KIND, SearchRegistry } from '../../common/search/search.registry'
-import { characters, noteTemplates, pages, stories, worldNotes, worlds } from '../../db/schema/writings'
+import { DB } from '../../common/db/db.module.js'
+import { hit, ModuleSearch } from '../../common/search/module-search.js'
+import { matches, PER_KIND, SearchRegistry } from '../../common/search/search.registry.js'
+import { characters, noteTemplates, pages, stories, worldNotes, worlds } from '../../db/schema/writings.js'
 
 // Ctrl+K en Escritos: mundos, personajes, notas del mundo, historias y páginas, por nombre o título. `parentId` es el
 // mundo (para la ruta de una ficha o una historia); `detail` de una nota es su plantilla ("Lugar", "Especie").

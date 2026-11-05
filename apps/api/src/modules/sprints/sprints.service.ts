@@ -1,11 +1,11 @@
 import { BadRequestException, ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import type { AddSprintTaskInput, CloseSprintInput, StartSprintInput } from '@kairo/shared'
-import { AccountService } from '../../account/account.service'
-import type { sprints } from '../../db/schema/sprints'
-import { ProjectsService } from '../projects/projects.service'
-import { TasksService } from '../tasks/tasks.service'
-import { addDays, isUniqueViolation, todayIn } from './sprints-utils'
-import { SprintsRepository } from './sprints.repository'
+import { AccountService } from '../../account/account.service.js'
+import type { sprints } from '../../db/schema/sprints.js'
+import { ProjectsService } from '../projects/projects.service.js'
+import { TasksService } from '../tasks/tasks.service.js'
+import { addDays, isUniqueViolation, todayIn } from './sprints-utils.js'
+import { SprintsRepository } from './sprints.repository.js'
 
 type SprintRow = typeof sprints.$inferSelect
 

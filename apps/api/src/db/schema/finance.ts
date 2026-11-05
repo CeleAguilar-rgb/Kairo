@@ -1,6 +1,6 @@
 import { sql } from 'drizzle-orm'
 import { bigint, boolean, check, date, doublePrecision, index, integer, text, timestamp, uniqueIndex, uuid } from 'drizzle-orm/pg-core'
-import { app, profiles, userColumns } from './_shared'
+import { app, profiles, userColumns } from './_shared.js'
 
 export const cardKindEnum = app.enum('card_kind', ['debit', 'credit', 'cash'])
 export const cardColorEnum = app.enum('card_color', ['ink', 'lavender', 'sand', 'lavender_soft'])

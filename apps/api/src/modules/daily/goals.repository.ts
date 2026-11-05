@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { GoalArea, GoalKind } from '@kairo/shared'
 import { and, asc, desc, eq, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { goalLogEntries, goalMilestones, goals } from '../../db/schema/daily'
+import { DB } from '../../common/db/db.module.js'
+import { goalLogEntries, goalMilestones, goals } from '../../db/schema/daily.js'
 
 type GoalFields = {
   title: string

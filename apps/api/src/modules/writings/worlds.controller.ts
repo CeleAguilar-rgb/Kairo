@@ -12,9 +12,9 @@ import {
   type WorldUpdateInput,
   worldUpdateSchema,
 } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { WorldsService } from './worlds.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { WorldsService } from './worlds.service.js'
 
 // Mundos, sus plantillas y la biblioteca completa de Escritos. El userId sale siempre del token (@CurrentUser) y
 // los ids de la ruta se validan como uuid antes de llegar al service.

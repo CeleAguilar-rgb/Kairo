@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { and, desc, eq, inArray, isNull, max, sql } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { sprints, sprintTasks } from '../../db/schema/sprints'
+import { DB } from '../../common/db/db.module.js'
+import { sprints, sprintTasks } from '../../db/schema/sprints.js'
 
 export type NewSprint = { number: number; goal: string; startsOn: string; endsOn: string }
 

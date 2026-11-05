@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { and, desc, eq, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { hit, ModuleSearch } from '../../common/search/module-search'
-import { matches, PER_KIND, SearchRegistry } from '../../common/search/search.registry'
-import { reminders } from '../../db/schema/reminders'
+import { DB } from '../../common/db/db.module.js'
+import { hit, ModuleSearch } from '../../common/search/module-search.js'
+import { matches, PER_KIND, SearchRegistry } from '../../common/search/search.registry.js'
+import { reminders } from '../../db/schema/reminders.js'
 
 // Ctrl+K en Recordatorios: por título; `date` es cuándo toca (UTC).
 @Injectable()

@@ -1,6 +1,6 @@
 import { date, integer, text, timestamp, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core'
-import { app, userColumns } from './_shared'
-import { projects } from './projects'
+import { app, userColumns } from './_shared.js'
+import { projects } from './projects.js'
 
 export const taskStatusEnum = app.enum('task_status', ['todo', 'in_progress', 'review', 'done'])
 export const taskPriorityEnum = app.enum('task_priority', ['low', 'medium', 'high'])

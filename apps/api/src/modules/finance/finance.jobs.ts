@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { chargesOn, FALLBACK_CATEGORY_KEY } from '@kairo/shared'
-import { AccountService } from '../../account/account.service'
-import { NotificationsService } from '../notifications/notifications.service'
-import { CategoriesRepository } from './categories.repository'
-import { addDays, firstOfNextMonth, formatMoney, monthStartOf, spentPerCategory, todayIn } from './finance-utils'
-import { MembershipsRepository } from './memberships.repository'
-import { SettingsRepository } from './settings.repository'
-import { TransactionsRepository } from './transactions.repository'
+import { AccountService } from '../../account/account.service.js'
+import { NotificationsService } from '../notifications/notifications.service.js'
+import { CategoriesRepository } from './categories.repository.js'
+import { addDays, firstOfNextMonth, formatMoney, monthStartOf, spentPerCategory, todayIn } from './finance-utils.js'
+import { MembershipsRepository } from './memberships.repository.js'
+import { SettingsRepository } from './settings.repository.js'
+import { TransactionsRepository } from './transactions.repository.js'
 
 type Membership = Awaited<ReturnType<MembershipsRepository['findActiveOfEveryone']>>[number]
 

@@ -10,9 +10,9 @@ import {
   type MoveInput,
   moveSchema,
 } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { TimelineService } from './timeline.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { TimelineService } from './timeline.service.js'
 
 const uuid = () => new ParseUUIDPipe()
 

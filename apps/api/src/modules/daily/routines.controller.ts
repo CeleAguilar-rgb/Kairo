@@ -1,9 +1,9 @@
 import { Body, Controller, Delete, Get, Inject, Param, ParseUUIDPipe, Patch, Post, Query } from '@nestjs/common'
 import { type RoutineBlockInput, type RoutineInput, routineBlockSchema, routineSchema } from '@kairo/shared'
 import { z } from 'zod'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { RoutinesService } from './routines.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { RoutinesService } from './routines.service.js'
 
 // routineId no se comparte con el form (routineBlockSchema, en packages/shared): la pantalla lo manda
 // aparte porque ya sabe en qué rutina está, igual que occurrence en Agenda.

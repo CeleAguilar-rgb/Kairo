@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { eq } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { financeSettings } from '../../db/schema/finance'
+import { DB } from '../../common/db/db.module.js'
+import { financeSettings } from '../../db/schema/finance.js'
 
 @Injectable()
 export class SettingsRepository {

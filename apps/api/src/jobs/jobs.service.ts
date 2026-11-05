@@ -1,8 +1,8 @@
 import { Inject, Injectable, Logger } from '@nestjs/common'
-import { AccountService } from '../account/account.service'
-import { FinanceJobs } from '../modules/finance/finance.jobs'
-import { RemindersJobs } from '../modules/reminders/reminders.jobs'
-import { TrashService } from '../modules/trash/trash.service'
+import { AccountService } from '../account/account.service.js'
+import { FinanceJobs } from '../modules/finance/finance.jobs.js'
+import { RemindersJobs } from '../modules/reminders/reminders.jobs.js'
+import { TrashService } from '../modules/trash/trash.service.js'
 
 export const JOB_NAMES = ['minute', 'daily'] as const
 export type JobName = (typeof JOB_NAMES)[number]

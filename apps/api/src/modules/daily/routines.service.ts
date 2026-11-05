@@ -1,10 +1,10 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import type { RoutineBlockInput, RoutineInput } from '@kairo/shared'
-import { AccountService } from '../../account/account.service'
-import type { routineBlocks, routineLogs, routines } from '../../db/schema/daily'
-import { isLateMark, minutesToWallTime, nowMinutesIn, routineAppliesOn, todayIn, toWallTime } from './daily-utils'
-import { encodeDailyUndo } from './daily-undo'
-import { RoutinesRepository } from './routines.repository'
+import { AccountService } from '../../account/account.service.js'
+import type { routineBlocks, routineLogs, routines } from '../../db/schema/daily.js'
+import { isLateMark, minutesToWallTime, nowMinutesIn, routineAppliesOn, todayIn, toWallTime } from './daily-utils.js'
+import { encodeDailyUndo } from './daily-undo.js'
+import { RoutinesRepository } from './routines.repository.js'
 
 type RoutineRow = typeof routines.$inferSelect
 type BlockRow = typeof routineBlocks.$inferSelect

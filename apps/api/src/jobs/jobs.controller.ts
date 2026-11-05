@@ -1,8 +1,8 @@
 import { timingSafeEqual } from 'node:crypto'
 import { Controller, Headers, HttpCode, Inject, NotFoundException, Param, Post } from '@nestjs/common'
-import { Public } from '../auth/public.decorator'
-import { env } from '../common/env'
-import { JOB_NAMES, type JobName, JobsService } from './jobs.service'
+import { Public } from '../auth/public.decorator.js'
+import { env } from '../common/env.js'
+import { JOB_NAMES, type JobName, JobsService } from './jobs.service.js'
 
 // Endpoints internos que dispara Supabase Cron (architecture.md, "Tareas programadas"). No llevan token de
 // persona (@Public): los protege el header X-Job-Secret. Sin JOB_SECRET configurado, con el header incorrecto o con

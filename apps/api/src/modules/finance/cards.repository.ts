@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { CardColor, CardKind } from '@kairo/shared'
 import { and, asc, eq, inArray, isNotNull, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { cards, memberships } from '../../db/schema/finance'
+import { DB } from '../../common/db/db.module.js'
+import { cards, memberships } from '../../db/schema/finance.js'
 
 type NewCard = { name: string; kind: CardKind; last4: string | null; color: CardColor; cutDay: number | null; dueDay: number | null }
 

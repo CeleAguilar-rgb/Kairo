@@ -16,9 +16,9 @@ import {
   type UpdateTaskStatusInput,
   updateTaskStatusSchema,
 } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { TasksService } from './tasks.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { TasksService } from './tasks.service.js'
 
 @Controller('tasks')
 export class TasksController {

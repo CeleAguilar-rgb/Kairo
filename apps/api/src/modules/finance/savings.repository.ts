@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { and, asc, eq, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { savingsGoals } from '../../db/schema/finance'
+import { DB } from '../../common/db/db.module.js'
+import { savingsGoals } from '../../db/schema/finance.js'
 
 type NewSaving = { name: string; targetCents: number; currency: string; dueOn: string | null }
 

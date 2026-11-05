@@ -1,7 +1,7 @@
 import { sql } from 'drizzle-orm'
 import { check, date, numeric, text, uniqueIndex, uuid } from 'drizzle-orm/pg-core'
-import { app, userColumns } from './_shared'
-import { projects } from './projects'
+import { app, userColumns } from './_shared.js'
+import { projects } from './projects.js'
 
 export const subjectColorEnum = app.enum('subject_color', ['lavender', 'ink', 'sand', 'lavender_soft', 'peach'])
 

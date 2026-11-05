@@ -1,11 +1,11 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
-import { CardsRepository } from './cards.repository'
-import { CategoriesRepository } from './categories.repository'
-import { DebtsRepository } from './debts.repository'
-import { decodeFinanceUndo } from './finance-undo'
-import { MembershipsRepository } from './memberships.repository'
-import { SavingsRepository } from './savings.repository'
-import { TransactionsRepository } from './transactions.repository'
+import { CardsRepository } from './cards.repository.js'
+import { CategoriesRepository } from './categories.repository.js'
+import { DebtsRepository } from './debts.repository.js'
+import { decodeFinanceUndo } from './finance-undo.js'
+import { MembershipsRepository } from './memberships.repository.js'
+import { SavingsRepository } from './savings.repository.js'
+import { TransactionsRepository } from './transactions.repository.js'
 
 // Un solo endpoint de Deshacer para todo Finanzas (el front también comparte una sola Server Action pública,
 // undoFinanceAction). Depende de los repositorios directo, no de los otros services, para no crear referencias

@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { and, eq, isNotNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { RowsTrash } from '../../common/trash/rows-trash'
-import { TrashRegistry } from '../../common/trash/trash.registry'
-import { goals, journalEntries, mealPlans } from '../../db/schema/daily'
+import { DB } from '../../common/db/db.module.js'
+import { RowsTrash } from '../../common/trash/rows-trash.js'
+import { TrashRegistry } from '../../common/trash/trash.registry.js'
+import { goals, journalEntries, mealPlans } from '../../db/schema/daily.js'
 
 // Papelera de Día a día (common/trash/rows-trash.ts): metas (sus hitos y su bitácora se van por la llave foránea al
 // borrarla para siempre), entradas del diario y comidas del menú. Las rutinas y sus bloques NO entran: borrarlos para

@@ -13,9 +13,9 @@ import {
   type SignCoverUploadInput,
   signCoverUploadSchema,
 } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { ProjectsService } from './projects.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { ProjectsService } from './projects.service.js'
 
 @Controller('projects')
 export class ProjectsController {

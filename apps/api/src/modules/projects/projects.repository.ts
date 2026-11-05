@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { ProjectKind, ProjectStatus } from '@kairo/shared'
 import { and, asc, desc, eq, inArray, isNull, max } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { projectLinks, projectObjectives, projects } from '../../db/schema/projects'
+import { DB } from '../../common/db/db.module.js'
+import { projectLinks, projectObjectives, projects } from '../../db/schema/projects.js'
 
 export type ProjectFields = {
   name: string

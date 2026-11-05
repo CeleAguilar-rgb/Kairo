@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common'
-import { NotificationsService } from '../notifications/notifications.service'
-import { RemindersRepository } from './reminders.repository'
+import { NotificationsService } from '../notifications/notifications.service.js'
+import { RemindersRepository } from './reminders.repository.js'
 
 const HOUR_MS = 60 * 60 * 1000
 // Un lote por minuto (architecture.md: "lotes pequeños"). Si quedan más, los toma la siguiente vuelta.

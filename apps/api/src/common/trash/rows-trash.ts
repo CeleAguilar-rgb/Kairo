@@ -2,9 +2,9 @@ import type { OnModuleInit } from '@nestjs/common'
 import type { TrashKind } from '@kairo/shared'
 import type { PgColumn, PgTable } from 'drizzle-orm/pg-core'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { purgeExpiredRows, purgeRow, restoreRow } from './trash-queries'
-import type { TrashRegistry } from './trash.registry'
-import type { TrashEntry, TrashSource } from './trash.types'
+import { purgeExpiredRows, purgeRow, restoreRow } from './trash-queries.js'
+import type { TrashRegistry } from './trash.registry.js'
+import type { TrashEntry, TrashSource } from './trash.types.js'
 
 // Un tipo de la papelera que es UNA fila sin partes internas que cuidar (un recordatorio, un gasto): su tabla y
 // cómo listar lo borrado de la persona.

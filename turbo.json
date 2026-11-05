@@ -1,5 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalPassThroughEnv": ["API_URL"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

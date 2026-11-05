@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { SEARCH_KINDS } from '@kairo/shared'
-import { containsPattern, type SearchHit, SearchRegistry } from '../../common/search/search.registry'
+import { containsPattern, type SearchHit, SearchRegistry } from '../../common/search/search.registry.js'
 
 @Injectable()
 export class SearchService {

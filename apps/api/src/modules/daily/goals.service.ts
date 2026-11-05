@@ -1,11 +1,11 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import type { GoalInput } from '@kairo/shared'
-import { AccountService } from '../../account/account.service'
-import type { goalLogEntries, goalMilestones, goals } from '../../db/schema/daily'
-import { ProjectsService } from '../projects/projects.service'
-import { todayIn } from './daily-utils'
-import { encodeDailyUndo } from './daily-undo'
-import { GoalsRepository } from './goals.repository'
+import { AccountService } from '../../account/account.service.js'
+import type { goalLogEntries, goalMilestones, goals } from '../../db/schema/daily.js'
+import { ProjectsService } from '../projects/projects.service.js'
+import { todayIn } from './daily-utils.js'
+import { encodeDailyUndo } from './daily-undo.js'
+import { GoalsRepository } from './goals.repository.js'
 
 type GoalRow = typeof goals.$inferSelect
 type MilestoneRow = typeof goalMilestones.$inferSelect

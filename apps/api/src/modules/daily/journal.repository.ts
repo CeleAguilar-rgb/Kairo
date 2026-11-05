@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { JournalTag } from '@kairo/shared'
 import { and, desc, eq, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { journalEntries } from '../../db/schema/daily'
+import { DB } from '../../common/db/db.module.js'
+import { journalEntries } from '../../db/schema/daily.js'
 
 type EntryFields = { mood: number; body: string; gratitude: string[]; tags: JournalTag[]; summary: string[] }
 

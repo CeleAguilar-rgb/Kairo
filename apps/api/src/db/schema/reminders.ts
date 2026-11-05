@@ -1,5 +1,5 @@
 import { text, timestamp, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core'
-import { app, userColumns } from './_shared'
+import { app, userColumns } from './_shared.js'
 
 export const reminderRepeatEnum = app.enum('reminder_repeat', ['none', 'daily', 'weekdays'])
 

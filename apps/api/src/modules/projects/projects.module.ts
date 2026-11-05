@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common'
-import { StorageModule } from '../../common/storage/storage.module'
-import { ProjectsController } from './projects.controller'
-import { ProjectsRepository } from './projects.repository'
-import { ProjectsService } from './projects.service'
-import { ProjectsTrash } from './projects.trash'
-import { ProjectsSearch } from './projects.search'
+import { StorageModule } from '../../common/storage/storage.module.js'
+import { ProjectsController } from './projects.controller.js'
+import { ProjectsRepository } from './projects.repository.js'
+import { ProjectsService } from './projects.service.js'
+import { ProjectsTrash } from './projects.trash.js'
+import { ProjectsSearch } from './projects.search.js'
 
 // Tareas, Agenda, Metas y Sprints le piden a ProjectsService el nombre de un proyecto y si es de la persona
 // (modules.md: un módulo pide datos al service de otro, nunca lee su tabla). Este módulo no depende de ninguno

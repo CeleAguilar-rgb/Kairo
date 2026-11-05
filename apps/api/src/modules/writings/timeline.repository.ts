@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { and, asc, eq, inArray, isNull, max } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { worldEras, worldEvents } from '../../db/schema/writings'
+import { DB } from '../../common/db/db.module.js'
+import { worldEras, worldEvents } from '../../db/schema/writings.js'
 
 export type EraRow = typeof worldEras.$inferSelect
 export type EventRow = typeof worldEvents.$inferSelect

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
-import { TasksModule } from '../tasks/tasks.module'
-import { FocusController } from './focus.controller'
-import { FocusRepository } from './focus.repository'
-import { FocusService } from './focus.service'
+import { TasksModule } from '../tasks/tasks.module.js'
+import { FocusController } from './focus.controller.js'
+import { FocusRepository } from './focus.repository.js'
+import { FocusService } from './focus.service.js'
 
 // Enfoque es una hoja del grafo de módulos: depende de Tareas (para saber si la tarea es de la persona) y ninguno
 // depende de él, así no hay dependencias circulares.

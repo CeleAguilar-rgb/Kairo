@@ -1,10 +1,10 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import type { JournalEntryInput } from '@kairo/shared'
-import { AccountService } from '../../account/account.service'
-import type { journalEntries } from '../../db/schema/daily'
-import { todayIn } from './daily-utils'
-import { encodeDailyUndo } from './daily-undo'
-import { JournalRepository } from './journal.repository'
+import { AccountService } from '../../account/account.service.js'
+import type { journalEntries } from '../../db/schema/daily.js'
+import { todayIn } from './daily-utils.js'
+import { encodeDailyUndo } from './daily-undo.js'
+import { JournalRepository } from './journal.repository.js'
 
 type EntryRow = typeof journalEntries.$inferSelect
 

@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { ReminderRepeat } from '@kairo/shared'
 import { and, asc, eq, gt, inArray, isNull, lte, sql } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { reminders } from '../../db/schema/reminders'
+import { DB } from '../../common/db/db.module.js'
+import { reminders } from '../../db/schema/reminders.js'
 
 type NewReminder = { title: string; remindAt: Date; repeat: ReminderRepeat; spawnedFromId?: string }
 

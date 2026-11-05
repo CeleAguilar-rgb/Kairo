@@ -7,9 +7,9 @@ import {
   type UpdateSectionsInput,
   updateSectionsSchema,
 } from '@kairo/shared'
-import { CurrentUser } from '../auth/current-user.decorator'
-import { ZodValidationPipe } from '../common/pipes/zod-validation.pipe'
-import { AccountService } from './account.service'
+import { CurrentUser } from '../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../common/pipes/zod-validation.pipe.js'
+import { AccountService } from './account.service.js'
 
 @Controller('me')
 export class AccountController {

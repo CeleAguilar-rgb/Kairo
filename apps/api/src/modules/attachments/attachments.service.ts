@@ -10,10 +10,10 @@ import {
   STORAGE_QUOTA_BYTES,
   type SignAttachmentUploadInput,
 } from '@kairo/shared'
-import { StorageService } from '../../common/storage/storage.service'
-import type { attachments } from '../../db/schema/attachments'
-import { ProjectsService } from '../projects/projects.service'
-import { AttachmentsRepository } from './attachments.repository'
+import { StorageService } from '../../common/storage/storage.service.js'
+import type { attachments } from '../../db/schema/attachments.js'
+import { ProjectsService } from '../projects/projects.service.js'
+import { AttachmentsRepository } from './attachments.repository.js'
 
 type AttachmentRow = typeof attachments.$inferSelect
 

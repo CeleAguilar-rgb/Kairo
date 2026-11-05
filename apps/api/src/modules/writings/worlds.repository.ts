@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { OptionTone, TemplateFieldInput, WorldRuleInput } from '@kairo/shared'
 import { and, asc, eq, inArray, isNull, max } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { characters, noteTemplates, pages, stories, worldEras, worldEvents, worldNotes, worlds } from '../../db/schema/writings'
+import { DB } from '../../common/db/db.module.js'
+import { characters, noteTemplates, pages, stories, worldEras, worldEvents, worldNotes, worlds } from '../../db/schema/writings.js'
 
 export type WorldRow = typeof worlds.$inferSelect
 export type TemplateRow = typeof noteTemplates.$inferSelect

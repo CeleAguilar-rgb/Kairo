@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { and, desc, eq, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { hit, ModuleSearch } from '../../common/search/module-search'
-import { matches, PER_KIND, SearchRegistry } from '../../common/search/search.registry'
-import { projects } from '../../db/schema/projects'
+import { DB } from '../../common/db/db.module.js'
+import { hit, ModuleSearch } from '../../common/search/module-search.js'
+import { matches, PER_KIND, SearchRegistry } from '../../common/search/search.registry.js'
+import { projects } from '../../db/schema/projects.js'
 
 // Ctrl+K en Proyectos: por nombre. `detail` es su tipo (uno de Escuela lleva a /escuela).
 @Injectable()

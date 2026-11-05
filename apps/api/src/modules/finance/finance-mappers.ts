@@ -1,4 +1,4 @@
-import type { cards, categories, debts, memberships, savingsGoals, transactions } from '../../db/schema/finance'
+import type { cards, categories, debts, memberships, savingsGoals, transactions } from '../../db/schema/finance.js'
 
 // De una fila de la base a lo que devuelve la API. Los nombres y la forma son los de los tipos de
 // apps/web/src/features/finance/types.ts: el front no cambia al reconectarse.

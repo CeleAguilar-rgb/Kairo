@@ -1,8 +1,8 @@
 import { Controller, Get, Inject, Query } from '@nestjs/common'
 import { type FinanceRecordsQuery, financeRecordsQuerySchema } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { RecordsService } from './records.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { RecordsService } from './records.service.js'
 
 @Controller('finance')
 export class RecordsController {

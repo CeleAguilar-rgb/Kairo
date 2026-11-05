@@ -6,9 +6,9 @@ import {
   eventSchema,
 } from '@kairo/shared'
 import { z } from 'zod'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { AgendaService } from './agenda.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { AgendaService } from './agenda.service.js'
 
 // moveEventSchema y duplicateEventSchema no se comparten con el front: la
 // pantalla solo manda la fecha nueva (moveEventSchema de packages/shared) o

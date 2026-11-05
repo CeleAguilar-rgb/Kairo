@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { DebtKind } from '@kairo/shared'
 import { and, asc, eq, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { debts } from '../../db/schema/finance'
+import { DB } from '../../common/db/db.module.js'
+import { debts } from '../../db/schema/finance.js'
 
 type NewDebt = {
   name: string

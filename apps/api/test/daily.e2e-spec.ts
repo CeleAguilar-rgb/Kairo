@@ -5,11 +5,11 @@ import { eq } from 'drizzle-orm'
 // En modo ESM, más seguro importar los globals de Jest en vez de asumirlos como globales.
 import { afterAll, beforeAll, describe, expect, it, jest } from '@jest/globals'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { AppModule } from '../src/app.module'
-import { DB } from '../src/common/db/db.module'
-import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter'
-import { profiles } from '../src/db/schema/_shared'
-import { createTestUser, deleteTestUser, type TestUser } from './helpers/test-users'
+import { AppModule } from '../src/app.module.js'
+import { DB } from '../src/common/db/db.module.js'
+import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter.js'
+import { profiles } from '../src/db/schema/_shared.js'
+import { createTestUser, deleteTestUser, type TestUser } from './helpers/test-users.js'
 
 function authHeader(user: TestUser) {
   return { Authorization: `Bearer ${user.accessToken}` }

@@ -1,8 +1,8 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common'
 import { z } from 'zod'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { DailyUndoService } from './daily-undo.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { DailyUndoService } from './daily-undo.service.js'
 
 const undoSchema = z.object({ token: z.string() })
 

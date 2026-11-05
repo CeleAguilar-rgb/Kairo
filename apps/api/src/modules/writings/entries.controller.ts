@@ -13,9 +13,9 @@ import {
   type SignCoverUploadInput,
   signCoverUploadSchema,
 } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { EntriesService } from './entries.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { EntriesService } from './entries.service.js'
 
 const uuid = () => new ParseUUIDPipe()
 

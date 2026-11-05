@@ -1,9 +1,9 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { FINANCE_CURRENCY, type CardInput, type MembershipInput } from '@kairo/shared'
-import { CardsRepository } from './cards.repository'
-import { toCard, toMembership } from './finance-mappers'
-import { encodeFinanceUndo } from './finance-undo'
-import { MembershipsRepository } from './memberships.repository'
+import { CardsRepository } from './cards.repository.js'
+import { toCard, toMembership } from './finance-mappers.js'
+import { encodeFinanceUndo } from './finance-undo.js'
+import { MembershipsRepository } from './memberships.repository.js'
 
 // Membresías y tarjetas. Las membresías con cobro salen en "Próximos pagos" de Inicio y en la Agenda: esas
 // pantallas leen `GET /finance/memberships` (records.controller.ts) y calculan el próximo cobro con el día.

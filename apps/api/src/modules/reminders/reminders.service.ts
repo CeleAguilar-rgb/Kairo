@@ -1,9 +1,9 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import type { CreateReminderInput, SnoozeReminderInput } from '@kairo/shared'
-import { AccountService } from '../../account/account.service'
-import type { reminders } from '../../db/schema/reminders'
-import { nextOccurrence, snoozeTarget, todayIn, zonedToUtc } from './reminder-utils'
-import { RemindersRepository } from './reminders.repository'
+import { AccountService } from '../../account/account.service.js'
+import type { reminders } from '../../db/schema/reminders.js'
+import { nextOccurrence, snoozeTarget, todayIn, zonedToUtc } from './reminder-utils.js'
+import { RemindersRepository } from './reminders.repository.js'
 
 type ReminderRow = typeof reminders.$inferSelect
 

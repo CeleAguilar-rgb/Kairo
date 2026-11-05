@@ -1,7 +1,8 @@
 {
   // Solo para PRODUCCIÓN: Node no sabe leer TypeScript, así que la API desplegada carga esta versión compilada
-  // (`main` en package.json). En desarrollo nadie la usa: el front y la API (tsx, jest) leen `src/` directo con
-  // `paths` (apps/web/tsconfig.json y apps/api/tsconfig.dev.json), así que editar un esquema se ve al instante.
+  // (`main` en package.json). Sale en CommonJS: el código fuente no lleva extensión en sus imports porque el front
+  // (Turbopack) no resuelve `./x.js` hacia `./x.ts`. En desarrollo nadie usa `dist/`: el front y la API (tsx, jest) leen
+  // `src/` directo con `paths` (apps/web/tsconfig.json y apps/api/tsconfig.dev.json).
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "module": "commonjs",

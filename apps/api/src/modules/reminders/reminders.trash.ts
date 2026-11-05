@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { and, eq, isNotNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { RowsTrash } from '../../common/trash/rows-trash'
-import { TrashRegistry } from '../../common/trash/trash.registry'
-import { reminders } from '../../db/schema/reminders'
+import { DB } from '../../common/db/db.module.js'
+import { RowsTrash } from '../../common/trash/rows-trash.js'
+import { TrashRegistry } from '../../common/trash/trash.registry.js'
+import { reminders } from '../../db/schema/reminders.js'
 
 // Papelera de Recordatorios (common/trash/rows-trash.ts). `detail`: cuándo tocaba (UTC); el front lo muestra en la
 // zona del perfil.

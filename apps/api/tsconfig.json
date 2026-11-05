@@ -1,8 +1,11 @@
 {
+  // La API es ESM de Node ("type": "module"): sus imports relativos llevan `.js` (lo exige la regla de ESLint de
+  // eslint.config.mjs, no TypeScript). Se usa resolución "Bundler" porque `@kairo/shared` se lee como código fuente y
+  // el front (Turbopack) no resuelve `.js` hacia `.ts`, así que `shared` no puede llevar extensiones.
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "outDir": "./dist",

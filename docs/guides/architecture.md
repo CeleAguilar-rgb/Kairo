@@ -127,7 +127,7 @@ src/
 └── index.ts
 ```
 
-**En desarrollo se lee `src/` directo; en producción, `dist/`** (decisión #54). El front (`apps/web/tsconfig.json`) y la API en desarrollo (`apps/api/tsconfig.dev.json`, usado por `tsx` y los scripts con `--tsconfig`) apuntan con `paths` al código fuente; jest lo hace con `moduleNameMapper`. La API desplegada carga `dist/index.js`, que genera `pnpm --filter @kairo/shared build` (el `build` de la API lo corre primero). `tsc --noEmit` usa los tipos de `src/`.
+**En desarrollo se lee `src/` directo; en producción, `dist/`** (decisiones #54 y #55). `shared/src/` lleva su propio `package.json` con `"type": "module"` (para `tsx`) y **sus imports no llevan extensión** (Turbopack no resuelve `.js` hacia `.ts`); `dist/` sale en CommonJS. La API, en cambio, es ESM nativo: **sus imports relativos llevan `.js`** y ESLint lo exige. El front (`apps/web/tsconfig.json`) y la API en desarrollo (`apps/api/tsconfig.dev.json`, usado por `tsx` y los scripts con `--tsconfig`) apuntan con `paths` al código fuente; jest lo hace con `moduleNameMapper`. La API desplegada carga `dist/index.js`, que genera `pnpm --filter @kairo/shared build` (el `build` de la API lo corre primero). `tsc --noEmit` usa los tipos de `src/`.
 
 Un esquema se define una sola vez y lo usan el formulario del front y la validación del back. Los tipos se derivan con `z.infer`. Este paquete no importa nada de `apps/`.
 
@@ -157,11 +157,11 @@ Caso Agenda: cada módulo con fechas (tareas con fecha, pagos de membresías, en
 |---|---|---|
 | Carpeta raíz | `apps/web` | `apps/api` |
 | Preset | Next.js | NestJS |
-| Compilar | el de Next | `pnpm build` (compila `shared` y luego la API, decisión #54) |
+| Compilar | el de Next | `pnpm build` (compila `shared` y luego la API, decisiones #54 y #55) |
 | Node | 22.x | 22.x |
 | Región de las funciones | `pdx1` (Portland) | `pdx1` (Portland) |
 
-  La región es la más cercana al Supabase (`us-west-2`, Oregón); la de Vercel por defecto (`iad1`, Virginia) añadiría un viaje a cada consulta. Los dos proyectos se crearon con `vercel project create` y `vercel project update`, **sin conectar GitHub ni desplegar**: los despliegues desde Git están desactivados hasta que estén las variables de entorno. Las variables llevan secretos y las pone la persona dueña (nombres en `apps/api/.env.example` y `apps/web/.env.example`; `DIRECT_URL` no se necesita en producción, solo la usa `drizzle-kit`). **Ojo con "Vercel Authentication"** (`ssoProtection`, activa por defecto): si se deja en la API, ni el Next.js ni Supabase Cron podrán llamarla.
+  La región es la más cercana al Supabase (`us-west-2`, Oregón); la de Vercel por defecto (`iad1`, Virginia) añadiría un viaje a cada consulta. Los dos proyectos se crearon con `vercel project create` y `vercel project update`, y después se conectó GitHub (`vercel git connect`, repositorio `CeleAguilar-rgb/Kairo`, rama de producción `main`). **No se ha desplegado nada**: el ajuste `createDeployments` de los dos proyectos sigue en `disabled` y no hay ningún despliegue; hay que activarlo (y tener las variables de entorno puestas) antes del primer despliegue. Las variables llevan secretos y las pone la persona dueña (nombres en `apps/api/.env.example` y `apps/web/.env.example`; `DIRECT_URL` no se necesita en producción, solo la usa `drizzle-kit`). **"Vercel Authentication"** (`ssoProtection`, activa por defecto) se **quitó de `kairo-api`** el 2026-11-04 porque ni el Next.js ni Supabase Cron podrían llamarla; la API se protege sola (guard de JWT en todas las rutas, `X-Job-Secret` en `/internal/jobs`). `kairo-web` la conserva configurada, **pero su dirección de producción (`*.vercel.app`) resultó pública** (responde sin iniciar sesión en Vercel): solo la protegen el login de la propia app y la API. **Direcciones (2026-11-04):** API `https://kairo-api-five.vercel.app`, front `https://kairo-web-omega.vercel.app` (los nombres sin sufijo ya estaban tomados). Qué se sube y qué no: decisión #56.
 
 ## Tareas programadas (`apps/api/src/jobs`)
 

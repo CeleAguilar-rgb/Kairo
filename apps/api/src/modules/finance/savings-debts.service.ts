@@ -1,13 +1,13 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { FINANCE_CURRENCY, type DebtInput, type MoneyAmountInput, type SavingGoalInput } from '@kairo/shared'
-import { AccountService } from '../../account/account.service'
-import { CardsRepository } from './cards.repository'
-import { DebtsRepository } from './debts.repository'
-import { toDebt, toSaving, toTransaction } from './finance-mappers'
-import { encodeFinanceUndo } from './finance-undo'
-import { firstOfNextMonth, formatMoney, todayIn } from './finance-utils'
-import { SavingsRepository } from './savings.repository'
-import { TransactionsRepository } from './transactions.repository'
+import { AccountService } from '../../account/account.service.js'
+import { CardsRepository } from './cards.repository.js'
+import { DebtsRepository } from './debts.repository.js'
+import { toDebt, toSaving, toTransaction } from './finance-mappers.js'
+import { encodeFinanceUndo } from './finance-undo.js'
+import { firstOfNextMonth, formatMoney, todayIn } from './finance-utils.js'
+import { SavingsRepository } from './savings.repository.js'
+import { TransactionsRepository } from './transactions.repository.js'
 
 // Ahorros y deudas no guardan un saldo: aportar, retirar y pagar crean un movimiento, y lo ahorrado y lo
 // pagado se calculan de ellos (SUM). Así el Resumen, los Movimientos y esta pestaña siempre dicen lo mismo.

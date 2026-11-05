@@ -1,0 +1,17 @@
+# Lo que NO debe subirse cuando se despliega con `vercel deploy` desde esta carpeta.
+# El CLI de Vercel NO aplica el .gitignore: sin este archivo se subió apps/api/.env (llaves reales) y la caché de Turbo
+# (1.8 GB). Las llaves de producción viven solo en las variables de entorno de cada proyecto de Vercel.
+
+# Secretos (todos los niveles)
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Cachés y resultados de compilación: Vercel compila desde el código fuente
+.turbo
+**/.turbo
+**/dist
+**/.next
+node_modules
+**/node_modules

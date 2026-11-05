@@ -1,9 +1,9 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post } from '@nestjs/common'
 import { isoDateSchema, journalEntrySchema } from '@kairo/shared'
 import { z } from 'zod'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { JournalService } from './journal.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { JournalService } from './journal.service.js'
 
 // summary ("Tu día en resumen") no se comparte con el formulario: lo arma journal-actions.ts con el
 // avance real de la rutina de hoy (mezclado con los extras que siguen de ejemplo, decisión #39), la

@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common'
 import { drizzle } from 'drizzle-orm/postgres-js'
 import postgres from 'postgres'
-import { env } from '../env'
+import { env } from '../env.js'
 
 export const DB = Symbol('DB')
 

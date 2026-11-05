@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { and, desc, eq, isNull, sql } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { attachments } from '../../db/schema/attachments'
+import { DB } from '../../common/db/db.module.js'
+import { attachments } from '../../db/schema/attachments.js'
 
 export type AttachmentFields = {
   projectId: string

@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common'
-import { AccountModule } from '../../account/account.module'
-import { NotificationsModule } from '../notifications/notifications.module'
-import { RemindersController } from './reminders.controller'
-import { RemindersJobs } from './reminders.jobs'
-import { RemindersRepository } from './reminders.repository'
-import { RemindersService } from './reminders.service'
-import { RemindersTrash } from './reminders.trash'
-import { RemindersSearch } from './reminders.search'
+import { AccountModule } from '../../account/account.module.js'
+import { NotificationsModule } from '../notifications/notifications.module.js'
+import { RemindersController } from './reminders.controller.js'
+import { RemindersJobs } from './reminders.jobs.js'
+import { RemindersRepository } from './reminders.repository.js'
+import { RemindersService } from './reminders.service.js'
+import { RemindersTrash } from './reminders.trash.js'
+import { RemindersSearch } from './reminders.search.js'
 
 // Exporta RemindersJobs para las tareas programadas (src/jobs): avisar los que ya tocan.
 @Module({

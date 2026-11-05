@@ -5,7 +5,7 @@ import {
   type UpdateProfileInput,
   type UpdateSectionsInput,
 } from '@kairo/shared'
-import { AccountRepository, type SectionRow } from './account.repository'
+import { AccountRepository, type SectionRow } from './account.repository.js'
 
 // No son opciones en el paso 2 de Bienvenida: 'home' siempre está presente,
 // y 'reminders'/'focus' son piezas más globales (avisos, pomodoro flotante)

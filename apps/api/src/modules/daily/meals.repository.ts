@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { and, eq, gte, inArray, isNull, lte } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { mealPlans } from '../../db/schema/daily'
+import { DB } from '../../common/db/db.module.js'
+import { mealPlans } from '../../db/schema/daily.js'
 
 type Meal = 'breakfast' | 'lunch' | 'dinner'
 type PlanFields = { dish: string; prep: boolean; note: string | null; done: boolean }

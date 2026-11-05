@@ -1,10 +1,10 @@
 import { Inject, Injectable, type OnModuleInit } from '@nestjs/common'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { moveByOwner, purgeByOwner, purgeExpiredRows } from '../../common/trash/trash-queries'
-import { TrashRegistry } from '../../common/trash/trash.registry'
-import type { TrashParent, TrashSource } from '../../common/trash/trash.types'
-import { sprints } from '../../db/schema/sprints'
+import { DB } from '../../common/db/db.module.js'
+import { moveByOwner, purgeByOwner, purgeExpiredRows } from '../../common/trash/trash-queries.js'
+import { TrashRegistry } from '../../common/trash/trash.registry.js'
+import type { TrashParent, TrashSource } from '../../common/trash/trash.types.js'
+import { sprints } from '../../db/schema/sprints.js'
 
 // Papelera de Sprints (common/trash/trash.types.ts). Un sprint no se borra solo (no sale en la Papelera): solo se va,
 // vuelve y se borra para siempre con su proyecto. Su relación con las tareas (`sprint_tasks`) se queda como estaba.

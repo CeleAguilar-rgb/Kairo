@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
-import { TrashController } from './trash.controller'
-import { TrashService } from './trash.service'
+import { TrashController } from './trash.controller.js'
+import { TrashService } from './trash.service.js'
 
 // La Papelera no importa ningún módulo: los adaptadores de cada uno se anotan solos en el TrashRegistry (global).
 // Exporta su service para Escuela (borrar una materia = mandar su proyecto a la papelera) y para las tareas

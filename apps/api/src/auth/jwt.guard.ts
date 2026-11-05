@@ -1,8 +1,8 @@
 import { CanActivate, ExecutionContext, Inject, Injectable, UnauthorizedException } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { SUPABASE_ADMIN } from '../common/supabase/supabase.module'
-import { IS_PUBLIC_KEY } from './public.decorator'
+import { SUPABASE_ADMIN } from '../common/supabase/supabase.module.js'
+import { IS_PUBLIC_KEY } from './public.decorator.js'
 
 // Guard global (docs/guides/security.md, sección 4): rutas privadas por defecto,
 // @Public() es la excepción. Todavía no revisa verified_sessions (eso llega con

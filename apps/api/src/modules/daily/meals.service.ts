@@ -1,10 +1,10 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import type { CopyWeekInput, MealRefInput, MealSlotInput, WeekInput } from '@kairo/shared'
-import { AccountService } from '../../account/account.service'
-import type { mealPlans } from '../../db/schema/daily'
-import { addDays, diffDays, mondayOf, todayIn } from './daily-utils'
-import { encodeDailyUndo } from './daily-undo'
-import { MealsRepository } from './meals.repository'
+import { AccountService } from '../../account/account.service.js'
+import type { mealPlans } from '../../db/schema/daily.js'
+import { addDays, diffDays, mondayOf, todayIn } from './daily-utils.js'
+import { encodeDailyUndo } from './daily-undo.js'
+import { MealsRepository } from './meals.repository.js'
 
 type PlanRow = typeof mealPlans.$inferSelect
 

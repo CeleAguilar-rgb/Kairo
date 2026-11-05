@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, Headers, HttpCode, Inject, Param, ParseUUIDPipe, Post } from '@nestjs/common'
 import { type PushSubscriptionInput, pushSubscriptionSchema, type PushUnsubscribeInput, pushUnsubscribeSchema } from '@kairo/shared'
-import { CurrentUser } from '../../auth/current-user.decorator'
-import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe'
-import { NotificationsService } from './notifications.service'
+import { CurrentUser } from '../../auth/current-user.decorator.js'
+import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
+import { NotificationsService } from './notifications.service.js'
 
 // El panel de avisos (Atajos.dc.html) y activar los avisos en el navegador (Web Push).
 @Controller('notifications')

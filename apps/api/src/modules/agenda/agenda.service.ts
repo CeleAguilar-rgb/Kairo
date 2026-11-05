@@ -1,9 +1,9 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import type { DeleteEventInput, EventInput } from '@kairo/shared'
-import { ProjectsService } from '../projects/projects.service'
-import { AgendaRepository } from './agenda.repository'
-import { addDays, wallTimeToMinutes } from './agenda-utils'
-import type { events } from '../../db/schema/agenda'
+import { ProjectsService } from '../projects/projects.service.js'
+import { AgendaRepository } from './agenda.repository.js'
+import { addDays, wallTimeToMinutes } from './agenda-utils.js'
+import type { events } from '../../db/schema/agenda.js'
 
 type EventRow = typeof events.$inferSelect
 type ProjectRef = { id: string; name: string }

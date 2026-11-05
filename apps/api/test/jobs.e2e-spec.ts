@@ -3,11 +3,11 @@ import { Test } from '@nestjs/testing'
 import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from '@jest/globals'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { AppModule } from '../src/app.module'
-import { DB } from '../src/common/db/db.module'
-import { env } from '../src/common/env'
-import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter'
-import { JobsService } from '../src/jobs/jobs.service'
+import { AppModule } from '../src/app.module.js'
+import { DB } from '../src/common/db/db.module.js'
+import { env } from '../src/common/env.js'
+import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter.js'
+import { JobsService } from '../src/jobs/jobs.service.js'
 
 // Solo la puerta de las tareas programadas. Correrlas de verdad aquí NO: recorren a todas las personas de la base, y
 // los e2e usan la misma base que desarrollo (helpers/test-users.ts), así que anotarían cobros y vaciarían la papelera

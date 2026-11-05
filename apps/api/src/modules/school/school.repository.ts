@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common'
 import type { SubjectColor } from '@kairo/shared'
 import { and, desc, eq, isNull } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { DB } from '../../common/db/db.module'
-import { schoolTerms, subjects } from '../../db/schema/school'
+import { DB } from '../../common/db/db.module.js'
+import { schoolTerms, subjects } from '../../db/schema/school.js'
 
 export type TermFields = { name: string; startsOn: string; endsOn: string; prepProjectId: string | null }
 export type NewSubject = { projectId: string; termId: string | null; teacher: string | null; color: SubjectColor }
