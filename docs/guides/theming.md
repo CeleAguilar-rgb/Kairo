@@ -14,7 +14,7 @@ apps/web/src/styles/
 ├── semantic.css        # Lo que usan los componentes: --bg, --surface, --text, --accent…
 ├── modes/
 │   ├── light.css       # [data-mode="light"] → asigna primitivos a semánticos
-│   └── dark.css        # Fase posterior; ver "Modo oscuro"
+│   └── dark.css        # [data-mode="dark"] → la misma lista; ver "Modo oscuro"
 ├── seasons/            # Adornos por mes (ver "Temporadas")
 └── globals.css         # Reset, tipografía base, fuentes
 ```
@@ -34,11 +34,18 @@ Valores aproximados — la referencia exacta es `docs/guides/Kairo-Sistema-de-di
 - **Radios:** tarjetas grandes 28 px, medianas 20 px, controles 14 px, pequeños 8 px; botones píldora (999 px).
 - **El usuario no quiere amarillo** como color principal.
 
-## Modo oscuro (preparado, no construido)
+## Modo oscuro
 
-- Desde el inicio, `<html>` lleva `data-mode="light"` y todos los colores pasan por semánticos. Con eso, el modo oscuro será solo escribir `modes/dark.css`.
-- La preferencia (`light`, `dark`, `system`) ya existe en `profiles.theme`.
-- Cuando llegue: tonos café cálidos, la lavanda solo como acento, todo el texto con contraste 4.5:1 (ver pantallas `ModoOscuro` y `Oscuro*`).
+- `modes/dark.css` tiene la misma lista que `modes/light.css`: lo que se agregue a uno va también al otro. Valores de `ModoOscuro.dc.html`: neutros cálidos casi negros, la lavanda solo en lo principal y lo activo, bordes finos en lugar de sombras duras.
+- **Un color que en claro servía para dos cosas, en oscuro puede necesitar dos variables.** Antes de usar una, fíjate para qué es:
+  - Botón principal: `--action` + `--on-action`, no `--surface-inverted`.
+  - Texto o trazo de acento: `--accent-line`, no `--accent` (que es un relleno).
+  - Texto dorado: `--warm-line`, no `--accent-warm` (que es un fondo).
+  - Barra neutra: `--progress-ink`. Figura rellena de una ilustración: `--art-ink`.
+- **Dónde se guarda:** en `profiles.theme` (`light`, `dark`, `system`), con `PATCH /v1/me/theme`. El selector es Perfil → Preferencias → Apariencia.
+- **La cookie `kairo_theme` es una copia del perfil en este dispositivo.** Existe para que el layout raíz ponga `data-mode` y `data-theme-pref` en `<html>` sin esperar a la API, también en `/entrar`, donde no hay perfil que leer. Primero se guarda el perfil y después la cookie: si la API falla, la cookie no cambia y el selector vuelve a como estaba. Si al entrar no coinciden (otro dispositivo, otro navegador), gana el perfil: el layout del dashboard monta `lib/theme/ThemeSync.tsx`, que aplica el tema y actualiza la cookie. En ese caso sí hay un parpadeo, una sola vez. `lib/theme/apply.ts` cambia el modo sin recargar.
+- **"Como el sistema":** el servidor no puede saber qué dice el sistema operativo y manda `light`. `public/theme-init.js` (bloqueante, en `<head>`) lo resuelve antes de pintar, sigue los cambios del sistema y corrige `data-mode` si Next vuelve a renderizar el layout.
+- En modo demo no hay base de datos: `getMe()` toma el tema de la cookie.
 
 ## Temporadas (adornos por mes)
 
@@ -64,7 +71,7 @@ Una festividad por mes, elegida automáticamente por la fecha en la zona horaria
 
 ## Evitar el parpadeo al cargar
 
-Las preferencias visuales (modo, adornos) se guardan en el perfil y también en una cookie. El layout del servidor lee la cookie y pone los atributos en `<html>` antes de enviar la página.
+Las preferencias visuales se guardan en el perfil y también en una cookie (ver "Modo oscuro"). El layout del servidor lee la cookie y pone los atributos en `<html>` antes de enviar la página.
 
 ## Animación (Motion)
 

@@ -4,13 +4,13 @@ import { useState } from 'react'
 import type { Profile, UserSection } from '@/lib/account/api'
 import { PerfilTab } from './PerfilTab'
 import styles from './PerfilView.module.css'
+import { PreferenciasTab } from './PreferenciasTab'
 import { SeccionesTab } from './SeccionesTab'
 
-type Tab = 'perfil' | 'secciones'
+type Tab = 'perfil' | 'secciones' | 'preferencias'
 
-// Solo estas dos pestañas por ahora: Conexiones, Preferencias y Cuenta
-// quedan para el siguiente incremento (varias tocan cosas de fase posterior
-// como el modo oscuro, o necesitan su propia infraestructura).
+// Conexiones y Cuenta quedan para el siguiente incremento (necesitan su propia
+// infraestructura). De Preferencias, por ahora solo existe Apariencia.
 const TABS: { id: Tab; name: string; icon: string }[] = [
   {
     id: 'perfil',
@@ -21,6 +21,11 @@ const TABS: { id: Tab; name: string; icon: string }[] = [
     id: 'secciones',
     name: 'Mis secciones',
     icon: 'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',
+  },
+  {
+    id: 'preferencias',
+    name: 'Preferencias',
+    icon: 'M4 7h10M18 7h2M4 17h2M10 17h10M16 5v4M8 15v4',
   },
 ]
 
@@ -62,11 +67,9 @@ export function PerfilView({ profile, sections }: PerfilViewProps) {
         </nav>
 
         <div className={styles.panel}>
-          {tab === 'perfil' ? (
-            <PerfilTab profile={profile} />
-          ) : (
-            <SeccionesTab sections={sections} />
-          )}
+          {tab === 'perfil' ? <PerfilTab profile={profile} /> : null}
+          {tab === 'secciones' ? <SeccionesTab sections={sections} /> : null}
+          {tab === 'preferencias' ? <PreferenciasTab themePreference={profile.theme} /> : null}
         </div>
       </div>
     </div>

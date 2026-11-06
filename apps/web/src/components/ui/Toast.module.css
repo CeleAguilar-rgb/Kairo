@@ -29,7 +29,7 @@
 
 .icon {
   flex-shrink: 0;
-  color: var(--accent);
+  color: var(--accent-line);
 }
 
 .message {

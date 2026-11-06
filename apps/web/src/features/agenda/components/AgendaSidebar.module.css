@@ -185,7 +185,7 @@
   align-items: center;
   justify-content: center;
   border: 1.5px solid var(--text-muted);
-  color: var(--text-on-inverted);
+  color: var(--on-action);
   transition:
     background 200ms ease,
     border-color 200ms ease;

@@ -9,6 +9,8 @@ import { ShortcutsProvider } from '@/features/shortcuts'
 import { getMe } from '@/lib/account/api'
 import { DEMO_MODE } from '@/lib/demo'
 import { createClient } from '@/lib/supabase/server'
+import { readThemePreference } from '@/lib/theme/preference'
+import { ThemeSync } from '@/lib/theme/ThemeSync'
 import styles from './layout.module.css'
 import { Topnav } from './Topnav'
 
@@ -34,8 +36,11 @@ export default async function DashboardLayout({
   // Lo que necesita el reproductor de Enfoque: los pomodoros de hoy y las tareas en las que puede enfocarse.
   const focus = await getFocusSetup()
 
+  const themeCookie = await readThemePreference()
+
   return (
     <ToastProvider>
+      {me.profile.theme !== themeCookie ? <ThemeSync theme={me.profile.theme} /> : null}
       <DoodlesProvider>
         <NavigationProvider>
           <FocusProvider sessionsToday={focus.sessionsToday} tasks={focus.tasks}>

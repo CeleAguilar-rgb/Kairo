@@ -149,8 +149,11 @@
   font-size: 14px;
 }
 
+/* min-height igual al del campo "Nombre", para que las dos etiquetas queden a la misma altura. */
 .days {
   display: flex;
+  align-items: center;
+  min-height: 48px;
   gap: var(--space-1);
 }
 

@@ -7,8 +7,17 @@
  * entre paréntesis para que sea fácil ir y volver.
  *
  * Este archivo es solo el contrato — no asigna valores. Quien les da
- * un valor real es el modo activo (hoy modes/light.css, mañana dark.css),
- * así el modo oscuro es escribir ese archivo y nada más.
+ * un valor real es el modo activo (modes/light.css o modes/dark.css).
+ *
+ * --action                  fondo del botón principal (en claro, tinta; en oscuro, lavanda)
+ * --on-action               texto sobre --action
+ * --on-danger               texto sobre un botón relleno de --danger
+ * --card-light              la luz fina arriba de cada tarjeta en oscuro; en claro, nada
+ * --accent-line             texto, íconos y trazos de acento. En oscuro no puede ser --accent: ese es un relleno apagado
+ * --warm-line               texto dorado o arena sobre superficies oscuras (--accent-warm es un fondo y en oscuro no se leería)
+ * --progress-ink            barra de avance neutra (en claro, tinta; en oscuro, hueso)
+ * --art-ink                 figuras rellenas de tinta en las ilustraciones de portada
+ * --selected-ring           anillo del elemento elegido y de la tarjeta destacada; en claro, invisible
  *
  * --bg                      fondo general de la app (crema)
  * --bg-glow                 brillo suave arriba a la derecha del fondo (gradiente del canvas)

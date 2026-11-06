@@ -1,11 +1,21 @@
 /*
- * Único modo por ahora. Asigna cada semántico de semantic.css a un
- * primitivo de tokens.css. El modo oscuro (fase posterior) será un
- * dark.css con esta misma lista — los valores ya están documentados
- * en docs/guides/Kairo-Sistema-de-diseno.pdf cuando toque escribirlo.
+ * Asigna cada semántico de semantic.css a un primitivo de tokens.css.
+ * modes/dark.css tiene esta misma lista: lo que se agregue aquí va también allá.
  */
 
 :root[data-mode='light'] {
+  color-scheme: light;
+
+  --action: var(--ink-900);
+  --on-action: var(--cream-200);
+  --on-danger: var(--cream-200);
+  --card-light: none;
+  --accent-line: var(--lavender-300);
+  --warm-line: var(--amber-200);
+  --progress-ink: var(--ink-900);
+  --art-ink: var(--ink-900);
+  --selected-ring: var(--ring-none);
+
   --bg: var(--cream-200);
   --bg-glow: var(--cream-25);
   --surface: var(--cream-50);

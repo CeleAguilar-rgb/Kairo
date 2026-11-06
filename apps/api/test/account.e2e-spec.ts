@@ -109,6 +109,41 @@ describe('Account (e2e)', () => {
       expect(resB.body.profile.name).toBe('Beto')
     })
 
+    it('cambiar el tema propio no toca el de otro usuario', async () => {
+      const resA = await request(app.getHttpServer())
+        .patch('/v1/me/theme')
+        .set(authHeader(userA))
+        .send({ theme: 'dark' })
+        .expect(200)
+      expect(resA.body.profile.theme).toBe('dark')
+
+      const resB = await request(app.getHttpServer())
+        .get('/v1/me')
+        .set(authHeader(userB))
+        .expect(200)
+      expect(resB.body.profile.theme).toBe('light')
+    })
+
+    it('el dueño del tema sale del token, no de lo que mande la petición', async () => {
+      await request(app.getHttpServer())
+        .patch('/v1/me/theme')
+        .set(authHeader(userA))
+        .send({ theme: 'system', userId: userB.id, id: userB.id })
+        .expect(200)
+
+      const resA = await request(app.getHttpServer())
+        .get('/v1/me')
+        .set(authHeader(userA))
+        .expect(200)
+      expect(resA.body.profile.theme).toBe('system')
+
+      const resB = await request(app.getHttpServer())
+        .get('/v1/me')
+        .set(authHeader(userB))
+        .expect(200)
+      expect(resB.body.profile.theme).toBe('light')
+    })
+
     it('reordenar las propias secciones no toca las de otro usuario', async () => {
       await request(app.getHttpServer())
         .patch('/v1/me/sections')
@@ -134,6 +169,21 @@ describe('Account (e2e)', () => {
         .set(authHeader(userA))
         .send({ name: '', avatarPath: 'star' })
         .expect(400)
+    })
+
+    it('rechaza un tema que no existe', () => {
+      return request(app.getHttpServer())
+        .patch('/v1/me/theme')
+        .set(authHeader(userA))
+        .send({ theme: 'sepia' })
+        .expect(400)
+    })
+
+    it('rechaza cambiar el tema sin token', () => {
+      return request(app.getHttpServer())
+        .patch('/v1/me/theme')
+        .send({ theme: 'dark' })
+        .expect(401)
     })
 
     it('rechaza la bienvenida sin ninguna sección elegida', () => {

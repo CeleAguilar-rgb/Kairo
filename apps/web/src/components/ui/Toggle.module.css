@@ -12,7 +12,7 @@
 }
 
 .checked {
-  background: var(--surface-inverted);
+  background: var(--action);
 }
 
 .knob {

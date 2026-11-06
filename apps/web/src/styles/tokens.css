@@ -51,6 +51,50 @@
   --rose-300: #c9a79c;
   --rose-700: #8a5a4b;
 
+  /* Modo oscuro (ModoOscuro.dc.html y pantallas Oscuro*): neutros cálidos casi negros */
+  --night-0: #131211;
+  --night-glow: #161514;
+  --night-sunken: #222120;
+  --night-100: #1e1d1b;
+  --night-200: #262523;
+  --night-featured: #2a2824;
+  --night-300: #2d2b29;
+  --night-400: #36332f;
+  --bone-100: #ede9e2;
+  --bone-200: #c4beb5;
+  --bone-300: #b3ada4;
+  --bone-400: #9a958d;
+  --lavender-night-100: #27252b;
+  --lavender-night-ink: #c9c4f7;
+  --lavender-night-300: #b7b1f5;
+  --lavender-night-400: #a59ff0;
+  --lavender-night-500: #8a83e6;
+  --lavender-night-600: #5f58bf;
+  /* No está en el canvas: un paso entre 600 y el fondo, para la escala de ánimo del Diario. */
+  --lavender-night-700: #46418f;
+  --sand-night: #e6d6b4;
+  --ink-on-lavender: #17151f;
+  --amber-night: #3a3326;
+  --danger-night: #f0a08c;
+  /* No está en el canvas: el mismo tono de --danger-night, bajado para usarlo de fondo. */
+  --danger-night-soft: #3a2a25;
+  --rose-night: #7a5146;
+  --sage-night: #8fb396;
+  --peach-night: #d99e76;
+
+  --tint-bone-06: rgba(237, 233, 226, 0.06);
+  --tint-bone-07: rgba(237, 233, 226, 0.07);
+  --tint-bone-08: rgba(237, 233, 226, 0.08);
+  --tint-bone-10: rgba(237, 233, 226, 0.1);
+  --tint-bone-16: rgba(237, 233, 226, 0.16);
+  --tint-night-70: rgba(28, 27, 25, 0.7);
+  --tint-lavender-night-14: rgba(165, 159, 240, 0.14);
+  --tint-black-60: rgba(0, 0, 0, 0.6);
+  --light-top: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --ring-bone-22: inset 0 0 0 1px rgba(237, 233, 226, 0.22);
+  /* Un anillo transparente y no "none": así se puede sumar a otra sombra en la misma lista. */
+  --ring-none: 0 0 0 0 transparent;
+
   /* Espacio — pasos reales del diseño, no una escala inventada de múltiplos de 4 */
   --space-1: 4px;
   --space-2: 6px;

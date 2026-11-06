@@ -242,7 +242,7 @@ export function TasksView({
           >
             <motion.path
               d="M3 10c22-8 40 6 64-1s40-8 62 0 44 7 66-1 46-6 72 3 30-3 30-3"
-              stroke="var(--accent)"
+              stroke="var(--accent-line)"
               strokeWidth="5"
               strokeLinecap="round"
               initial={{ pathLength: 0 }}

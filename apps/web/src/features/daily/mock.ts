@@ -69,7 +69,7 @@ const BLOCK_SEEDS: BlockSeed[] = [
   { id: 'esc', start: '17:00', end: '18:30', title: 'Avanzar escuela', kind: 'focus', icon: 'cap', alert: true, nag: 15, link: 'school' },
   { id: 'dash', start: '19:00', end: '20:00', title: 'Proyecto personal', kind: 'focus', icon: 'code', alert: true, link: PROJECT_ID.dash },
   { id: 'cen', start: '20:30', title: 'Cenar', kind: 'meal', icon: 'food', alert: true },
-  { id: 'esr', start: '21:30', title: 'Escribir', kind: 'habit', icon: 'pen', alert: true, note: 'Auralun · 500 palabras' },
+  { id: 'esr', start: '21:30', title: 'Escribir', kind: 'habit', icon: 'pen', alert: true, note: 'Aurelun · 500 palabras' },
   { id: 'zz', start: '23:00', title: 'Dormir', kind: 'habit', icon: 'moon', alert: true, note: 'Sin pantallas desde 22:30' },
 ]
 
@@ -203,7 +203,7 @@ const ENTRY_SEEDS: EntrySeed[] = [
   { mood: 3, text: 'La revisión del bot con mi jefe salió bien; le gustó la propuesta de módulos. Avancé la agenda del dashboard.', summary: ['10 de 12 bloques', '3 tareas hechas', 'Revisión del bot'] },
   { mood: 2, text: 'Día pesado. Me la pasé separando módulos del bot y no me dio tiempo de escribir.', summary: ['8 de 12 bloques', '2 tareas hechas', 'Bloque de enfoque'] },
   { mood: 3, text: 'Dejé listo el meal prep de la semana y empecé a revisar lo de la ingeniería.', summary: ['11 de 12 bloques', '1 tarea hecha', 'Meal prep'] },
-  { mood: 4, text: 'Día tranquilo. Escribí una escena larga de Auralun y salí a caminar.', summary: ['Fin de semana', 'Escribir · 1,200 palabras'] },
+  { mood: 4, text: 'Día tranquilo. Escribí una escena larga de Aurelun y salí a caminar.', summary: ['Fin de semana', 'Escribir · 1,200 palabras'] },
   { mood: 4, text: 'Salí temprano a caminar y avancé lo de la inscripción sin prisa.', summary: ['Fin de semana', '1 tarea hecha'] },
   { mood: 2, text: 'Me costó arrancar, pero al final dejé cerrado el sprint.', summary: ['9 de 12 bloques', '4 tareas hechas'] },
   { mood: 3, text: 'Buen día de enfoque: avancé el módulo de Recordatorios.', summary: ['10 de 12 bloques', '2 tareas hechas'] },
@@ -285,7 +285,7 @@ function seedGoals(ctx: MockContext): Goal[] {
     {
       ...base,
       id: 'goal-aur',
-      title: 'Escribir 50,000 palabras de Auralun',
+      title: 'Escribir 50,000 palabras de Aurelun',
       area: 'personal',
       kind: 'number',
       status: 'active',
@@ -293,7 +293,7 @@ function seedGoals(ctx: MockContext): Goal[] {
       current: 18400,
       unit: 'palabras',
       dueOn: ctx.day(76),
-      why: 'Para no dejar Auralun solo en ideas',
+      why: 'Para no dejar Aurelun solo en ideas',
       log: [
         { id: 'log-aur-1', date: ctx.day(-12), amount: 1200 },
         { id: 'log-aur-2', date: ctx.day(-16), amount: 800 },

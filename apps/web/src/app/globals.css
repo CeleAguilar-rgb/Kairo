@@ -1,6 +1,7 @@
 @import '../styles/tokens.css';
 @import '../styles/semantic.css';
 @import '../styles/modes/light.css';
+@import '../styles/modes/dark.css';
 
 * {
   box-sizing: border-box;

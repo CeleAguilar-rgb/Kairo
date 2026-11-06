@@ -73,7 +73,7 @@
 
 .icon_in_progress {
   background: var(--surface-inverted);
-  color: var(--accent);
+  color: var(--accent-line);
 }
 
 .icon_review {

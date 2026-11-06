@@ -26,7 +26,7 @@ export function WorldHero({ name, description, stats, onEditStats }: WorldHeroPr
           <circle cx="340" cy="150" r="1.2" />
         </g>
         <g className={styles.moon}>
-          <circle cx="930" cy="128" r="86" fill="var(--accent-warm)" />
+          <circle cx="930" cy="128" r="86" fill="var(--warm-line)" />
           <circle cx="964" cy="108" r="78" fill="var(--surface-inverted)" />
         </g>
         <path d="M760 300c40-60 90-78 140-62s80 4 110-30 90-40 150 6v86z" fill="var(--surface-inverted-muted)" />

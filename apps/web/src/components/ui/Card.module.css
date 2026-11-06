@@ -9,13 +9,14 @@
 .surface {
   background: var(--surface);
   border: 1px solid var(--border);
+  box-shadow: var(--card-light);
   color: var(--text);
 }
 
 .inverted {
   background: var(--surface-inverted);
   color: var(--text-on-inverted);
-  box-shadow: var(--shadow-featured);
+  box-shadow: var(--shadow-featured), var(--selected-ring);
 }
 
 .accent {
@@ -50,7 +51,7 @@
 
 .iconInverted {
   background: var(--surface-inverted-muted);
-  color: var(--accent);
+  color: var(--accent-line);
 }
 
 .iconAccent {
@@ -125,7 +126,7 @@
 }
 
 .inverted .link {
-  color: var(--accent);
+  color: var(--accent-line);
   text-decoration-color: transparent;
 }
 

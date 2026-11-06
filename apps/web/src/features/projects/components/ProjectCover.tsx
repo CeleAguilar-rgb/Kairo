@@ -8,6 +8,8 @@ import type { ProjectCoverKey } from '../types'
 // --accent-soft, crema → --surface, cálido → --accent-warm, arena → --surface-muted.
 const INK = 'var(--text)'
 const DARK = 'var(--surface-inverted)'
+// Las figuras rellenas de tinta: en oscuro se aclaran para no perderse contra el fondo.
+const SHAPE = 'var(--art-ink)'
 const LAVENDER = 'var(--accent)'
 const LAVENDER_SOFT = 'var(--accent-soft)'
 const PAPER = 'var(--surface)'
@@ -22,7 +24,7 @@ const ART: Record<ProjectCoverKey, ReactNode> = {
   luna: (
     <>
       <rect width="400" height="200" fill={DARK} />
-      <circle cx="270" cy="96" r="58" fill={WARM} />
+      <circle cx="270" cy="96" r="58" fill="var(--warm-line)" />
       <circle cx="296" cy="82" r="54" fill={DARK} />
       <g fill={CREAM_ON_DARK}>
         <circle cx="80" cy="50" r="3" />
@@ -35,7 +37,7 @@ const ART: Record<ProjectCoverKey, ReactNode> = {
   tablero: (
     <>
       <rect width="400" height="200" fill={LAVENDER_SOFT} />
-      <rect x="90" y="40" width="100" height="74" rx="16" fill={DARK} />
+      <rect x="90" y="40" width="100" height="74" rx="16" fill={SHAPE} />
       <rect x="204" y="40" width="70" height="44" rx="14" fill={PAPER} stroke={INK} strokeWidth="4" />
       <rect x="204" y="98" width="70" height="66" rx="14" fill={LAVENDER} stroke={INK} strokeWidth="4" />
       <rect x="90" y="128" width="100" height="36" rx="14" fill={PAPER} stroke={INK} strokeWidth="4" />
@@ -74,7 +76,7 @@ const ART: Record<ProjectCoverKey, ReactNode> = {
   dash: (
     <>
       <rect width="400" height="200" fill={LAVENDER_SOFT} />
-      <rect x="74" y="38" width="96" height="74" rx="16" fill={DARK} />
+      <rect x="74" y="38" width="96" height="74" rx="16" fill={SHAPE} />
       <rect x="184" y="38" width="64" height="44" rx="14" fill={PAPER} stroke={INK} strokeWidth="3" />
       <rect x="184" y="96" width="64" height="70" rx="14" fill={LAVENDER} stroke={INK} strokeWidth="3" />
       <rect x="74" y="126" width="96" height="40" rx="14" fill={PAPER} stroke={INK} strokeWidth="3" />
@@ -101,7 +103,7 @@ const ART: Record<ProjectCoverKey, ReactNode> = {
       <path d="M304 166l10 18-26-14z" fill={CREAM_ON_DARK} />
       <rect x="194" y="136" width="84" height="8" rx="4" fill={DARK} />
       <rect x="194" y="150" width="54" height="8" rx="4" fill={LAVENDER} />
-      <path d="M330 24L304 62h18l-6 28 30-40h-19z" fill={WARM} stroke={CREAM_ON_DARK} strokeWidth="2.5" strokeLinejoin="round" />
+      <path d="M330 24L304 62h18l-6 28 30-40h-19z" fill="var(--warm-line)" stroke={CREAM_ON_DARK} strokeWidth="2.5" strokeLinejoin="round" />
     </>
   ),
   // VinculaPSI: dos círculos que se encuentran con un corazón en medio
@@ -127,7 +129,7 @@ const ART: Record<ProjectCoverKey, ReactNode> = {
         strokeLinejoin="round"
       />
       <path d="M164 104l16 16M180 104l-16 16" stroke={INK} strokeWidth="4" strokeLinecap="round" />
-      <circle cx="234" cy="112" r="9" fill={DARK} />
+      <circle cx="234" cy="112" r="9" fill={SHAPE} />
       <path d="M190 142c8 6 20 6 28 0" fill="none" stroke={INK} strokeWidth="3.5" strokeLinecap="round" />
       <path d="M256 70l14 30M262 74l-8 6M266 84l-8 6M270 94l-8 6" stroke={INK} strokeWidth="2.5" strokeLinecap="round" />
       <circle cx="330" cy="150" r="16" fill={LAVENDER} stroke={INK} strokeWidth="3" />
@@ -144,7 +146,7 @@ const ART: Record<ProjectCoverKey, ReactNode> = {
       <text x="70" y="158" fontSize="140" fill={INK} style={{ fontFamily: 'var(--font-script)' }}>
         67
       </text>
-      <circle cx="290" cy="100" r="50" fill={DARK} />
+      <circle cx="290" cy="100" r="50" fill={SHAPE} />
       <path d="M290 74v44M272 102l18 18 18-18" fill="none" stroke={LAVENDER} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M248 168h84" stroke={INK} strokeWidth="5" strokeLinecap="round" />
     </>
@@ -164,10 +166,10 @@ const ART: Record<ProjectCoverKey, ReactNode> = {
   ing: (
     <>
       <rect width="400" height="200" fill={SAND} />
-      <rect x="120" y="140" width="170" height="28" rx="6" fill={DARK} />
+      <rect x="120" y="140" width="170" height="28" rx="6" fill={SHAPE} />
       <rect x="132" y="112" width="150" height="28" rx="6" fill={LAVENDER} stroke={INK} strokeWidth="3" />
       <rect x="114" y="84" width="160" height="28" rx="6" fill={PAPER} stroke={INK} strokeWidth="3" />
-      <path d="M200 26l70 24-70 24-70-24z" fill={DARK} />
+      <path d="M200 26l70 24-70 24-70-24z" fill={SHAPE} />
       <path d="M164 62v14c20 12 52 12 72 0V62" fill="none" stroke={INK} strokeWidth="3" />
       <path d="M262 54v26" stroke={INK} strokeWidth="3" strokeLinecap="round" />
       <circle cx="262" cy="84" r="5" fill={WARM} stroke={INK} strokeWidth="2" />

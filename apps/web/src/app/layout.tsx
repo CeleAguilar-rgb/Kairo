@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Gochi_Hand, Outfit } from 'next/font/google'
 import { MotionConfig } from 'motion/react'
+import { readThemePreference } from '@/lib/theme/preference'
 import './globals.css'
 
 const outfit = Outfit({
@@ -27,9 +28,23 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({ children }: LayoutProps<'/'>) {
+export default async function RootLayout({ children }: LayoutProps<'/'>) {
+  const themePreference = await readThemePreference()
+
   return (
-    <html lang="es" data-mode="light" className={`${outfit.variable} ${gochiHand.variable}`}>
+    // suppressHydrationWarning: con 'system', theme-init.js cambia data-mode antes de que React hidrate.
+    <html
+      lang="es"
+      data-mode={themePreference === 'dark' ? 'dark' : 'light'}
+      data-theme-pref={themePreference}
+      className={`${outfit.variable} ${gochiHand.variable}`}
+      suppressHydrationWarning
+    >
+      {/* Va siempre y no solo con 'system': si React lo creara al cambiar de preferencia, no se ejecutaría. */}
+      <head>
+        {/* eslint-disable-next-line @next/next/no-sync-scripts -- tiene que bloquear: corre antes de pintar para que no haya parpadeo. */}
+        <script src="/theme-init.js" />
+      </head>
       <body>
         {/* reducedMotion="user" respeta prefers-reduced-motion para toda animación de Motion, sin repetirlo en cada media query */}
         <MotionConfig reducedMotion="user">{children}</MotionConfig>

@@ -44,7 +44,7 @@
 }
 
 .best {
-  background: var(--surface-inverted);
+  background: var(--progress-ink);
 }
 
 .some {

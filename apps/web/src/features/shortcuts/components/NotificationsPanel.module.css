@@ -52,6 +52,11 @@
   outline-offset: -2px;
 }
 
+.textButton:focus-visible {
+  outline-offset: 3px;
+  border-radius: var(--radius-8);
+}
+
 .groupName {
   display: block;
   padding: var(--space-2) var(--space-7);

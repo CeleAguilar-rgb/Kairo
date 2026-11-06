@@ -118,7 +118,7 @@
 
 .row:hover .chevron {
   transform: translateX(3px);
-  color: var(--accent);
+  color: var(--accent-line);
 }
 
 .empty {

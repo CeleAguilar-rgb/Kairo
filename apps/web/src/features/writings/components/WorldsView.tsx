@@ -24,7 +24,7 @@ export function WorldsView({ worlds }: { worlds: WorldCard[] }) {
           <motion.div key={world.id} variants={fadeUp}>
             <Link href={`/escritos/mundos/${world.id}`} className={styles.world}>
               <svg className={styles.sky} viewBox="0 0 600 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                <circle cx="470" cy="90" r="54" fill="var(--accent-warm)" />
+                <circle cx="470" cy="90" r="54" fill="var(--warm-line)" />
                 <circle cx="448" cy="78" r="54" fill="var(--surface-inverted)" />
                 <g fill="var(--text-on-inverted)">
                   <circle cx="80" cy="40" r="2" />

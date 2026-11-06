@@ -163,7 +163,7 @@
 }
 
 .chipOn .chipIcon {
-  color: var(--accent);
+  color: var(--accent-line);
 }
 
 .adjustLink {

@@ -49,6 +49,7 @@
   inset: 0;
   border-radius: inherit;
   background: var(--surface-inverted);
+  box-shadow: var(--selected-ring);
 }
 
 .label {
