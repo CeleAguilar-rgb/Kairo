@@ -62,7 +62,7 @@
   font-weight: 400;
   font-size: 104px;
   line-height: 0.9;
-  color: var(--accent-warm);
+  color: var(--warm-line);
 }
 
 .description {

@@ -97,7 +97,7 @@
 
 .statIcon_left {
   background: var(--surface-inverted-muted);
-  color: var(--accent);
+  color: var(--accent-line);
 }
 
 .statLabel {
@@ -173,7 +173,7 @@
 }
 
 .swatchExpense {
-  background: var(--surface-inverted);
+  background: var(--progress-ink);
 }
 
 .chart {
@@ -220,7 +220,7 @@
 }
 
 .barExpense {
-  background: var(--surface-inverted);
+  background: var(--progress-ink);
 }
 
 /* Los meses que no se están viendo van más tenues */
@@ -328,7 +328,7 @@
 }
 
 .tone_ink {
-  background: var(--surface-inverted);
+  background: var(--progress-ink);
 }
 
 .tone_strong {

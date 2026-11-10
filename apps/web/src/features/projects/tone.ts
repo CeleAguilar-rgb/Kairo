@@ -4,9 +4,9 @@
 // variables semánticas (regla 5), en el orden de los colores del canvas.
 const TONES = [
   'var(--accent)',
-  'var(--surface-inverted)',
+  'var(--progress-ink)',
   'var(--accent-ink)',
-  'var(--accent-warm)',
+  'var(--warm-line)',
   'var(--text-subtle)',
   'var(--accent-strong)',
   'var(--border-control)',

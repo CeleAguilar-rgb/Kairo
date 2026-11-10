@@ -30,7 +30,7 @@
 /* El lomo de un libro (EscritosInicio): tinta con letra dorada, lavanda y arena */
 .spine_ink {
   background: var(--surface-inverted);
-  color: var(--accent-warm);
+  color: var(--warm-line);
 }
 
 .spine_lavender {

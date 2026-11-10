@@ -4,6 +4,7 @@ import {
   MODULE_IDS,
   type UpdateProfileInput,
   type UpdateSectionsInput,
+  type UpdateThemeInput,
 } from '@kairo/shared'
 import { AccountRepository, type SectionRow } from './account.repository.js'
 
@@ -36,6 +37,11 @@ export class AccountService {
 
   async updateProfile(userId: string, input: UpdateProfileInput) {
     await this.repository.updateProfile(userId, input)
+    return this.getMe(userId)
+  }
+
+  async updateTheme(userId: string, input: UpdateThemeInput) {
+    await this.repository.updateTheme(userId, input.theme)
     return this.getMe(userId)
   }
 

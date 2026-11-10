@@ -34,8 +34,8 @@
 }
 
 .solid {
-  background: var(--surface-inverted);
-  color: var(--text-on-inverted);
+  background: var(--action);
+  color: var(--on-action);
   box-shadow: var(--shadow-sm);
 }
 
@@ -63,7 +63,7 @@
 
 .danger {
   background: var(--danger);
-  color: var(--text-on-inverted);
+  color: var(--on-danger);
 }
 
 .danger:hover:not(:disabled) {

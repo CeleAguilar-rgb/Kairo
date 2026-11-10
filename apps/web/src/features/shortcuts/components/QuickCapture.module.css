@@ -12,8 +12,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--surface-inverted);
-  color: var(--text-on-inverted);
+  background: var(--action);
+  color: var(--on-action);
   box-shadow: var(--shadow-lg);
   cursor: pointer;
 }

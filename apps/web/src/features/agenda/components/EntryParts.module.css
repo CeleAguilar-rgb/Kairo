@@ -12,7 +12,8 @@
   min-height: 26px;
   padding: 0 var(--space-3);
   border-radius: var(--radius-pill);
-  border: 1px solid;
+  border-width: 1px;
+  border-style: solid;
   font-size: 12px;
   cursor: pointer;
   transition: opacity 250ms ease;
@@ -34,7 +35,8 @@
   box-sizing: border-box;
   position: absolute;
   border-radius: var(--radius-12);
-  border: 1px solid;
+  border-width: 1px;
+  border-style: solid;
   padding: var(--space-2) var(--space-3);
   display: flex;
   flex-direction: column;

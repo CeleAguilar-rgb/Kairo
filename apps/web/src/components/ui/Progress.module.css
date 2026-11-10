@@ -16,7 +16,7 @@
 }
 
 .ink {
-  background: var(--surface-inverted);
+  background: var(--progress-ink);
 }
 
 .danger {
@@ -45,7 +45,7 @@
 }
 
 .ringFill {
-  stroke: var(--accent);
+  stroke: var(--accent-line);
 }
 
 .ringLabel {

@@ -6,6 +6,8 @@ import {
   updateProfileSchema,
   type UpdateSectionsInput,
   updateSectionsSchema,
+  type UpdateThemeInput,
+  updateThemeSchema,
 } from '@kairo/shared'
 import { CurrentUser } from '../auth/current-user.decorator.js'
 import { ZodValidationPipe } from '../common/pipes/zod-validation.pipe.js'
@@ -29,6 +31,14 @@ export class AccountController {
     @Body(new ZodValidationPipe(updateProfileSchema)) body: UpdateProfileInput,
   ) {
     return this.accountService.updateProfile(userId, body)
+  }
+
+  @Patch('theme')
+  updateTheme(
+    @CurrentUser() userId: string,
+    @Body(new ZodValidationPipe(updateThemeSchema)) body: UpdateThemeInput,
+  ) {
+    return this.accountService.updateTheme(userId, body)
   }
 
   @Post('onboarding')

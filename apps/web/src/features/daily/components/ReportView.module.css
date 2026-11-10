@@ -108,7 +108,7 @@
 
 .dayToday {
   font-weight: 600;
-  color: var(--surface);
+  color: var(--text-on-inverted);
   background: var(--surface-inverted);
 }
 
@@ -177,7 +177,7 @@
 
 .cell_done {
   background: var(--accent-strong);
-  color: var(--surface);
+  color: var(--on-action);
 }
 
 .cell_late {

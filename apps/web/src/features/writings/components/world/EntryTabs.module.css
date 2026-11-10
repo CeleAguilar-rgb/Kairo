@@ -120,7 +120,7 @@
 
 .tagDark {
   background: var(--surface-inverted-muted);
-  color: var(--accent);
+  color: var(--accent-line);
 }
 
 .tileName {

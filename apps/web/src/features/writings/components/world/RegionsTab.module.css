@@ -78,7 +78,7 @@
 }
 
 .regionDark .name {
-  color: var(--accent-warm);
+  color: var(--warm-line);
 }
 
 .kind {

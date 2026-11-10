@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common'
-import type { ModuleId } from '@kairo/shared'
+import type { ModuleId, ThemePreference } from '@kairo/shared'
 import { asc, eq, lt } from 'drizzle-orm'
 import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 import { DB } from '../common/db/db.module.js'
@@ -50,6 +50,10 @@ export class AccountRepository {
     data: { name: string; avatarPath: string },
   ) {
     await this.db.update(profiles).set(data).where(eq(profiles.id, userId))
+  }
+
+  async updateTheme(userId: string, theme: ThemePreference) {
+    await this.db.update(profiles).set({ theme, updatedAt: new Date() }).where(eq(profiles.id, userId))
   }
 
   // Reemplazo completo: la tabla es chica (una fila por módulo como máximo) y

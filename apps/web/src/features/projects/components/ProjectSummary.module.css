@@ -336,7 +336,7 @@
 
 .linkIcon2 {
   background: var(--surface-inverted);
-  color: var(--accent);
+  color: var(--accent-line);
 }
 
 /* Notas */

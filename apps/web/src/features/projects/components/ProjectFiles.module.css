@@ -408,7 +408,7 @@
 
 .linkIcon0 {
   background: var(--surface-inverted);
-  color: var(--accent);
+  color: var(--accent-line);
 }
 
 .linkIcon1 {
@@ -493,7 +493,7 @@
 .spaceFill {
   height: 100%;
   border-radius: var(--radius-8);
-  background: var(--surface-inverted);
+  background: var(--progress-ink);
   transform-origin: left center;
 }
 

@@ -8,8 +8,10 @@
   overflow-x: clip;
 }
 
+/* El espacio de abajo es para el reproductor y el botón "+", que flotan fijos en la esquina:
+   sin él, al llegar al final de una página larga le tapan su última fila. */
 .content {
-  padding: 0;
+  padding: 0 0 var(--space-15);
 }
 
 /* Se hizo clic en un enlace y la página siguiente todavía no llega: la actual
