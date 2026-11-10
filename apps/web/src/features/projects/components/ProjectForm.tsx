@@ -137,6 +137,13 @@ export function ProjectForm({ mode, projectId, initial, initialCoverUrl, taskCou
     addObjective()
   }
 
+  // Enter en los campos del enlace lo agrega, igual que en Objetivos, en vez de enviar todo el formulario
+  const handleLinkKey = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key !== 'Enter') return
+    event.preventDefault()
+    addLink()
+  }
+
   const addLink = () => {
     if (!linkTitle.trim() && !linkUrl.trim()) return
     const parsed = projectLinkSchema.safeParse({ title: linkTitle, url: linkUrl.trim() })
@@ -435,6 +442,7 @@ export function ProjectForm({ mode, projectId, initial, initialCoverUrl, taskCou
                     setLinkTitle(event.target.value)
                     setLinkError('')
                   }}
+                  onKeyDown={handleLinkKey}
                 />
                 <Input
                   id="project-link-url"
@@ -447,6 +455,7 @@ export function ProjectForm({ mode, projectId, initial, initialCoverUrl, taskCou
                     setLinkUrl(event.target.value)
                     setLinkError('')
                   }}
+                  onKeyDown={handleLinkKey}
                 />
                 <Button variant="ghost" onClick={addLink}>
                   Agregar

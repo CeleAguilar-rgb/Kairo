@@ -47,7 +47,7 @@ El orden puede cambiar; la arquitectura de módulos existe para eso.
 | Qué | Qué debe quedar preparado desde ya |
 |---|---|
 | Versión de teléfono (responsive, menú abajo, PWA) | Layouts sin anchos fijos |
-| Modo oscuro: **construido** (decisión #55) | Todo color por variable semántica; `profiles.theme` |
+| Modo oscuro: **construido** (decisión #57) | Todo color por variable semántica; `profiles.theme` |
 | Varios usuarios (invitar a otros desde la app) | Todo filtrado por `user_id` (ya es regla de seguridad) |
 | Ver y editar sin conexión | ids uuid, `updated_at` confiable, borrado suave |
 | Exportar y respaldos propios | Nada especial |

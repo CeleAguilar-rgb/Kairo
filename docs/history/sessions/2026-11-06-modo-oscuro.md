@@ -22,7 +22,7 @@
 
 ## Decisiones tomadas
 
-- #55: el tema se guarda en el perfil y la cookie es su copia; si no coinciden, gana el perfil.
+- #57: el tema se guarda en el perfil y la cookie es su copia; si no coinciden, gana el perfil.
 
 ## Qué se probó
 
