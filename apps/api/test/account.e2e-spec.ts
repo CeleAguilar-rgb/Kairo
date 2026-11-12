@@ -144,6 +144,23 @@ describe('Account (e2e)', () => {
       expect(resB.body.profile.theme).toBe('light')
     })
 
+    it('cambiar el tema de color propio no toca el de otro usuario, aunque la petición nombre a otro', async () => {
+      const resA = await request(app.getHttpServer())
+        .patch('/v1/me/appearance')
+        .set(authHeader(userA))
+        .send({ colorTheme: 'sage', intensity: 'vivid', userId: userB.id, id: userB.id })
+        .expect(200)
+      expect(resA.body.profile.colorTheme).toBe('sage')
+      expect(resA.body.profile.themeIntensity).toBe('vivid')
+
+      const resB = await request(app.getHttpServer())
+        .get('/v1/me')
+        .set(authHeader(userB))
+        .expect(200)
+      expect(resB.body.profile.colorTheme).toBe('lavender')
+      expect(resB.body.profile.themeIntensity).toBe('subtle')
+    })
+
     it('reordenar las propias secciones no toca las de otro usuario', async () => {
       await request(app.getHttpServer())
         .patch('/v1/me/sections')
@@ -177,6 +194,26 @@ describe('Account (e2e)', () => {
         .set(authHeader(userA))
         .send({ theme: 'sepia' })
         .expect(400)
+    })
+
+    it('rechaza un tema de color o una intensidad que no existen', async () => {
+      await request(app.getHttpServer())
+        .patch('/v1/me/appearance')
+        .set(authHeader(userA))
+        .send({ colorTheme: 'neon', intensity: 'subtle' })
+        .expect(400)
+      await request(app.getHttpServer())
+        .patch('/v1/me/appearance')
+        .set(authHeader(userA))
+        .send({ colorTheme: 'sage', intensity: 'max' })
+        .expect(400)
+    })
+
+    it('rechaza cambiar el tema de color sin token', () => {
+      return request(app.getHttpServer())
+        .patch('/v1/me/appearance')
+        .send({ colorTheme: 'sage', intensity: 'tinted' })
+        .expect(401)
     })
 
     it('rechaza cambiar el tema sin token', () => {

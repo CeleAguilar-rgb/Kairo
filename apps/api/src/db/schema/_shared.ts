@@ -1,9 +1,13 @@
+import { COLOR_THEMES, THEME_INTENSITIES } from '@kairo/shared'
 import { boolean, date, text, time, timestamp, uuid } from 'drizzle-orm/pg-core'
 import { pgSchema } from 'drizzle-orm/pg-core'
 
 export const app = pgSchema('app')
 
 export const themeEnum = app.enum('theme', ['light', 'dark', 'system'])
+// Las mismas listas que valida @kairo/shared: un tema nuevo se agrega allá y aquí sale en la migración.
+export const colorThemeEnum = app.enum('color_theme', COLOR_THEMES)
+export const themeIntensityEnum = app.enum('theme_intensity', THEME_INTENSITIES)
 export const weekStartEnum = app.enum('week_start', ['monday', 'sunday'])
 export const hourFormatEnum = app.enum('hour_format', ['12h', '24h'])
 
@@ -22,6 +26,8 @@ export const profiles = app
     hourFormat: hourFormatEnum('hour_format').notNull().default('12h'),
     currency: text('currency').notNull().default('MXN'),
     theme: themeEnum('theme').notNull().default('light'),
+    colorTheme: colorThemeEnum('color_theme').notNull().default('lavender'),
+    themeIntensity: themeIntensityEnum('theme_intensity').notNull().default('subtle'),
     quietFrom: time('quiet_from'),
     quietTo: time('quiet_to'),
     decorationsOn: boolean('decorations_on').notNull().default(true),

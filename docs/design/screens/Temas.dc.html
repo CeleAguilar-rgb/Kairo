@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Temas de color</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gochi+Hand&amp;family=Outfit:wght@300;400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+.tb{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:10px;min-height:52px;padding:8px 16px 8px 8px;border-radius:999px;cursor:pointer;transition:background .2s ease,box-shadow .2s ease}
+.tb:focus-visible,.sg:focus-visible,.thumb:focus-visible{outline:2px solid #6a62d6;outline-offset:2px}
+.sg{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;min-height:40px;padding:0 18px;border-radius:999px;cursor:pointer;font-weight:500}
+.thumbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:1000px){.thumbs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.thumbs{grid-template-columns:1fr}}
+.thumb{all:unset;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:24px;cursor:pointer;min-width:0}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (prefers-reduced-motion:reduce){.tb{transition:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #f3eee6; color: #1f1c19; font-family: 'Outfit', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+<div style="max-width: 1280px; margin: 0 auto; padding: 36px 24px 56px; display: flex; flex-direction: column; gap: 22px; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; color: #6b645b">Kairo · Perfil › Apariencia</span><h1 style="margin: 0; font-family: 'Gochi Hand', cursive; font-weight: 400; font-size: 64px; line-height: 1">Temas de color</h1>
+<p style="margin: 0; color: #4a443d; max-width: 76ch">12 temas, y para cada uno eliges qué tanto pinta: <b style="font-weight: 500">Sutil</b> cambia solo el acento, <b style="font-weight: 500">Teñido</b> también le da su tono a fondos y tarjetas, e <b style="font-weight: 500">Intenso</b> además pinta la tarjeta principal y los botones. Funciona en claro y en oscuro.</p></div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+<div role="radiogroup" aria-label="Tema" style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{themes}}" as="t" hint-placeholder-count="6"><button class="tb" type="button" role="radio" aria-checked="{{t.sel}}" onClick="{{t.pick}}" style="{{t.style}}"><span style="{{t.dot}}"></span>{{t.name}}</button></sc-for></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><div role="radiogroup" aria-label="Intensidad" style="display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: #fffdf9; border: 1px solid #e6ded2"><sc-for list="{{levels}}" as="m" hint-placeholder-count="3"><button class="sg" type="button" role="radio" aria-checked="{{m.sel}}" onClick="{{m.pick}}" style="{{m.style}}">{{m.name}}</button></sc-for></div><div role="radiogroup" aria-label="Modo" style="display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: #fffdf9; border: 1px solid #e6ded2"><sc-for list="{{modes}}" as="m" hint-placeholder-count="2"><button class="sg" type="button" role="radio" aria-checked="{{m.sel}}" onClick="{{m.pick}}" style="{{m.style}}">{{m.name}}</button></sc-for></div></div>
+</div>
+<p style="margin: -8px 0 0; color: #6b645b">{{cur.desc}}</p>
+<div style="{{big.page}}">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px">
+<span style="{{big.logoStyle}}"><svg width="{{big.logoPx}}" height="{{big.logoPx}}" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="{{big.ink}}" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="{{big.fill}}" stroke="{{big.ink}}" stroke-width="3.5"></circle></svg>kairo</span>
+<span style="{{big.btn}}">+ Nuevo</span>
+</div>
+<div><div style="{{big.hello}}">Buenos días</div><svg width="{{big.waveW}}" height="12" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true" style="display: block"><path d="M2 8 C 20 2, 35 2, 50 7 S 80 12, 100 6 S 140 1, 160 6 S 190 10, 198 5" fill="none" stroke="{{big.fill}}" stroke-width="4" stroke-linecap="round"></path></svg></div>
+<div style="{{big.grid}}">
+<div style="{{big.hero}}"><span style="font-weight: 500">Pendientes de hoy</span>
+<span style="display: flex; align-items: center; gap: 8px"><span style="{{big.checkOn}}"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="{{big.checkInk}}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></span><span style="text-decoration: line-through; opacity: .6">Comprar despensa</span></span>
+<span style="display: flex; align-items: center; gap: 8px"><span style="{{big.checkOff}}"></span>Revisar el bot</span>
+<span style="{{big.track}}"><span style="{{big.bar}}"></span></span></div>
+<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<div style="{{big.soft}}"><span style="font-weight: 500">Recordatorio</span><span style="{{big.softSub}}">Renovar el dominio · 15 oct</span></div>
+<div style="{{big.card}}"><span style="font-weight: 500">Metas</span><span style="{{big.track2}}"><span style="{{big.bar2}}"></span></span><span style="{{big.link}}">Ver metas</span></div>
+</div>
+</div>
+</div>
+<h2 style="margin: 12px 0 0; font-size: 22px; font-weight: 500">Todos juntos</h2>
+<div class="thumbs"><sc-for list="{{thumbs}}" as="th" hint-placeholder-count="6"><button class="thumb" type="button" onClick="{{th.pick}}" aria-label="{{th.label}}" style="{{th.style}}"><span style="display: flex; justify-content: space-between; align-items: center"><span style="font-weight: 500">{{th.name}}</span><span style="font-size: 12px; color: #6b645b">{{th.lvl}}</span></span><span class="pair"><div style="{{th.l.page}}">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px">
+<span style="{{th.l.logoStyle}}"><svg width="{{th.l.logoPx}}" height="{{th.l.logoPx}}" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="{{th.l.ink}}" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="{{th.l.fill}}" stroke="{{th.l.ink}}" stroke-width="3.5"></circle></svg>kairo</span>
+<span style="{{th.l.btn}}">+ Nuevo</span>
+</div>
+<div><div style="{{th.l.hello}}">Buenos días</div><svg width="{{th.l.waveW}}" height="12" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true" style="display: block"><path d="M2 8 C 20 2, 35 2, 50 7 S 80 12, 100 6 S 140 1, 160 6 S 190 10, 198 5" fill="none" stroke="{{th.l.fill}}" stroke-width="4" stroke-linecap="round"></path></svg></div>
+<div style="{{th.l.grid}}">
+<div style="{{th.l.hero}}"><span style="font-weight: 500">Pendientes de hoy</span>
+<span style="display: flex; align-items: center; gap: 8px"><span style="{{th.l.checkOn}}"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="{{th.l.checkInk}}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></span><span style="text-decoration: line-through; opacity: .6">Comprar despensa</span></span>
+<span style="display: flex; align-items: center; gap: 8px"><span style="{{th.l.checkOff}}"></span>Revisar el bot</span>
+<span style="{{th.l.track}}"><span style="{{th.l.bar}}"></span></span></div>
+<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<div style="{{th.l.soft}}"><span style="font-weight: 500">Recordatorio</span><span style="{{th.l.softSub}}">Renovar el dominio · 15 oct</span></div>
+<div style="{{th.l.card}}"><span style="font-weight: 500">Metas</span><span style="{{th.l.track2}}"><span style="{{th.l.bar2}}"></span></span><span style="{{th.l.link}}">Ver metas</span></div>
+</div>
+</div>
+</div><div style="{{th.d.page}}">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px">
+<span style="{{th.d.logoStyle}}"><svg width="{{th.d.logoPx}}" height="{{th.d.logoPx}}" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M 50 16 A 34 34 0 1 1 16 50" stroke="{{th.d.ink}}" stroke-width="12" stroke-linecap="round"></path><circle cx="26" cy="26" r="9" fill="{{th.d.fill}}" stroke="{{th.d.ink}}" stroke-width="3.5"></circle></svg>kairo</span>
+<span style="{{th.d.btn}}">+ Nuevo</span>
+</div>
+<div><div style="{{th.d.hello}}">Buenos días</div><svg width="{{th.d.waveW}}" height="12" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true" style="display: block"><path d="M2 8 C 20 2, 35 2, 50 7 S 80 12, 100 6 S 140 1, 160 6 S 190 10, 198 5" fill="none" stroke="{{th.d.fill}}" stroke-width="4" stroke-linecap="round"></path></svg></div>
+<div style="{{th.d.grid}}">
+<div style="{{th.d.hero}}"><span style="font-weight: 500">Pendientes de hoy</span>
+<span style="display: flex; align-items: center; gap: 8px"><span style="{{th.d.checkOn}}"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="{{th.d.checkInk}}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></span><span style="text-decoration: line-through; opacity: .6">Comprar despensa</span></span>
+<span style="display: flex; align-items: center; gap: 8px"><span style="{{th.d.checkOff}}"></span>Revisar el bot</span>
+<span style="{{th.d.track}}"><span style="{{th.d.bar}}"></span></span></div>
+<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<div style="{{th.d.soft}}"><span style="font-weight: 500">Recordatorio</span><span style="{{th.d.softSub}}">Renovar el dominio · 15 oct</span></div>
+<div style="{{th.d.card}}"><span style="font-weight: 500">Metas</span><span style="{{th.d.track2}}"><span style="{{th.d.bar2}}"></span></span><span style="{{th.d.link}}">Ver metas</span></div>
+</div>
+</div>
+</div></span></button></sc-for></div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { theme: 'lavanda', mode: 'light', level: 'tenido' }; }
+  renderVals() {
+    var self = this, st = this.state;
+    var T = {"lavanda": {"name": "Lavanda", "desc": "El de ahora. Tranquilo y nocturno.", "s": {"50": "#f6f5ff", "100": "#e9e7fb", "200": "#dad7f6", "300": "#cbc6f5", "400": "#aaa4f0", "500": "#8982e9", "600": "#6a62d6", "700": "#514aac", "800": "#3a3480", "900": "#28235c", "950": "#17123e"}, "n": {"light": {"bg": "#eeeffc", "card": "#fbfbff", "row": "#f4f4ff", "line": "#dcdced", "hero": "#202030", "heroInk": "#f1f1fa", "track": "#3b3b4d", "ink2": "#62626f"}, "dark": {"bg": "#0f0f15", "card": "#181921", "row": "#20212a", "line": "rgba(237,233,226,.10)", "hero": "#1e1e29", "heroInk": "#ede9e2", "track": "#2c2d38", "ink2": "#b3ada4"}}}, "salvia": {"name": "Salvia", "desc": "Verde suave, para enfocarse.", "s": {"50": "#ecfcef", "100": "#dcefdf", "200": "#cbe3cf", "300": "#b9d8bf", "400": "#98bda0", "500": "#7ba183", "600": "#62856a", "700": "#4d6953", "800": "#394e3e", "900": "#263529", "950": "#121e15"}, "n": {"light": {"bg": "#e8f4ea", "card": "#f9fdf9", "row": "#eff8f0", "line": "#d4e2d7", "hero": "#17261a", "heroInk": "#ecf4ee", "track": "#324235", "ink2": "#5b675d"}, "dark": {"bg": "#0b110c", "card": "#141c16", "row": "#1b241d", "line": "rgba(237,233,226,.10)", "hero": "#18221a", "heroInk": "#ede9e2", "track": "#273129", "ink2": "#b3ada4"}}}, "verde-agua": {"name": "Verde agua", "desc": "Fresco y ligero.", "s": {"50": "#e5fdf5", "100": "#d3f0e6", "200": "#bee4d7", "300": "#a8d8c8", "400": "#84bdab", "500": "#66a28f", "600": "#4e8675", "700": "#3d6a5c", "800": "#2e4f45", "900": "#1d362e", "950": "#0b1f19"}, "n": {"light": {"bg": "#e5f4ef", "card": "#f7fdfb", "row": "#ecf8f4", "line": "#d0e3dc", "hero": "#112620", "heroInk": "#eaf5f1", "track": "#2d423b", "ink2": "#586762"}, "dark": {"bg": "#09110f", "card": "#121c19", "row": "#192521", "line": "rgba(237,233,226,.10)", "hero": "#14231e", "heroInk": "#ede9e2", "track": "#24312d", "ink2": "#b3ada4"}}}, "bosque": {"name": "Bosque", "desc": "Verde profundo, sereno.", "s": {"50": "#e8fdee", "100": "#cde6d4", "200": "#b1d0ba", "300": "#93bba0", "400": "#77a686", "500": "#5f9170", "600": "#4c7a5c", "700": "#3c6149", "800": "#2e4937", "900": "#1f3326", "950": "#0f1f14"}, "n": {"light": {"bg": "#e7f4eb", "card": "#f8fdfa", "row": "#eef8f1", "line": "#d3e3d8", "hero": "#16261b", "heroInk": "#ecf4ee", "track": "#314236", "ink2": "#5b675e"}, "dark": {"bg": "#0b110d", "card": "#141c16", "row": "#1b241e", "line": "rgba(237,233,226,.10)", "hero": "#17221b", "heroInk": "#ede9e2", "track": "#263129", "ink2": "#b3ada4"}}}, "cielo": {"name": "Cielo", "desc": "Azul claro, despejado.", "s": {"50": "#f1f8ff", "100": "#dbecff", "200": "#c9dff8", "300": "#b7d3f2", "400": "#96b6da", "500": "#789abf", "600": "#607ea0", "700": "#4b647f", "800": "#374a5e", "900": "#243241", "950": "#111b27"}, "n": {"light": {"bg": "#e8f1fc", "card": "#f9fcff", "row": "#eef6ff", "line": "#d4dfed", "hero": "#172330", "heroInk": "#ecf3fa", "track": "#313e4d", "ink2": "#5b646f"}, "dark": {"bg": "#0b1015", "card": "#141a21", "row": "#1b222a", "line": "rgba(237,233,226,.10)", "hero": "#172029", "heroInk": "#ede9e2", "track": "#262f38", "ink2": "#b3ada4"}}}, "oceano": {"name": "Océano", "desc": "Azul intenso, concentrado.", "s": {"50": "#f1f8ff", "100": "#c6e1fd", "200": "#a7c9ec", "300": "#87b1dd", "400": "#689acd", "500": "#4d83b7", "600": "#3b6c9c", "700": "#2f567d", "800": "#24425f", "900": "#182e44", "950": "#0b1c2d"}, "n": {"light": {"bg": "#e7f1fc", "card": "#f9fcff", "row": "#eef6fe", "line": "#d3e0ec", "hero": "#16232f", "heroInk": "#ecf3fa", "track": "#313f4c", "ink2": "#5b646e"}, "dark": {"bg": "#0b1015", "card": "#141a21", "row": "#1b222a", "line": "rgba(237,233,226,.10)", "hero": "#172029", "heroInk": "#ede9e2", "track": "#262f38", "ink2": "#b3ada4"}}}, "mostaza": {"name": "Mostaza", "desc": "Amarillo cálido, con chispa.", "s": {"50": "#fff6df", "100": "#fbe5ac", "200": "#f1d58a", "300": "#ddb954", "400": "#c79d00", "500": "#a88500", "600": "#8b6d00", "700": "#6f5700", "800": "#544100", "900": "#3b2c00", "950": "#231900"}, "n": {"light": {"bg": "#f5f0e3", "card": "#fdfcf7", "row": "#f9f5eb", "line": "#e4dece", "hero": "#272110", "heroInk": "#f5f2e9", "track": "#433d2b", "ink2": "#686357"}, "dark": {"bg": "#120f08", "card": "#1c1911", "row": "#252118", "line": "rgba(237,233,226,.10)", "hero": "#231f13", "heroInk": "#ede9e2", "track": "#322e22", "ink2": "#b3ada4"}}}, "arena": {"name": "Arena", "desc": "Casi neutro, como papel.", "s": {"50": "#fff6e4", "100": "#f9ecd3", "200": "#f3e3c3", "300": "#dac69e", "400": "#c1aa7a", "500": "#a78e5c", "600": "#8a7446", "700": "#6e5c37", "800": "#524529", "900": "#382e1a", "950": "#211909"}, "n": {"light": {"bg": "#f6efe3", "card": "#fefbf7", "row": "#faf5eb", "line": "#e5ddce", "hero": "#282010", "heroInk": "#f6f1e9", "track": "#453c2b", "ink2": "#696257"}, "dark": {"bg": "#120f08", "card": "#1d1911", "row": "#262118", "line": "rgba(237,233,226,.10)", "hero": "#241e13", "heroInk": "#ede9e2", "track": "#332d22", "ink2": "#b3ada4"}}}, "durazno": {"name": "Durazno", "desc": "Cálido, con energía.", "s": {"50": "#fff4ee", "100": "#ffdec9", "200": "#fac9a8", "300": "#f2b48a", "400": "#dd9663", "500": "#c47a44", "600": "#a5622f", "700": "#834d24", "800": "#623a1c", "900": "#452711", "950": "#2b1403"}, "n": {"light": {"bg": "#faede5", "card": "#fffbf8", "row": "#fdf3ec", "line": "#eadbd1", "hero": "#2d1e13", "heroInk": "#f9f0ea", "track": "#4a392e", "ink2": "#6d6059"}, "dark": {"bg": "#140e0a", "card": "#1f1812", "row": "#291f19", "line": "rgba(237,233,226,.10)", "hero": "#281d15", "heroInk": "#ede9e2", "track": "#362b24", "ink2": "#b3ada4"}}}, "coral": {"name": "Coral", "desc": "Vivo y alegre.", "s": {"50": "#fff4f2", "100": "#ffded8", "200": "#ffc7bd", "300": "#fbb0a5", "400": "#f39c8f", "500": "#d77d70", "600": "#b46358", "700": "#8f4e45", "800": "#6a3a33", "900": "#492520", "950": "#2d110e"}, "n": {"light": {"bg": "#fcece9", "card": "#fffbfa", "row": "#fff2f0", "line": "#ecd9d6", "hero": "#2f1c19", "heroInk": "#faefed", "track": "#4c3734", "ink2": "#6e5f5d"}, "dark": {"bg": "#150d0c", "card": "#201715", "row": "#2a1e1d", "line": "rgba(237,233,226,.10)", "hero": "#291b19", "heroInk": "#ede9e2", "track": "#372a28", "ink2": "#b3ada4"}}}, "rosa": {"name": "Rosa", "desc": "Dulce y personal.", "s": {"50": "#fff3f7", "100": "#ffe1ea", "200": "#fbcfdd", "300": "#f5bfd0", "400": "#dd9fb3", "500": "#c18197", "600": "#a1687b", "700": "#805161", "800": "#5f3c48", "900": "#412830", "950": "#27141b"}, "n": {"light": {"bg": "#fbebf0", "card": "#fffafc", "row": "#fef1f5", "line": "#ebd8de", "hero": "#2d1c22", "heroInk": "#f9eff2", "track": "#4b373d", "ink2": "#6d5f63"}, "dark": {"bg": "#150d0f", "card": "#201619", "row": "#291e22", "line": "rgba(237,233,226,.10)", "hero": "#281b1f", "heroInk": "#ede9e2", "track": "#362a2e", "ink2": "#b3ada4"}}}, "vino": {"name": "Vino", "desc": "Profundo y elegante.", "s": {"50": "#fff3f5", "100": "#ffd1da", "200": "#f8afbf", "300": "#eb91a6", "400": "#dc738d", "500": "#c65a77", "600": "#aa4763", "700": "#8a3a50", "800": "#682c3c", "900": "#491d29", "950": "#2f0d17"}, "n": {"light": {"bg": "#fcebee", "card": "#fffafb", "row": "#fef1f4", "line": "#ecd8dc", "hero": "#2e1c20", "heroInk": "#faeff0", "track": "#4b373b", "ink2": "#6e5f61"}, "dark": {"bg": "#150d0e", "card": "#201618", "row": "#291e20", "line": "rgba(237,233,226,.10)", "hero": "#291b1e", "heroInk": "#ede9e2", "track": "#372a2c", "ink2": "#b3ada4"}}}};
+    var KEYS = Object.keys(T);
+    var view = function (k, mode, small) {
+      var lvl = st.level;
+      var s = T[k].s, d = mode === 'dark';
+      var N = d ? { bg: '#131211', card: '#1e1d1b', row: '#262523', line: 'rgba(237,233,226,.10)', ink: '#ede9e2', ink2: '#b3ada4', hero: '#2a2824', heroInk: '#ede9e2', track: '#33302c' } : { bg: '#f3eee6', card: '#fffdf9', row: '#f7f2ea', line: '#e6ded2', ink: '#1f1c19', ink2: '#6b645b', hero: '#1f1c19', heroInk: '#f3eee6', track: '#3a3530' };
+      if (lvl !== 'sutil') { var tn = T[k].n[mode]; N = { bg: tn.bg, card: tn.card, row: tn.row, line: tn.line, ink: N.ink, ink2: tn.ink2, hero: tn.hero, heroInk: tn.heroInk, track: tn.track }; }
+      if (lvl === 'intenso') { if (d) { N.hero = s['900']; N.heroInk = s['100']; N.track = s['800']; } else { N.hero = s['800']; N.heroInk = s['50']; N.track = s['700']; } }
+      var fill = d ? s['400'] : s['300'], soft = d ? s['900'] : s['100'], softInk = d ? s['200'] : s['800'], softBd = d ? s['800'] : s['200'];
+      var btnBg = d ? s['300'] : (lvl === 'intenso' ? s['700'] : '#1f1c19'), btnInk = d ? s['950'] : (lvl === 'intenso' ? s['50'] : '#f3eee6'), link = d ? s['300'] : s['700'];
+      var pad = small ? 12 : 28, rad = small ? 16 : 28, fs = small ? 11 : 15;
+      var card = 'background: ' + N.card + '; border: 1px solid ' + N.line + '; border-radius: ' + (small ? 12 : 22) + 'px; padding: ' + (small ? 8 : 16) + 'px; display: flex; flex-direction: column; gap: ' + (small ? 4 : 8) + 'px; min-width: 0;' + (d ? ' box-shadow: inset 0 1px 0 rgba(255,255,255,.05);' : '');
+      return {
+        page: 'background: ' + N.bg + '; color: ' + N.ink + '; border-radius: ' + rad + 'px; padding: ' + pad + 'px; display: flex; flex-direction: column; gap: ' + (small ? 8 : 16) + 'px; font-size: ' + fs + 'px; text-align: left; border: 1px solid ' + (d ? 'rgba(237,233,226,.08)' : '#e6ded2') + '; min-width: 0; overflow: hidden;',
+        ink: N.ink, fill: fill, logoPx: small ? 14 : 26, logoStyle: "display: inline-flex; align-items: center; gap: 8px; font-family: 'Gochi Hand', cursive; font-size: " + (small ? 14 : 26) + 'px;', waveW: small ? 70 : 200,
+        btn: 'display: inline-flex; align-items: center; min-height: ' + (small ? 22 : 40) + 'px; padding: 0 ' + (small ? 8 : 18) + 'px; border-radius: 999px; font-weight: 500; background: ' + btnBg + '; color: ' + btnInk + ';',
+        hello: "font-family: 'Gochi Hand', cursive; font-size: " + (small ? 24 : 64) + 'px; line-height: 1;' + (lvl === 'intenso' ? ' color: ' + (d ? s['200'] : s['800']) + ';' : ''),
+        grid: 'display: grid; grid-template-columns: ' + (small ? '1fr 1fr' : 'minmax(0, 1.2fr) minmax(0, 1fr)') + '; gap: ' + (small ? 6 : 14) + 'px;',
+        hero: 'background: ' + N.hero + '; color: ' + N.heroInk + '; border-radius: ' + (small ? 12 : 22) + 'px; padding: ' + (small ? 8 : 18) + 'px; display: flex; flex-direction: column; gap: ' + (small ? 5 : 10) + 'px; min-width: 0;' + (d ? ' border: 1px solid rgba(237,233,226,.14);' : ''),
+        checkOn: 'width: ' + (small ? 10 : 18) + 'px; height: ' + (small ? 10 : 18) + 'px; border-radius: 5px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; background: ' + fill + ';',
+        checkOff: 'width: ' + (small ? 10 : 18) + 'px; height: ' + (small ? 10 : 18) + 'px; border-radius: 5px; flex-shrink: 0; border: 1.5px solid ' + (d ? '#6b645b' : '#8a8278') + ';',
+        checkInk: d ? s['950'] : '#1f1c19',
+        track: 'display: block; height: ' + (small ? 4 : 8) + 'px; border-radius: 999px; background: ' + N.track + ';',
+        bar: 'display: block; height: 100%; width: 40%; border-radius: 999px; background: ' + fill + ';',
+        soft: 'background: ' + soft + '; border: 1px solid ' + softBd + '; color: ' + softInk + '; border-radius: ' + (small ? 12 : 22) + 'px; padding: ' + (small ? 8 : 16) + 'px; display: flex; flex-direction: column; gap: 2px; min-width: 0;',
+        softSub: 'font-size: ' + (small ? 9 : 13) + 'px; opacity: .85;',
+        card: card,
+        track2: 'display: block; height: ' + (small ? 4 : 8) + 'px; border-radius: 999px; background: ' + N.row + ';',
+        bar2: 'display: block; height: 100%; width: 62%; border-radius: 999px; background: ' + fill + ';',
+        link: 'color: ' + link + '; text-decoration: underline; text-underline-offset: 3px; font-size: ' + (small ? 9 : 13) + 'px;'
+      };
+    };
+    var themes = KEYS.map(function (k) { var on = st.theme === k; return { name: T[k].name, sel: on ? 'true' : 'false', pick: function () { self.setState({ theme: k }); },
+      dot: 'width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; background: ' + T[k].s['300'] + '; box-shadow: inset 0 0 0 1px rgba(31,28,25,.12);',
+      style: on ? 'background: #fffdf9; box-shadow: inset 0 0 0 2px #1f1c19; font-weight: 500;' : 'background: rgba(255,253,249,.6); box-shadow: inset 0 0 0 1px #e6ded2;' }; });
+    var modes = [['light', 'Claro'], ['dark', 'Oscuro']].map(function (m) { var on = st.mode === m[0]; return { name: m[1], sel: on ? 'true' : 'false', pick: function () { self.setState({ mode: m[0] }); }, style: on ? 'background: #1f1c19; color: #f3eee6;' : 'color: #1f1c19;' }; });
+    var LV = { sutil: 'Sutil', tenido: 'Teñido', intenso: 'Intenso' };
+    var levels = [['sutil', 'Sutil'], ['tenido', 'Teñido'], ['intenso', 'Intenso']].map(function (m) { var on = st.level === m[0]; return { name: m[1], sel: on ? 'true' : 'false', pick: function () { self.setState({ level: m[0] }); }, style: on ? 'background: #1f1c19; color: #f3eee6;' : 'color: #1f1c19;' }; });
+    var thumbs = KEYS.map(function (k) { var on = st.theme === k; return { lvl: LV[st.level] + ' · claro y oscuro', name: T[k].name, label: 'Ver tema ' + T[k].name, pick: function () { self.setState({ theme: k }); }, l: view(k, 'light', true), d: view(k, 'dark', true),
+      style: on ? 'background: #fffdf9; box-shadow: inset 0 0 0 2px #1f1c19;' : 'background: rgba(255,253,249,.6); box-shadow: inset 0 0 0 1px #e6ded2;' }; });
+    return { themes: themes, modes: modes, levels: levels, cur: { desc: T[st.theme].desc }, big: view(st.theme, st.mode, false), thumbs: thumbs };
+  }
+}
+</script>
+</body>
+</html>

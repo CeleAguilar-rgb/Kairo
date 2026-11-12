@@ -28,12 +28,7 @@
   --ink-on-dark-muted: #b8b0a5;
   --ink-on-dark-soft: #cfc8bd;
 
-  /* Color: acento lavanda */
-  --lavender-100: #e9e7fb;
-  --lavender-300: #cbc6f5;
-  --lavender-400: #9d96e8;
-  --lavender-600: #6a62d6;
-  --lavender-ink: #3a3480;
+  /* Color: acento — vive en palettes.css (--p-50 … --p-950), uno por tema de color. */
 
   /* Color: cálido de apoyo */
   --amber-200: #f3e3c3;
@@ -64,14 +59,6 @@
   --bone-200: #c4beb5;
   --bone-300: #b3ada4;
   --bone-400: #9a958d;
-  --lavender-night-100: #27252b;
-  --lavender-night-ink: #c9c4f7;
-  --lavender-night-300: #b7b1f5;
-  --lavender-night-400: #a59ff0;
-  --lavender-night-500: #8a83e6;
-  --lavender-night-600: #5f58bf;
-  /* No está en el canvas: un paso entre 600 y el fondo, para la escala de ánimo del Diario. */
-  --lavender-night-700: #46418f;
   --sand-night: #e6d6b4;
   --ink-on-lavender: #17151f;
   --amber-night: #3a3326;
@@ -88,7 +75,6 @@
   --tint-bone-10: rgba(237, 233, 226, 0.1);
   --tint-bone-16: rgba(237, 233, 226, 0.16);
   --tint-night-70: rgba(28, 27, 25, 0.7);
-  --tint-lavender-night-14: rgba(165, 159, 240, 0.14);
   --tint-black-60: rgba(0, 0, 0, 0.6);
   --light-top: inset 0 1px 0 rgba(255, 255, 255, 0.05);
   --ring-bone-22: inset 0 0 0 1px rgba(237, 233, 226, 0.22);
@@ -137,7 +123,6 @@
   --tint-ink-28: rgba(31, 28, 25, 0.28);
   --tint-cream-70: rgba(255, 253, 249, 0.7);
   --tint-cream-08: rgba(243, 238, 230, 0.08);
-  --tint-lavender-14: rgba(203, 198, 245, 0.14);
 
   /* Duración y curvas de animación (Motion las reutiliza igual) */
   --duration-fast: 150ms;

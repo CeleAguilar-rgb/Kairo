@@ -1,10 +1,10 @@
 import 'server-only'
-import type { ModuleId } from '@kairo/shared'
+import type { ColorTheme, ModuleId, ThemeIntensity } from '@kairo/shared'
 import { cache } from 'react'
 import { api, ApiError } from '@/lib/api-client'
 import { DEMO_MODE } from '@/lib/demo'
 import { DEMO_ME } from '@/lib/mock/demo-me'
-import { readThemePreference } from '@/lib/theme/preference'
+import { readAppearance, readThemePreference } from '@/lib/theme/preference'
 
 export type Profile = {
   id: string
@@ -15,6 +15,8 @@ export type Profile = {
   hourFormat: '12h' | '24h'
   currency: string
   theme: 'light' | 'dark' | 'system'
+  colorTheme: ColorTheme
+  themeIntensity: ThemeIntensity
   decorationsOn: boolean
   onboardedAt: string | null
 }
@@ -33,7 +35,18 @@ export type Me = { profile: Profile; sections: UserSection[] }
 // en el mismo request; React lo deduplica en vez de llamar a la API dos veces.
 export const getMe = cache(async (): Promise<Me | null> => {
   // En demo no hay base de datos que guarde el tema: el perfil de ejemplo toma el de la cookie.
-  if (DEMO_MODE) return { ...DEMO_ME, profile: { ...DEMO_ME.profile, theme: await readThemePreference() } }
+  if (DEMO_MODE) {
+    const appearance = await readAppearance()
+    return {
+      ...DEMO_ME,
+      profile: {
+        ...DEMO_ME.profile,
+        theme: await readThemePreference(),
+        colorTheme: appearance.colorTheme,
+        themeIntensity: appearance.intensity,
+      },
+    }
+  }
   try {
     return await api.get<Me>('/me')
   } catch (error) {

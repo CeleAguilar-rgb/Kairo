@@ -69,7 +69,7 @@ export function PerfilView({ profile, sections }: PerfilViewProps) {
         <div className={styles.panel}>
           {tab === 'perfil' ? <PerfilTab profile={profile} /> : null}
           {tab === 'secciones' ? <SeccionesTab sections={sections} /> : null}
-          {tab === 'preferencias' ? <PreferenciasTab themePreference={profile.theme} /> : null}
+          {tab === 'preferencias' ? <PreferenciasTab themePreference={profile.theme} colorTheme={profile.colorTheme} themeIntensity={profile.themeIntensity} /> : null}
         </div>
       </div>
     </div>

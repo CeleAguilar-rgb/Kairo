@@ -649,6 +649,124 @@
       "w": 1440,
       "x": 9120,
       "y": 23960
+    },
+    "PaletaTonos.dc.html": {
+      "expand": "fill",
+      "h": 2660,
+      "is_interactive": true,
+      "title": "Paleta · tonos de cada color (50 a 950)",
+      "w": 1440,
+      "x": 12640,
+      "y": 17560
+    },
+    "AppInicio.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "page": "app-telefono",
+      "title": "Inicio",
+      "w": 390,
+      "x": 0,
+      "y": 0,
+      "expand": "fill"
+    },
+    "AppTareas.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "page": "app-telefono",
+      "title": "Tareas",
+      "w": 390,
+      "x": 470,
+      "y": 0,
+      "expand": "fill"
+    },
+    "AppAgenda.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "page": "app-telefono",
+      "title": "Agenda",
+      "w": 390,
+      "x": 940,
+      "y": 0,
+      "expand": "fill"
+    },
+    "AppDia.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "page": "app-telefono",
+      "title": "Día a día",
+      "w": 390,
+      "x": 1410,
+      "y": 0,
+      "expand": "fill"
+    },
+    "AppMas.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "page": "app-telefono",
+      "title": "Más",
+      "w": 390,
+      "x": 1880,
+      "y": 0,
+      "expand": "fill"
+    },
+    "AppFinanzas.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "page": "app-telefono",
+      "title": "Finanzas",
+      "w": 390,
+      "x": 2350,
+      "y": 0,
+      "expand": "fill"
+    },
+    "AppCaptura.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "page": "app-telefono",
+      "title": "Crear rápido",
+      "w": 390,
+      "x": 0,
+      "y": 1224,
+      "expand": "fill"
+    },
+    "AppTareaDetalle.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "page": "app-telefono",
+      "title": "Detalle de tarea",
+      "w": 390,
+      "x": 470,
+      "y": 1224,
+      "expand": "fill"
+    },
+    "AppEventoDetalle.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "page": "app-telefono",
+      "title": "Detalle de evento",
+      "w": 390,
+      "x": 940,
+      "y": 1224,
+      "expand": "fill"
+    },
+    "AppAvisos.dc.html": {
+      "h": 844,
+      "is_interactive": true,
+      "page": "app-telefono",
+      "title": "Avisos",
+      "w": 390,
+      "x": 1410,
+      "y": 1224,
+      "expand": "fill"
+    },
+    "Temas.dc.html": {
+      "expand": "fill",
+      "h": 2900,
+      "is_interactive": true,
+      "title": "Temas de color",
+      "w": 1440,
+      "x": 14160,
+      "y": 17560
     }
   },
   "createdOnFiles": {
@@ -660,6 +778,22 @@
     "view": "canvas"
   },
   "notes": {
+    "app-pantallas": {
+      "kind": "title1",
+      "maxW": 2740,
+      "page": "app-telefono",
+      "text": "Pantallas de la app",
+      "x": 0,
+      "y": -260
+    },
+    "app-hojas": {
+      "kind": "title1",
+      "maxW": 1800,
+      "page": "app-telefono",
+      "text": "Hojas que suben desde abajo",
+      "x": 0,
+      "y": 964
+    },
     "flujo-cuentas": {
       "kind": "title1",
       "maxW": 4480,
@@ -821,8 +955,29 @@
     "EscritosContadores.dc.html",
     "EscritosPortada.dc.html",
     "EscritosPaginaEspecie.dc.html",
-    "EscritosCapitulo.dc.html"
+    "EscritosCapitulo.dc.html",
+    "PaletaTonos.dc.html",
+    "Temas.dc.html",
+    "AppInicio.dc.html",
+    "AppTareas.dc.html",
+    "AppAgenda.dc.html",
+    "AppDia.dc.html",
+    "AppMas.dc.html",
+    "AppFinanzas.dc.html",
+    "AppCaptura.dc.html",
+    "AppTareaDetalle.dc.html",
+    "AppEventoDetalle.dc.html",
+    "AppAvisos.dc.html"
   ],
-  "pages": [],
+  "pages": [
+    {
+      "id": "web",
+      "name": "Web"
+    },
+    {
+      "id": "app-telefono",
+      "name": "App teléfono"
+    }
+  ],
   "title": "Kairo"
-}
+}

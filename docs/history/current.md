@@ -2,7 +2,7 @@
 
 > Léelo al empezar cada sesión. Actualízalo al terminar. Máximo ~60 líneas: es un resumen, no un diario. El detalle va en `sessions/`.
 
-**Última actualización:** 2026-11-06 · Recorrido estético de toda la app y modo oscuro (rama `fix/polish-and-dark-mode`, sin commit). Siguen pendientes los adornos de temporada y probar los avisos en el navegador
+**Última actualización:** 2026-11-11 · Temas de color (12 temas × 3 intensidades) hechos directo en `main`, sin commit. Siguen pendientes los adornos de temporada y probar los avisos en el navegador
 
 ## Fase actual
 
@@ -10,6 +10,13 @@
 
 ## Lo último que se hizo
 
+- **2026-11-11 · Temas de color.**
+  - 12 temas y 3 intensidades (Sutil, Teñido, Intenso) en Perfil → Preferencias.
+  - Se guarda en `profiles.color_theme` y `theme_intensity` (migración `0015`, aplicada) con `PATCH /v1/me/appearance`, y la cookie `kairo_appearance` es su copia.
+  - `palettes.css` e `intensity.css`; los modos piden tonos `--p-*`.
+  - Todas las cuentas arrancan en Lavanda + Sutil, igual que antes.
+  - Se copiaron del canvas `Temas`, `PaletaTonos` y las 10 pantallas `App*` de la app de teléfono.
+  - Probado en demo, no con una cuenta real. Decisión #58. Detalle en `sessions/2026-11-11-temas-de-color.md`.
 - **2026-11-06 · Recorrido estético y modo oscuro.** Corregidos: Papelera sin márgenes, el reproductor tapando el final de las páginas, los bordes de los eventos de Agenda (un `border` que pisaba el color) y detalles menores. Modo oscuro: `modes/dark.css`, Perfil → Preferencias → Apariencia (Claro, Oscuro, Como el sistema), guardado en `profiles.theme` con `PATCH /v1/me/theme` y copiado en la cookie `kairo_theme`. Probado en demo, no con una cuenta real. Decisión #57. Detalle en `sessions/2026-11-06-modo-oscuro.md`.
 - **2026-11-03 · Música quitada del reproductor.** Se probó Spotify completo (funciona), el embed de Spotify (solo 30 s, descartado) y se armó el de YouTube; la usuaria prefirió quitar el modo Música. El reproductor queda solo con el pomodoro y las pruebas (`tools/`) se borraron. Decisión #53; detalle y el plan por si se retoma en `sessions/2026-11-03-musica.md`.
 - **2026-11-03 · Lo global terminado: avisos, tareas programadas y su front.** Papelera, Ctrl+K y captura rápida (2 de noviembre) más lo que estaba a medias: `NotificationsModule` y `JobsModule` registrados, `POST /v1/internal/jobs/minute|daily` con `X-Job-Secret` (404 sin él), `pnpm jobs:run`, cobros de membresías anotados solos, avisos de presupuesto, `cron.sql` escrito sin aplicar, y el front de la campana (panel Hoy/Ayer/Antes, Web Push con `public/sw.js`). Decisiones #49 a #52. Se corrigió el test de Día a día que fallaba de 18:00 a 24:00 hora de México (calculaba "hoy" en UTC). Los e2e de la API van completos. **Los avisos no se han visto en el navegador con una cuenta real.** Detalle en `sessions/2026-11-02-lo-global.md`.

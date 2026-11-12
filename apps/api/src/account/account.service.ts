@@ -2,6 +2,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import {
   type CompleteOnboardingInput,
   MODULE_IDS,
+  type UpdateAppearanceInput,
   type UpdateProfileInput,
   type UpdateSectionsInput,
   type UpdateThemeInput,
@@ -42,6 +43,11 @@ export class AccountService {
 
   async updateTheme(userId: string, input: UpdateThemeInput) {
     await this.repository.updateTheme(userId, input.theme)
+    return this.getMe(userId)
+  }
+
+  async updateAppearance(userId: string, input: UpdateAppearanceInput) {
+    await this.repository.updateAppearance(userId, input.colorTheme, input.intensity)
     return this.getMe(userId)
   }
 

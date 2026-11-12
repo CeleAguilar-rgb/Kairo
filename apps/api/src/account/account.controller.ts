@@ -2,6 +2,8 @@ import { Body, Controller, Get, Inject, Patch, Post } from '@nestjs/common'
 import {
   type CompleteOnboardingInput,
   completeOnboardingSchema,
+  type UpdateAppearanceInput,
+  updateAppearanceSchema,
   type UpdateProfileInput,
   updateProfileSchema,
   type UpdateSectionsInput,
@@ -39,6 +41,15 @@ export class AccountController {
     @Body(new ZodValidationPipe(updateThemeSchema)) body: UpdateThemeInput,
   ) {
     return this.accountService.updateTheme(userId, body)
+  }
+
+  // Aparte de /me/theme: el modo (claro u oscuro) y el tema de color se eligen por separado.
+  @Patch('appearance')
+  updateAppearance(
+    @CurrentUser() userId: string,
+    @Body(new ZodValidationPipe(updateAppearanceSchema)) body: UpdateAppearanceInput,
+  ) {
+    return this.accountService.updateAppearance(userId, body)
   }
 
   @Post('onboarding')

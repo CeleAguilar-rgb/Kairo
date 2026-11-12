@@ -22,7 +22,7 @@ Para los módulos que todavía no tienen backend (todos salvo Cuenta e Inicio + 
 
 | Tabla | Columnas | Relaciones / notas |
 |---|---|---|
-| profiles | name, avatar_path, timezone, week_start, hour_format, currency, theme (`light`, `dark`, `system`), quiet_from, quiet_to, decorations_on, birthday, diary_pin_hash, onboarded_at | `id` = `auth.users.id`. `theme` existe desde el inicio aunque el modo oscuro llegue después. |
+| profiles | name, avatar_path, timezone, week_start, hour_format, currency, theme (`light`, `dark`, `system`), color_theme (12 temas, default `lavender`), theme_intensity (`subtle`, `tinted`, `vivid`, default `subtle`), quiet_from, quiet_to, decorations_on, birthday, diary_pin_hash, onboarded_at | `id` = `auth.users.id`. `theme` existe desde el inicio aunque el modo oscuro llegue después. |
 | user_sections | section, enabled, position, in_bottom_nav | Qué módulos tiene activos cada usuario y en qué orden. `in_bottom_nav` es para el teléfono (fase posterior). |
 | home_cards | card, enabled, position | Tarjetas de Inicio ("Ajustar mi Inicio"). |
 | connections | provider (`notion`, `canva`, `spotify`, `claude`), status, token_ref, connected_at | Fase posterior. El token vive cifrado (Vault), aquí solo la referencia. |

@@ -1,0 +1,66 @@
+/*
+ * Intensidad del tema de color (Temas.dc.html). Va después de light.css y dark.css y solo
+ * sobrescribe semánticos: los componentes no se enteran.
+ *
+ * Sutil (data-intensity='subtle' o sin atributo): nada aquí; el tema solo cambia el acento.
+ * Teñido: los neutros del tema (--tl-* en claro, --td-* en oscuro, de palettes.css) toman el
+ *   lugar de fondo, tarjetas, filas, bordes, texto secundario y la tarjeta destacada.
+ * Intenso: lo de Teñido, más la tarjeta destacada y el botón principal del color del tema.
+ *
+ * El canvas no da valor para todo semántico; los que faltan (--surface-muted, --border-soft,
+ * --border-control, los translúcidos) se mezclan con color-mix() desde los que sí da, para
+ * que guarden la misma distancia entre sí que en el tema neutro.
+ */
+
+:root[data-mode='light'][data-intensity='tinted'],
+:root[data-mode='light'][data-intensity='vivid'] {
+  --bg: var(--tl-bg);
+  --bg-glow: var(--tl-card);
+  --surface: var(--tl-card);
+  --surface-raised: var(--tl-row);
+  --surface-muted: color-mix(in srgb, var(--tl-bg) 60%, var(--tl-line));
+  --surface-inverted: var(--tl-hero);
+  --surface-inverted-muted: var(--tl-track);
+  --text-muted: var(--tl-ink2);
+  --text-on-inverted: var(--tl-hero-ink);
+
+  --border: var(--tl-line);
+  --border-soft: color-mix(in srgb, var(--tl-line) 50%, var(--tl-card));
+  --border-control: color-mix(in srgb, var(--tl-line) 88%, var(--ink-900));
+
+  --surface-glass: color-mix(in srgb, var(--tl-card) 70%, transparent);
+}
+
+:root[data-mode='dark'][data-intensity='tinted'],
+:root[data-mode='dark'][data-intensity='vivid'] {
+  --bg: var(--td-bg);
+  --bg-glow: color-mix(in srgb, var(--td-bg) 80%, var(--td-card));
+  --surface: var(--td-card);
+  --surface-raised: var(--td-row);
+  --surface-muted: color-mix(in srgb, var(--td-row) 92%, var(--bone-100));
+  --surface-inverted: var(--td-hero);
+  --surface-inverted-muted: var(--td-track);
+  --text-muted: var(--td-ink2);
+  --text-on-inverted: var(--td-hero-ink);
+
+  --surface-glass: color-mix(in srgb, var(--td-bg) 70%, transparent);
+}
+
+:root[data-mode='light'][data-intensity='vivid'] {
+  --surface-inverted: var(--p-800);
+  --surface-inverted-muted: var(--p-700);
+  --text-on-inverted: var(--p-50);
+  --text-on-inverted-muted: color-mix(in srgb, var(--p-50) 70%, var(--p-800));
+  --text-on-inverted-soft: color-mix(in srgb, var(--p-50) 85%, var(--p-800));
+  --border-inverted: var(--p-700);
+  --action: var(--p-700);
+  --on-action: var(--p-50);
+}
+
+:root[data-mode='dark'][data-intensity='vivid'] {
+  --surface-inverted: var(--p-900);
+  --surface-inverted-muted: var(--p-800);
+  --text-on-inverted: var(--p-100);
+  --text-on-inverted-muted: color-mix(in srgb, var(--p-100) 70%, var(--p-900));
+  --text-on-inverted-soft: color-mix(in srgb, var(--p-100) 85%, var(--p-900));
+}

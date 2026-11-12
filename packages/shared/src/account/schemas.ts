@@ -20,6 +20,40 @@ export const updateThemeSchema = z.object({ theme: themeSchema })
 
 export type UpdateThemeInput = z.infer<typeof updateThemeSchema>
 
+// Temas de color (docs/design/screens/Temas.dc.html). El orden es el del canvas.
+// 'lavender' es el de siempre: con 'subtle', Kairo se ve igual que antes de los temas.
+export const COLOR_THEMES = [
+  'lavender',
+  'sage',
+  'aqua',
+  'forest',
+  'sky',
+  'ocean',
+  'mustard',
+  'sand',
+  'peach',
+  'coral',
+  'pink',
+  'wine',
+] as const
+export const colorThemeSchema = z.enum(COLOR_THEMES)
+
+export type ColorTheme = z.infer<typeof colorThemeSchema>
+
+// Qué tanto pinta el tema: 'subtle' solo el acento, 'tinted' también fondos y tarjetas,
+// 'vivid' además la tarjeta principal y los botones.
+export const THEME_INTENSITIES = ['subtle', 'tinted', 'vivid'] as const
+export const themeIntensitySchema = z.enum(THEME_INTENSITIES)
+
+export type ThemeIntensity = z.infer<typeof themeIntensitySchema>
+
+export const updateAppearanceSchema = z.object({
+  colorTheme: colorThemeSchema,
+  intensity: themeIntensitySchema,
+})
+
+export type UpdateAppearanceInput = z.infer<typeof updateAppearanceSchema>
+
 // Paso 1 y 2 de Bienvenida: nombre + doodle, y las secciones elegidas.
 export const completeOnboardingSchema = z.object({
   name: z.string().trim().min(1, 'Escribe tu nombre.').max(80),

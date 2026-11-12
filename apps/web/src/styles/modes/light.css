@@ -1,6 +1,10 @@
 /*
  * Asigna cada semántico de semantic.css a un primitivo de tokens.css.
  * modes/dark.css tiene esta misma lista: lo que se agregue aquí va también allá.
+ *
+ * El acento sale de --p-* (palettes.css), el tono del tema de color activo. Qué tono va en
+ * cada papel lo dice Temas.dc.html: relleno 300, fondo suave 100, texto sobre él 800, fuerte 600.
+ * Con lavanda son los mismos valores de antes de los temas.
  */
 
 :root[data-mode='light'] {
@@ -10,7 +14,7 @@
   --on-action: var(--cream-200);
   --on-danger: var(--cream-200);
   --card-light: none;
-  --accent-line: var(--lavender-300);
+  --accent-line: var(--p-300);
   --warm-line: var(--amber-200);
   --progress-ink: var(--ink-900);
   --art-ink: var(--ink-900);
@@ -37,12 +41,12 @@
   --text-on-inverted-soft: var(--ink-on-dark-soft);
   --border-inverted: var(--ink-700);
 
-  --accent: var(--lavender-300);
-  --accent-soft: var(--lavender-100);
-  --accent-ink: var(--lavender-ink);
-  --accent-strong: var(--lavender-600);
+  --accent: var(--p-300);
+  --accent-soft: var(--p-100);
+  --accent-ink: var(--p-800);
+  --accent-strong: var(--p-600);
   --accent-warm: var(--amber-200);
-  --focus-ring: var(--lavender-600);
+  --focus-ring: var(--p-600);
 
   --danger: var(--danger-700);
   --danger-soft: var(--blush-100);
@@ -53,7 +57,7 @@
   --surface-hover: var(--tint-ink-06);
   --surface-glass: var(--tint-cream-70);
   --surface-inverted-glass: var(--tint-cream-08);
-  --accent-glow: var(--tint-lavender-14);
+  --accent-glow: color-mix(in srgb, var(--p-300) 14%, transparent);
   --scrim: var(--tint-ink-28);
 
   --cover-sage: var(--sage-200);
@@ -61,7 +65,7 @@
 
   --mood-1: var(--sand-300);
   --mood-2: var(--sand-100);
-  --mood-3: var(--lavender-100);
-  --mood-4: var(--lavender-300);
-  --mood-5: var(--lavender-400);
+  --mood-3: var(--p-100);
+  --mood-4: var(--p-300);
+  --mood-5: var(--p-400);
 }

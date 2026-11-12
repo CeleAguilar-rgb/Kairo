@@ -11,10 +11,12 @@
 ```
 apps/web/src/styles/
 ├── tokens.css          # Primitivos: paleta cruda, escala de espacios, radios, fuentes, sombras, duraciones
+├── palettes.css        # Primitivos del tema de color: --p-50 … --p-950 y neutros teñidos; ver "Temas de color"
 ├── semantic.css        # Lo que usan los componentes: --bg, --surface, --text, --accent…
 ├── modes/
 │   ├── light.css       # [data-mode="light"] → asigna primitivos a semánticos
-│   └── dark.css        # [data-mode="dark"] → la misma lista; ver "Modo oscuro"
+│   ├── dark.css        # [data-mode="dark"] → la misma lista; ver "Modo oscuro"
+│   └── intensity.css   # [data-intensity] → Teñido e Intenso sobrescriben algunos semánticos
 ├── seasons/            # Adornos por mes (ver "Temporadas")
 └── globals.css         # Reset, tipografía base, fuentes
 ```
@@ -46,6 +48,22 @@ Valores aproximados — la referencia exacta es `docs/guides/Kairo-Sistema-de-di
 - **La cookie `kairo_theme` es una copia del perfil en este dispositivo.** Existe para que el layout raíz ponga `data-mode` y `data-theme-pref` en `<html>` sin esperar a la API, también en `/entrar`, donde no hay perfil que leer. Primero se guarda el perfil y después la cookie: si la API falla, la cookie no cambia y el selector vuelve a como estaba. Si al entrar no coinciden (otro dispositivo, otro navegador), gana el perfil: el layout del dashboard monta `lib/theme/ThemeSync.tsx`, que aplica el tema y actualiza la cookie. En ese caso sí hay un parpadeo, una sola vez. `lib/theme/apply.ts` cambia el modo sin recargar.
 - **"Como el sistema":** el servidor no puede saber qué dice el sistema operativo y manda `light`. `public/theme-init.js` (bloqueante, en `<head>`) lo resuelve antes de pintar, sigue los cambios del sistema y corrige `data-mode` si Next vuelve a renderizar el layout.
 - En modo demo no hay base de datos: `getMe()` toma el tema de la cookie.
+
+## Temas de color
+
+Canvas: `Temas.dc.html` (12 temas × 3 intensidades, en claro y en oscuro) y `PaletaTonos.dc.html`. Decisión #58.
+
+- **El acento ya no se llama lavanda en los modos.** `light.css` y `dark.css` piden un tono de la escala del tema activo (`--p-300`, `--p-100`…), y `palettes.css` llena esa escala según `data-palette` en `<html>`. Para agregar un tema basta un bloque en `palettes.css` y su id en `COLOR_THEMES` de `@kairo/shared`; los modos no cambian.
+- **Qué tono hace qué:**
+  - En claro: relleno 300, fondo suave 100, texto sobre él 800 y fuerte o foco 600. Con lavanda son los valores de siempre.
+  - En oscuro: botón 300 con texto 950, trazos y foco 400, relleno 600. El fondo suave es el 900 con texto 200, como en `Temas.dc.html`; así se reemplaza el "sin morado de relleno" de `ModoOscuro.dc.html` (lo eligió la usuaria). El contraste va de 8:1 a 10:1.
+- **Intensidad (`data-intensity`):**
+  - `subtle` no toca nada más.
+  - `tinted` cambia fondo, tarjetas, filas, bordes, texto secundario y tarjeta destacada por los neutros teñidos del tema (`--tl-*` en claro, `--td-*` en oscuro).
+  - `vivid` además pinta la tarjeta destacada y el botón principal con la escala.
+  - Lo que el canvas no da (`--surface-muted`, `--border-soft`, translúcidos) sale con `color-mix()` de lo que sí da.
+- **Muestras del selector:** `--swatch-<tema>` (el tono 300 de cada tema), fijas, porque el selector pinta los 12 a la vez.
+- **Dónde se guarda:** `profiles.color_theme` y `profiles.theme_intensity`, con `PATCH /v1/me/appearance` (los dos juntos). La cookie `kairo_appearance` (`sage.tinted`) es su copia, igual que `kairo_theme`, y `AppearanceSync` corrige si no coinciden. Las cuentas existentes y las nuevas arrancan en `lavender` + `subtle`.
 
 ## Temporadas (adornos por mes)
 

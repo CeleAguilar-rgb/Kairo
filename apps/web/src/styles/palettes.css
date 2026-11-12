@@ -1,0 +1,399 @@
+/*
+ * Temas de color: los 11 tonos de cada tema (50 casi blanco, 950 casi negro) y sus neutros
+ * teñidos para claro (--tl-*) y oscuro (--td-*). Valores copiados tal cual del objeto T de
+ * docs/design/screens/Temas.dc.html: si el canvas cambia, se actualizan desde ahí.
+ *
+ * Solo modes/ los usa. --p-* lo leen light.css y dark.css (el acento); --tl-* y --td-* los lee
+ * intensity.css cuando la intensidad es "Teñido" o "Intenso".
+ * Sin data-palette (o con uno desconocido) se queda lavanda, el de siempre.
+ */
+
+/* Lavanda: El de ahora. Tranquilo y nocturno. */
+:root,
+:root[data-palette='lavender'] {
+  --p-50: #f6f5ff;
+  --p-100: #e9e7fb;
+  --p-200: #dad7f6;
+  --p-300: #cbc6f5;
+  --p-400: #aaa4f0;
+  --p-500: #8982e9;
+  --p-600: #6a62d6;
+  --p-700: #514aac;
+  --p-800: #3a3480;
+  --p-900: #28235c;
+  --p-950: #17123e;
+  --tl-bg: #eeeffc;
+  --tl-card: #fbfbff;
+  --tl-row: #f4f4ff;
+  --tl-line: #dcdced;
+  --tl-hero: #202030;
+  --tl-hero-ink: #f1f1fa;
+  --tl-track: #3b3b4d;
+  --tl-ink2: #62626f;
+  --td-bg: #0f0f15;
+  --td-card: #181921;
+  --td-row: #20212a;
+  --td-line: rgba(237,233,226,.10);
+  --td-hero: #1e1e29;
+  --td-hero-ink: #ede9e2;
+  --td-track: #2c2d38;
+  --td-ink2: #b3ada4;
+}
+
+/* Salvia: Verde suave, para enfocarse. */
+:root[data-palette='sage'] {
+  --p-50: #ecfcef;
+  --p-100: #dcefdf;
+  --p-200: #cbe3cf;
+  --p-300: #b9d8bf;
+  --p-400: #98bda0;
+  --p-500: #7ba183;
+  --p-600: #62856a;
+  --p-700: #4d6953;
+  --p-800: #394e3e;
+  --p-900: #263529;
+  --p-950: #121e15;
+  --tl-bg: #e8f4ea;
+  --tl-card: #f9fdf9;
+  --tl-row: #eff8f0;
+  --tl-line: #d4e2d7;
+  --tl-hero: #17261a;
+  --tl-hero-ink: #ecf4ee;
+  --tl-track: #324235;
+  --tl-ink2: #5b675d;
+  --td-bg: #0b110c;
+  --td-card: #141c16;
+  --td-row: #1b241d;
+  --td-line: rgba(237,233,226,.10);
+  --td-hero: #18221a;
+  --td-hero-ink: #ede9e2;
+  --td-track: #273129;
+  --td-ink2: #b3ada4;
+}
+
+/* Verde agua: Fresco y ligero. */
+:root[data-palette='aqua'] {
+  --p-50: #e5fdf5;
+  --p-100: #d3f0e6;
+  --p-200: #bee4d7;
+  --p-300: #a8d8c8;
+  --p-400: #84bdab;
+  --p-500: #66a28f;
+  --p-600: #4e8675;
+  --p-700: #3d6a5c;
+  --p-800: #2e4f45;
+  --p-900: #1d362e;
+  --p-950: #0b1f19;
+  --tl-bg: #e5f4ef;
+  --tl-card: #f7fdfb;
+  --tl-row: #ecf8f4;
+  --tl-line: #d0e3dc;
+  --tl-hero: #112620;
+  --tl-hero-ink: #eaf5f1;
+  --tl-track: #2d423b;
+  --tl-ink2: #586762;
+  --td-bg: #09110f;
+  --td-card: #121c19;
+  --td-row: #192521;
+  --td-line: rgba(237,233,226,.10);
+  --td-hero: #14231e;
+  --td-hero-ink: #ede9e2;
+  --td-track: #24312d;
+  --td-ink2: #b3ada4;
+}
+
+/* Bosque: Verde profundo, sereno. */
+:root[data-palette='forest'] {
+  --p-50: #e8fdee;
+  --p-100: #cde6d4;
+  --p-200: #b1d0ba;
+  --p-300: #93bba0;
+  --p-400: #77a686;
+  --p-500: #5f9170;
+  --p-600: #4c7a5c;
+  --p-700: #3c6149;
+  --p-800: #2e4937;
+  --p-900: #1f3326;
+  --p-950: #0f1f14;
+  --tl-bg: #e7f4eb;
+  --tl-card: #f8fdfa;
+  --tl-row: #eef8f1;
+  --tl-line: #d3e3d8;
+  --tl-hero: #16261b;
+  --tl-hero-ink: #ecf4ee;
+  --tl-track: #314236;
+  --tl-ink2: #5b675e;
+  --td-bg: #0b110d;
+  --td-card: #141c16;
+  --td-row: #1b241e;
+  --td-line: rgba(237,233,226,.10);
+  --td-hero: #17221b;
+  --td-hero-ink: #ede9e2;
+  --td-track: #263129;
+  --td-ink2: #b3ada4;
+}
+
+/* Cielo: Azul claro, despejado. */
+:root[data-palette='sky'] {
+  --p-50: #f1f8ff;
+  --p-100: #dbecff;
+  --p-200: #c9dff8;
+  --p-300: #b7d3f2;
+  --p-400: #96b6da;
+  --p-500: #789abf;
+  --p-600: #607ea0;
+  --p-700: #4b647f;
+  --p-800: #374a5e;
+  --p-900: #243241;
+  --p-950: #111b27;
+  --tl-bg: #e8f1fc;
+  --tl-card: #f9fcff;
+  --tl-row: #eef6ff;
+  --tl-line: #d4dfed;
+  --tl-hero: #172330;
+  --tl-hero-ink: #ecf3fa;
+  --tl-track: #313e4d;
+  --tl-ink2: #5b646f;
+  --td-bg: #0b1015;
+  --td-card: #141a21;
+  --td-row: #1b222a;
+  --td-line: rgba(237,233,226,.10);
+  --td-hero: #172029;
+  --td-hero-ink: #ede9e2;
+  --td-track: #262f38;
+  --td-ink2: #b3ada4;
+}
+
+/* Océano: Azul intenso, concentrado. */
+:root[data-palette='ocean'] {
+  --p-50: #f1f8ff;
+  --p-100: #c6e1fd;
+  --p-200: #a7c9ec;
+  --p-300: #87b1dd;
+  --p-400: #689acd;
+  --p-500: #4d83b7;
+  --p-600: #3b6c9c;
+  --p-700: #2f567d;
+  --p-800: #24425f;
+  --p-900: #182e44;
+  --p-950: #0b1c2d;
+  --tl-bg: #e7f1fc;
+  --tl-card: #f9fcff;
+  --tl-row: #eef6fe;
+  --tl-line: #d3e0ec;
+  --tl-hero: #16232f;
+  --tl-hero-ink: #ecf3fa;
+  --tl-track: #313f4c;
+  --tl-ink2: #5b646e;
+  --td-bg: #0b1015;
+  --td-card: #141a21;
+  --td-row: #1b222a;
+  --td-line: rgba(237,233,226,.10);
+  --td-hero: #172029;
+  --td-hero-ink: #ede9e2;
+  --td-track: #262f38;
+  --td-ink2: #b3ada4;
+}
+
+/* Mostaza: Amarillo cálido, con chispa. */
+:root[data-palette='mustard'] {
+  --p-50: #fff6df;
+  --p-100: #fbe5ac;
+  --p-200: #f1d58a;
+  --p-300: #ddb954;
+  --p-400: #c79d00;
+  --p-500: #a88500;
+  --p-600: #8b6d00;
+  --p-700: #6f5700;
+  --p-800: #544100;
+  --p-900: #3b2c00;
+  --p-950: #231900;
+  --tl-bg: #f5f0e3;
+  --tl-card: #fdfcf7;
+  --tl-row: #f9f5eb;
+  --tl-line: #e4dece;
+  --tl-hero: #272110;
+  --tl-hero-ink: #f5f2e9;
+  --tl-track: #433d2b;
+  --tl-ink2: #686357;
+  --td-bg: #120f08;
+  --td-card: #1c1911;
+  --td-row: #252118;
+  --td-line: rgba(237,233,226,.10);
+  --td-hero: #231f13;
+  --td-hero-ink: #ede9e2;
+  --td-track: #322e22;
+  --td-ink2: #b3ada4;
+}
+
+/* Arena: Casi neutro, como papel. */
+:root[data-palette='sand'] {
+  --p-50: #fff6e4;
+  --p-100: #f9ecd3;
+  --p-200: #f3e3c3;
+  --p-300: #dac69e;
+  --p-400: #c1aa7a;
+  --p-500: #a78e5c;
+  --p-600: #8a7446;
+  --p-700: #6e5c37;
+  --p-800: #524529;
+  --p-900: #382e1a;
+  --p-950: #211909;
+  --tl-bg: #f6efe3;
+  --tl-card: #fefbf7;
+  --tl-row: #faf5eb;
+  --tl-line: #e5ddce;
+  --tl-hero: #282010;
+  --tl-hero-ink: #f6f1e9;
+  --tl-track: #453c2b;
+  --tl-ink2: #696257;
+  --td-bg: #120f08;
+  --td-card: #1d1911;
+  --td-row: #262118;
+  --td-line: rgba(237,233,226,.10);
+  --td-hero: #241e13;
+  --td-hero-ink: #ede9e2;
+  --td-track: #332d22;
+  --td-ink2: #b3ada4;
+}
+
+/* Durazno: Cálido, con energía. */
+:root[data-palette='peach'] {
+  --p-50: #fff4ee;
+  --p-100: #ffdec9;
+  --p-200: #fac9a8;
+  --p-300: #f2b48a;
+  --p-400: #dd9663;
+  --p-500: #c47a44;
+  --p-600: #a5622f;
+  --p-700: #834d24;
+  --p-800: #623a1c;
+  --p-900: #452711;
+  --p-950: #2b1403;
+  --tl-bg: #faede5;
+  --tl-card: #fffbf8;
+  --tl-row: #fdf3ec;
+  --tl-line: #eadbd1;
+  --tl-hero: #2d1e13;
+  --tl-hero-ink: #f9f0ea;
+  --tl-track: #4a392e;
+  --tl-ink2: #6d6059;
+  --td-bg: #140e0a;
+  --td-card: #1f1812;
+  --td-row: #291f19;
+  --td-line: rgba(237,233,226,.10);
+  --td-hero: #281d15;
+  --td-hero-ink: #ede9e2;
+  --td-track: #362b24;
+  --td-ink2: #b3ada4;
+}
+
+/* Coral: Vivo y alegre. */
+:root[data-palette='coral'] {
+  --p-50: #fff4f2;
+  --p-100: #ffded8;
+  --p-200: #ffc7bd;
+  --p-300: #fbb0a5;
+  --p-400: #f39c8f;
+  --p-500: #d77d70;
+  --p-600: #b46358;
+  --p-700: #8f4e45;
+  --p-800: #6a3a33;
+  --p-900: #492520;
+  --p-950: #2d110e;
+  --tl-bg: #fcece9;
+  --tl-card: #fffbfa;
+  --tl-row: #fff2f0;
+  --tl-line: #ecd9d6;
+  --tl-hero: #2f1c19;
+  --tl-hero-ink: #faefed;
+  --tl-track: #4c3734;
+  --tl-ink2: #6e5f5d;
+  --td-bg: #150d0c;
+  --td-card: #201715;
+  --td-row: #2a1e1d;
+  --td-line: rgba(237,233,226,.10);
+  --td-hero: #291b19;
+  --td-hero-ink: #ede9e2;
+  --td-track: #372a28;
+  --td-ink2: #b3ada4;
+}
+
+/* Rosa: Dulce y personal. */
+:root[data-palette='pink'] {
+  --p-50: #fff3f7;
+  --p-100: #ffe1ea;
+  --p-200: #fbcfdd;
+  --p-300: #f5bfd0;
+  --p-400: #dd9fb3;
+  --p-500: #c18197;
+  --p-600: #a1687b;
+  --p-700: #805161;
+  --p-800: #5f3c48;
+  --p-900: #412830;
+  --p-950: #27141b;
+  --tl-bg: #fbebf0;
+  --tl-card: #fffafc;
+  --tl-row: #fef1f5;
+  --tl-line: #ebd8de;
+  --tl-hero: #2d1c22;
+  --tl-hero-ink: #f9eff2;
+  --tl-track: #4b373d;
+  --tl-ink2: #6d5f63;
+  --td-bg: #150d0f;
+  --td-card: #201619;
+  --td-row: #291e22;
+  --td-line: rgba(237,233,226,.10);
+  --td-hero: #281b1f;
+  --td-hero-ink: #ede9e2;
+  --td-track: #362a2e;
+  --td-ink2: #b3ada4;
+}
+
+/* Vino: Profundo y elegante. */
+:root[data-palette='wine'] {
+  --p-50: #fff3f5;
+  --p-100: #ffd1da;
+  --p-200: #f8afbf;
+  --p-300: #eb91a6;
+  --p-400: #dc738d;
+  --p-500: #c65a77;
+  --p-600: #aa4763;
+  --p-700: #8a3a50;
+  --p-800: #682c3c;
+  --p-900: #491d29;
+  --p-950: #2f0d17;
+  --tl-bg: #fcebee;
+  --tl-card: #fffafb;
+  --tl-row: #fef1f4;
+  --tl-line: #ecd8dc;
+  --tl-hero: #2e1c20;
+  --tl-hero-ink: #faeff0;
+  --tl-track: #4b373b;
+  --tl-ink2: #6e5f61;
+  --td-bg: #150d0e;
+  --td-card: #201618;
+  --td-row: #291e20;
+  --td-line: rgba(237,233,226,.10);
+  --td-hero: #291b1e;
+  --td-hero-ink: #ede9e2;
+  --td-track: #372a2c;
+  --td-ink2: #b3ada4;
+}
+
+/* La muestra de cada tema (su tono 300), fija: el selector de Apariencia pinta los 12 a la vez,
+ * no solo el activo. */
+:root {
+  --swatch-lavender: #cbc6f5;
+  --swatch-sage: #b9d8bf;
+  --swatch-aqua: #a8d8c8;
+  --swatch-forest: #93bba0;
+  --swatch-sky: #b7d3f2;
+  --swatch-ocean: #87b1dd;
+  --swatch-mustard: #ddb954;
+  --swatch-sand: #dac69e;
+  --swatch-peach: #f2b48a;
+  --swatch-coral: #fbb0a5;
+  --swatch-pink: #f5bfd0;
+  --swatch-wine: #eb91a6;
+}

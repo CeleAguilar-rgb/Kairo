@@ -2,16 +2,21 @@
  * Modo oscuro: misma lista que light.css, con los valores de ModoOscuro.dc.html y las
  * pantallas Oscuro*. Reglas del canvas: neutros casi negros, la lavanda solo en lo
  * principal y lo activo, profundidad con bordes finos en lugar de sombras duras.
+ *
+ * El acento sale de --p-* (palettes.css), el tema de color activo. Cada papel usa el tono más
+ * cercano al que ModoOscuro.dc.html le da a la lavanda (botón 300, trazos 400, relleno 600). El
+ * fondo suave y su texto siguen a Temas.dc.html (tono 900 con texto 200), no al "sin morado de
+ * relleno" de ModoOscuro: lo eligió la usuaria (decisión #58).
  */
 
 :root[data-mode='dark'] {
   color-scheme: dark;
 
-  --action: var(--lavender-night-300);
-  --on-action: var(--ink-on-lavender);
+  --action: var(--p-300);
+  --on-action: var(--p-950);
   --on-danger: var(--ink-on-lavender);
   --card-light: var(--light-top);
-  --accent-line: var(--lavender-night-400);
+  --accent-line: var(--p-400);
   --warm-line: var(--sand-night);
   --progress-ink: var(--bone-300);
   --art-ink: var(--bone-300);
@@ -38,12 +43,12 @@
   --text-on-inverted-soft: var(--bone-200);
   --border-inverted: var(--tint-bone-16);
 
-  --accent: var(--lavender-night-600);
-  --accent-soft: var(--lavender-night-100);
-  --accent-ink: var(--lavender-night-ink);
-  --accent-strong: var(--lavender-night-400);
+  --accent: var(--p-600);
+  --accent-soft: var(--p-900);
+  --accent-ink: var(--p-200);
+  --accent-strong: var(--p-400);
   --accent-warm: var(--amber-night);
-  --focus-ring: var(--lavender-night-400);
+  --focus-ring: var(--p-400);
 
   --danger: var(--danger-night);
   --danger-soft: var(--danger-night-soft);
@@ -54,7 +59,7 @@
   --surface-hover: var(--tint-bone-06);
   --surface-glass: var(--tint-night-70);
   --surface-inverted-glass: var(--tint-bone-07);
-  --accent-glow: var(--tint-lavender-night-14);
+  --accent-glow: color-mix(in srgb, var(--p-400) 14%, transparent);
   --scrim: var(--tint-black-60);
 
   --cover-sage: var(--sage-night);
@@ -62,9 +67,9 @@
 
   --mood-1: var(--night-400);
   --mood-2: var(--night-300);
-  --mood-3: var(--lavender-night-100);
-  --mood-4: var(--lavender-night-700);
-  --mood-5: var(--lavender-night-600);
+  --mood-3: var(--accent-soft);
+  --mood-4: var(--p-700);
+  --mood-5: var(--p-600);
 
   /* "Sin sombras duras ni brillos": las mismas capas, más suaves sobre casi negro. */
   --shadow-sm: 0 10px 22px -8px rgba(0, 0, 0, 0.35);

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Gochi_Hand, Outfit } from 'next/font/google'
 import { MotionConfig } from 'motion/react'
-import { readThemePreference } from '@/lib/theme/preference'
+import { readAppearance, readThemePreference } from '@/lib/theme/preference'
 import './globals.css'
 
 const outfit = Outfit({
@@ -30,6 +30,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: LayoutProps<'/'>) {
   const themePreference = await readThemePreference()
+  const appearance = await readAppearance()
 
   return (
     // suppressHydrationWarning: con 'system', theme-init.js cambia data-mode antes de que React hidrate.
@@ -37,6 +38,8 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
       lang="es"
       data-mode={themePreference === 'dark' ? 'dark' : 'light'}
       data-theme-pref={themePreference}
+      data-palette={appearance.colorTheme}
+      data-intensity={appearance.intensity}
       className={`${outfit.variable} ${gochiHand.variable}`}
       suppressHydrationWarning
     >

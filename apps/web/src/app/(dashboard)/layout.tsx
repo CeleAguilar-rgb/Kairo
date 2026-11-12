@@ -9,8 +9,8 @@ import { ShortcutsProvider } from '@/features/shortcuts'
 import { getMe } from '@/lib/account/api'
 import { DEMO_MODE } from '@/lib/demo'
 import { createClient } from '@/lib/supabase/server'
-import { readThemePreference } from '@/lib/theme/preference'
-import { ThemeSync } from '@/lib/theme/ThemeSync'
+import { readAppearance, readThemePreference } from '@/lib/theme/preference'
+import { AppearanceSync, ThemeSync } from '@/lib/theme/ThemeSync'
 import styles from './layout.module.css'
 import { Topnav } from './Topnav'
 
@@ -37,10 +37,17 @@ export default async function DashboardLayout({
   const focus = await getFocusSetup()
 
   const themeCookie = await readThemePreference()
+  const appearanceCookie = await readAppearance()
+  const appearanceDiffers =
+    me.profile.colorTheme !== appearanceCookie.colorTheme ||
+    me.profile.themeIntensity !== appearanceCookie.intensity
 
   return (
     <ToastProvider>
       {me.profile.theme !== themeCookie ? <ThemeSync theme={me.profile.theme} /> : null}
+      {appearanceDiffers ? (
+        <AppearanceSync colorTheme={me.profile.colorTheme} intensity={me.profile.themeIntensity} />
+      ) : null}
       <DoodlesProvider>
         <NavigationProvider>
           <FocusProvider sessionsToday={focus.sessionsToday} tasks={focus.tasks}>
