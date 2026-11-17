@@ -10,7 +10,8 @@ export type ProjectFields = {
   kind: ProjectKind
   status: ProjectStatus
   description: string | null
-  coverPath: string | null
+  // Ausente = no tocar la portada (Drizzle ignora las claves `undefined` en `.set()`; al crear queda en null).
+  coverPath?: string | null
   startedOn: string | null
   goalOn: string | null
 }

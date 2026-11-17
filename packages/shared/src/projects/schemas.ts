@@ -14,8 +14,9 @@ export const projectLinkSchema = z.object({
 export type ProjectLinkInput = z.infer<typeof projectLinkSchema>
 
 // Formulario de proyecto (ProyectoEditar.dc.html): sirve para crear y para editar. Los días son
-// días sueltos (started_on, goal_on, 'AAAA-MM-DD'). `cover` es la clave de una portada ilustrada;
-// cuando exista la subida de imágenes llevará también una ruta de Storage.
+// días sueltos (started_on, goal_on, 'AAAA-MM-DD'). `cover` tiene tres valores con significado distinto:
+// una clave = portada ilustrada, `null` = sin portada y ausente (`undefined`) = "no la toques" (así un
+// proyecto con imagen subida no la pierde al guardar otros cambios: la imagen se sube por su propia ruta).
 export const projectSchema = z
   .object({
     name: z.string().trim().min(1, 'Escribe un nombre para el proyecto.').max(80, 'Máximo 80 caracteres.'),
@@ -26,7 +27,7 @@ export const projectSchema = z
     goalOn: z.iso.date().nullable(),
     objectives: z.array(z.string().trim().min(1).max(200, 'Cada objetivo puede tener hasta 200 caracteres.')).max(30),
     links: z.array(projectLinkSchema).max(30),
-    cover: z.enum(PROJECT_COVER_KEYS).nullable(),
+    cover: z.enum(PROJECT_COVER_KEYS).nullable().optional(),
   })
   .refine((project) => !project.startedOn || !project.goalOn || project.goalOn >= project.startedOn, {
     path: ['goalOn'],

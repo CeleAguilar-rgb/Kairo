@@ -8,6 +8,17 @@
   flex-direction: column;
   align-items: flex-end;
   gap: var(--space-4);
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    opacity var(--duration-base) var(--ease-out);
+}
+
+/* Al bajar en la página la píldora se esconde hacia abajo para no tapar el contenido. Con el foco del
+   teclado dentro (o al pasar el cursor por donde estaba) se queda, para que no se pierda el control. */
+.dockHidden:not(:focus-within):not(:hover) {
+  transform: translateY(calc(100% + var(--space-9)));
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* La píldora colapsada */
@@ -309,4 +320,11 @@
   background: var(--accent);
   color: var(--surface-inverted);
   cursor: pointer;
+}
+
+/* Con "reducir movimiento" la píldora solo se desvanece, sin deslizarse. */
+@media (prefers-reduced-motion: reduce) {
+  .dockHidden:not(:focus-within):not(:hover) {
+    transform: none;
+  }
 }

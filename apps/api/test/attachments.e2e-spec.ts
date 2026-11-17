@@ -76,6 +76,11 @@ describe('Archivos y portada (Storage, e2e)', () => {
       .post(url)
       .set(authHeader(user))
       .send(body as object)
+  const patch = (user: TestUser, url: string, body: unknown) =>
+    request(app.getHttpServer())
+      .patch(url)
+      .set(authHeader(user))
+      .send(body as object)
   const del = (user: TestUser, url: string) =>
     request(app.getHttpServer()).delete(url).set(authHeader(user))
 
@@ -306,6 +311,34 @@ describe('Archivos y portada (Storage, e2e)', () => {
       const read = (await get(userA, `/v1/projects/${project.id}`).expect(200))
         .body as ProjectJson
       expect(read.coverUrl).toBeTruthy()
+    })
+
+    it('guardar el formulario sin `cover` deja la imagen subida; con una ilustrada la reemplaza; con null la quita', async () => {
+      const project = await createProject(userA, { cover: null })
+      const bytes = new TextEncoder().encode('abc')
+      const signed = (
+        await post(userA, `/v1/projects/${project.id}/cover/sign-upload`, {
+          name: 'portada.png',
+          mime: 'image/png',
+          sizeBytes: bytes.byteLength,
+        }).expect(201)
+      ).body as SignedUpload
+      await uploadReal(signed, bytes, 'image/png')
+      await post(userA, `/v1/projects/${project.id}/cover/confirm`, { path: signed.path }).expect(201)
+
+      // El formulario de edición con imagen subida no manda `cover` (ausente = no tocar).
+      const { cover: _omitted, ...withoutCover } = newProject({ name: 'Renombrado' })
+      const kept = (await patch(userA, `/v1/projects/${project.id}`, withoutCover).expect(200)).body as ProjectJson
+      expect(kept.coverPath).toBe(`storage:${signed.path}`)
+      expect(kept.coverUrl).toBeTruthy()
+
+      // Elegir una ilustrada reemplaza la imagen subida.
+      const preset = (await patch(userA, `/v1/projects/${project.id}`, newProject({ cover: 'olas' })).expect(200)).body as ProjectJson
+      expect(preset.coverPath).toBe('preset:olas')
+      expect(preset.coverUrl).toBeNull()
+
+      const none = (await patch(userA, `/v1/projects/${project.id}`, newProject({ cover: null })).expect(200)).body as ProjectJson
+      expect(none.coverPath).toBeNull()
     })
 
     it('subir una portada nueva borra de Storage la anterior', async () => {

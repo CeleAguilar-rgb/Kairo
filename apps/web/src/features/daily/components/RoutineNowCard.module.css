@@ -122,3 +122,51 @@
     animation: none;
   }
 }
+
+/* Los hábitos del día: una lista de checks al pie de la tarjeta */
+.habits {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-inverted);
+}
+
+.habitsTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-on-inverted-soft);
+}
+
+.habitsCount {
+  font-variant-numeric: tabular-nums;
+}
+
+.habitList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-6);
+}
+
+.habit {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: 14px;
+}
+
+.habitDone {
+  color: var(--text-on-inverted-soft);
+  text-decoration: line-through;
+}
+
+.habitMissed {
+  color: var(--danger-on-inverted);
+}

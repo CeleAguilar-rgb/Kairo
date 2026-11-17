@@ -1,7 +1,7 @@
 'use client'
 
 import type { CreateTaskInput } from '@kairo/shared'
-import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import dynamic from 'next/dynamic'
 import { useMemo, useState, useTransition } from 'react'
 
@@ -10,7 +10,6 @@ import { LineIcon } from '@/components/ui/Card'
 import { Doodle } from '@/components/ui/Doodle'
 import { Segmented } from '@/components/ui/Segmented'
 import { useToast } from '@/components/ui/Toast'
-import { projectTone } from '@/features/projects'
 import type { IsoDate } from '@/lib/dates'
 import { EASE_OUT, SPRING } from '@/lib/motion'
 
@@ -21,6 +20,7 @@ import type { Task, TaskStatus } from '../types'
 import { TaskBoard } from './TaskBoard'
 import { TaskDeleteDialog } from './TaskDeleteDialog'
 import { TaskDetailDrawer } from './TaskDetailDrawer'
+import { ProjectFilter } from './ProjectFilter'
 import { TaskList } from './TaskList'
 import styles from './TasksView.module.css'
 
@@ -59,7 +59,7 @@ export function TasksView({
 }: TasksViewProps) {
   const toast = useToast()
   const [tasks, setTasks] = useState(initialTasks)
-  const [view, setView] = useState<View>('list')
+  const [view, setView] = useState<View>('board')
   const [projectFilter, setProjectFilter] = useState<string>(initialProjectId ?? 'all')
   const [showDone, setShowDone] = useState(false)
   const [openId, setOpenId] = useState<string | null>(null)
@@ -340,54 +340,13 @@ export function TasksView({
         </motion.div>
       </section>
 
-      <LayoutGroup id="task-filters">
-        <div
-          className={styles.filters}
-          role="group"
-          aria-label="Filtrar por proyecto"
-        >
-          {[{ id: 'all', name: 'Todas' }, ...projects].map((project, index) => {
-            const selected = projectFilter === project.id
-            const count =
-              project.id === 'all' ? pendingTotal : pendingIn(project.id)
-            return (
-              <motion.button
-                key={project.id}
-                type="button"
-                className={[
-                  styles.filter,
-                  selected ? styles.filterSelected : null,
-                ]
-                  .filter(Boolean)
-                  .join(' ')}
-                aria-pressed={selected}
-                onClick={() => setProjectFilter(project.id)}
-                whileTap={{ scale: 0.96 }}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease: EASE_OUT, delay: 0.2 + index * 0.04 }}
-              >
-                {selected ? (
-                  <motion.span
-                    layoutId="filter-pill"
-                    className={styles.filterPill}
-                    transition={SPRING.slide}
-                  />
-                ) : null}
-                {project.id !== 'all' ? (
-                  <span
-                    className={styles.filterDot}
-                    style={{ background: projectTone(project.id) }}
-                    aria-hidden="true"
-                  />
-                ) : null}
-                <span className={styles.filterName}>{project.name}</span>
-                <span className={styles.filterCount}>{count}</span>
-              </motion.button>
-            )
-          })}
-        </div>
-      </LayoutGroup>
+      <div className={styles.filters}>
+        <ProjectFilter
+          value={projectFilter}
+          onChange={setProjectFilter}
+          options={[{ id: 'all', name: 'Todos los proyectos', count: pendingTotal }, ...projects.map((project) => ({ id: project.id, name: project.name, count: pendingIn(project.id) }))]}
+        />
+      </div>
 
       <AnimatePresence mode="wait">
         <motion.div

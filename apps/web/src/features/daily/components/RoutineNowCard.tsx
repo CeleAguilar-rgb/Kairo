@@ -1,12 +1,16 @@
 'use client'
 
 import { motion } from 'motion/react'
+import { useOptimistic, useTransition } from 'react'
 
 import { Card, CardHeader, CardLink, LineIcon } from '@/components/ui/Card'
-import { formatWallTime } from '@/lib/dates'
+import { Checkbox } from '@/components/ui/Checkbox'
+import { useToast } from '@/components/ui/Toast'
+import { formatWallTime, minutesToWallTime } from '@/lib/dates'
 import { EASE_OUT, fadeUp, staggerList } from '@/lib/motion'
 
-import { currentBlock, endMinutes, isOverdue, startMinutes } from '../routine-utils'
+import { toggleRoutineBlockAction } from '../routine-actions'
+import { currentBlock, endMinutes, isLateMark, isOverdue, startMinutes } from '../routine-utils'
 import { ROUTINE_KIND_LABEL, type RoutineBlockToday } from '../types'
 
 import styles from './RoutineNowCard.module.css'
@@ -24,7 +28,29 @@ const MAX_LINES = 3
 
 // "Ahora en tu rutina" (Main.dc.html): el bloque en curso (o el siguiente),
 // lo que ya pasó sin marcar (en rojo) y lo que viene.
-export function RoutineNowCard({ blocks, nowMinutes, hourFormat }: RoutineNowCardProps) {
+export function RoutineNowCard({ blocks: allBlocks, nowMinutes, hourFormat }: RoutineNowCardProps) {
+  const toast = useToast()
+  const [, startTransition] = useTransition()
+  // Los hábitos (agua, vitaminas…) no son "lo que sigue" sino una lista de checks del día: van aparte,
+  // abajo, y se marcan desde aquí sin entrar a Día a día. Optimista: la palomita se ve al instante y la
+  // Server Action va detrás (si falla, el estado vuelve solo al del servidor y sale un aviso).
+  const [visible, applyMark] = useOptimistic(allBlocks, (current, mark: { id: string; done: boolean }) =>
+    current.map((block) =>
+      block.id !== mark.id ? block : { ...block, log: mark.done ? { doneAt: minutesToWallTime(nowMinutes), late: isLateMark(block, nowMinutes) } : null },
+    ),
+  )
+  const habits = visible.filter((block) => block.kind === 'habit')
+  const blocks = visible.filter((block) => block.kind !== 'habit')
+
+  const toggleHabit = (block: RoutineBlockToday) =>
+    startTransition(async () => {
+      const done = block.log === null
+      applyMark({ id: block.id, done })
+      const result = await toggleRoutineBlockAction({ blockId: block.id, done })
+      if (!result.ok) toast.show({ message: result.message ?? 'No se pudo guardar. Intenta de nuevo.', icon: 'info' })
+    })
+  const habitsDone = habits.filter((block) => block.log !== null).length
+
   // Solo un bloque con rango puede estar "en curso"; un hábito es un momento.
   const current = currentBlock(blocks, nowMinutes)
   const upcoming = blocks.filter((b) => startMinutes(b) > nowMinutes)
@@ -91,6 +117,33 @@ export function RoutineNowCard({ blocks, nowMinutes, hourFormat }: RoutineNowCar
             </motion.li>
           ))}
         </motion.ul>
+      ) : null}
+
+      {habits.length > 0 ? (
+        <section className={styles.habits} aria-labelledby="home-habits">
+          <h3 id="home-habits" className={styles.habitsTitle}>
+            Hábitos de hoy
+            <span className={styles.habitsCount}>
+              {habitsDone}/{habits.length}
+            </span>
+          </h3>
+          <ul className={styles.habitList}>
+            {habits.map((block) => {
+              const overdue = isOverdue(block, nowMinutes)
+              return (
+                <li key={block.id} className={styles.habit}>
+                  <Checkbox
+                    checked={block.log !== null}
+                    onToggle={() => toggleHabit(block)}
+                    label={`${block.log !== null ? 'Desmarcar' : 'Marcar'} ${block.title}`}
+                    tone={overdue ? 'danger' : 'inverted'}
+                  />
+                  <span className={[styles.habitName, block.log !== null ? styles.habitDone : null, overdue ? styles.habitMissed : null].filter(Boolean).join(' ')}>{block.title}</span>
+                </li>
+              )
+            })}
+          </ul>
+        </section>
       ) : null}
     </Card>
   )

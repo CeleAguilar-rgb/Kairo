@@ -175,6 +175,13 @@ export function storagePathOf(coverPath: string | null): string | null {
   return coverPath?.startsWith(STORAGE_PREFIX) ? coverPath.slice(STORAGE_PREFIX.length) : null
 }
 
+// La portada que pide el formulario: una clave es "preset:<clave>", `null` es "sin portada" y ausente es
+// "dejar la que haya" (una imagen subida no viaja en el formulario, ver `projectSchema`).
+function coverPathOf(cover: ProjectInput['cover']): string | null | undefined {
+  if (cover === undefined) return undefined
+  return cover ? `${COVER_PREFIX}${cover}` : null
+}
+
 // Del formulario a las columnas: una descripción vacía es nula y la portada es "preset:<clave>".
 function fieldsOf(input: ProjectInput): ProjectFields {
   return {
@@ -182,7 +189,7 @@ function fieldsOf(input: ProjectInput): ProjectFields {
     kind: input.kind,
     status: input.status,
     description: input.description === '' ? null : input.description,
-    coverPath: input.cover ? `${COVER_PREFIX}${input.cover}` : null,
+    coverPath: coverPathOf(input.cover),
     startedOn: input.startedOn,
     goalOn: input.goalOn,
   }

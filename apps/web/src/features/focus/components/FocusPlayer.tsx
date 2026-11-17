@@ -2,6 +2,7 @@
 
 import { FOCUS_DOTS } from '@kairo/shared'
 import { AnimatePresence, motion } from 'motion/react'
+import { useEffect, useState } from 'react'
 
 import { SPRING } from '@/lib/motion'
 
@@ -22,6 +23,36 @@ function formatClock(totalSeconds: number) {
   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
 }
 
+// Cuánto hay que bajar de la parte de arriba antes de que la píldora pueda esconderse, y cuántos píxeles
+// mínimos cuenta como "un movimiento" (ignora el temblor de una rueda de ratón o un trackpad).
+const HIDE_AFTER_SCROLL = 80
+const MIN_SCROLL_STEP = 8
+
+// true mientras la persona baja en la página: la píldora se esconde para no tapar el contenido y reaparece
+// en cuanto sube (o vuelve al inicio). El scroll es el de la ventana: el dashboard no tiene otro contenedor.
+function useHiddenWhileScrollingDown() {
+  const [hidden, setHidden] = useState(false)
+
+  useEffect(() => {
+    let lastY = window.scrollY
+    const onScroll = () => {
+      const y = window.scrollY
+      if (y < HIDE_AFTER_SCROLL) {
+        setHidden(false)
+      } else if (Math.abs(y - lastY) >= MIN_SCROLL_STEP) {
+        setHidden(y > lastY)
+      } else {
+        return
+      }
+      lastY = y
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  return hidden
+}
+
 // El reproductor flotante (Reproductor.dc.html): el pomodoro. El modo Música (Spotify) se quitó el 2026-11-03
 // (decisión #53). Lee todo de useFocus(), así que puede abrirse desde otras pantallas (el botón "Pomodoro" del
 // detalle de tarea) sin perder lo que ya estaba corriendo.
@@ -29,6 +60,7 @@ export function FocusPlayer() {
   const focus = useFocus()
   const { timer, expanded, setExpanded, task, cycleTask } = focus
   const { state, reset, skipToBreak, choosePreset, toggleRun } = timer
+  const scrolledDown = useHiddenWhileScrollingDown()
 
   const preset = FOCUS_PRESETS[state.presetIndex]
   const totalSeconds = (state.phase === 'work' ? preset.workMinutes : preset.breakMinutes) * 60
@@ -49,7 +81,8 @@ export function FocusPlayer() {
   const pillSub = state.running ? 'Enfoque' : 'Enfoque en pausa'
 
   return (
-    <div className={styles.dock}>
+    // Con el panel abierto nunca se esconde: la persona lo está usando.
+    <div className={[styles.dock, !expanded && scrolledDown ? styles.dockHidden : null].filter(Boolean).join(' ')}>
       <AnimatePresence>
         {expanded ? (
           <motion.section

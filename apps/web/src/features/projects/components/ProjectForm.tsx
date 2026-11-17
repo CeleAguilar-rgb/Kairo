@@ -105,7 +105,7 @@ export function ProjectForm({ mode, projectId, initial, initialCoverUrl, taskCou
   const [linkTitle, setLinkTitle] = useState('')
   const [linkUrl, setLinkUrl] = useState('')
   const [linkError, setLinkError] = useState('')
-  const [cover, setCover] = useState<ProjectCoverKey | null>(initial.cover)
+  const [cover, setCover] = useState<ProjectCoverKey | null>(initial.cover ?? null)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
   // Las portadas elegibles; si el proyecto ya tiene una propia (uno de los de ejemplo), se ofrece también.
@@ -212,7 +212,9 @@ export function ProjectForm({ mode, projectId, initial, initialCoverUrl, taskCou
       goalOn: goalOn || null,
       objectives,
       links,
-      cover,
+      // Con una imagen subida no se manda `cover`: ausente = "dejar la portada como está". Mandar `null`
+      // borraría la imagen (la subida ya quedó guardada por su cuenta, no viaja en este formulario).
+      cover: coverUrl ? undefined : cover,
     }
     const parsed = projectSchema.safeParse(candidate)
     if (!parsed.success) {
