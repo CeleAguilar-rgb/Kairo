@@ -1,7 +1,8 @@
 /* La línea de tiempo de hoy. Las medidas de las columnas son variables para que la raya vertical (el riel)
    siempre caiga justo en medio de los íconos, también en celular. */
 .list {
-  --time-col: 64px;
+  /* Cabe "10:30 a. m." en una sola línea (en 24 h sobra espacio, pero así las filas no cambian de ancho) */
+  --time-col: 88px;
   --icon-col: 40px;
   --row-gap: var(--space-5);
 
@@ -38,6 +39,8 @@
   font-size: 14px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+  /* Una hora nunca se parte en dos líneas ("10:30 a." / "m."): la columna se mide para que quepa */
+  white-space: nowrap;
 }
 
 /* Lo que todavía no llega va más tenue y sin negrita */
@@ -169,6 +172,7 @@
   font-size: 14px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .focus {
@@ -291,9 +295,14 @@
 
 @media (max-width: 720px) {
   .list {
-    --time-col: 52px;
+    --time-col: 76px;
     --icon-col: 36px;
     --row-gap: var(--space-4);
+  }
+
+  .time,
+  .focusTime {
+    font-size: 13px;
   }
 
   .focusRow .iconFocus {

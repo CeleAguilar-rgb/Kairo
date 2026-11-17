@@ -215,7 +215,7 @@
 
 .row {
   display: grid;
-  grid-template-columns: 72px 40px minmax(0, 1fr) auto 44px;
+  grid-template-columns: 88px 40px minmax(0, 1fr) auto 44px;
   gap: var(--space-5);
   align-items: center;
   min-height: 60px;
@@ -223,10 +223,20 @@
   border-top: 1px solid var(--border-soft);
 }
 
+/* Inicio arriba y fin debajo: cada hora en su propia línea, sin cortes a medias ("6:00 a. m. – 8:00 a." / "m.") */
 .time {
+  display: flex;
+  flex-direction: column;
   font-weight: 600;
   font-size: 14px;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.timeEnd {
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--text-muted);
 }
 
 .icon {
@@ -385,7 +395,7 @@
 
 @media (max-width: 720px) {
   .row {
-    grid-template-columns: 52px 36px minmax(0, 1fr) 44px;
+    grid-template-columns: 76px 36px minmax(0, 1fr) 44px;
     gap: var(--space-4);
   }
 

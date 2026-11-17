@@ -1,16 +1,23 @@
+/* Título arriba y, debajo, una fila con etiquetas y botones. Antes todo era una sola fila que se
+   rompía: con un nombre largo el título ocupaba el ancho y cada bloque caía en su propia línea. */
 .header {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
+  flex-direction: column;
   gap: var(--space-7);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5) var(--space-7);
 }
 
 .chips {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
-  margin-top: var(--space-1);
 }
 
 .chip {

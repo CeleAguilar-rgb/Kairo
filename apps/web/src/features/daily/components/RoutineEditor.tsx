@@ -230,8 +230,8 @@ export function RoutineEditor({ routines, blocks, links, hourFormat }: RoutineEd
                 {ownBlocks.map((block) => (
                   <motion.li key={block.id} variants={fadeUp} className={styles.row}>
                     <span className={styles.time}>
-                      {formatWallTime(block.startsAt, hourFormat)}
-                      {block.endsAt ? ` – ${formatWallTime(block.endsAt, hourFormat)}` : ''}
+                      <span>{formatWallTime(block.startsAt, hourFormat)}</span>
+                      {block.endsAt ? <span className={styles.timeEnd}>– {formatWallTime(block.endsAt, hourFormat)}</span> : null}
                     </span>
                     <span className={[styles.icon, block.kind === 'focus' ? styles.iconFocus : null].filter(Boolean).join(' ')}>
                       <LineIcon d={ROUTINE_ICON_META[block.icon].d} size={20} />
