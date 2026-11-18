@@ -14,6 +14,15 @@ const GROUP_NAME: Record<TaskGroupKey, string> = {
   done: 'Hechas',
 }
 
+// La ÚNICA regla de "lo de hoy" (la usan la Lista y la tarjeta de Inicio): lo que vence
+// hoy, hecho o no (cuenta para el anillo), más lo vencido que sigue pendiente. Lo
+// vencido que ya se hizo no: era de otro día y ya quedó.
+export function isForToday(task: Task, today: IsoDate): boolean {
+  if (!task.dueOn) return false
+  if (task.dueOn === today) return true
+  return task.dueOn < today && task.status !== 'done'
+}
+
 // Grupos de la vista Lista (Tareas.dc.html). Lo vencido cuenta como "Hoy":
 // sigue pendiente y es lo primero que hay que ver. Los grupos vacíos no salen.
 export function groupTasks(tasks: Task[], today: IsoDate, weekEnd: IsoDate, showDone: boolean): TaskGroup[] {
@@ -22,7 +31,7 @@ export function groupTasks(tasks: Task[], today: IsoDate, weekEnd: IsoDate, show
 
   for (const task of pending) {
     if (!task.dueOn) byKey.undated.push(task)
-    else if (task.dueOn <= today) byKey.today.push(task)
+    else if (isForToday(task, today)) byKey.today.push(task)
     else if (task.dueOn <= weekEnd) byKey.week.push(task)
     else byKey.later.push(task)
   }

@@ -9,13 +9,15 @@ import styles from './ProjectCard.module.css'
 
 type ProjectCardProps = {
   project: Project
-  // "Próxima: Hoy", "Próxima: Vie 16" o "Sin fecha" (la arma quien conoce la fecha de hoy).
+  // "Próxima: Hoy", "Próxima: Vie 16", "Vencida: 9 nov" o "Sin fecha" (la arma quien conoce la fecha de hoy).
   nextText: string
+  // La fecha más cercana ya pasó: el texto sale en rojo.
+  overdue?: boolean
 }
 
 // La tarjeta de la galería de Proyectos (Proyectos.dc.html): portada ilustrada con el tipo y,
 // si está en pausa, su etiqueta; nombre, descripción, avance y la próxima fecha.
-export function ProjectCard({ project, nextText }: ProjectCardProps) {
+export function ProjectCard({ project, nextText, overdue = false }: ProjectCardProps) {
   const coverKey = coverKeyOf(project.coverPath)
 
   return (
@@ -57,7 +59,7 @@ export function ProjectCard({ project, nextText }: ProjectCardProps) {
             <span>
               {project.doneCount} de {project.taskCount} tareas
             </span>
-            <span className={styles.next}>
+            <span className={[styles.next, overdue ? styles.nextOverdue : null].filter(Boolean).join(' ')}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <circle cx="12" cy="12" r="9" />
                 <path d="M12 7v5l3 2" />

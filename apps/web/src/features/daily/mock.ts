@@ -376,7 +376,4 @@ export const FOCUS_AREA_LABEL: Record<string, string> = {
   personal: 'Personal',
 }
 
-// Lo que el Diario cuenta de hoy fuera de la rutina: tareas hechas y eventos. Debería salir de Tareas y
-// Agenda; sigue de ejemplo con la API conectada (decisión #39), igual que FOCUS_TASKS arriba.
-export const TODAY_SUMMARY_EXTRAS = ['1 tarea hecha', 'Daily · Partida con amigos']
 

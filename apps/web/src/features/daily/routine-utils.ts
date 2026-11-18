@@ -159,6 +159,8 @@ export function reportStats(rows: ReportRow[]): ReportStats {
   let late = 0
   let longestRun: ReportStats['longestRun'] = null
   let mostSkipped: ReportStats['mostSkipped'] = null
+  let longestRunBlockId: string | null = null
+  const skippedByRow: { blockId: string; count: number; title: string; startsAt: string }[] = []
 
   for (const row of rows) {
     let run = 0
@@ -169,14 +171,24 @@ export function reportStats(rows: ReportRow[]): ReportStats {
         total += 1
         run += 1
         if (cell.status === 'late') late += 1
-        if (run > (longestRun?.days ?? 0)) longestRun = { days: run, title: row.title, startsAt: row.startsAt }
+        if (run > (longestRun?.days ?? 0)) {
+          longestRun = { days: run, title: row.title, startsAt: row.startsAt }
+          longestRunBlockId = row.blockId
+        }
       } else if (cell.status === 'skipped') {
         total += 1
         skipped += 1
         run = 0
       }
     }
-    if (skipped > (mostSkipped?.count ?? 0)) mostSkipped = { count: skipped, title: row.title, startsAt: row.startsAt }
+    skippedByRow.push({ blockId: row.blockId, count: skipped, title: row.title, startsAt: row.startsAt })
+  }
+
+  // "Lo que más se te salta" no puede ser el mismo bloque de tu mejor racha: se contradirían. En empate
+  // gana el primero (el más temprano del día, como vienen las filas).
+  for (const row of skippedByRow) {
+    if (row.blockId === longestRunBlockId) continue
+    if (row.count > (mostSkipped?.count ?? 0)) mostSkipped = { count: row.count, title: row.title, startsAt: row.startsAt }
   }
 
   return { pct: total === 0 ? null : Math.round((ok / total) * 100), ok, total, late, longestRun, mostSkipped }

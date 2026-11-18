@@ -128,7 +128,12 @@ export function ProjectsView({ projects, today, weekEnd }: ProjectsViewProps) {
             >
               <ProjectCard
                 project={project}
-                nextText={project.nextDueOn ? `Próxima: ${formatDueLabel(project.nextDueOn, today, weekEnd)}` : 'Sin fecha'}
+                nextText={
+                  !project.nextDueOn
+                    ? 'Sin fecha'
+                    : `${project.nextDueOn < today ? 'Vencida' : 'Próxima'}: ${formatDueLabel(project.nextDueOn, today, weekEnd)}`
+                }
+                overdue={project.nextDueOn !== null && project.nextDueOn < today}
               />
             </motion.div>
           ))}

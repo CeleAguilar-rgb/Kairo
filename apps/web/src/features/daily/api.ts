@@ -4,12 +4,13 @@ import { getMe } from '@/lib/account/api'
 import { api } from '@/lib/api-client'
 import { DEMO_MODE } from '@/lib/demo'
 import { listProjects } from '@/features/projects/api'
+import { countTasksDoneToday } from '@/features/tasks/api'
 import { addDays, minutesNowIn, startOfMonth, startOfWeek, type IsoDate } from '@/lib/dates'
 import { getMockContext, mockDelay, type MockContext } from '@/lib/mock/context'
 
 import { HABIT_TARGET_PERCENT } from './goal-utils'
 import { MEAL_ORDER, mealSlots } from './meal-utils'
-import { buildDailySeed, FOCUS_AREA_LABEL, FOCUS_TASKS, pastStatus, TODAY_SUMMARY_EXTRAS, type DailySeed } from './mock'
+import { buildDailySeed, FOCUS_AREA_LABEL, FOCUS_TASKS, pastStatus, type DailySeed } from './mock'
 import {
   countsForReport,
   dayProgress,
@@ -206,12 +207,15 @@ export async function getRoutineStreaks(): Promise<Streak[]> {
   return streaks.filter((streak) => streak.days > 0).sort((a, b) => b.days - a.days).slice(0, 3)
 }
 
-// "Tu día en resumen" del Diario: cuántos bloques van y lo demás que se cumplió hoy. Los extras (tareas
-// hechas, eventos) siguen de ejemplo: todavía no se conecta con Tareas/Agenda (decisión #39).
+// "Tu día en resumen" del Diario: cuántos bloques van y cuántas tareas se hicieron hoy, pedido a Tareas
+// por su api.ts para que el número sea el mismo que ves allá. Si Tareas está apagado o falla, no sale.
 export async function getDaySummary(): Promise<string[]> {
-  const { blocks } = await getDayRoutine()
+  const [{ blocks }, tasksDone] = await Promise.all([getDayRoutine(), countTasksDoneToday().catch(() => 0)])
   const { done, total } = dayProgress(blocks)
-  return [...(total > 0 ? [`${done} de ${total} bloques`] : []), ...TODAY_SUMMARY_EXTRAS]
+  return [
+    ...(total > 0 ? [`${done} de ${total} bloques`] : []),
+    ...(tasksDone > 0 ? [`${tasksDone} ${tasksDone === 1 ? 'tarea hecha' : 'tareas hechas'}`] : []),
+  ]
 }
 
 // --- Rutina (editor) ------------------------------------------------------------------------------

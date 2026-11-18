@@ -13,6 +13,7 @@ import { formatRelativeDay, type IsoDate } from '@/lib/dates'
 import { listItem, SPRING, staggerList } from '@/lib/motion'
 
 import { updateTaskStatus } from '../actions'
+import { dueTone } from '../grouping'
 import type { Task, TaskStatus } from '../types'
 
 import { TaskDetailDrawer } from './TaskDetailDrawer'
@@ -139,7 +140,14 @@ export function TodayTasksCard({ tasks: initial, today, onDoneCountChange }: Tod
                 <button type="button" className={styles.rowButton} onClick={() => setOpenId(task.id)} aria-label={`Ver detalle: ${task.title}`}>
                   <span className={[styles.title, done ? styles.titleDone : null].filter(Boolean).join(' ')}>{task.title}</span>
                   <span className={styles.meta}>
-                    {task.project?.name ?? 'Personal'} · {task.dueOn ? formatRelativeDay(task.dueOn, today) : 'Sin fecha'}
+                    {task.project?.name ?? 'Personal'} ·{' '}
+                    {dueTone(task, today) === 'overdue' && task.dueOn ? (
+                      <span className={styles.overdue}>Vencida: {formatRelativeDay(task.dueOn, today)}</span>
+                    ) : task.dueOn ? (
+                      formatRelativeDay(task.dueOn, today)
+                    ) : (
+                      'Sin fecha'
+                    )}
                   </span>
                 </button>
                 <svg className={styles.chevron} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

@@ -108,6 +108,12 @@
   color: var(--text-on-inverted-muted);
 }
 
+/* Lo vencido que sigue pendiente: mismo rojo que Tareas, en su versión sobre fondo oscuro. */
+.overdue {
+  color: var(--danger-on-inverted);
+  font-weight: 600;
+}
+
 .chevron {
   flex-shrink: 0;
   color: var(--text-subtle);
