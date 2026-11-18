@@ -81,7 +81,7 @@ export function HomeView(props: HomeViewProps) {
     () => (data.tasks ?? []).filter((t) => t.status !== 'done').length,
   )
 
-  const visible = available.filter((card) => !hidden.has(card.id))
+  const visible = available.filter((card) => !hidden.has(card.id) && !isEmptyCard(card.id, data))
   // layoutDependency: Motion solo mide el layout cuando este valor cambia. Sin él mide
   // en CADA render (por ejemplo, con cada tecla que se escribe), y medir fuerza al
   // navegador a recalcular la página.
@@ -326,6 +326,24 @@ export function HomeView(props: HomeViewProps) {
       </LayoutGroup>
     </main>
   )
+}
+
+// Una tarjeta que llegó sin nada que mostrar (sin recordatorios, sin metas…) no sale en Inicio: una tarjeta
+// grande que solo dice "Nada pendiente" ocupaba espacio sin aportar. Pendientes, la semana y la rutina se
+// quedan siempre: que estén vacías ya es información ("Nada para hoy"). Si falló la carga (null) tampoco se
+// esconde: ahí la tarjeta muestra su error y "Intentar de nuevo".
+function isEmptyCard(id: HomeCardId, data: HomeData): boolean {
+  const list = {
+    tasks: null,
+    agenda: null,
+    routine: null,
+    goals: data.goals,
+    menu: data.meals,
+    payments: data.payments,
+    projects: data.projects,
+    reminders: data.reminders,
+  }[id]
+  return list !== null && list.length === 0
 }
 
 // "Jueves 8 de octubre, Celeste. Tienes 4 pendientes y un pago esta semana."

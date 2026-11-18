@@ -48,15 +48,24 @@ export function GoalCard({ goal, today, delay = 0, calm = false, onOpen }: GoalC
         </span>
       </div>
       <span className={styles.title}>{goal.title}</span>
-      <div className={styles.progress}>
-        <div className={styles.numbers}>
-          <span className={styles.percent}>
-            <CountUp value={goalPercent(goal)} format={(n) => `${Math.round(n)}%`} />
-          </span>
-          <span className={styles.progressText}>{goalProgressText(goal)}</span>
+      {/* Una meta con hitos y sin ninguno no tiene avance que medir: "0 % · 0 de 0 hitos" con una barra vacía
+          parecía un fracaso. En su lugar, el siguiente paso (la tarjeta entera abre el detalle, donde se agregan). */}
+      {goal.kind === 'milestones' && goal.target === 0 ? (
+        <span className={styles.firstStep}>
+          <LineIcon d="M12 5v14M5 12h14" size={14} strokeWidth={2.2} />
+          Agrega el primer hito
+        </span>
+      ) : (
+        <div className={styles.progress}>
+          <div className={styles.numbers}>
+            <span className={styles.percent}>
+              <CountUp value={goalPercent(goal)} format={(n) => `${Math.round(n)}%`} />
+            </span>
+            <span className={styles.progressText}>{goalProgressText(goal)}</span>
+          </div>
+          <ProgressBar value={Math.max(0.03, goalRatio(goal))} label={`Avance de ${goal.title}`} delay={delay + 0.1} />
         </div>
-        <ProgressBar value={Math.max(0.03, goalRatio(goal))} label={`Avance de ${goal.title}`} delay={delay + 0.1} />
-      </div>
+      )}
       {goal.why ? <span className={styles.why}>“{goal.why}”</span> : null}
       <span className={styles.due}>
         <LineIcon d={['M3 7h18v14H3z', 'M3 11h18M8 5v4M16 5v4']} size={14} />

@@ -14,7 +14,7 @@
   width: 100%;
   padding: var(--space-5) var(--space-6);
   border-radius: var(--radius-14);
-  border: 1px solid var(--border-control);
+  border: 1px solid var(--border-input);
   background: var(--surface);
   font: inherit;
   line-height: 1.55;

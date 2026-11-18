@@ -12,6 +12,7 @@ import { Segmented } from '@/components/ui/Segmented'
 import { useToast } from '@/components/ui/Toast'
 import { addDays, addMonths, formatDayMonth, minutesNowIn, minutesToWallTime, startOfMonth, type IsoDate } from '@/lib/dates'
 import { EASE_OUT } from '@/lib/motion'
+import { useNarrowScreen } from '@/lib/use-narrow-screen'
 
 import { createEventAction, deleteEventAction, duplicateEventAction, moveEventAction, undoDeleteAction, updateEventAction } from '../actions'
 import { byTime, dayLabel, FILTER_TYPES, heading, rangeLabel, shiftAnchor, weekDays, type AgendaView as View } from '../agenda-utils'
@@ -94,7 +95,11 @@ export function AgendaView({ entries, projects, today, nowMinutes, timeZone, hou
   const toast = useToast()
   const [pending, startTransition] = useTransition()
 
-  const [view, setView] = useState<View>('week')
+  // null = la persona todavía no eligió: en el teléfono abre en Día (la semana no cabe a lo ancho) y en
+  // pantallas grandes en Semana.
+  const narrow = useNarrowScreen()
+  const [pickedView, setView] = useState<View | null>(null)
+  const view: View = pickedView ?? (narrow ? 'day' : 'week')
   const [anchor, setAnchor] = useState<IsoDate>(today)
   // Hacia dónde se mueve el calendario al cambiar de período (1 = adelante, -1 = atrás, 0 = sin dirección)
   const [direction, setDirection] = useState<1 | -1 | 0>(0)

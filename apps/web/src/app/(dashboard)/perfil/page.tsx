@@ -1,7 +1,10 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { PageEnter } from '@/components/layout/PageEnter'
 import { getMe } from '@/lib/account/api'
 import { PerfilView } from './PerfilView'
+
+export const metadata: Metadata = { title: 'Mi perfil' }
 
 // getMe() está envuelto en cache() (lib/account/api.ts): este llamado no
 // repite la petición a la API, reusa la que ya hizo el layout del dashboard.

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import type { ProjectInput } from '@kairo/shared'
 import { notFound } from 'next/navigation'
 
@@ -5,6 +6,8 @@ import { PageEnter } from '@/components/layout/PageEnter'
 import { ProjectForm } from '@/features/projects'
 import { getProject } from '@/features/projects/api'
 import { coverKeyOf } from '@/features/projects/types'
+
+export const metadata: Metadata = { title: 'Editar proyecto' }
 
 type EditProjectPageProps = { params: Promise<{ id: string }> }
 

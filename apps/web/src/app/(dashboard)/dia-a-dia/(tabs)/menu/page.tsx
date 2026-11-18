@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { isoDateSchema } from '@kairo/shared'
 import { redirect } from 'next/navigation'
 
@@ -5,6 +6,8 @@ import { DailyToolbar, EditRoutineLink, MenuWeek, WeekSwitcher } from '@/feature
 import { getMealWeek } from '@/features/daily/api'
 import { getMe } from '@/lib/account/api'
 import { addDays, startOfWeek, todayIn } from '@/lib/dates'
+
+export const metadata: Metadata = { title: 'Menú' }
 
 const BASE = '/dia-a-dia/menu'
 

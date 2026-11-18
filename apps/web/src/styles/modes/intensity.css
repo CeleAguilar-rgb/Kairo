@@ -27,6 +27,8 @@
   --border: var(--tl-line);
   --border-soft: color-mix(in srgb, var(--tl-line) 50%, var(--tl-card));
   --border-control: color-mix(in srgb, var(--tl-line) 88%, var(--ink-900));
+  /* La línea del tema con más tinta: 3.1:1 en el tema más claro de los 12 */
+  --border-input: color-mix(in srgb, var(--tl-line) 55%, var(--ink-900));
 
   --surface-glass: color-mix(in srgb, var(--tl-card) 70%, transparent);
 }

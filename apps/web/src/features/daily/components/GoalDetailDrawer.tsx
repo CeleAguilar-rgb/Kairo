@@ -285,7 +285,7 @@ function GoalDetail({ goal, today, onClose, onEdit, onAchieved }: DetailProps) {
           Editar
         </Button>
         <Button className={styles.achieve} onClick={handleAchieve} disabled={pending}>
-          La logré
+          Marcar como lograda
         </Button>
       </footer>
     </div>

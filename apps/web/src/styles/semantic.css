@@ -29,7 +29,10 @@
  * --surface-inverted-sunken base de esqueletos dentro de --surface-inverted (no está en el PDF; sale de la pantalla Estados)
  * --border                  borde por defecto de tarjetas y menús (linea)
  * --border-soft             línea divisoria, más tenue que --border (no está en el PDF; uso propio para separadores de fila)
- * --border-control          borde de inputs y botón "fantasma" (linea-fuerte)
+ * --border-control          borde de botón "fantasma", zonas punteadas y aros (linea-fuerte)
+ * --border-input            borde de los campos donde se escribe (Input, Select, Textarea). No está en el PDF: la
+ *                           linea-fuerte daba ~1.5:1 y un campo vacío casi no se veía; este llega a 3:1 (WCAG 1.4.11)
+ *                           contra --surface y --bg en todos los modos y temas
  * --text                    texto principal (tinta)
  * --text-muted              texto secundario: fechas, notas, etiquetas (texto-2)
  * --text-subtle             placeholder, tachado de "hecho", borde de casilla vacía — nunca texto que se deba leer (texto-3)

@@ -1,6 +1,9 @@
+import type { Metadata } from 'next'
 import { BrandPanel } from '../BrandPanel'
 import styles from '../split-layout.module.css'
 import { RecoverForm } from './RecoverForm'
+
+export const metadata: Metadata = { title: 'Recuperar contraseña' }
 
 export default function RecuperarPage() {
   return (

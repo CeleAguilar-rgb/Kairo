@@ -1,9 +1,12 @@
+import type { Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
 
 import { PageEnter } from '@/components/layout/PageEnter'
 import { EntryFullPage } from '@/features/writings'
 import { getEntryPage } from '@/features/writings/api'
 import { getMe } from '@/lib/account/api'
+
+export const metadata: Metadata = { title: 'Escritos' }
 
 type EntryPageProps = { params: Promise<{ id: string; entryId: string }> }
 

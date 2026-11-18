@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
 
@@ -6,6 +7,8 @@ import { WorldShell } from '@/features/writings'
 import { getWorldBundle } from '@/features/writings/api'
 
 import styles from './layout.module.css'
+
+export const metadata: Metadata = { title: 'Escritos' }
 
 type WorldLayoutProps = {
   children: ReactNode

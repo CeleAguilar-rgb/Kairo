@@ -12,6 +12,7 @@ import { Segmented } from '@/components/ui/Segmented'
 import { useToast } from '@/components/ui/Toast'
 import type { IsoDate } from '@/lib/dates'
 import { EASE_OUT, SPRING } from '@/lib/motion'
+import { useNarrowScreen } from '@/lib/use-narrow-screen'
 
 import { createTask, deleteTask, restoreTask, updateTaskStatus } from '../actions'
 import { groupTasks } from '../grouping'
@@ -59,7 +60,11 @@ export function TasksView({
 }: TasksViewProps) {
   const toast = useToast()
   const [tasks, setTasks] = useState(initialTasks)
-  const [view, setView] = useState<View>('board')
+  // null = la persona todavía no eligió: en el teléfono abre en Lista (el tablero de columnas no cabe) y en
+  // pantallas grandes en Tablero. Lo que elija después se respeta aunque gire la pantalla.
+  const narrow = useNarrowScreen()
+  const [pickedView, setView] = useState<View | null>(null)
+  const view: View = pickedView ?? (narrow ? 'list' : 'board')
   const [projectFilter, setProjectFilter] = useState<string>(initialProjectId ?? 'all')
   const [showDone, setShowDone] = useState(false)
   const [openId, setOpenId] = useState<string | null>(null)
@@ -367,6 +372,7 @@ export function TasksView({
               openId={openId}
               recentId={recentId}
               quickProjectName={activeProject?.name ?? 'Sin proyecto'}
+              showProject={projectFilter === 'all'}
               onToggleDone={toggleDone}
               onOpen={(task) => setOpenId(task.id)}
               onQuickAdd={handleQuickAdd}
@@ -377,6 +383,7 @@ export function TasksView({
               tasks={filtered}
               today={today}
               weekEnd={weekEnd}
+              showProject={projectFilter === 'all'}
               onOpen={(task) => setOpenId(task.id)}
               onMove={setStatus}
               onDelete={setDeletingTask}

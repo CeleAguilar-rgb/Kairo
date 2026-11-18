@@ -163,6 +163,11 @@
   .header {
     padding: var(--space-6) var(--space-5) 0;
   }
+
+  /* En el teléfono las secciones viven en la barra de abajo (BottomTabs, AppMas.dc.html). */
+  .nav {
+    display: none;
+  }
 }
 
 .menuWrap {

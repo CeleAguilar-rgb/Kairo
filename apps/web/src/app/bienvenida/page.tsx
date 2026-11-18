@@ -1,8 +1,11 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { getMe } from '@/lib/account/api'
 import { createClient } from '@/lib/supabase/server'
 import { BienvenidaWizard } from './BienvenidaWizard'
 import styles from './page.module.css'
+
+export const metadata: Metadata = { title: 'Bienvenida' }
 
 // Mismo candado que apps/web/src/app/page.tsx, al revés: sin sesión → /entrar;
 // con sesión y perfil ya creado (bienvenida ya hecha) → de vuelta al dashboard.

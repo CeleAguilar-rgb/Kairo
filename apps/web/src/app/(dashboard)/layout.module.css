@@ -14,6 +14,14 @@
   padding: 0 0 var(--space-15);
 }
 
+/* En el teléfono, abajo están la barra de secciones y, encima, el "+" y el pomodoro apilados
+   (QuickCapture y FocusPlayer): el final de la página tiene que poder subir por encima de todo eso. */
+@media (max-width: 720px) {
+  .content {
+    padding-bottom: calc(96px + 60px + var(--space-4) + 60px + var(--space-8));
+  }
+}
+
 /* Se hizo clic en un enlace y la página siguiente todavía no llega: la actual
    se atenúa y baja un poco, para que se note que la app ya reaccionó.
    La transición vive AQUÍ y no en .content a propósito: así solo anima al entrar en

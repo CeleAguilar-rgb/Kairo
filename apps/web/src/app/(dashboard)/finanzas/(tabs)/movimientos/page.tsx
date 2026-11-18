@@ -1,9 +1,12 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { MovementsView } from '@/features/finance'
 import { getFinanceMonth, getMovements } from '@/features/finance/api'
 import { monthHrefs } from '@/features/finance/finance-utils'
 import { getMe } from '@/lib/account/api'
+
+export const metadata: Metadata = { title: 'Movimientos' }
 
 type PageProps = { searchParams: Promise<{ mes?: string; nuevo?: string }> }
 

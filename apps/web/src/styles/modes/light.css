@@ -32,6 +32,8 @@
   --border: var(--sand-200);
   --border-soft: var(--sand-100);
   --border-control: var(--sand-300);
+  /* 3.7:1 sobre --surface, 3.3:1 sobre --bg (el mismo gris de la casilla vacía) */
+  --border-input: var(--ink-500);
 
   --text: var(--ink-900);
   --text-muted: var(--ink-600);

@@ -14,7 +14,7 @@ import { useEntering } from '@/lib/use-entering'
 import { dueLabel, dueTone, type TaskGroup } from '../grouping'
 import type { Task } from '../types'
 
-import { DueText, PriorityBadge, ProjectChip } from './TaskBits'
+import { DueText, PriorityBadge, ProjectChip, SubtaskCount } from './TaskBits'
 import styles from './TaskList.module.css'
 
 type TaskListProps = {
@@ -24,6 +24,8 @@ type TaskListProps = {
   openId: string | null
   recentId: string | null
   quickProjectName: string
+  // false cuando ya se filtró por un proyecto: repetir su chip en cada fila no dice nada.
+  showProject: boolean
   onToggleDone: (task: Task) => void
   onOpen: (task: Task) => void
   onQuickAdd: (title: string) => void
@@ -31,7 +33,7 @@ type TaskListProps = {
 }
 
 // Vista Lista de Tareas.dc.html: captura rápida arriba y grupos por fecha.
-export function TaskList({ groups, today, weekEnd, openId, recentId, quickProjectName, onToggleDone, onOpen, onQuickAdd, onDelete }: TaskListProps) {
+export function TaskList({ groups, today, weekEnd, openId, recentId, quickProjectName, showProject, onToggleDone, onOpen, onQuickAdd, onDelete }: TaskListProps) {
   // Quién está en qué grupo y en qué orden: Motion solo re-mide las filas si esto cambia.
   const listKey = groups.map((group) => `${group.key}:${group.items.map((task) => task.id).join(',')}`).join('|')
 
@@ -99,11 +101,11 @@ export function TaskList({ groups, today, weekEnd, openId, recentId, quickProjec
                     <Checkbox checked={done} onToggle={() => onToggleDone(task)} label={(done ? 'Desmarcar: ' : 'Marcar como hecha: ') + task.title} />
                     <button type="button" className={styles.rowButton} onClick={() => onOpen(task)} aria-label={`Ver detalle: ${task.title}`}>
                       <span className={[styles.title, done ? styles.titleDone : null].filter(Boolean).join(' ')}>{task.title}</span>
-                      <span className={styles.hideSm}>
-                        <ProjectChip project={task.project} />
-                      </span>
+                      {/* Los dos huecos se quedan aunque vayan vacíos: la fila es una cuadrícula y así las
+                          columnas de prioridad y fecha no se mueven de una fila a otra. */}
+                      <span className={styles.hideSm}>{showProject ? <ProjectChip project={task.project} /> : null}</span>
                       <span className={[styles.subs, styles.hideSm].join(' ')}>
-                        {task.subtasks.filter((s) => s.done).length}/{task.subtasks.length}
+                        <SubtaskCount done={task.subtasks.filter((s) => s.done).length} total={task.subtasks.length} />
                       </span>
                       <PriorityBadge priority={task.priority} />
                       <DueText label={dueLabel(task.dueOn, today, weekEnd)} tone={dueTone(task, today)} />

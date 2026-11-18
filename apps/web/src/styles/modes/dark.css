@@ -34,6 +34,8 @@
   --border: var(--tint-bone-10);
   --border-soft: var(--tint-bone-08);
   --border-control: var(--tint-bone-16);
+  /* Hueso al 40 %: 3.4:1 sobre --surface y --bg (el 16 % de --border-control daba 1.6:1) */
+  --border-input: color-mix(in srgb, var(--bone-100) 40%, transparent);
 
   --text: var(--bone-100);
   --text-muted: var(--bone-300);

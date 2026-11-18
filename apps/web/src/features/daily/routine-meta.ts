@@ -33,7 +33,8 @@ export const GOAL_AREA_LABEL: Record<GoalArea, string> = {
 }
 
 export const GOAL_KIND_LABEL: Record<GoalKind, string> = {
-  milestones: 'Logro',
+  // "Logro" con su palomita se leía como un botón de "ya la logré"; es el tipo de meta, no una acción.
+  milestones: 'Con hitos',
   number: 'Número',
   habit: 'Hábito',
   project: 'Proyecto',

@@ -65,14 +65,22 @@ a.chip:hover {
 
 /* Mismo tamaño que .close, pero sin su giro de 90°: no tiene sentido en un
    bote de basura. Se tiñe de rojo-peligro en vez de girar. */
+/* El pie del panel: solo "Mandar a la papelera", separado por una línea de lo demás. */
+.footer {
+  display: flex;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-soft);
+}
+
 .delete {
   all: unset;
   box-sizing: border-box;
-  width: 44px;
-  height: 44px;
+  min-height: 44px;
+  padding: 0 var(--space-5);
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: var(--space-3);
+  font-size: 14px;
   border-radius: var(--radius-pill);
   cursor: pointer;
   color: var(--text-muted);

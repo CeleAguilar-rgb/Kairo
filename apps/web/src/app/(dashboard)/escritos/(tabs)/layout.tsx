@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import type { ReactNode } from 'react'
 
@@ -8,6 +9,8 @@ import { getWritingsOverview, getWorldCards, overviewText } from '@/features/wri
 import { getMe } from '@/lib/account/api'
 
 import styles from './layout.module.css'
+
+export const metadata: Metadata = { title: 'Escritos' }
 
 // La cabecera (título, resumen, palabras de la semana) y las pestañas son comunes a Historias, Notas, Personajes y
 // Mundos: viven en el layout, así que al cambiar de pestaña solo cambia el contenido de abajo y la cabecera no se

@@ -19,7 +19,9 @@ const gochiHand = Gochi_Hand({
 })
 
 export const metadata: Metadata = {
-  title: 'Kairo',
+  // Cada pantalla pone su nombre ("Tareas") y aquí se completa: "Tareas · Kairo". Con varias pestañas
+  // abiertas ya no se llaman todas "Kairo"; sin título propio, la pantalla se queda con el default.
+  title: { default: 'Kairo', template: '%s · Kairo' },
   description: 'Dashboard personal para organizar la vida en un solo lugar',
   // El ícono de pestaña y el de "agregar a inicio": assets ya exportados del canvas en public/kairo-logo/.
   icons: {

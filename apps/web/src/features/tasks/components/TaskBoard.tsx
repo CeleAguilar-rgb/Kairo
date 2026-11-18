@@ -11,13 +11,15 @@ import { useEntering } from '@/lib/use-entering'
 import { dueLabel, dueTone } from '../grouping'
 import { STATUS_LABEL, type Task, type TaskStatus } from '../types'
 
-import { DueText, ProjectChip } from './TaskBits'
+import { DueText, ProjectChip, SubtaskCount } from './TaskBits'
 import styles from './TaskBoard.module.css'
 
 type TaskBoardProps = {
   tasks: Task[]
   today: IsoDate
   weekEnd: IsoDate
+  // false cuando ya se filtró por un proyecto: repetir su chip en cada tarjeta no dice nada.
+  showProject: boolean
   onOpen: (task: Task) => void
   onMove: (task: Task, status: TaskStatus) => void
   onDelete: (task: Task) => void
@@ -47,6 +49,7 @@ export function TaskBoard({
   tasks,
   today,
   weekEnd,
+  showProject,
   onOpen,
   onMove,
   onDelete,
@@ -183,7 +186,7 @@ export function TaskBoard({
                       }}
                     >
                       <div className={styles.cardTop}>
-                        <ProjectChip project={task.project} />
+                        {showProject ? <ProjectChip project={task.project} /> : <span />}
                         <div className={styles.cardTopActions}>
                           <button
                             type="button"
@@ -237,23 +240,23 @@ export function TaskBoard({
                         </button>
                       </h3>
                       <div className={styles.cardMeta}>
-                        <svg
-                          width="14"
-                          height="14"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          aria-hidden="true"
-                        >
-                          <path d="M9 11l3 3 8-8" />
-                          <path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9" />
-                        </svg>
-                        <span>
-                          {subsDone}/{task.subtasks.length}
-                        </span>
+                        {task.subtasks.length > 0 ? (
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                          >
+                            <path d="M9 11l3 3 8-8" />
+                            <path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9" />
+                          </svg>
+                        ) : null}
+                        <SubtaskCount done={subsDone} total={task.subtasks.length} />
                         <span className={styles.cardDue}>
                           <DueText
                             label={dueLabel(task.dueOn, today, weekEnd)}

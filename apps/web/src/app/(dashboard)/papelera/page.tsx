@@ -1,9 +1,12 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { PageEnter } from '@/components/layout/PageEnter'
 import { TrashView } from '@/features/trash'
 import { listTrash } from '@/features/trash/api'
 import { getMe } from '@/lib/account/api'
+
+export const metadata: Metadata = { title: 'Papelera' }
 
 // Papelera: todo lo borrado de los últimos 30 días, de todos los módulos. Esta página junta los datos y la hora de
 // ahora (para "Quedan 27 días"); la pantalla es TrashView.

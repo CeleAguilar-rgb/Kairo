@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { PageEnter } from '@/components/layout/PageEnter'
@@ -11,6 +12,8 @@ import {
   startOfWeek,
   todayIn,
 } from '@/lib/dates'
+
+export const metadata: Metadata = { title: 'Inicio' }
 
 // Inicio: el saludo y las tarjetas de los módulos activos. La página solo
 // junta datos y calcula lo que depende de la hora (en la zona del perfil),

@@ -107,28 +107,6 @@ export function TaskDetailDrawer({
               </span>
             )}
             <div className={styles.topActions}>
-              {onDelete ? (
-                <button
-                  type="button"
-                  className={styles.delete}
-                  aria-label={`Borrar "${task.title}"`}
-                  onClick={() => onDelete(task)}
-                >
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />
-                  </svg>
-                </button>
-              ) : null}
               <button
                 type="button"
                 className={styles.close}
@@ -323,6 +301,29 @@ export function TaskDetailDrawer({
               Pomodoro
             </Button>
           </motion.div>
+
+          {/* Borrar vive aquí abajo, separado del resto: arriba quedaba pegado a la X de cerrar y era
+              fácil tocar uno por el otro. Con texto, además, se entiende qué hace sin adivinar el ícono. */}
+          {onDelete ? (
+            <motion.div className={styles.footer} variants={fadeUp}>
+              <button type="button" className={styles.delete} onClick={() => onDelete(task)}>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />
+                </svg>
+                Mandar a la papelera
+              </button>
+            </motion.div>
+          ) : null}
         </motion.div>
       ) : null}
     </Drawer>

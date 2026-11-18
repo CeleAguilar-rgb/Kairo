@@ -219,13 +219,19 @@ function MealRow({ meal, time, dates, today, byKey, selected, hourFormat, onPick
             type="button"
             className={classes.filter(Boolean).join(' ')}
             aria-pressed={on}
-            aria-label={`${WEEKDAYS_SHORT[weekdayOf(date)]} ${dayOfMonth(date)}, ${MEAL_LABEL[meal]}: ${plan?.dish ?? 'vacío'}`}
+            aria-label={`${WEEKDAYS_SHORT[weekdayOf(date)]} ${dayOfMonth(date)}, ${MEAL_LABEL[meal]}: ${plan?.dish ?? 'vacío'}${plan?.prep ? ' · meal prep' : ''}`}
             onClick={() => onPick({ date, meal })}
           >
             {plan ? (
               <>
                 <span className={styles.dish}>{plan.dish}</span>
-                {plan.prep ? <span className={[styles.tag, styles.tagPrep].join(' ')}>Meal prep</span> : null}
+                {/* Meal prep casi siempre se repite toda la semana (el resumen de arriba ya lo dice): en cada
+                    celda basta un ícono pequeño, y el texto queda en el aria-label del botón y en el title. */}
+                {plan.prep ? (
+                  <span className={styles.prepIcon} title="Meal prep" aria-hidden="true">
+                    <LineIcon d={['M4 10h16v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9z', 'M8 10V7a4 4 0 0 1 8 0v3']} size={12} strokeWidth={2} />
+                  </span>
+                ) : null}
                 {plan.hasEvent ? <span className={[styles.tag, styles.tagEvent].join(' ')}>Evento</span> : null}
                 {plan.done ? (
                   <span className={styles.ate}>

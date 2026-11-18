@@ -162,6 +162,14 @@
   font-size: 14px;
 }
 
+/* Con el dedo: cada casilla mide 24px pero su área de toque 44px (Checkbox, ::after). Con 8px entre filas
+   las áreas se enciman y un toque podía marcar el hábito de al lado; con 20px el paso es de 44px exactos. */
+@media (pointer: coarse) {
+  .habitList {
+    row-gap: var(--space-9);
+  }
+}
+
 .habitDone {
   color: var(--text-on-inverted-soft);
   text-decoration: line-through;

@@ -33,6 +33,12 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* En lugar de la barra cuando la meta todavía no tiene cómo medirse (0 de 0 hitos). */
+.goalHint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
 .meals {
   list-style: none;
   display: flex;

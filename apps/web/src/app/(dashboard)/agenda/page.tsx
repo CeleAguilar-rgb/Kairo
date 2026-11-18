@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { PageEnter } from '@/components/layout/PageEnter'
@@ -6,6 +7,8 @@ import { getAgendaEntries } from '@/features/agenda/api'
 import { listProjects } from '@/features/projects/api'
 import { getMe } from '@/lib/account/api'
 import { minutesNowIn, todayIn } from '@/lib/dates'
+
+export const metadata: Metadata = { title: 'Agenda' }
 
 // Agenda: el calendario con eventos, cobros de membresías y tareas con fecha. Esta página solo junta los
 // datos (de ejemplo por ahora), la fecha de hoy y la hora de ahora en la zona del perfil; la pantalla es AgendaView.

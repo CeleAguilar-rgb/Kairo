@@ -25,15 +25,23 @@ export function GoalsCard({ goals }: { goals: Goal[] }) {
       <motion.ul className={styles.goals} variants={staggerList(0.08, 0.1)} initial="hidden" animate="show">
         {goals.map((goal, index) => {
           const ratio = goal.target > 0 ? goal.current / goal.target : 0
+          // Sin meta que medir (una de hitos sin hitos), la barra en 0 % solo parecía "no has hecho nada".
+          const measurable = goal.target > 0
           return (
             <motion.li key={goal.id} className={styles.goal} variants={fadeUp}>
               <div className={styles.goalHead}>
                 <span className={styles.goalName}>{goal.title}</span>
-                <span className={styles.goalPct}>
-                  <CountUp value={Math.round(Math.min(1, ratio) * 100)} format={(n) => `${Math.round(n)}%`} />
-                </span>
+                {measurable ? (
+                  <span className={styles.goalPct}>
+                    <CountUp value={Math.round(Math.min(1, ratio) * 100)} format={(n) => `${Math.round(n)}%`} />
+                  </span>
+                ) : null}
               </div>
-              <ProgressBar value={ratio} label={`Avance de ${goal.title}`} delay={0.15 + index * 0.08} />
+              {measurable ? (
+                <ProgressBar value={ratio} label={`Avance de ${goal.title}`} delay={0.15 + index * 0.08} />
+              ) : (
+                <span className={styles.goalHint}>{goal.kind === 'milestones' ? 'Agrega su primer hito en Metas' : 'Todavía sin avance que medir'}</span>
+              )}
             </motion.li>
           )
         })}

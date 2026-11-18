@@ -4,6 +4,14 @@ import { PRIORITY_LABEL, type TaskPriority } from '../types'
 
 import styles from './TaskBits.module.css'
 
+// "EXANI-III | Preparación Maestría UANL" → "EXANI-III": en un chip pequeño el nombre largo siempre se
+// cortaba a medias ("EXANI-III | Prepara…"). Si el nombre trae un separador, el chip muestra solo la parte
+// de antes; el nombre completo queda en el title (y en el detalle de la tarea).
+function shortProjectName(name: string): string {
+  const [head] = name.split(/\s+[|—–]\s+/)
+  return head.trim() || name
+}
+
 // Chip "● Dashboard personal" de las filas y tarjetas de Tareas.
 export function ProjectChip({ project }: { project: { id: string; name: string } | null }) {
   return (
@@ -13,7 +21,17 @@ export function ProjectChip({ project }: { project: { id: string; name: string }
         style={project ? { background: projectTone(project.id) } : undefined}
         aria-hidden="true"
       />
-      <span className={styles.chipText}>{project?.name ?? 'Sin proyecto'}</span>
+      <span className={styles.chipText}>{project ? shortProjectName(project.name) : 'Sin proyecto'}</span>
+    </span>
+  )
+}
+
+// "2/5" de subtareas. Una tarea sin subtareas no muestra nada: "0/0" solo era ruido.
+export function SubtaskCount({ done, total, className }: { done: number; total: number; className?: string }) {
+  if (total === 0) return null
+  return (
+    <span className={className} aria-label={`${done} de ${total} subtareas`}>
+      {done}/{total}
     </span>
   )
 }

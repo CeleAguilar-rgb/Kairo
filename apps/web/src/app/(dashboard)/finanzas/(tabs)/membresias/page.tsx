@@ -1,8 +1,11 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { MembershipsView } from '@/features/finance'
 import { getFinanceMonth, getMemberships } from '@/features/finance/api'
 import { getMe } from '@/lib/account/api'
+
+export const metadata: Metadata = { title: 'Membresías' }
 
 // Finanzas → Membresías: las tarjetas y lo que se cobra cada cierto tiempo, con su próximo cobro.
 export default async function FinanceMembershipsPage() {

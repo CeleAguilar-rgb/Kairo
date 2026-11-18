@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import type { ProjectInput } from '@kairo/shared'
 import { redirect } from 'next/navigation'
 
@@ -5,6 +6,8 @@ import { PageEnter } from '@/components/layout/PageEnter'
 import { ProjectForm } from '@/features/projects'
 import { getMe } from '@/lib/account/api'
 import { todayIn } from '@/lib/dates'
+
+export const metadata: Metadata = { title: 'Nuevo proyecto' }
 
 // "Nuevo proyecto": el formulario vacío. Empieza hoy, es personal y activo, con la portada de
 // olas (los valores con los que abre el canvas).

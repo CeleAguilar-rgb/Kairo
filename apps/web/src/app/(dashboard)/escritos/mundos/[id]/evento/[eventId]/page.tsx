@@ -1,9 +1,12 @@
+import type { Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
 
 import { PageEnter } from '@/components/layout/PageEnter'
 import { EventFullPage } from '@/features/writings'
 import { getWorldBundle } from '@/features/writings/api'
 import { getMe } from '@/lib/account/api'
+
+export const metadata: Metadata = { title: 'Escritos' }
 
 type EventPageProps = { params: Promise<{ id: string; eventId: string }> }
 

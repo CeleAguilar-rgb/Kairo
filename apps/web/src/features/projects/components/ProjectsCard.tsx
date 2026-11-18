@@ -52,9 +52,14 @@ export function ProjectsCard({ projects }: { projects: Project[] }) {
                 <div className={styles.text}>
                   <div className={styles.head}>
                     <span className={styles.name}>{project.name}</span>
-                    <span className={styles.pct}>{Math.round(project.progress * 100)}%</span>
+                    {project.taskCount > 0 ? <span className={styles.pct}>{Math.round(project.progress * 100)}%</span> : null}
                   </div>
-                  <ProgressBar value={project.progress} tone="ink" label={`Avance de ${project.name}`} delay={0.15 + index * 0.07} />
+                  {/* Sin tareas, una barra en 0 % no dice nada: mejor decir qué falta. */}
+                  {project.taskCount > 0 ? (
+                    <ProgressBar value={project.progress} tone="ink" label={`Avance de ${project.name}`} delay={0.15 + index * 0.07} />
+                  ) : (
+                    <span className={styles.hint}>Sin tareas todavía</span>
+                  )}
                 </div>
               </Link>
             </motion.li>

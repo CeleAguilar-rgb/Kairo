@@ -1,9 +1,12 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { GoalsView } from '@/features/daily'
 import { listAllGoals, listHabitBlocks, listProjectOptions } from '@/features/daily/api'
 import { getMe } from '@/lib/account/api'
 import { todayIn } from '@/lib/dates'
+
+export const metadata: Metadata = { title: 'Metas' }
 
 // Día a día → Metas: las metas por estado y su formulario. Esta página solo junta los datos (de ejemplo por
 // ahora) y la fecha de hoy en la zona del perfil; la pantalla es GoalsView.

@@ -1,9 +1,12 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { TodayView } from '@/features/daily'
 import { getDayRoutine, getMealsToday, getRoutineStreaks } from '@/features/daily/api'
 import { getMe } from '@/lib/account/api'
 import { formatLongDay, todayIn } from '@/lib/dates'
+
+export const metadata: Metadata = { title: 'Día a día' }
 
 // Día a día → Hoy: la rutina del día. Esta página solo junta los datos (de ejemplo por ahora) y la hora de
 // ahora en la zona del perfil; la pantalla es TodayView.

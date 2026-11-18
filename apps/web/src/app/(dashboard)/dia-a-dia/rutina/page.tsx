@@ -1,9 +1,12 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { PageEnter } from '@/components/layout/PageEnter'
 import { RoutineEditor } from '@/features/daily'
 import { listFocusLinks, listRoutines } from '@/features/daily/api'
 import { getMe } from '@/lib/account/api'
+
+export const metadata: Metadata = { title: 'Editar rutina' }
 
 // Día a día → Mis rutinas: el editor de rutinas y sus bloques. Es una pantalla aparte (sin las pestañas de
 // Día a día), por eso vive fuera del grupo (tabs). Esta página solo junta los datos (de ejemplo por ahora);

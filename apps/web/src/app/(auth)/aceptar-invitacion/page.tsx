@@ -1,8 +1,11 @@
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { BrandPanel } from '../BrandPanel'
 import formStyles from '../SetPasswordForm.module.css'
 import { SetPasswordForm } from '../SetPasswordForm'
 import styles from '../split-layout.module.css'
+
+export const metadata: Metadata = { title: 'Aceptar invitación' }
 
 export default async function AceptarInvitacionPage() {
   const supabase = await createClient()

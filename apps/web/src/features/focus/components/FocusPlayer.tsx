@@ -4,7 +4,7 @@ import { FOCUS_DOTS } from '@kairo/shared'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState } from 'react'
 
-import { SPRING } from '@/lib/motion'
+import { DURATION, SPRING } from '@/lib/motion'
 
 import { useFocus } from '../FocusContext'
 import { FOCUS_PRESETS } from '../mock'
@@ -79,6 +79,11 @@ export function FocusPlayer() {
   const taskText = task || 'lo que estás haciendo'
   const pillTitle = `${clock} · ${taskText}`
   const pillSub = state.running ? 'Enfoque' : 'Enfoque en pausa'
+  // Sin correr, la píldora se encoge a solo su anillo (con los minutos que faltan dentro): una píldora
+  // ancha que dice "Enfoque en pausa" tapaba contenido en todas las pantallas sin aportar nada. Corriendo
+  // vuelve a su tamaño completo; en pantallas angostas siempre va encogida (lo decide el CSS).
+  const compact = !expanded && !state.running
+  const minutesLeft = Math.ceil(state.secondsLeft / 60)
 
   return (
     // Con el panel abierto nunca se esconde: la persona lo está usando.
@@ -192,8 +197,24 @@ export function FocusPlayer() {
         ) : null}
       </AnimatePresence>
 
-      <button type="button" className={styles.pill} aria-expanded={expanded} aria-label={`${expanded ? 'Ocultar' : 'Abrir'} el pomodoro`} onClick={() => setExpanded(!expanded)}>
+      <button
+        type="button"
+        className={styles.pill}
+        aria-expanded={expanded}
+        aria-label={`${expanded ? 'Ocultar' : 'Abrir'} el pomodoro · ${clock} · ${pillSub}`}
+        onClick={() => setExpanded(!expanded)}
+      >
         <span className={styles.pillRingWrap}>
+          {/* Los minutos aparecen con un rebote leve cuando la píldora se encoge, y se apagan al desplegarse. */}
+          <motion.span
+            className={styles.pillMinutes}
+            aria-hidden="true"
+            initial={false}
+            animate={compact ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.6 }}
+            transition={compact ? { ...SPRING.pop, delay: 0.12 } : { duration: DURATION.fast }}
+          >
+            {minutesLeft}
+          </motion.span>
           <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
             <circle cx="22" cy="22" r="18" fill="none" className={styles.ringTrack} strokeWidth="5" />
             <circle
@@ -210,22 +231,39 @@ export function FocusPlayer() {
             />
           </svg>
         </span>
-        <span className={styles.pillText}>
-          <span className={styles.pillTitle}>{pillTitle}</span>
-          <span className={styles.pillSub}>{pillSub}</span>
-        </span>
-        <span className={styles.pillAction} aria-hidden="true">
-          {state.running ? (
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <rect x="6" y="5" width="4" height="14" rx="1.5" />
-              <rect x="14" y="5" width="4" height="14" rx="1.5" />
-            </svg>
-          ) : (
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.7l-10-6.5A1 1 0 0 0 8 5.5z" />
-            </svg>
+        {/* El cuerpo de la píldora se despliega desde el anillo (su ancho va de 0 a su tamaño) y se recoge
+            al revés. Por dentro mide siempre lo mismo, así el texto no se reacomoda mientras se mueve:
+            solo se va descubriendo, como un cajón. */}
+        <AnimatePresence initial={false}>
+          {compact ? null : (
+            <motion.span
+              key="body"
+              className={styles.pillBody}
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: 'auto', opacity: 1, transition: { width: SPRING.panel, opacity: { duration: DURATION.base, delay: 0.05 } } }}
+              exit={{ width: 0, opacity: 0, transition: { width: SPRING.panel, opacity: { duration: DURATION.fast } } }}
+            >
+              <span className={styles.pillBodyInner}>
+                <span className={styles.pillText}>
+                  <span className={styles.pillTitle}>{pillTitle}</span>
+                  <span className={styles.pillSub}>{pillSub}</span>
+                </span>
+                <span className={styles.pillAction} aria-hidden="true">
+                  {state.running ? (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <rect x="6" y="5" width="4" height="14" rx="1.5" />
+                      <rect x="14" y="5" width="4" height="14" rx="1.5" />
+                    </svg>
+                  ) : (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M8 5.5v13a1 1 0 0 0 1.5.9l10-6.5a1 1 0 0 0 0-1.7l-10-6.5A1 1 0 0 0 8 5.5z" />
+                    </svg>
+                  )}
+                </span>
+              </span>
+            </motion.span>
           )}
-        </span>
+        </AnimatePresence>
       </button>
     </div>
   )

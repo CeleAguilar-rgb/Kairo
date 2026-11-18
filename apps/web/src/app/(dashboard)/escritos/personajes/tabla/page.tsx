@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { PageEnter } from '@/components/layout/PageEnter'
@@ -8,6 +9,8 @@ import { getCharacterDatabase } from '@/features/writings/api'
 import { getMe } from '@/lib/account/api'
 
 import styles from './page.module.css'
+
+export const metadata: Metadata = { title: 'Personajes' }
 
 type DatabasePageProps = { searchParams: Promise<{ mundo?: string; abrir?: string }> }
 

@@ -11,7 +11,7 @@ import { NOTIFICATIONS_TRIGGER, useShortcuts } from '@/features/shortcuts'
 import type { Profile, UserSection } from '@/lib/account/api'
 import { getAvatar } from '@/lib/account/avatars'
 import { popover, SPRING } from '@/lib/motion'
-import { modules, type ModuleManifest } from '@/lib/modules/registry'
+import { findActive, navModules } from './nav-modules'
 import styles from './Topnav.module.css'
 
 type TopnavProps = { profile: Profile; sections: UserSection[] }
@@ -45,20 +45,7 @@ export function Topnav({ profile, sections }: TopnavProps) {
     }
   }, [menuOpen])
 
-  const sectionByModule = new Map(
-    sections.map((section) => [section.section, section]),
-  )
-  const visibleModules = modules
-    .filter((module) => module.inNav !== false)
-    .filter(
-      (module) =>
-        module.id === 'home' || sectionByModule.get(module.id)?.enabled,
-    )
-    .sort(
-      (a, b) =>
-        (sectionByModule.get(a.id)?.position ?? -1) -
-        (sectionByModule.get(b.id)?.position ?? -1),
-    )
+  const visibleModules = navModules(sections)
   // Si ya se hizo clic en otra sección, la píldora viaja hacia ella sin esperar a que cargue.
   const activeId = findActive(visibleModules, pendingHref ?? pathname)
 
@@ -270,15 +257,4 @@ export function Topnav({ profile, sections }: TopnavProps) {
       </div>
     </header>
   )
-}
-
-// '/' solo es Inicio exacto; las demás rutas cuentan también sus subrutas
-// (/proyectos/abc sigue marcando Proyectos).
-function findActive(list: ModuleManifest[], pathname: string) {
-  const match = list.find((module) =>
-    module.href === '/'
-      ? pathname === '/'
-      : pathname === module.href || pathname.startsWith(`${module.href}/`),
-  )
-  return match?.id ?? null
 }

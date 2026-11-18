@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { isoDateSchema } from '@kairo/shared'
 import { redirect } from 'next/navigation'
 
@@ -5,6 +6,8 @@ import { DailyToolbar, EditRoutineLink, ReportView, WeekSwitcher } from '@/featu
 import { getReportWeek } from '@/features/daily/api'
 import { getMe } from '@/lib/account/api'
 import { addDays, startOfWeek, todayIn } from '@/lib/dates'
+
+export const metadata: Metadata = { title: 'Reporte' }
 
 const BASE = '/dia-a-dia/reporte'
 

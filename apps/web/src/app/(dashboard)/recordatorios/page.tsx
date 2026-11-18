@@ -1,9 +1,12 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { PageEnter } from '@/components/layout/PageEnter'
 import { RemindersView } from '@/features/reminders'
 import { listUpcomingReminders } from '@/features/reminders/api'
 import { getMe } from '@/lib/account/api'
+
+export const metadata: Metadata = { title: 'Recordatorios' }
 
 // Recordatorios: lo de hoy (con lo atrasado), el formulario de nuevo recordatorio y lo que viene. Esta
 // página solo junta los datos (de ejemplo por ahora) y la hora de ahora; la pantalla es RemindersView.

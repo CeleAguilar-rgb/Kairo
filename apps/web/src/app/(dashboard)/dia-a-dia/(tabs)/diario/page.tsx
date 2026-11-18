@@ -1,9 +1,12 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { DailyToolbar, EditRoutineLink, JournalView } from '@/features/daily'
 import { getDaySummary, listJournal } from '@/features/daily/api'
 import { getMe } from '@/lib/account/api'
 import { formatMonthYear, todayIn } from '@/lib/dates'
+
+export const metadata: Metadata = { title: 'Diario' }
 
 // Día a día → Diario: la entrada de hoy, el mapa de ánimo del mes y los días anteriores. Esta página solo junta
 // los datos (de ejemplo por ahora); la pantalla es JournalView. El PIN y el cifrado llegan con la API.

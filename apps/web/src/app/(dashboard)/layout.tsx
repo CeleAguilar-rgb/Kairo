@@ -11,6 +11,7 @@ import { DEMO_MODE } from '@/lib/demo'
 import { createClient } from '@/lib/supabase/server'
 import { readAppearance, readThemePreference } from '@/lib/theme/preference'
 import { AppearanceSync, ThemeSync } from '@/lib/theme/ThemeSync'
+import { BottomTabs } from './BottomTabs'
 import styles from './layout.module.css'
 import { Topnav } from './Topnav'
 
@@ -55,6 +56,7 @@ export default async function DashboardLayout({
             <div className={styles.shell}>
               <Topnav profile={me.profile} sections={me.sections} />
               <PageFrame className={styles.content}>{children}</PageFrame>
+              <BottomTabs sections={me.sections} />
             </div>
           </ShortcutsProvider>
           </FocusProvider>

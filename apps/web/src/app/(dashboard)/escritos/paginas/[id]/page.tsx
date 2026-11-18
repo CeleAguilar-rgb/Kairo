@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound, redirect } from 'next/navigation'
 
 import { PageEnter } from '@/components/layout/PageEnter'
@@ -6,6 +7,8 @@ import { getPageEditor } from '@/features/writings/api'
 import { getMe } from '@/lib/account/api'
 
 import styles from './page.module.css'
+
+export const metadata: Metadata = { title: 'Escritos' }
 
 type WritingPageProps = { params: Promise<{ id: string }> }
 
