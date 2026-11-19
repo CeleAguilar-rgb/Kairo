@@ -307,3 +307,11 @@
     transform: none;
   }
 }
+
+/* Con el dedo, los botones de confirmar miden 44px. */
+@media (pointer: coarse) {
+  .confirmCancel,
+  .confirmDo {
+    min-height: 44px;
+  }
+}
