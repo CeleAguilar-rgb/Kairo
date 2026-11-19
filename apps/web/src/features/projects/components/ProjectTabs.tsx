@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 
 import { LineIcon } from '@/components/ui/Card'
 import { usePendingHref } from '@/components/layout/Navigation'
+import { ScrollTabs } from '@/components/ui/ScrollTabs'
 import { SPRING } from '@/lib/motion'
 
 import styles from './ProjectTabs.module.css'
@@ -29,7 +30,7 @@ export function ProjectTabs({ projectId }: { projectId: string }) {
 
   return (
     <LayoutGroup id="project-tabs">
-      <nav className={styles.tabs} aria-label="Partes del proyecto" data-tab-switch>
+      <ScrollTabs className={styles.tabs} aria-label="Partes del proyecto" data-tab-switch>
         {TABS.map((tab) => {
           const href = `${base}${tab.slug}`
           const active = tab.slug === '' ? target === base : target.startsWith(href)
@@ -43,7 +44,7 @@ export function ProjectTabs({ projectId }: { projectId: string }) {
             </Link>
           )
         })}
-      </nav>
+      </ScrollTabs>
     </LayoutGroup>
   )
 }

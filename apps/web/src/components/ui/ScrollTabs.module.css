@@ -1,0 +1,41 @@
+/* Ver ScrollTabs.tsx. El <nav> conserva el aspecto de cada módulo (fondo, borde, padding); este
+   contenedor es el que se desliza y el único con máscara, así el fondo de la píldora no se toca.
+   --fade-start y --fade-end los escribe el componente según lo que quede escondido de cada lado. */
+.scroller {
+  /* Se comporta como el <nav> que lo contiene: misma dirección y misma separación entre pestañas. */
+  display: flex;
+  flex-direction: inherit;
+  gap: inherit;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  /* Espacio para el aro de foco, que overflow recortaría; el margen negativo lo anula en el diseño. */
+  padding-block: var(--space-2);
+  margin-block: calc(-1 * var(--space-2));
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--fade-start, 0px),
+    #000 calc(100% - var(--fade-end, 0px)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--fade-start, 0px),
+    #000 calc(100% - var(--fade-end, 0px)),
+    transparent 100%
+  );
+}
+
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+
+/* Cada pestaña en una sola línea y sin encogerse: si no caben, se desliza, no se parte el texto. */
+.scroller > * {
+  flex-shrink: 0;
+  white-space: nowrap;
+}

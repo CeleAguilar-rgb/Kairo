@@ -22,6 +22,7 @@ export function TermTabs({
     <Segmented
       label="Escuela"
       tone="glass"
+      scroll
       value={tab}
       onChange={onChange}
       options={TAB_OPTIONS}

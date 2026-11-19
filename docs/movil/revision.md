@@ -4,6 +4,8 @@
 
 > Copia de trabajo de la revisión. Al arreglar algo, marca su casilla (`- [x]`) en el mismo commit.
 > Si aparece algo nuevo, agrégalo en su pantalla con su prioridad.
+>
+> Capturas del estado inicial: `antes.md` (carpeta `antes/`). Las del después van en `despues.md` (carpeta `despues/`), con el mismo número.
 
 ## Cómo se probó
 
@@ -20,9 +22,9 @@ A 320 y 360 px de ancho ninguna pantalla se desborda de la página; lo que se ve
 | Problema | Dónde aparece | Prioridad | Pista para arreglarlo |
 | --- | --- | --- | --- |
 | Botones flotantes (pomodoro "25" y +) tapan contenido | Casi todas: Perfil, Membresías, Recordatorios, Sprints, Tareas, Inicio | Alta | Dejar espacio al final de cada lista o subir los botones sobre la barra; `FocusPlayer.module.css` y `QuickCapture.module.css` |
-| Pestañas que se salen por la derecha sin pista de que se deslizan | Perfil, Finanzas, Día a día, Escritos, Proyecto | Media | Degradado o flecha al borde, y llevar la pestaña activa a la vista |
-| Texto de pestañas partido en dos renglones | Perfil ("Mi perfil", "Mis secciones") | Media | `white-space: nowrap` en las pestañas |
-| Cada módulo resuelve las pestañas distinto (unas se deslizan, otras bajan de renglón) | Escuela y Proyectos bajan de renglón; los demás se deslizan | Baja | Elegir un solo comportamiento |
+| Pestañas que se salen por la derecha sin pista de que se deslizan | Perfil, Finanzas, Día a día, Escritos, Proyecto | Media (hecho con ScrollTabs) | Degradado o flecha al borde, y llevar la pestaña activa a la vista |
+| Texto de pestañas partido en dos renglones | Perfil ("Mi perfil", "Mis secciones") | Media (hecho) | `white-space: nowrap` en las pestañas |
+| Cada módulo resuelve las pestañas distinto (unas se deslizan, otras bajan de renglón) | Escuela y Proyectos bajan de renglón; los demás se deslizan | Baja (hecho: todas se deslizan en una línea) | Elegir un solo comportamiento |
 | Casillas y enlaces chicos para el dedo (24–32 px) | Casillas de tareas y rutina, "Ver todos", "Mover de hora", "Día a día" en Rutina | Media | Área de toque de 44 px aunque el ícono siga chico |
 | Escuela y Recordatorios no aparecen en la barra ni en "Más" | Menú "Más" (solo Proyectos, Finanzas y Escritos) | Media | Están con `inNav: false`; confirmar con Celeste si es a propósito |
 | El tamaño de letra grande del teléfono empeora todo lo anterior | Todo | Media | Probar siempre también con letra grande |
@@ -52,14 +54,14 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 
 ### Día a día
 
-- [ ] Media — Las pestañas (Hoy, Menú, Reporte, Diario, Metas) se salen por la derecha.
+- [x] Media — Las pestañas (Hoy, Menú, Reporte, Diario, Metas) se salen por la derecha.
 - [ ] Media — Menú semanal: se ven 2 de 7 días y el resto se desliza; las comidas largas quedan de 4 renglones. Valorar una vista de un día a la vez.
 - [ ] Media — Reporte: la semana también se desliza de lado.
 - [ ] Baja — Rutina: el enlace para volver a "Día a día" y el interruptor son chicos.
 
 ### Finanzas
 
-- [ ] Media — Pestañas cortadas ("Ahorros y deu…"); hay 5 y solo caben 2 y media.
+- [x] Media — Pestañas cortadas ("Ahorros y deu…"); hay 5 y solo caben 2 y media.
 - [ ] Media — Membresías: la tabla mide más del doble del ancho y se desliza; mejor como tarjetas.
 - [ ] Media — Membresías: el + tapa "$0 al mes" de la tarjeta de efectivo.
 - [ ] Baja — Movimientos: descripciones cortadas ("Comida fuera · Débito ••4417 · hoy").
@@ -69,18 +71,18 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 
 - [ ] Baja — Los filtros (Todos, Trabajo, Personal, Escuela) bajan de renglón.
 - [ ] Media — En un proyecto, el "25" y el + tapan el progreso y la fecha de la tarjeta.
-- [ ] Baja — Pestañas del proyecto (Resumen, Sprints, Archivos) apenas se salen.
+- [x] Baja — Pestañas del proyecto (Resumen, Sprints, Archivos) apenas se salen.
 - [ ] Media — Sprints: el tablero se apila en columnas verticales y funciona, pero el + tapa las tarjetas.
 
 ### Escuela
 
 - [ ] **Alta** — El horario de clases mide 720 px y solo se ven Lunes y Martes. Mejor una vista por día en teléfono.
-- [ ] Media — Pestañas en dos renglones (Calificaciones baja sola).
+- [x] Media — Pestañas en dos renglones (Calificaciones baja sola).
 - [ ] Media — No se llega a Escuela desde la barra ni desde "Más".
 
 ### Escritos
 
-- [ ] Media — Las pestañas del mundo miden 804 px (más del doble del ancho) y se deslizan sin pista.
+- [x] Media — Las pestañas del mundo miden 804 px (más del doble del ancho) y se deslizan sin pista.
 - [ ] Media — El resumen del mundo tiene otra fila que se desliza (782 px).
 - [ ] Pendiente — Revisar el editor de páginas, las fichas y el mapa con el teclado abierto.
 
@@ -91,7 +93,7 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 
 ### Perfil
 
-- [ ] Media — Pestañas cortadas ("Preferencias") y con el texto partido en dos renglones.
+- [x] Media — Pestañas cortadas ("Preferencias") y con el texto partido en dos renglones.
 - [ ] Media — El + tapa los temas de color de la derecha (Bosque, Arena).
 
 ### Papelera
@@ -124,7 +126,7 @@ Empezar por lo que arregla varias pantallas a la vez, todo en la rama `movil`.
 
 1. Botones flotantes: que no tapen contenido en ninguna pantalla.
 2. Filas de Tareas y Papelera: nombre completo, con los datos en un segundo renglón.
-3. Un solo componente de pestañas para el teléfono: un renglón, con pista de que se desliza.
+3. (Hecho: `components/ui/ScrollTabs`, usado por Día a día, Finanzas, Proyectos, Escritos, Perfil y Escuela; falta probarlo en el teléfono.) Un solo componente de pestañas para el teléfono: un renglón, con pista de que se desliza.
 4. Horario de Escuela y Menú semanal: vista de un día a la vez.
 5. Tabla de Membresías como tarjetas.
 6. Áreas de toque de 44 px.

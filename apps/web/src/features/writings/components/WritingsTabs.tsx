@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { usePendingHref } from '@/components/layout/Navigation'
+import { ScrollTabs } from '@/components/ui/ScrollTabs'
 import { SPRING } from '@/lib/motion'
 
 import styles from './WritingsTabs.module.css'
@@ -30,7 +31,7 @@ export function WritingsTabs({ counts }: { counts: WritingsTabCounts }) {
 
   return (
     <LayoutGroup id="writings-tabs">
-      <nav className={styles.tabs} aria-label="Escritos" data-tab-switch>
+      <ScrollTabs className={styles.tabs} aria-label="Escritos" data-tab-switch>
         {TABS.map((tab) => {
           const active = tab.href === BASE ? target === BASE : target.startsWith(tab.href)
           return (
@@ -43,7 +44,7 @@ export function WritingsTabs({ counts }: { counts: WritingsTabCounts }) {
             </Link>
           )
         })}
-      </nav>
+      </ScrollTabs>
     </LayoutGroup>
   )
 }
