@@ -26,7 +26,7 @@ A 320 y 360 px de ancho ninguna pantalla se desborda de la página; lo que se ve
 | Texto de pestañas partido en dos renglones | Perfil ("Mi perfil", "Mis secciones") | Media (hecho) | `white-space: nowrap` en las pestañas |
 | Cada módulo resuelve las pestañas distinto (unas se deslizan, otras bajan de renglón) | Escuela y Proyectos bajan de renglón; los demás se deslizan | Baja (hecho: todas se deslizan en una línea) | Elegir un solo comportamiento |
 | Casillas y enlaces chicos para el dedo (24–32 px) | Casillas de tareas y rutina, "Ver todos", "Mover de hora", "Día a día" en Rutina | Media | Área de toque de 44 px aunque el ícono siga chico |
-| Escuela y Recordatorios no aparecen en la barra ni en "Más" | Menú "Más" (solo Proyectos, Finanzas y Escritos) | Media | Están con `inNav: false`; confirmar con Celeste si es a propósito |
+| Escuela y Recordatorios no aparecen en la barra ni en "Más" | Menú "Más" (solo Proyectos, Finanzas y Escritos) | Media (hecho en móvil) | Están con `inNav: false`; confirmar con Celeste si es a propósito |
 | El tamaño de letra grande del teléfono empeora todo lo anterior | Todo | Media | Probar siempre también con letra grande |
 
 ## Pantalla por pantalla
@@ -41,7 +41,7 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 
 ### Tareas
 
-- [ ] **Alta** — En la lista, el nombre de la tarea se reduce a 1–6 letras ("T…", "Termin…"). La fila móvil reserva 56 px para la prioridad, pero el chip "Media" mide más y se come el nombre (`features/tasks/components/TaskList.module.css`, `.rowButton` dentro de `@media (max-width: 720px)`). Pasar prioridad y fecha a un segundo renglón.
+- [x] **Alta** — (hecho: dos renglones; falta probarlo en el teléfono) En la lista, el nombre de la tarea se reduce a 1–6 letras ("T…", "Termin…"). La fila móvil reserva 56 px para la prioridad, pero el chip "Media" mide más y se come el nombre (`features/tasks/components/TaskList.module.css`, `.rowButton` dentro de `@media (max-width: 720px)`). Pasar prioridad y fecha a un segundo renglón.
 - [ ] Media — El texto "Agregar tarea… escribe y presiona Enter" se corta.
 - [ ] Media — El botón + tapa la fecha y el bote de basura de las filas de abajo.
 - [ ] Pendiente — Revisar la vista Tablero en teléfono.
@@ -78,7 +78,7 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 
 - [ ] **Alta** — El horario de clases mide 720 px y solo se ven Lunes y Martes. Mejor una vista por día en teléfono.
 - [x] Media — Pestañas en dos renglones (Calificaciones baja sola).
-- [ ] Media — No se llega a Escuela desde la barra ni desde "Más".
+- [x] Media — No se llega a Escuela desde la barra ni desde "Más".
 
 ### Escritos
 
@@ -89,7 +89,7 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 ### Recordatorios
 
 - [ ] Media — El "25" y el + tapan los íconos de alarma de la derecha.
-- [ ] Media — No se llega a Recordatorios desde la barra ni desde "Más" (solo por la campana o Inicio).
+- [x] Media — No se llega a Recordatorios desde la barra ni desde "Más" (solo por la campana o Inicio).
 
 ### Perfil
 
@@ -98,7 +98,7 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 
 ### Papelera
 
-- [ ] **Alta** — Los nombres se reducen a una letra ("B…") y la descripción queda de una palabra por renglón, porque "Restaurar" ocupa casi toda la fila (`features/trash/components/TrashView.module.css`, `.row` en móvil). Poner "Restaurar" debajo o como ícono.
+- [x] **Alta** — (hecho: botones en un segundo renglón; falta probarlo en el teléfono) Los nombres se reducen a una letra ("B…") y la descripción queda de una palabra por renglón, porque "Restaurar" ocupa casi toda la fila (`features/trash/components/TrashView.module.css`, `.row` en móvil). Poner "Restaurar" debajo o como ícono.
 - [ ] Baja — Los filtros ocupan 3 renglones.
 
 ### Menú "Más", captura rápida y avisos
@@ -130,7 +130,16 @@ Empezar por lo que arregla varias pantallas a la vez, todo en la rama `movil`.
 4. Horario de Escuela y Menú semanal: vista de un día a la vez.
 5. Tabla de Membresías como tarjetas.
 6. Áreas de toque de 44 px.
-7. Decidir con Celeste cómo se llega a Escuela y Recordatorios.
+7. (Hecho en móvil: entran con `navModules(sections, { mobile: true })`. Para el escritorio, propuesta a Celeste en `para-celeste.md`.)
 8. Revisar lo marcado como Pendiente, con letra grande y en modo oscuro.
 
 Ya corregido: `apps/web/next.config.ts` permite abrir el modo demo desde el teléfono por Wi-Fi (`allowedDevOrigins`). Sin eso las pantallas cargaban vacías.
+
+## Cosas que solo se ven con hover (auditoría 2026-11-18)
+
+En el teléfono no hay hover: todo lo que aparece solo al pasar el mouse hay que mostrarlo siempre. Regla: `@media (hover: none)` (ya la usa Recordatorios).
+
+- [x] Flecha de los enlaces de tarjeta ("Día a día ›", `CardLink`) — se ve siempre en táctil.
+- [x] Botón de borrar en la lista de Tareas (`TaskList.module.css`) y en el tablero (`TaskBoard.module.css`) — se ve siempre, a la derecha de la fila.
+- [x] Botón "hecho" de Recordatorios — ya estaba resuelto.
+- [ ] Revisar a mano en el teléfono: fondo de las filas y píldoras que cambian con `:hover` (solo estética, no esconden nada).

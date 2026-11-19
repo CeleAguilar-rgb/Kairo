@@ -3,10 +3,14 @@ import { modules, type ModuleManifest } from '@/lib/modules/registry'
 
 // Las secciones que ve la persona, en su orden (user_sections). La usan el menú de arriba (Topnav) y la
 // barra de abajo del teléfono (BottomTabs): las dos tienen que mostrar exactamente lo mismo.
-export function navModules(sections: UserSection[]): ModuleManifest[] {
+//
+// `mobile`: en el teléfono también entran los módulos con `inNav: false` (Escuela y Recordatorios). Esa bandera
+// existe porque en el escritorio el nav no cabe con más de 7 secciones junto a los íconos; en el teléfono hay
+// barra de 5 más el menú del avatar, así que no hay ese límite.
+export function navModules(sections: UserSection[], { mobile = false }: { mobile?: boolean } = {}): ModuleManifest[] {
   const sectionByModule = new Map(sections.map((section) => [section.section, section]))
   return modules
-    .filter((module) => module.inNav !== false)
+    .filter((module) => mobile || module.inNav !== false)
     .filter((module) => module.id === 'home' || sectionByModule.get(module.id)?.enabled)
     .sort((a, b) => (sectionByModule.get(a.id)?.position ?? -1) - (sectionByModule.get(b.id)?.position ?? -1))
 }

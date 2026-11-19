@@ -99,6 +99,7 @@ export function TodayTasksCard({ tasks: initial, today, onDoneCountChange }: Tod
         title="Pendientes de hoy"
         subtitle="Toca uno para ver el detalle"
         iconTone="inverted"
+        inline
         icon={<LineIcon d={['M8 4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z', 'M8.5 12l2.5 2.5 4.5-5']} />}
         action={
           <>

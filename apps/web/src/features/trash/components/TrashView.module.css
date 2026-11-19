@@ -264,8 +264,30 @@
 }
 
 @media (max-width: 720px) {
+  /* Dos renglones: la letra y el nombre arriba con todo el ancho, y abajo los botones. Antes los
+     botones ("Restaurar", "Borrar para siempre") iban en una columna `auto` que se quedaba con casi
+     todo el ancho y le dejaba al nombre una sola letra. */
   .row {
-    grid-template-columns: 44px minmax(0, 1fr) auto;
+    grid-template-columns: 44px minmax(0, 1fr);
+    row-gap: var(--space-3);
+    padding: var(--space-4) 0;
+  }
+
+  .actions {
+    grid-column: 1 / -1;
+  }
+
+  /* La pregunta y sus dos botones en una sola línea: la pregunta es la que cede (puede partirse
+     en dos), los botones no, para que nunca baje una tercera línea. */
+  .asking {
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+
+  .askText {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: left;
   }
 
   .left {
