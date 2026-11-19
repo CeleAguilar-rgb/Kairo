@@ -169,7 +169,7 @@ export function SearchPalette({ open, onClose, demo }: SearchPaletteProps) {
                 aria-controls={listId}
                 aria-activedescendant={rows[active] ? `${listId}-${active}` : undefined}
               />
-              <kbd className={styles.kbd}>Esc</kbd>
+              <kbd className={styles.keyHint}>Esc</kbd>
             </div>
 
             <div id={listId} role="listbox" aria-label="Resultados" className={styles.results} aria-busy={searching}>
@@ -195,7 +195,7 @@ export function SearchPalette({ open, onClose, demo }: SearchPaletteProps) {
                           <span className={styles.resultTitle}>{row.title}</span>
                           <span className={styles.resultSub}>{row.sub}</span>
                         </span>
-                        {on ? <kbd className={styles.kbd}>Enter</kbd> : null}
+                        {on ? <kbd className={styles.keyHint}>Enter</kbd> : null}
                       </div>
                     )
                   })}
@@ -206,10 +206,10 @@ export function SearchPalette({ open, onClose, demo }: SearchPaletteProps) {
             </div>
 
             <div className={styles.footer}>
-              <span>
+              <span className={styles.keyHint}>
                 <kbd className={styles.kbd}>↑</kbd> <kbd className={styles.kbd}>↓</kbd> moverte
               </span>
-              <span>
+              <span className={styles.keyHint}>
                 <kbd className={styles.kbd}>Enter</kbd> abrir
               </span>
               <span>
