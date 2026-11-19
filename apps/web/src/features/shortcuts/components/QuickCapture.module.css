@@ -130,7 +130,6 @@
 
 .whens {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--space-2);
 }
 
@@ -229,5 +228,13 @@
   .kindOn,
   .fabRingWork {
     transition: none;
+  }
+}
+
+/* Con el dedo, los chips de "¿Cuándo?" miden 44px. */
+@media (pointer: coarse) {
+  .when,
+  .whenOn {
+    min-height: 44px;
   }
 }

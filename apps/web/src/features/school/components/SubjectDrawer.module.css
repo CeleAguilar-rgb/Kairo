@@ -71,7 +71,6 @@
 .days {
   display: flex;
   gap: var(--space-2);
-  flex-wrap: wrap;
 }
 
 .day,
@@ -168,4 +167,19 @@
 
 .submit {
   flex: 1;
+}
+
+/* Con el dedo, los días de clase llegan a 44px de área de toque sin crecer. */
+@media (pointer: coarse) {
+  .day,
+  .daySelected {
+    position: relative;
+  }
+
+  .day::after,
+  .daySelected::after {
+    content: '';
+    position: absolute;
+    inset: -2px 0;
+  }
 }

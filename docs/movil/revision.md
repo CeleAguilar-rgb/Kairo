@@ -21,7 +21,7 @@ A 320 y 360 px de ancho ninguna pantalla se desborda de la página; lo que se ve
 
 | Problema | Dónde aparece | Prioridad | Pista para arreglarlo |
 | --- | --- | --- | --- |
-| Botones flotantes (pomodoro "25" y +) tapan contenido | Casi todas: Perfil, Membresías, Recordatorios, Sprints, Tareas, Inicio | Alta | Dejar espacio al final de cada lista o subir los botones sobre la barra; `FocusPlayer.module.css` y `QuickCapture.module.css` |
+| Botones flotantes (pomodoro "25" y +) tapan contenido | Casi todas: Perfil, Membresías, Recordatorios, Sprints, Tareas, Inicio | Resuelto | Dejar espacio al final de cada lista o subir los botones sobre la barra; `FocusPlayer.module.css` y `QuickCapture.module.css` |
 | Pestañas que se salen por la derecha sin pista de que se deslizan | Perfil, Finanzas, Día a día, Escritos, Proyecto | Media (hecho con ScrollTabs) | Degradado o flecha al borde, y llevar la pestaña activa a la vista |
 | Texto de pestañas partido en dos renglones | Perfil ("Mi perfil", "Mis secciones") | Media (hecho) | `white-space: nowrap` en las pestañas |
 | Cada módulo resuelve las pestañas distinto (unas se deslizan, otras bajan de renglón) | Escuela y Proyectos bajan de renglón; los demás se deslizan | Baja (hecho: todas se deslizan en una línea) | Elegir un solo comportamiento |
@@ -43,13 +43,13 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 
 - [x] **Alta** — (hecho: dos renglones; falta probarlo en el teléfono) En la lista, el nombre de la tarea se reduce a 1–6 letras ("T…", "Termin…"). La fila móvil reserva 56 px para la prioridad, pero el chip "Media" mide más y se come el nombre (`features/tasks/components/TaskList.module.css`, `.rowButton` dentro de `@media (max-width: 720px)`). Pasar prioridad y fecha a un segundo renglón.
 - [ ] Media — El texto "Agregar tarea… escribe y presiona Enter" se corta.
-- [ ] Media — El botón + tapa la fecha y el bote de basura de las filas de abajo.
+- [x] Media — (descartado: el + ya no es problema en ninguna parte, según el usuario) El botón + tapa la fecha y el bote de basura de las filas de abajo.
 - [ ] Pendiente — Revisar la vista Tablero en teléfono.
 
 ### Agenda
 
 - [ ] Media — Las tareas de "Todo el día" se cortan ("Terminar el diseño del dashb…").
-- [ ] Media — Los botones flotantes tapan la columna de horas.
+- [x] Media — (descartado: el + ya no es problema en ninguna parte, según el usuario) Los botones flotantes tapan la columna de horas.
 - [ ] Pendiente — Revisar las vistas Semana y Mes.
 
 ### Día a día
@@ -64,16 +64,16 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 
 - [x] Media — Pestañas cortadas ("Ahorros y deu…"); hay 5 y solo caben 2 y media.
 - [x] Media — (hecho: en ≤720px cada fila es una tarjeta con CSS grid; falta probarlo en el teléfono) Membresías: la tabla mide más del doble del ancho y se desliza; mejor como tarjetas.
-- [ ] Media — Membresías: el + tapa "$0 al mes" de la tarjeta de efectivo.
+- [x] Media — (descartado: el + ya no es problema en ninguna parte, según el usuario) Membresías: el + tapa "$0 al mes" de la tarjeta de efectivo.
 - [x] Baja — (hecho, falta probar en el teléfono) Movimientos: descripciones cortadas ("Comida fuera · Débito ••4417 · hoy").
 - [x] Baja — Presupuesto: los interruptores son chicos.
 
 ### Proyectos
 
 - [ ] Baja — Los filtros (Todos, Trabajo, Personal, Escuela) bajan de renglón.
-- [ ] Media — En un proyecto, el "25" y el + tapan el progreso y la fecha de la tarjeta.
+- [x] Media — (descartado: el + ya no es problema en ninguna parte, según el usuario) En un proyecto, el "25" y el + tapan el progreso y la fecha de la tarjeta.
 - [x] Baja — Pestañas del proyecto (Resumen, Sprints, Archivos) apenas se salen.
-- [ ] Media — Sprints: el tablero se apila en columnas verticales y funciona, pero el + tapa las tarjetas.
+- [x] Media — (descartado: el + ya no es problema en ninguna parte, según el usuario) Sprints: el tablero se apila en columnas verticales y funciona, pero el + tapa las tarjetas.
 
 ### Escuela
 
@@ -89,13 +89,13 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 
 ### Recordatorios
 
-- [ ] Media — El "25" y el + tapan los íconos de alarma de la derecha.
+- [x] Media — (descartado: el + ya no es problema en ninguna parte, según el usuario) El "25" y el + tapan los íconos de alarma de la derecha.
 - [x] Media — No se llega a Recordatorios desde la barra ni desde "Más" (solo por la campana o Inicio).
 
 ### Perfil
 
 - [x] Media — Pestañas cortadas ("Preferencias") y con el texto partido en dos renglones.
-- [ ] Media — El + tapa los temas de color de la derecha (Bosque, Arena).
+- [x] Media — (descartado: el + ya no es problema en ninguna parte, según el usuario) El + tapa los temas de color de la derecha (Bosque, Arena).
 
 ### Papelera
 
@@ -109,7 +109,7 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 
 ## Segunda ronda (2026-11-18, dicho por la usuaria)
 
-Nota sobre los botones flotantes: hoy el contenido ya deja espacio al final de la lista y el "25" se mete debajo del "Más" al hacer scroll, así que **baja a Media** y no es lo más urgente.
+Nota sobre los botones flotantes: **ya no es un problema en ninguna parte** (confirmado por el usuario): el contenido deja espacio al final de la lista y el "25" se mete debajo del "Más" al hacer scroll. Los pendientes de abajo que solo hablaban del + o del "25" tapando algo se marcaron como descartados.
 
 - [x] **Alta** — (hecho, opción A; falta probarlo en el teléfono) Barra inferior sin "Más": muestra las primeras 5 secciones del orden de la persona (Perfil → Mis secciones); las demás van en el menú del avatar. Con 5 o menos se muestran todas, y con 1 sola no hay barra. Resuelve de paso que Escuela y Recordatorios no tengan acceso.
 - [x] **Alta** — (hecho: `position: sticky` + degradado + `viewport-fit=cover`; falta probarlo en el teléfono) La barra superior se esconde con un poco de scroll en el teléfono. Debe quedarse fija, sin sobreponerse a la cámara ni a la hora del sistema (zona segura: `env(safe-area-inset-top)` y `viewport-fit=cover`).
@@ -145,4 +145,6 @@ En el teléfono no hay hover: todo lo que aparece solo al pasar el mouse hay que
 - [x] Botón "hecho" de Recordatorios — ya estaba resuelto.
 - [ ] Revisar a mano en el teléfono: fondo de las filas y píldoras que cambian con `:hover` (solo estética, no esconden nada).
 - [x] Media — (hecho, falta probar en el teléfono) Píldoras con varios botones (`Segmented`: Área, Estado, Repetir, Vista, Filtrar…) siempre en una línea que se desliza con desvanecido y 44 px de toque; y las barras de pestañas ya no hacen scroll vertical.
+- [x] Media — (hecho, falta probar en el teléfono) Filas de chips (filtros de Papelera y Personajes, "¿Cuándo?" de captura rápida, prioridad de tareas, categoría de movimientos, etiquetas del diario, días de la materia, chips de Inicio) en una sola línea que se desliza con desvanecido (`ChipRow`) y 44 px de toque con el dedo.
 - [x] Media — (hecho, falta probar en el teléfono) Finanzas completo con lo ya hecho: selector de mes centrado y acción ("Movimiento", "Agregar membresía") en su fila a todo el ancho; Resumen con las cuatro cifras en dos por dos; detalle de los movimientos en dos renglones en vez de cortarse; Ahorros y deudas con el monto y los botones repartidos; tarjetas de Membresías en una fila que se desliza con desvanecido; botes de basura, muestras de color y categorías a 44 px con el dedo.
+- [x] Baja — (hecho, falta probar en el teléfono) Presupuesto: "Así vas" va primero en una sola columna (tableta y teléfono), antes de las categorías.

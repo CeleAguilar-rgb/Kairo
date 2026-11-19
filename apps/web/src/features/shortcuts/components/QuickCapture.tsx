@@ -15,6 +15,7 @@ import { quickExpenseAction } from '@/features/finance'
 import { createReminderAction } from '@/features/reminders'
 import { createNoteAction } from '@/features/writings'
 import { EASE_OUT, SPRING } from '@/lib/motion'
+import { ChipRow } from '@/components/ui/ChipRow'
 
 import { dayFor, parseExpense, reminderSlot, WHENS, whenLabel } from '../capture'
 import { createQuickTask } from '../create-task'
@@ -218,13 +219,13 @@ export function QuickCapture({ open, onToggle, onClose, timeZone, demo }: QuickC
             </div>
 
             {whens.length > 0 ? (
-              <div className={styles.whens} role="group" aria-label="¿Cuándo?">
+              <ChipRow className={styles.whens} role="group" aria-label="¿Cuándo?">
                 {whens.map((option) => (
                   <button key={option} type="button" aria-pressed={option === chosenWhen} className={option === chosenWhen ? styles.whenOn : styles.when} onClick={() => setWhen(option)}>
                     {whenLabel(kind, option)}
                   </button>
                 ))}
-              </div>
+              </ChipRow>
             ) : null}
 
             <div className={styles.footer}>
