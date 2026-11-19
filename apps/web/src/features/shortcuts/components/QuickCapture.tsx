@@ -3,12 +3,14 @@
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useId, useRef, useState, useTransition } from 'react'
+import { useEffect, useId, useRef, useState, useTransition, type PointerEvent as ReactPointerEvent } from 'react'
 
 import { Button } from '@/components/ui/Button'
 import { LineIcon } from '@/components/ui/Card'
+import { PanelScrim } from '@/components/ui/PanelScrim'
 import { useToast } from '@/components/ui/Toast'
 import { createEventAction } from '@/features/agenda'
+import { useFocus } from '@/features/focus'
 import { quickExpenseAction } from '@/features/finance'
 import { createReminderAction } from '@/features/reminders'
 import { createNoteAction } from '@/features/writings'
@@ -19,6 +21,16 @@ import { createQuickTask } from '../create-task'
 import type { CaptureKind, CaptureWhen } from '../types'
 
 import styles from './QuickCapture.module.css'
+
+// Cuánto hay que mantener presionado el "+" para abrir el pomodoro, y cuánto puede moverse el dedo antes de
+// que cuente como un arrastre (scroll) y no como una pulsación larga.
+const LONG_PRESS_MS = 450
+const LONG_PRESS_MOVE = 10
+
+// El anillo de avance va dentro del círculo del "+" (el botón mide 60). El "+" llega a unos 8px del
+// centro y el borde del botón está a 30. A mitad de camino (radio 19) se veía más pegado al "+" que al borde,
+// así que se acercó un poco al borde (radio 21: unos 7px de la orilla y unos 10px del "+").
+const FAB_RING = 2 * Math.PI * 21
 
 type QuickCaptureProps = {
   open: boolean
@@ -50,9 +62,64 @@ export function QuickCapture({ open, onToggle, onClose, timeZone, demo }: QuickC
   const [when, setWhen] = useState<CaptureWhen>('today')
   const [error, setError] = useState<string | null>(null)
   const [saving, startSaving] = useTransition()
+  const focus = useFocus()
+  const pressTimer = useRef<number | null>(null)
+  const pressStart = useRef<{ x: number; y: number } | null>(null)
+  const longPressed = useRef(false)
+  // El botón se encoge un poco mientras se pulsa (whileTap); el anillo, que es un elemento aparte, lo imita.
+  const [pressed, setPressed] = useState(false)
   const current = KINDS.find((item) => item.kind === kind)!
   const whens = WHENS[kind]
   const chosenWhen = whens.includes(when) ? when : (whens[0] ?? 'none')
+
+  function cancelPress() {
+    if (pressTimer.current !== null) window.clearTimeout(pressTimer.current)
+    pressTimer.current = null
+    pressStart.current = null
+  }
+
+  // Si el componente se desmonta con la pulsación a medias, no debe quedar el temporizador vivo.
+  useEffect(() => cancelPress, [])
+
+  function endPress() {
+    cancelPress()
+    setPressed(false)
+  }
+
+  function handlePressStart(event: ReactPointerEvent) {
+    longPressed.current = false
+    setPressed(true)
+    pressStart.current = { x: event.clientX, y: event.clientY }
+    pressTimer.current = window.setTimeout(() => {
+      pressTimer.current = null
+      longPressed.current = true
+      // Un toque corto de vibración confirma que se detectó (donde el aparato lo permite).
+      navigator.vibrate?.(15)
+      onClose()
+      focus.setExpanded(true)
+    }, LONG_PRESS_MS)
+  }
+
+  function handlePressMove(event: ReactPointerEvent) {
+    const start = pressStart.current
+    if (!start) return
+    if (Math.hypot(event.clientX - start.x, event.clientY - start.y) > LONG_PRESS_MOVE) cancelPress()
+  }
+
+  // Tras una pulsación larga el navegador igual dispara el clic al soltar: se ignora para no abrir también
+  // la captura rápida. Con el pomodoro abierto el "+" es una "x" que lo cierra (así no se abre un panel
+  // encima del otro); si no, abre o cierra la captura.
+  function handleClick() {
+    if (longPressed.current) {
+      longPressed.current = false
+      return
+    }
+    if (focus.expanded) {
+      focus.setExpanded(false)
+      return
+    }
+    onToggle()
+  }
 
   function pickKind(next: CaptureKind) {
     setKind(next)
@@ -92,6 +159,7 @@ export function QuickCapture({ open, onToggle, onClose, timeZone, demo }: QuickC
 
   return (
     <>
+      <PanelScrim open={open} onClose={onClose} />
       <AnimatePresence>
         {open ? (
           <motion.section
@@ -171,13 +239,51 @@ export function QuickCapture({ open, onToggle, onClose, timeZone, demo }: QuickC
         ) : null}
       </AnimatePresence>
 
+      {/* El avance del pomodoro se dibuja sobre el botón (solo en teléfono y solo mientras corre; va dentro del círculo). Va aparte del botón
+          porque este gira al abrirse y el anillo no debe girar con él. */}
+      {focus.progress.running ? (
+        <motion.svg
+          className={styles.fabRing}
+          width="60"
+          height="60"
+          viewBox="0 0 60 60"
+          aria-hidden="true"
+          animate={{ scale: pressed ? 0.92 : 1 }}
+          transition={SPRING.pop}
+        >
+          <circle cx="30" cy="30" r="21" fill="none" className={styles.fabRingTrack} strokeWidth="3.5" />
+          <circle
+            cx="30"
+            cy="30"
+            r="21"
+            fill="none"
+            className={styles.fabRingWork}
+            strokeWidth="3.5"
+            strokeLinecap="round"
+            strokeDasharray={FAB_RING}
+            strokeDashoffset={FAB_RING * (1 - focus.progress.fraction)}
+            transform="rotate(-90 30 30)"
+          />
+        </motion.svg>
+      ) : null}
+
+      <span id="fab-hint" className={styles.srOnly}>
+        Mantén presionado para abrir el pomodoro.
+      </span>
       <motion.button
         type="button"
         className={styles.fab}
-        aria-label={open ? 'Cerrar crear rápido' : 'Crear rápido'}
-        aria-expanded={open}
-        onClick={onToggle}
-        animate={{ rotate: open ? 45 : 0 }}
+        aria-label={open ? 'Cerrar crear rápido' : focus.expanded ? 'Cerrar el pomodoro' : 'Crear rápido'}
+        aria-describedby="fab-hint"
+        aria-expanded={open || focus.expanded}
+        onClick={handleClick}
+        onPointerDown={handlePressStart}
+        onPointerMove={handlePressMove}
+        onPointerUp={endPress}
+        onPointerLeave={endPress}
+        onPointerCancel={endPress}
+        onContextMenu={(event) => event.preventDefault()}
+        animate={{ rotate: open || focus.expanded ? 45 : 0 }}
         whileTap={{ scale: 0.92 }}
         transition={SPRING.pop}
       >

@@ -172,7 +172,9 @@
     position: sticky;
     top: 0;
     z-index: var(--z-popover);
-    padding: max(var(--space-6), env(safe-area-inset-top)) var(--space-5) var(--space-2);
+    /* Alto de la barra sólida: el último valor del padding (abajo) es lo que separa los íconos de donde
+       empieza el desvanecido. Con 0 el degradado arranca justo debajo de los botones. */
+    padding: max(var(--space-6), env(safe-area-inset-top)) var(--space-5) 0;
     background: var(--bg);
   }
 
@@ -182,6 +184,7 @@
     left: 0;
     right: 0;
     top: 100%;
+    /* Alto del desvanecido. Más alto = más suave pero tapa más contenido. */
     height: 24px;
     pointer-events: none;
     background: linear-gradient(
@@ -300,6 +303,60 @@
   }
 }
 
+/* Las herramientas que dejan la barra por falta de espacio (Topnav.tsx): solo en teléfonos angostos. */
+.menuTools {
+  display: none;
+}
+
+.menuDot {
+  width: 8px;
+  height: 8px;
+  margin-left: var(--space-3);
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Barra apretada: Topnav.tsx mide cuánto cabe y escribe en el <header> data-hidden = cuántos botones se
+   esconden (0 a 3). Se van en orden: 1 doodles, 2 avisos, 3 lupa (data-order de cada uno). Los escondidos
+   siguen midiendo su ancho (fuera del flujo, invisibles) y su opción aparece en el menú del avatar.
+   "Escondido" = su data-order es menor o igual que data-hidden. Solo en teléfono. */
+@media (max-width: 720px) {
+  .tools {
+    position: relative;
+  }
+
+  .header:is([data-hidden='1'], [data-hidden='2'], [data-hidden='3']) .collapsible[data-order='1'],
+  .header:is([data-hidden='2'], [data-hidden='3']) .collapsible[data-order='2'],
+  .header[data-hidden='3'] .collapsible[data-order='3'] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* El menú solo muestra el hueco de los que se fueron. */
+  .menuTools {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .menuTools [data-order] {
+    display: none;
+  }
+
+  .header:is([data-hidden='1'], [data-hidden='2'], [data-hidden='3']) .menuTools [data-order='1'],
+  .header:is([data-hidden='2'], [data-hidden='3']) .menuTools [data-order='2'],
+  .header[data-hidden='3'] .menuTools [data-order='3'] {
+    display: flex;
+  }
+
+  .header[data-hidden='0'] .menuTools {
+    display: none;
+  }
+}
+
 .menuItem:hover,
 .menuItemDanger:hover {
   background: var(--surface-hover);
@@ -342,4 +399,43 @@
     max-width: 100%;
     overflow-x: auto;
   }
+}
+
+/* El reloj del pomodoro solo existe en el teléfono: arriba de 720px el pomodoro tiene su píldora abajo. */
+.focusButton {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .focusButton {
+    display: inline-flex;
+  }
+}
+
+/* Corriendo, el reloj se ensancha en un chip con el tiempo. Los dígitos son tabulares para que el chip no
+   cambie de ancho cada segundo. */
+.focusRunning {
+  width: auto;
+  min-width: 44px;
+  gap: var(--space-2);
+  padding: 0 var(--space-5);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.focusRunning:hover {
+  background: var(--accent-soft);
+}
+
+.focusTime {
+  font-size: 14px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Con el panel abierto el chip se invierte igual que los demás botones de la barra. */
+.focusRunning.iconButtonOpen,
+.focusRunning.iconButtonOpen:hover {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
 }

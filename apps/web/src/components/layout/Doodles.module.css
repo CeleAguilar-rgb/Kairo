@@ -40,6 +40,12 @@
   gap: var(--space-2);
 }
 
+/* En el menú del avatar (teléfono) caben 3 por renglón. */
+.trayGridCompact {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-items: center;
+}
+
 .doodleButton {
   all: unset;
   box-sizing: border-box;

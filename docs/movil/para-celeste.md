@@ -19,3 +19,11 @@ Cosas que salieron de revisar la versión de teléfono y que **también conviene
 **Cómo copiarlo:** el componente `components/ui/ScrollTabs.tsx` ya hace esto (una sola línea, desvanecido progresivo dentro de la píldora y la sección activa centrada). Bastaría envolver el `<nav>` del Topnav con él y quitar `inNav: false` de `features/school/module.ts` y `features/reminders/module.ts`.
 
 **Mientras tanto:** en el teléfono, Escuela y Recordatorios ya aparecen (la barra de abajo y el menú del avatar usan `navModules(sections, { mobile: true })`); el escritorio queda como estaba.
+
+## 3. Botón "+" (captura rápida) en lavanda
+
+**Hoy:** el "+" es del color de `--action` (tinta en claro). Cuando flota sobre una tarjeta oscura (Pendientes de hoy, por ejemplo) se pierde: es casi del mismo color. Probamos un aro del color de la página, un filete semitransparente y un reflejo interior, y ninguno se veía bien sobre claro y oscuro a la vez.
+
+**Cambio:** pintarlo de **lavanda** (`background: var(--accent)`, ícono con `color: var(--accent-ink)`) y dejar solo la sombra de siempre. Contrasta con el fondo claro y con las tarjetas oscuras sin bordes, sin detectar qué hay detrás y sin sombras especiales. Así quedó en el teléfono.
+
+**Dónde:** `features/shortcuts/components/QuickCapture.module.css`, la regla `.fab` (ya hecho; aplica a escritorio y teléfono porque es el mismo botón). Es un cambio de diseño respecto al canvas (`Atajos.dc.html` lo pinta con `--action`), por eso conviene que lo vea ella antes de adoptarlo.
