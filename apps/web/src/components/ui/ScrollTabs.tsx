@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, type ComponentPropsWithoutRef } from 'react'
+import { useCallback, useEffect, useRef, type ComponentPropsWithoutRef } from 'react'
 
 import styles from './ScrollTabs.module.css'
 import { useScrollFades } from './useScrollFades'
@@ -16,26 +16,60 @@ import { useScrollFades } from './useScrollFades'
 export function ScrollTabs({ as = 'nav', className, children, ...rest }: ComponentPropsWithoutRef<'nav'> & { as?: 'nav' | 'div' }) {
   const { ref: scrollerRef, update: updateFades } = useScrollFades<HTMLDivElement>()
   const lastActive = useRef<Element | null>(null)
+  // true desde que la persona desliza con el dedo o la rueda, hasta que la pestaña activa cambie.
+  const userMoved = useRef(false)
   const Tag = as
+
+  // Lleva la pestaña activa al centro. La posición se mide con getBoundingClientRect y no con offsetLeft:
+  // offsetLeft cuenta desde el ancestro posicionado más cercano (no desde este contenedor) y, dentro de un
+  // panel o una página con márgenes, se pasaba de largo.
+  const centerActive = useCallback(
+    (behavior: ScrollBehavior) => {
+      const scroller = scrollerRef.current
+      // La activa es un enlace con aria-current, o (en Segmented) un botón con aria-pressed / aria-checked.
+      const active = scroller?.querySelector<HTMLElement>('[aria-current="page"], [aria-pressed="true"], [aria-checked="true"]')
+      if (!scroller || !active) return
+      const left = active.getBoundingClientRect().left - scroller.getBoundingClientRect().left + scroller.scrollLeft
+      scroller.scrollTo({ left: left - (scroller.clientWidth - active.offsetWidth) / 2, behavior })
+    },
+    [scrollerRef],
+  )
 
   // Sin lista de dependencias a propósito: corre cada vez que la pestaña activa cambia de render, y solo
   // actúa cuando la activa es otra distinta (así no pelea con la persona mientras desliza a mano).
   useEffect(() => {
     const scroller = scrollerRef.current
     if (!scroller) return
-    // La activa es un enlace con aria-current, o (en Segmented) un botón con aria-pressed / aria-checked.
     const active = scroller.querySelector('[aria-current="page"], [aria-pressed="true"], [aria-checked="true"]')
     if (active && active !== lastActive.current) {
       lastActive.current = active
-      const tab = active as HTMLElement
-      scroller.scrollTo({ left: tab.offsetLeft - (scroller.clientWidth - tab.offsetWidth) / 2, behavior: 'smooth' })
+      userMoved.current = false
+      centerActive('smooth')
     }
     updateFades()
   })
 
+  // Si lo de dentro cambia de ancho (la tipografía termina de cargar), la activa se vuelve a centrar, salvo
+  // que la persona ya esté deslizando a mano.
+  useEffect(() => {
+    const scroller = scrollerRef.current
+    if (!scroller) return
+    const observer = new ResizeObserver(() => {
+      if (!userMoved.current) centerActive('auto')
+    })
+    for (const child of Array.from(scroller.children)) observer.observe(child)
+    return () => observer.disconnect()
+  }, [scrollerRef, centerActive])
+
   return (
     <Tag className={className} {...rest}>
-      <div ref={scrollerRef} className={styles.scroller} onScroll={updateFades}>
+      <div
+        ref={scrollerRef}
+        className={styles.scroller}
+        onScroll={updateFades}
+        onPointerDown={() => (userMoved.current = true)}
+        onWheel={() => (userMoved.current = true)}
+      >
         {children}
       </div>
     </Tag>

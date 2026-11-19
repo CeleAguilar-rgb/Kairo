@@ -53,7 +53,6 @@ export function SchoolHeader({
         <Segmented
           label="Momento"
           tone="glass"
-          scroll
           value={mode}
           onChange={onModeChange}
           options={MODE_OPTIONS}
