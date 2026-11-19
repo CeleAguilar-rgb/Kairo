@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'motion/react'
-import type { ReactNode } from 'react'
+import { useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 
 import { PlacedDoodles } from '@/components/layout/Doodles'
 import { LineIcon } from '@/components/ui/Card'
@@ -25,6 +25,43 @@ type GreetingProps = {
 // derecha las estadísticas, alineadas abajo. La bandeja de doodles está en el
 // header (components/layout/Doodles.tsx); aquí solo se dibujan los pegados.
 export function Greeting({ hello, subtitle, pendingCount, activeProjects, dueThisWeekCents, currency }: GreetingProps) {
+  const statsRef = useRef<HTMLDivElement>(null)
+  // En teléfono las tarjetas van en una fila de columnas iguales; si el número más largo no cabe en una
+  // columna (por ejemplo "$12,450"), pasan a ser una tarjeta horizontal por renglón, de todo el ancho, en vez
+  // de encoger la cifra. Solo tiene efecto en teléfono: el CSS ignora la clase arriba de 720px.
+  const [stacked, setStacked] = useState(false)
+  const moneyText = dueThisWeekCents !== null ? formatMoney(Math.round(dueThisWeekCents / 100) * 100, currency) : null
+
+  useLayoutEffect(() => {
+    const stats = statsRef.current
+    if (!stats) return
+    const texts = [String(pendingCount), activeProjects !== null ? String(activeProjects) : null, moneyText].filter((text): text is string => text !== null)
+
+    function measure() {
+      if (!stats) return
+      const values = Array.from(stats.querySelectorAll<HTMLElement>('[data-stat-value]'))
+      const cards = Array.from(stats.querySelectorAll<HTMLElement>('[data-stat]'))
+      const context = document.createElement('canvas').getContext('2d')
+      if (!context || values.length === 0 || cards.length === 0) return
+      // Se mide el texto FINAL (el número va subiendo animado, su ancho cambia mientras tanto) con la misma
+      // tipografía del número, no el contenido que haya en ese instante.
+      context.font = getComputedStyle(values[0]).font
+      const widest = Math.max(...texts.map((text) => context.measureText(text).width))
+      const cardStyle = getComputedStyle(cards[0])
+      // El relleno de la tarjeta EN COLUMNA (el de arriba, igual en las dos disposiciones): el de los lados cambia
+      // al apilar y haría que el resultado oscilara entre las dos.
+      const padding = parseFloat(cardStyle.paddingTop) * 2
+      const gap = parseFloat(getComputedStyle(stats).columnGap) || 0
+      const column = (stats.clientWidth - gap * (cards.length - 1)) / cards.length
+      setStacked(widest + padding > column)
+    }
+
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(stats)
+    return () => observer.disconnect()
+  }, [pendingCount, activeProjects, moneyText])
+
   return (
     <section className={styles.hero} aria-labelledby="home-hello">
       <div className={styles.helloBlock}>
@@ -64,7 +101,7 @@ export function Greeting({ hello, subtitle, pendingCount, activeProjects, dueThi
         <PlacedDoodles />
       </div>
 
-      <motion.div className={styles.stats} variants={staggerList(0.08, 0.5)} initial="hidden" animate="show">
+      <motion.div ref={statsRef} className={[styles.stats, stacked ? styles.statsStacked : null].filter(Boolean).join(' ')} variants={staggerList(0.08, 0.5)} initial="hidden" animate="show">
         <Stat tone="inverted" icon="M5 12l5 5L20 7" label="pendientes hoy">
           <CountUp value={pendingCount} />
         </Stat>
@@ -93,12 +130,12 @@ type StatProps = {
 
 function Stat({ tone, icon, label, children }: StatProps) {
   return (
-    <motion.div className={styles.stat} variants={fadeUp} whileHover={{ y: -2 }}>
+    <motion.div className={styles.stat} data-stat="" variants={fadeUp} whileHover={{ y: -2 }}>
       <span className={[styles.statIcon, styles[`statIcon_${tone}`]].join(' ')} aria-hidden="true">
         <LineIcon d={icon} strokeWidth={2} />
       </span>
       <div className={styles.statText}>
-        <span className={styles.statValue}>{children}</span>
+        <span className={styles.statValue} data-stat-value="">{children}</span>
         <span className={styles.statLabel}>{label}</span>
       </div>
     </motion.div>
