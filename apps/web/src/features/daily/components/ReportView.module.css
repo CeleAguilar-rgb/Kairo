@@ -42,6 +42,19 @@
   font-size: 14px;
 }
 
+/* Enlace de una línea: con el dedo, un área de toque de 44px alrededor sin mover nada. */
+@media (pointer: coarse) {
+  .moveLink {
+    position: relative;
+  }
+
+  .moveLink::after {
+    content: '';
+    position: absolute;
+    inset: -14px -8px;
+  }
+}
+
 .board {
   gap: var(--space-7);
 }
