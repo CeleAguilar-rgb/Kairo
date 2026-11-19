@@ -62,7 +62,7 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 ### Finanzas
 
 - [x] Media — Pestañas cortadas ("Ahorros y deu…"); hay 5 y solo caben 2 y media.
-- [ ] Media — Membresías: la tabla mide más del doble del ancho y se desliza; mejor como tarjetas.
+- [x] Media — (hecho: en ≤720px cada fila es una tarjeta con CSS grid; falta probarlo en el teléfono) Membresías: la tabla mide más del doble del ancho y se desliza; mejor como tarjetas.
 - [ ] Media — Membresías: el + tapa "$0 al mes" de la tarjeta de efectivo.
 - [ ] Baja — Movimientos: descripciones cortadas ("Comida fuera · Débito ••4417 · hoy").
 - [x] Baja — Presupuesto: los interruptores son chicos.
@@ -128,7 +128,7 @@ Empezar por lo que arregla varias pantallas a la vez, todo en la rama `movil`.
 2. Filas de Tareas y Papelera: nombre completo, con los datos en un segundo renglón.
 3. (Hecho: `components/ui/ScrollTabs`, usado por Día a día, Finanzas, Proyectos, Escritos, Perfil y Escuela; falta probarlo en el teléfono.) Un solo componente de pestañas para el teléfono: un renglón, con pista de que se desliza.
 4. Horario de Escuela y Menú semanal: vista de un día a la vez.
-5. Tabla de Membresías como tarjetas.
+5. Tabla de Membresías como tarjetas (hecho).
 6. Áreas de toque de 44 px.
 7. (Hecho en móvil: entran con `navModules(sections, { mobile: true })`. Para el escritorio, propuesta a Celeste en `para-celeste.md`.)
 8. Revisar lo marcado como Pendiente, con letra grande y en modo oscuro.

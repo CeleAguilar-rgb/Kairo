@@ -28,7 +28,8 @@ const SOON_DAYS = 3
 
 // Membresías (Finanzas.dc.html y FinMembresia.dc.html): las tarjetas con lo que cada una paga al mes (tocar una
 // filtra la tabla) y la tabla de membresías con su próximo cobro. Un toque en una membresía la abre para
-// corregirla, pausarla o borrarla.
+// corregirla, pausarla o borrarla. En el teléfono la tabla no cabe: cada fila se vuelve una tarjeta (solo CSS, ver
+// MembershipsView.module.css) y el `data-label` de las celdas pone el nombre de la columna que ya no se ve.
 export function MembershipsView({ view, today }: { view: MembershipsData; today: IsoDate }) {
   const calm = useCalmEntry()
   const [selected, setSelected] = useState<string | null>(null)
@@ -200,7 +201,7 @@ function MembershipRow({ membership, today, dimmed, onOpen }: { membership: Memb
           </span>
         </button>
       </td>
-      <td>
+      <td data-label="Próximo cobro">
         {paused ? (
           <span className={styles.hint}>—</span>
         ) : (
@@ -209,7 +210,9 @@ function MembershipRow({ membership, today, dimmed, onOpen }: { membership: Memb
           </span>
         )}
       </td>
-      <td className={styles.cardCell}>{cardLabel(membership.card)}</td>
+      <td className={styles.cardCell} data-label="Tarjeta">
+        {cardLabel(membership.card)}
+      </td>
       <td>
         <span className={[styles.status, paused ? styles.statusPaused : styles.statusActive].join(' ')}>{paused ? 'Pausada' : 'Activa'}</span>
       </td>

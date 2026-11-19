@@ -327,6 +327,88 @@
   white-space: nowrap;
 }
 
+/* --- Teléfono: cada fila de la tabla es una tarjeta ---
+   Una tabla de 5 columnas mide 620px y en 360px solo se ve la mitad. En vez de deslizarla, cada fila pasa
+   a ser una tarjeta con una cuadrícula: servicio y monto arriba, cobro y estado en medio y la tarjeta de
+   pago abajo. Es el mismo HTML (sin duplicar nada); arriba de 720px la tabla se queda como está. */
+@media (max-width: 720px) {
+  .table {
+    min-width: 0;
+  }
+
+  .table,
+  .table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  /* El encabezado ya no tiene columnas que nombrar, pero los lectores de pantalla lo siguen leyendo. */
+  .table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'service amount'
+      'date status'
+      'card card';
+    align-items: center;
+    gap: var(--space-4) var(--space-5);
+    padding: var(--space-6);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-18);
+    background: var(--surface-raised);
+  }
+
+  .table td {
+    padding: 0;
+    border-top: 0;
+    min-width: 0;
+  }
+
+  .table td:nth-child(1) {
+    grid-area: service;
+  }
+
+  .table td:nth-child(2) {
+    grid-area: date;
+  }
+
+  .table td:nth-child(3) {
+    grid-area: card;
+  }
+
+  .table td:nth-child(4) {
+    grid-area: status;
+    justify-self: end;
+  }
+
+  .table td:nth-child(5) {
+    grid-area: amount;
+    font-size: 18px;
+  }
+
+  /* El nombre de la columna que ya no se ve, delante del dato. */
+  .table td[data-label]::before {
+    content: attr(data-label);
+    margin-right: var(--space-3);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .cardCell {
+    white-space: normal;
+    font-size: 14px;
+  }
+}
+
 .dialogList {
   margin: 0;
   padding-left: var(--space-9);
