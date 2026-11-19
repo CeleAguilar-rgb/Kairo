@@ -166,8 +166,8 @@ export function TrashView({ items: initialItems, nowIso, timeZone }: TrashViewPr
                         <Button variant="ghost" className={styles.small} onClick={() => setAsking(null)}>
                           Cancelar
                         </Button>
-                        <Button variant="danger" className={styles.small} onClick={() => purge(item)}>
-                          Borrar para siempre
+                        <Button variant="danger" className={styles.small} aria-label={`Borrar para siempre: ${name}`} onClick={() => purge(item)}>
+                          Borrar
                         </Button>
                       </div>
                     ) : (

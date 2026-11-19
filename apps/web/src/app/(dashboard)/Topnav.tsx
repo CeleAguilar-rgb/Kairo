@@ -47,9 +47,11 @@ export function Topnav({ profile, sections }: TopnavProps) {
 
   const visibleModules = navModules(sections)
   // Las que no caben en la barra de abajo del teléfono: se listan en este menú (solo se ven en el teléfono).
-  const { rest: restModules } = splitTabs(visibleModules)
+  // Se arma con la lista del teléfono, que incluye Escuela y Recordatorios (ver navModules).
+  const mobileModules = navModules(sections, { mobile: true })
+  const { rest: restModules } = splitTabs(mobileModules)
   // Si ya se hizo clic en otra sección, la píldora viaja hacia ella sin esperar a que cargue.
-  const activeId = findActive(visibleModules, pendingHref ?? pathname)
+  const activeId = findActive(mobileModules, pendingHref ?? pathname)
 
   async function handleSignOut() {
     // Import dinámico: el cliente de Supabase pesa ~65 KB y solo se necesita aquí, al

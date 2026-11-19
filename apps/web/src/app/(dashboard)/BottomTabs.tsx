@@ -19,7 +19,7 @@ export function BottomTabs({ sections }: { sections: UserSection[] }) {
   const pathname = usePathname()
   const pendingHref = usePendingHref()
 
-  const visible = navModules(sections)
+  const visible = navModules(sections, { mobile: true })
   const { tabs } = splitTabs(visible)
   const activeId = findActive(visible, pendingHref ?? pathname)
 

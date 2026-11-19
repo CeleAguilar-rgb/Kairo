@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 import { Card, CardHeader, LineIcon } from '@/components/ui/Card'
 import { Doodle } from '@/components/ui/Doodle'
+import { ScrollTabs } from '@/components/ui/ScrollTabs'
 import {
   addDays,
   dateOfMoment,
@@ -62,7 +63,7 @@ export function WeekCard({ events, today, timeZone, hourFormat, weekStart }: Wee
         action={<span className={styles.range}>{formatRange(days[0], days[6])}</span>}
       />
 
-      <div className={styles.days} role="group" aria-label="Días de la semana">
+      <ScrollTabs as="div" className={styles.days} role="group" aria-label="Días de la semana">
         {days.map((day) => {
           const isSelected = day === selected
           const hasEvents = (byDay.get(day)?.length ?? 0) > 0
@@ -83,7 +84,7 @@ export function WeekCard({ events, today, timeZone, hourFormat, weekStart }: Wee
             </motion.button>
           )
         })}
-      </div>
+      </ScrollTabs>
 
       <div className={styles.eventsViewport}>
         <AnimatePresence mode="popLayout" initial={false} custom={direction}>

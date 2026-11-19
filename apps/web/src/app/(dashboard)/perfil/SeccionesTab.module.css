@@ -102,3 +102,59 @@
   font-size: 13px;
   color: var(--danger);
 }
+
+/* Teléfono: dos renglones. Arriba el orden, el ícono, el nombre y el interruptor; debajo del nombre, la
+   etiqueta "Abajo en celular". Antes todo iba en una línea y la descripción quedaba en una columna de
+   tres palabras de ancho, partida en cinco renglones. */
+@media (max-width: 720px) {
+  .row {
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr) auto;
+    column-gap: var(--space-3);
+    padding: var(--space-3) 0;
+  }
+
+  /* Las flechas, el ícono y el interruptor abarcan los dos renglones y se centran en el alto completo
+     de la fila (no solo en el renglón de arriba). Por eso la separación con la etiqueta es un margen
+     de la etiqueta y no un row-gap: sin etiqueta no queda un renglón vacío que sume espacio. */
+  .orderButtons,
+  .iconOn,
+  .iconOff,
+  .row > :last-child {
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+  .orderButtons {
+    grid-column: 1;
+  }
+
+  .iconOn,
+  .iconOff {
+    grid-column: 2;
+  }
+
+  .info {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .row > :last-child {
+    grid-column: 4;
+  }
+
+  .badge {
+    grid-column: 3;
+    grid-row: 2;
+    justify-self: start;
+    margin-top: var(--space-2);
+  }
+
+  .description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+  }
+}

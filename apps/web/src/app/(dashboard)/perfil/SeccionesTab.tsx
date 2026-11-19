@@ -8,6 +8,7 @@ import { Toggle } from '@/components/ui/Toggle'
 import { updateSections } from '@/lib/account/actions'
 import type { UserSection } from '@/lib/account/api'
 import { MODULE_CATALOG } from '@/lib/modules/catalog'
+import { TAB_SLOTS } from '../nav-modules'
 import styles from './SeccionesTab.module.css'
 
 type SeccionesTabProps = { sections: UserSection[] }
@@ -93,7 +94,7 @@ export function SeccionesTab({ sections }: SeccionesTabProps) {
   }
 
   // Cuántos módulos encendidos hay hasta cada posición de `order` (inclusive);
-  // de ahí sale qué filas muestran "Abajo en celular" (las primeras 4).
+  // de ahí sale qué filas muestran "Abajo en celular" (las primeras TAB_SLOTS).
   const onCountUpTo = order.reduce<number[]>((acc, id) => {
     const previous = acc.length ? acc[acc.length - 1] : 0
     return [...acc, previous + (enabled[id] ? 1 : 0)]
@@ -115,9 +116,9 @@ export function SeccionesTab({ sections }: SeccionesTabProps) {
           const entry = catalogById.get(id)
           if (!entry) return null
 
-          // Los primeros 4 módulos encendidos, en el orden de la lista, son
-          // los que entrarán al menú de abajo del celular (fase posterior).
-          const showsOnPhone = !!enabled[id] && onCountUpTo[index] <= 4
+          // Los primeros TAB_SLOTS (5) módulos encendidos, en el orden de la lista, son
+          // los de la barra de abajo del celular; el resto va en el menú del avatar.
+          const showsOnPhone = !!enabled[id] && onCountUpTo[index] <= TAB_SLOTS
 
           return (
             <div key={id} className={styles.row}>
