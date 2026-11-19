@@ -176,6 +176,17 @@
        empieza el desvanecido. Con 0 el degradado arranca justo debajo de los botones. */
     padding: max(var(--space-6), env(safe-area-inset-top)) var(--space-5) 0;
     background: var(--bg);
+    /* El velo de los menús vive dentro de la barra: arriba de todo, pero debajo del menú (z-index 20). */
+    --scrim-z: 1;
+    /* Al cerrar el menú la barra espera lo que dura el velo en desvanecerse (0.2s) antes de bajar de capa. */
+    transition: z-index 0s linear 0.2s;
+  }
+
+  /* Con el menú del avatar o los doodles abiertos la barra sube sobre la barra de abajo, el "+" y el reproductor
+     para que el velo los oscurezca también. */
+  .header[data-panel-open] {
+    z-index: var(--z-drawer);
+    transition-delay: 0s;
   }
 
   .header::after {
@@ -245,6 +256,21 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+}
+
+/* En el teléfono el menú sale al centro de la pantalla (no colgando del avatar), como los demás paneles.
+   Sin transform: Motion lo usa para animar la entrada; inset + margin auto + height fit-content centran solos. */
+@media (max-width: 720px) {
+  .menu {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    height: fit-content;
+    width: min(280px, calc(100% - var(--space-9) * 2));
+    max-height: calc(100dvh - var(--space-9) * 2);
+    overflow-y: auto;
+    transform-origin: center;
+  }
 }
 
 .menuHeader {

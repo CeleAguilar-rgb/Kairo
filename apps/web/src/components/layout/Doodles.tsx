@@ -106,18 +106,26 @@ export function DoodlePicker({ compact = false }: { compact?: boolean }) {
   )
 }
 
-// Botón del lápiz + bandeja (header).
-export function DoodleTray({ buttonClassName, openClassName }: { buttonClassName: string; openClassName: string }) {
-  const [open, setOpen] = useState(false)
+// Botón del lápiz + bandeja (header). Quien la usa decide cuándo está abierta (`open`): el Topnav la comparte
+// con sus otros menús para que solo haya uno abierto a la vez.
+type DoodleTrayProps = {
+  buttonClassName: string
+  openClassName: string
+  open: boolean
+  onToggle: () => void
+  onClose: () => void
+}
+
+export function DoodleTray({ buttonClassName, openClassName, open, onToggle, onClose }: DoodleTrayProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!open) return
     function onPointerDown(event: PointerEvent) {
-      if (!wrapRef.current?.contains(event.target as Node)) setOpen(false)
+      if (!wrapRef.current?.contains(event.target as Node)) onClose()
     }
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') setOpen(false)
+      if (event.key === 'Escape') onClose()
     }
     document.addEventListener('pointerdown', onPointerDown)
     document.addEventListener('keydown', onKeyDown)
@@ -125,7 +133,7 @@ export function DoodleTray({ buttonClassName, openClassName }: { buttonClassName
       document.removeEventListener('pointerdown', onPointerDown)
       document.removeEventListener('keydown', onKeyDown)
     }
-  }, [open])
+  }, [open, onClose])
 
   return (
     <div className={styles.trayWrap} ref={wrapRef}>
@@ -134,7 +142,7 @@ export function DoodleTray({ buttonClassName, openClassName }: { buttonClassName
         className={[buttonClassName, open ? openClassName : null].filter(Boolean).join(' ')}
         aria-label="Agregar doodles"
         aria-expanded={open}
-        onClick={() => setOpen((value) => !value)}
+        onClick={onToggle}
         whileHover={{ rotate: -10 }}
         whileTap={{ scale: 0.9 }}
         transition={SPRING.pop}

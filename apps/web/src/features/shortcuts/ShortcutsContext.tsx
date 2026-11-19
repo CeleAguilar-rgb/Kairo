@@ -10,8 +10,9 @@ import { SearchPalette } from './components/SearchPalette'
 import { listNotificationsAction } from './notification-actions'
 import type { NotificationsPanelData } from './types'
 
-// Cuál de los tres atajos está abierto (Atajos.dc.html): abrir uno cierra los otros.
-export type ShortcutPanel = 'search' | 'notifications' | 'capture'
+// Cuál panel flotante está abierto (Atajos.dc.html): abrir uno cierra los otros. Además de los tres atajos, el
+// menú del avatar y la bandeja de doodles del Topnav usan este mismo estado, así nunca hay dos menús a la vez.
+export type ShortcutPanel = 'search' | 'notifications' | 'capture' | 'menu' | 'doodles'
 
 type ShortcutsValue = {
   open: ShortcutPanel | null
@@ -90,18 +91,17 @@ export function ShortcutsProvider({ children, timeZone, demo }: ShortcutsProvide
 
   // Estable: el panel lo usa en un efecto (clic afuera).
   const closePanel = useCallback(() => setOpen(null), [])
+  const togglePanel = useCallback(
+    (panel: ShortcutPanel) => {
+      setFocusExpanded(false)
+      setOpen((current) => (current === panel ? null : panel))
+    },
+    [setFocusExpanded],
+  )
 
   const value = useMemo<ShortcutsValue>(
-    () => ({
-      open,
-      toggle: (panel) => {
-        setFocusExpanded(false)
-        setOpen((current) => (current === panel ? null : panel))
-      },
-      close: () => setOpen(null),
-      unread: notifications?.unread ?? 0,
-    }),
-    [open, notifications, setFocusExpanded],
+    () => ({ open, toggle: togglePanel, close: closePanel, unread: notifications?.unread ?? 0 }),
+    [open, notifications, togglePanel, closePanel],
   )
 
   return (
@@ -109,7 +109,7 @@ export function ShortcutsProvider({ children, timeZone, demo }: ShortcutsProvide
       {children}
       <SearchPalette open={open === 'search'} onClose={() => setOpen(null)} demo={demo} />
       <NotificationsPanel open={open === 'notifications'} onClose={closePanel} data={notifications} onChange={setNotifications} timeZone={timeZone} />
-      <QuickCapture open={open === 'capture'} onToggle={() => value.toggle('capture')} onClose={() => setOpen(null)} timeZone={timeZone} demo={demo} />
+      <QuickCapture open={open === 'capture'} onToggle={() => togglePanel('capture')} onClose={() => setOpen(null)} timeZone={timeZone} demo={demo} />
     </ShortcutsContext.Provider>
   )
 }

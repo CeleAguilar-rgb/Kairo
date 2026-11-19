@@ -7,6 +7,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { DoodlePicker, DoodleTray } from '@/components/layout/Doodles'
 import { usePendingHref } from '@/components/layout/Navigation'
 import { LineIcon } from '@/components/ui/Card'
+import { PanelScrim } from '@/components/ui/PanelScrim'
 import { useFocus } from '@/features/focus'
 import { NOTIFICATIONS_TRIGGER, useShortcuts } from '@/features/shortcuts'
 import type { Profile, UserSection } from '@/lib/account/api'
@@ -27,7 +28,6 @@ type TopnavProps = { profile: Profile; sections: UserSection[] }
 export function Topnav({ profile, sections }: TopnavProps) {
   const router = useRouter()
   const pathname = usePathname()
-  const [menuOpen, setMenuOpen] = useState(false)
   const [doodlesOpen, setDoodlesOpen] = useState(false)
   // Cuántos de los tres botones (doodles, avisos, lupa; en ese orden) no caben y pasaron al menú del avatar.
   const [hiddenCount, setHiddenCount] = useState(0)
@@ -38,6 +38,10 @@ export function Topnav({ profile, sections }: TopnavProps) {
   const avatar = getAvatar(profile.avatarPath)
   const pendingHref = usePendingHref()
   const shortcuts = useShortcuts()
+  // El menú del avatar y la bandeja de doodles comparten el estado de los atajos: abrir uno cierra los demás.
+  const menuOpen = shortcuts.open === 'menu'
+  const doodleTrayOpen = shortcuts.open === 'doodles'
+  const closePanels = shortcuts.close
   const focus = useFocus()
   const running = focus.progress.running
   const clock = formatClock(focus.timer.state.secondsLeft)
@@ -47,11 +51,10 @@ export function Topnav({ profile, sections }: TopnavProps) {
     if (!menuOpen) return
 
     function handlePointerDown(event: PointerEvent) {
-      if (!menuWrapRef.current?.contains(event.target as Node))
-        setMenuOpen(false)
+      if (!menuWrapRef.current?.contains(event.target as Node)) closePanels()
     }
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') setMenuOpen(false)
+      if (event.key === 'Escape') closePanels()
     }
 
     document.addEventListener('pointerdown', handlePointerDown)
@@ -60,7 +63,7 @@ export function Topnav({ profile, sections }: TopnavProps) {
       document.removeEventListener('pointerdown', handlePointerDown)
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [menuOpen])
+  }, [menuOpen, closePanels])
 
   // Mide cuántos botones caben en una línea: logo + (reloj o chip, lupa, avisos, doodles, avatar). Si falta
   // espacio se esconden de a uno, en el orden de `data-order`: primero los doodles, luego los avisos y al
@@ -134,7 +137,12 @@ export function Topnav({ profile, sections }: TopnavProps) {
       ref={headerRef}
       className={styles.header}
       data-hidden={hiddenCount}
+      data-panel-open={menuOpen || doodleTrayOpen ? '' : undefined}
     >
+      {/* Velo del teléfono para el menú del avatar y los doodles. Va aquí dentro (no en el layout) porque esos
+          menús cuelgan de la barra, que es su propia capa: con la barra elevada (ver [data-panel-open] en el
+          CSS) el velo y el menú quedan arriba de todo y el resto de la barra queda oscurecido debajo del velo. */}
+      <PanelScrim open={menuOpen || doodleTrayOpen} onClose={closePanels} mobileOnly />
       <Link ref={logoRef} href="/" className={styles.logo} aria-label="Kairo, ir a Inicio">
         <motion.svg
           width="30"
@@ -279,6 +287,9 @@ export function Topnav({ profile, sections }: TopnavProps) {
             <DoodleTray
               buttonClassName={styles.iconButton}
               openClassName={styles.iconButtonOpen}
+              open={doodleTrayOpen}
+              onToggle={() => shortcuts.toggle('doodles')}
+              onClose={closePanels}
             />
           </div>
         </div>
@@ -290,7 +301,7 @@ export function Topnav({ profile, sections }: TopnavProps) {
             aria-haspopup="menu"
             aria-expanded={menuOpen}
             aria-label={`Menú de ${profile.name ?? 'tu cuenta'}`}
-            onClick={() => setMenuOpen((open) => !open)}
+            onClick={() => shortcuts.toggle('menu')}
             whileHover={{ rotate: -8, scale: 1.04 }}
             whileTap={{ scale: 0.94 }}
             transition={SPRING.pop}
@@ -332,7 +343,6 @@ export function Topnav({ profile, sections }: TopnavProps) {
                     className={styles.menuItem}
                     data-order="3"
                     onClick={() => {
-                      setMenuOpen(false)
                       shortcuts.toggle('search')
                     }}
                   >
@@ -359,7 +369,6 @@ export function Topnav({ profile, sections }: TopnavProps) {
                     className={styles.menuItem}
                     data-order="2"
                     onClick={() => {
-                      setMenuOpen(false)
                       shortcuts.toggle('notifications')
                     }}
                   >
@@ -423,7 +432,7 @@ export function Topnav({ profile, sections }: TopnavProps) {
                           .filter(Boolean)
                           .join(' ')}
                         aria-current={module.id === activeId ? 'page' : undefined}
-                        onClick={() => setMenuOpen(false)}
+                        onClick={closePanels}
                       >
                         <svg
                           className={styles.menuIcon}
@@ -451,7 +460,7 @@ export function Topnav({ profile, sections }: TopnavProps) {
                   href="/perfil"
                   role="menuitem"
                   className={styles.menuItem}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={closePanels}
                 >
                   Mi perfil
                 </Link>
@@ -460,7 +469,7 @@ export function Topnav({ profile, sections }: TopnavProps) {
                   href="/papelera"
                   role="menuitem"
                   className={styles.menuItem}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={closePanels}
                 >
                   Papelera
                 </Link>
