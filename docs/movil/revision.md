@@ -70,7 +70,8 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 
 ### Proyectos
 
-- [ ] Baja — Los filtros (Todos, Trabajo, Personal, Escuela) bajan de renglón.
+- [x] Baja — (hecho, falta probar en el teléfono) Los filtros (Todos, Trabajo, Personal, Escuela) ya van en una línea que se desliza, con "Nuevo proyecto" a todo lo ancho debajo.
+- [x] Media — (hecho, falta probar en el teléfono) Proyecto: cabecera compacta ("Editar proyecto" y "···" en una fila, "Ver en el tablero" debajo), Avance arriba del Resumen, botón de Sprints y Archivos a todo lo ancho, portadas más bajas en la galería y sin barra vertical en el filtro de Archivos.
 - [x] Media — (descartado: el + ya no es problema en ninguna parte, según el usuario) En un proyecto, el "25" y el + tapan el progreso y la fecha de la tarjeta.
 - [x] Baja — Pestañas del proyecto (Resumen, Sprints, Archivos) apenas se salen.
 - [x] Media — (descartado: el + ya no es problema en ninguna parte, según el usuario) Sprints: el tablero se apila en columnas verticales y funciona, pero el + tapa las tarjetas.

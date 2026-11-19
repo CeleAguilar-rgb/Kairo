@@ -103,7 +103,7 @@ export function ProjectsView({ projects, today, weekEnd }: ProjectsViewProps) {
               ),
             }))}
           />
-          <ButtonLink href="/proyectos/nuevo">
+          <ButtonLink href="/proyectos/nuevo" className={styles.newButton}>
             <LineIcon d="M12 5v14M5 12h14" size={16} strokeWidth={2} />
             Nuevo proyecto
           </ButtonLink>

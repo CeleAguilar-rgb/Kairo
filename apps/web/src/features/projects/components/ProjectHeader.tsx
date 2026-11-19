@@ -152,7 +152,7 @@ export function ProjectHeader({
               />
               Ver en el tablero
             </Link>
-            <ButtonLink href={`/proyectos/${id}/editar`}>
+            <ButtonLink href={`/proyectos/${id}/editar`} className={styles.editLink}>
               <LineIcon
                 d={['M14 4l6 6L9 21H3v-6L14 4z', 'M12 6l6 6']}
                 size={16}
