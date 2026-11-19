@@ -156,6 +156,62 @@
   .sun {
     display: none;
   }
+
+  /* Las estadísticas en una sola fila a todo el ancho, una columna por tarjeta (valen 1, 2 o 3 según los
+     módulos activos). Antes eran píldoras horizontales: solo cabían dos por renglón y la tercera quedaba
+     sola con un hueco al lado. Ahora cada una es vertical: ícono, número y texto debajo (el texto se parte
+     en dos renglones si hace falta). */
+  .stats {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+
+  .stat {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+    min-width: 0;
+    padding: var(--space-4);
+    white-space: normal;
+  }
+
+  .statText {
+    gap: var(--space-2);
+    min-width: 0;
+  }
+
+  /* La cifra no se encoge: si no cabe en una columna, Greeting.tsx pone .statsStacked (abajo). */
+  .statValue {
+    font-size: 26px;
+    white-space: nowrap;
+  }
+
+  .statLabel {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+
+  /* Una tarjeta por renglón, a todo el ancho y horizontal (como en escritorio): ícono, número y texto. */
+  .statsStacked {
+    grid-auto-flow: row;
+  }
+
+  .statsStacked .stat {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-4) var(--space-8) var(--space-4) var(--space-4);
+  }
+
+  .statsStacked .statText {
+    gap: 0;
+  }
+
+  .statsStacked .statLabel {
+    font-size: 13px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

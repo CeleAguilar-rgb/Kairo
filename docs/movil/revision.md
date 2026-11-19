@@ -35,7 +35,7 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 
 ### Inicio
 
-- [ ] Media — Las tarjetas de números (pendientes, proyectos, $ por pagar) quedan dos arriba y una abajo, con huecos.
+- [x] Media — Las tarjetas de números (pendientes, proyectos, $ por pagar) quedan dos arriba y una abajo, con huecos. (Una fila de 3 columnas con el contenido en vertical.)
 - [ ] Media — El "25" del pomodoro queda encima de "Pendientes de hoy" y de las flechas de las tareas.
 - [ ] Baja — Los títulos de tareas largos se cortan en la tarjeta.
 
