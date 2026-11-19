@@ -1,0 +1,139 @@
+/* La semana en el teléfono: un bloque por día, con la fecha a la izquierda y lo del día a la derecha. */
+.list {
+  display: none;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 720px) {
+  .list {
+    display: flex;
+  }
+}
+
+.day {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  column-gap: var(--space-4);
+  align-items: start;
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--border-soft);
+}
+
+.day:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.dayHead {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-1) 0;
+  border-radius: var(--radius-14);
+  cursor: pointer;
+}
+
+.dayHead:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.dow {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.numToday {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+}
+
+/* Un día sin nada ocupa una sola línea, a la altura del número */
+.empty {
+  margin: 0;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+}
+
+.item {
+  all: unset;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-3);
+  border-radius: var(--radius-14);
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  cursor: pointer;
+  transition:
+    background 200ms ease,
+    border-color 200ms ease;
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.itemSelected {
+  background: var(--surface-raised);
+  border-color: var(--border-control);
+}
+
+/* La barrita del color del tipo (trabajo, personal, escuela, pago, tarea) */
+.swatch {
+  width: 6px;
+  flex-shrink: 0;
+  border-radius: var(--radius-pill);
+  border: 1px solid;
+}
+
+.itemText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.itemTitle {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.itemTime {
+  font-size: 13px;
+  color: var(--text-muted);
+}

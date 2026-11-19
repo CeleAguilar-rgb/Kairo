@@ -18,6 +18,7 @@ import { createEventAction, deleteEventAction, duplicateEventAction, moveEventAc
 import { byTime, dayLabel, FILTER_TYPES, heading, rangeLabel, shiftAnchor, weekDays, type AgendaView as View } from '../agenda-utils'
 import { isEventEntry, type AgendaEntry, type AgendaEntryType, type EventKind } from '../types'
 
+import { AgendaFilters } from './AgendaFilters'
 import styles from './AgendaView.module.css'
 import { AgendaSidebar } from './AgendaSidebar'
 import { DayView } from './DayView'
@@ -304,6 +305,7 @@ export function AgendaView({ entries, projects, today, nowMinutes, timeZone, hou
 
       <div className={styles.layout}>
         <section className={styles.calendarWrap} aria-label="Calendario">
+          <AgendaFilters counts={counts} hidden={hidden} onToggle={toggleFilter} />
           <Card className={styles.calendar}>
             <motion.div
               key={`${view}:${periodKey}`}

@@ -125,3 +125,17 @@ Cosas que salieron de revisar la versión de teléfono y que **también conviene
 - Con el dedo (`pointer: coarse`): `.action` del panel lateral y `.menuItem` del detalle a 44px; los chips de "Todo el día" (`EntryParts`) a 36px a propósito, porque van apilados y 44px los volvería muy altos.
 
 **Dónde:** `features/agenda/components/` (`WeekView`, `MonthView`, `EventDrawer`, `EntryParts`, `AgendaSidebar`, `EventDetailDrawer`).
+
+> Nota: lo de `WeekView` (semana que se desliza con desvanecido) se reemplazó en el punto 13: en el teléfono la semana ya no es una rejilla.
+
+## 13. Agenda en el teléfono (2.ª pasada): controles centrados, "Mostrar" arriba y semana como lista
+
+**Hoy:** la barra Día/Semana/Mes, las flechas con "Hoy" y "Nuevo evento" quedaban a la izquierda; el texto "Todo el día" de la vista Día empujaba a los chips y rompía la vista; la rejilla semanal de 7 columnas solo dejaba ver ~3 días a la vez con los títulos cortados y lo que no sigue la rejilla (tareas, pagos, "todo el día") quedaba apretado en una fila; y el filtro "Mostrar" vivía en el panel lateral, que en el teléfono queda hasta el final de la página.
+
+**Cambio:**
+- `AgendaView.module.css` (≤720px): `.controls` pasa a columna centrada (Día/Semana/Mes, flechas con "Hoy" y "Nuevo evento" a todo lo ancho). `Segmented` trae `align-self: flex-start`, así que se le gana con `.controls > :first-child { align-self: center }`, que pesa más.
+- `DayView.module.css`: `.allDayLabel { width: 100% }` en ≤720px, "Todo el día" queda en su propio renglón arriba de los chips.
+- Nuevo `AgendaFilters.tsx/.module.css`: el filtro "Mostrar" como una fila de chips (`ChipRow`, punto 10) arriba del calendario, con botones `role="checkbox"`. Solo se ve en ≤720px (`display: none` por defecto). La tarjeta "Mostrar" del panel (`AgendaSidebar`, clase `.filtersCard`) se oculta en esa misma medida. Esconder y mostrar lo hace el CSS, no JavaScript.
+- Nuevo `WeekList.tsx/.module.css`: la semana en el teléfono es una lista, un bloque por día (fecha a la izquierda, tarjetas a la derecha). Usa `byTime` (lo de todo el día primero, luego por hora) y los colores de `entry-types.module.css`. Un día vacío se pliega a una línea "Sin nada". `WeekView` renderiza las dos cosas y el CSS decide cuál se ve: `.scroll { display: none }` (la rejilla) en ≤720px y `.list { display: none }` (la lista) fuera de ese ancho.
+
+**Dónde:** `features/agenda/components/` (`AgendaView`, `AgendaSidebar`, `AgendaFilters`, `DayView`, `WeekView`, `WeekList`).

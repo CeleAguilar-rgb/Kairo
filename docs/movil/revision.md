@@ -52,6 +52,10 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 - [x] Media — (descartado: el + ya no es problema en ninguna parte, según el usuario) Los botones flotantes tapan la columna de horas.
 - [x] Pendiente — (hecho, falta probar en el teléfono) Vistas Semana y Mes revisadas: la semana se desliza con desvanecido a la orilla de la tarjeta, el mes ya era una cuadrícula de barritas (ahora "+3" en vez de "+3 más" en dos renglones) y el cajón "Nuevo evento" ya no se sale de la pantalla (hora de fin) ni dibuja barra vertical en "Tipo".
 
+- [x] Media — (hecho, falta probar en el teléfono) Centrados la barra Día/Semana/Mes, las flechas con "Hoy" y "Nuevo evento"; "Todo el día" en la vista Día va arriba de los chips (ya no rompe la vista).
+- [x] Media — (hecho, falta probar en el teléfono) La semana en el teléfono es una lista por día (lo de todo el día primero, días vacíos plegados) en vez de la rejilla de 7 columnas; la rejilla queda para pantallas grandes.
+- [x] Media — (hecho, falta probar en el teléfono) Mes: "Mostrar" sube arriba del calendario como chips con conteo (en Día, Semana y Mes), y la tarjeta del panel se oculta en el teléfono.
+
 ### Día a día
 
 - [x] Media — Las pestañas (Hoy, Menú, Reporte, Diario, Metas) se salen por la derecha.

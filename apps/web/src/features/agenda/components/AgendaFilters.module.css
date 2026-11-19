@@ -1,0 +1,76 @@
+/* Solo en el teléfono (ver AgendaFilters.tsx). ChipRow pone la línea que se desliza; aquí van el aspecto y el aviso
+   de que está activo o apagado. */
+.row {
+  display: none;
+  gap: var(--space-2);
+}
+
+@media (max-width: 720px) {
+  .row {
+    display: flex;
+  }
+}
+
+.chip {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 36px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-control);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background var(--duration-base) ease,
+    color var(--duration-base) ease,
+    opacity var(--duration-base) ease;
+}
+
+/* Activo: se rellena; apagado, queda tenue y con el color del tipo vacío. */
+.chipOn {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.chip:not(.chipOn) .swatch {
+  background: transparent;
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Cada tipo trae su fondo, texto y borde de entry-types.module.css; aquí solo el tamaño. */
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  border: 1.5px solid;
+}
+
+.count {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* Con el dedo, los chips miden 44px. */
+@media (pointer: coarse) {
+  .chip {
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip {
+    transition: none;
+  }
+}

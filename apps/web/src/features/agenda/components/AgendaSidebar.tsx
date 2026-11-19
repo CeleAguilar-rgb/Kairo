@@ -90,7 +90,7 @@ export function AgendaSidebar({ selected, upcoming, counts, hidden, hourFormat, 
         )}
       </Card>
 
-      <Card as="section" className={styles.card} aria-labelledby="agenda-filters">
+      <Card as="section" className={[styles.card, styles.filtersCard].join(' ')} aria-labelledby="agenda-filters">
         <h2 id="agenda-filters" className={styles.plainTitle}>
           Mostrar
         </h2>
