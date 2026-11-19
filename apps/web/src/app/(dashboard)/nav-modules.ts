@@ -20,16 +20,10 @@ export function findActive(list: ModuleManifest[], pathname: string) {
   return match?.id ?? null
 }
 
-// Las pestañas fijas de la barra del teléfono (AppMas.dc.html): Inicio, Tareas, Agenda y Día a día.
-// Lo demás va en "Más". Si alguna de las fijas está apagada, su lugar lo toma la siguiente sección.
-const PINNED = ['home', 'tasks', 'agenda', 'daily'] as const
-const TAB_SLOTS = 4
+// La barra del teléfono muestra las primeras 5 secciones del orden de la persona (Perfil → Mis secciones);
+// las demás van en el menú del avatar (Topnav). Con 5 o menos, la barra las muestra todas.
+export const TAB_SLOTS = 5
 
-export function splitTabs(visible: ModuleManifest[]): { tabs: ModuleManifest[]; more: ModuleManifest[] } {
-  const pinned = PINNED.map((id) => visible.find((module) => module.id === id)).filter((module) => module !== undefined)
-  const others = visible.filter((module) => !pinned.includes(module))
-  const ordered = [...pinned, ...others]
-  // Con una sola sección de sobra no hace falta "Más": va directo como quinta pestaña.
-  if (ordered.length <= TAB_SLOTS + 1) return { tabs: ordered, more: [] }
-  return { tabs: ordered.slice(0, TAB_SLOTS), more: ordered.slice(TAB_SLOTS) }
+export function splitTabs(visible: ModuleManifest[]): { tabs: ModuleManifest[]; rest: ModuleManifest[] } {
+  return { tabs: visible.slice(0, TAB_SLOTS), rest: visible.slice(TAB_SLOTS) }
 }

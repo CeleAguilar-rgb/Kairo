@@ -11,7 +11,7 @@ import { NOTIFICATIONS_TRIGGER, useShortcuts } from '@/features/shortcuts'
 import type { Profile, UserSection } from '@/lib/account/api'
 import { getAvatar } from '@/lib/account/avatars'
 import { popover, SPRING } from '@/lib/motion'
-import { findActive, navModules } from './nav-modules'
+import { findActive, navModules, splitTabs } from './nav-modules'
 import styles from './Topnav.module.css'
 
 type TopnavProps = { profile: Profile; sections: UserSection[] }
@@ -46,6 +46,8 @@ export function Topnav({ profile, sections }: TopnavProps) {
   }, [menuOpen])
 
   const visibleModules = navModules(sections)
+  // Las que no caben en la barra de abajo del teléfono: se listan en este menú (solo se ven en el teléfono).
+  const { rest: restModules } = splitTabs(visibleModules)
   // Si ya se hizo clic en otra sección, la píldora viaja hacia ella sin esperar a que cargue.
   const activeId = findActive(visibleModules, pendingHref ?? pathname)
 
@@ -224,6 +226,41 @@ export function Topnav({ profile, sections }: TopnavProps) {
                 <div className={styles.menuHeader}>
                   <span className={styles.menuName}>{profile.name}</span>
                 </div>
+                {restModules.length > 0 ? (
+                  <div className={styles.menuSections}>
+                    {restModules.map((module) => (
+                      <Link
+                        key={module.id}
+                        href={module.href}
+                        role="menuitem"
+                        className={[styles.menuItem, module.id === activeId ? styles.menuItemActive : null]
+                          .filter(Boolean)
+                          .join(' ')}
+                        aria-current={module.id === activeId ? 'page' : undefined}
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        <svg
+                          className={styles.menuIcon}
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.8"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                        >
+                          {module.icon.map((d) => (
+                            <path key={d} d={d} />
+                          ))}
+                        </svg>
+                        {module.label}
+                      </Link>
+                    ))}
+                    <div className={styles.menuDivider} />
+                  </div>
+                ) : null}
                 <Link
                   href="/perfil"
                   role="menuitem"

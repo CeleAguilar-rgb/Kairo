@@ -108,7 +108,7 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 
 Nota sobre los botones flotantes: hoy el contenido ya deja espacio al final de la lista y el "25" se mete debajo del "Más" al hacer scroll, así que **baja a Media** y no es lo más urgente.
 
-- [ ] **Alta** — Barra inferior sin "Más": mostrar en ella solo 5 secciones elegidas y encontrar otra forma de llegar a las demás (ver "Opciones" abajo). Resuelve de paso que Escuela y Recordatorios no tengan acceso.
+- [x] **Alta** — (hecho, opción A; falta probarlo en el teléfono) Barra inferior sin "Más": muestra las primeras 5 secciones del orden de la persona (Perfil → Mis secciones); las demás van en el menú del avatar. Con 5 o menos se muestran todas, y con 1 sola no hay barra. Resuelve de paso que Escuela y Recordatorios no tengan acceso.
 - [x] **Alta** — (hecho: `position: sticky` + degradado + `viewport-fit=cover`; falta probarlo en el teléfono) La barra superior se esconde con un poco de scroll en el teléfono. Debe quedarse fija, sin sobreponerse a la cámara ni a la hora del sistema (zona segura: `env(safe-area-inset-top)` y `viewport-fit=cover`).
 - [ ] Media — Al cambiar de pestaña y volver, no se conserva dónde se había dejado el scroll. Guardar la posición por pantalla. Es complicado: probar primero en una pantalla.
 - [ ] Media — Quitar los textos de atajos de teclado de PC (por ejemplo "Ctrl+K" y las teclas en la búsqueda) cuando se usa el teléfono. Decidir si la función de esos atajos hace falta como botón táctil y cómo se implementa.
