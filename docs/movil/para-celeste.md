@@ -99,3 +99,17 @@ Cosas que salieron de revisar la versión de teléfono y que **también conviene
 **Dónde (se cambió `<div>` por `<ChipRow>`):** Papelera (filtros; con `.filtersWrap` que conserva su espacio), Personajes (tabla y pestaña del mundo), Captura rápida ("¿Cuándo?"), Tareas (prioridad), Finanzas (categoría del movimiento), Diario (etiquetas), Escuela (días de la materia) e Inicio (chips de "Ajustar"). Aplica también a escritorio: si caben, se ven igual que antes; si no, se deslizan.
 
 **No se tocó:** avatares, temas, muestras de color y selectores de íconos (son cuadrículas de elegir, no filtros) ni la barra de portada.
+
+## 11. Proyectos en el teléfono: lo mismo que en Día a día y Finanzas
+
+**Hoy:** en ≤720px "Nuevo proyecto" quedaba al lado de una píldora que se salía de la pantalla; la cabecera de un proyecto ocupaba media pantalla con tres filas de botones; el Resumen enterraba el avance al final; los filtros de Archivos y el estado del formulario dibujaban una barra vertical.
+
+**Cambio:**
+- `ProjectsView`: `.controls` con `flex: 1 1 100%; min-width: 0` (sin eso crece al ancho de la píldora entera) y "Nuevo proyecto" a todo lo ancho; portadas de 132px (`ProjectCard`) y casilla punteada más baja.
+- `ProjectHeader`: "Editar proyecto" + "···" en una fila y "Ver en el tablero" debajo (con `order`; `a.editLink` para ganarle en especificidad al `.button`).
+- `ProjectSummary` (≤1080px): `.main` y `.side` con `display: contents` y `.avanceWrap { order: -1 }`: el Avance sube arriba de todo. Misma idea y mismo efecto secundario que el "Así vas" de Presupuesto.
+- `ProjectSprints` y `ProjectFiles`: el botón de la barra (`.toolbar > button`) a todo lo ancho; "Agregar" del backlog a 44px con el dedo.
+- `ProjectForm`: "Agregar" del objetivo a todo lo ancho.
+- **Barra vertical:** `.filterScroll` (Archivos) y `.statusWrap` (formulario) tenían `overflow-x: auto` alrededor de un `Segmented`, que ya se desliza solo. `overflow-x: auto` fuerza `overflow-y` y salía una barra. Se les quitó el overflow.
+
+**Dónde:** `features/projects/components/` (los `.module.css` de cada vista y `ProjectSummary.tsx`, `ProjectHeader.tsx`, `ProjectsView.tsx`, que solo agregan una clase).

@@ -406,3 +406,23 @@
   font-size: 14px;
   color: var(--text-muted);
 }
+
+/* Con el dedo, "Agregar" (del backlog) mide 44px. */
+@media (pointer: coarse) {
+  .addButton {
+    min-height: 44px;
+  }
+}
+
+/* Teléfono: el botón de empezar o cerrar sprint a todo lo ancho, debajo del texto. */
+@media (max-width: 720px) {
+  .toolbar > button {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+
+/* Teléfono: el botón de empezar o cerrar sprint a todo lo ancho, debajo del texto. */
+@media (max-width: 720px) {
+  .toolbar > button {
+    flex: 1 1 100

@@ -303,7 +303,7 @@ export function ProjectSummary({ project, today, weekEnd }: ProjectSummaryProps)
       </div>
 
       <aside className={styles.side}>
-        <motion.div {...enter(1, calm)}>
+        <motion.div className={styles.avanceWrap} {...enter(1, calm)}>
           <Card tone="inverted" as="section" className={[styles.card, styles.avance].join(' ')} aria-labelledby="project-progress">
             <span className={styles.heart} aria-hidden="true">
               <Doodle kind="heart" size={40} stroke="inverted" />

@@ -152,3 +152,10 @@
     transform: none;
   }
 }
+
+/* Teléfono: la portada más baja, para que quepan más proyectos en pantalla. */
+@media (max-width: 720px) {
+  .cover {
+    height: 132px;
+  }
+}

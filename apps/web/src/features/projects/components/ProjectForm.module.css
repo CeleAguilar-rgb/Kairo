@@ -193,7 +193,7 @@
   display: flex;
   align-self: flex-start;
   max-width: 100%;
-  overflow-x: auto;
+  min-width: 0;
 }
 
 /* Objetivos y enlaces ya agregados */
@@ -299,6 +299,12 @@
 @media (max-width: 720px) {
   .linkInputs {
     grid-template-columns: 1fr;
+  }
+
+  /* "Agregar" del objetivo a todo lo ancho, igual que el de los enlaces. */
+  .addRow > button {
+    flex: 1 1 100%;
+    justify-content: center;
   }
 }
 
