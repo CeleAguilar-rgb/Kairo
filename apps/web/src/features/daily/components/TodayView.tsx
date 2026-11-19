@@ -16,7 +16,6 @@ import { dayProgress, isLateMark } from '../routine-utils'
 import type { MealPlan, RoutineBlockToday, RoutineDay, Streak } from '../types'
 
 import { DailyToolbar } from './DailyToolbar'
-import { EditRoutineLink } from './EditRoutineLink'
 import { RoutineTimeline } from './RoutineTimeline'
 import { DayProgressCard, StreaksCard, TodayMenuCard } from './TodayCards'
 import styles from './TodayView.module.css'
@@ -90,7 +89,7 @@ export function TodayView({ day, streaks, meals, nowIso, timeZone, hourFormat, d
 
   return (
     <>
-      <DailyToolbar action={<EditRoutineLink />}>
+      <DailyToolbar>
         {dateText}
         {routineName ? ` · rutina ${routineName}` : ''}
       </DailyToolbar>

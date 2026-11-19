@@ -41,3 +41,10 @@
   opacity: 0.4;
   cursor: default;
 }
+
+@media (max-width: 720px) {
+  .switcher {
+    flex: 1;
+    justify-content: center;
+  }
+}

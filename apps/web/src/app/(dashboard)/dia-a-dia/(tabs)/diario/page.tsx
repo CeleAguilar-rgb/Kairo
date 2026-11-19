@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
-import { DailyToolbar, EditRoutineLink, JournalView } from '@/features/daily'
+import { DailyToolbar, JournalView } from '@/features/daily'
 import { getDaySummary, listJournal } from '@/features/daily/api'
 import { getMe } from '@/lib/account/api'
 import { formatMonthYear, todayIn } from '@/lib/dates'
@@ -20,7 +20,7 @@ export default async function DailyJournalPage() {
 
   return (
     <>
-      <DailyToolbar action={<EditRoutineLink />}>Tu diario · {formatMonthYear(today).split(' ')[0].toLowerCase()}</DailyToolbar>
+      <DailyToolbar>Tu diario · {formatMonthYear(today).split(' ')[0].toLowerCase()}</DailyToolbar>
       <JournalView entries={entries} today={today} daySummary={daySummary} timeZone={timezone} hourFormat={hourFormat} weekStart={weekStart} />
     </>
   )

@@ -97,18 +97,19 @@
   display: inline-block;
 }
 
+/* El desvanecido llega a la orilla de la tarjeta (no a la del contenido): se le quita el margen de la tarjeta y se
+   le devuelve como padding. */
 .scroller {
-  overflow-x: auto;
-  margin: 0 calc(var(--space-1) * -1);
-  padding: var(--space-1);
+  margin-inline: calc(var(--space-11) * -1);
+  padding: var(--space-1) var(--space-11);
 }
 
 .matrix {
   display: grid;
-  grid-template-columns: minmax(150px, 1.4fr) repeat(7, minmax(36px, 1fr)) 64px;
+  grid-template-columns: minmax(150px, 1.4fr) repeat(7, minmax(52px, 1fr)) 64px;
   gap: var(--space-2);
   align-items: center;
-  min-width: 560px;
+  min-width: 660px;
 }
 
 .dayHead {

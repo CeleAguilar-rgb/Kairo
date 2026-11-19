@@ -55,8 +55,8 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 ### Día a día
 
 - [x] Media — Las pestañas (Hoy, Menú, Reporte, Diario, Metas) se salen por la derecha.
-- [ ] Media — Menú semanal: se ven 2 de 7 días y el resto se desliza; las comidas largas quedan de 4 renglones. Valorar una vista de un día a la vez.
-- [ ] Media — Reporte: la semana también se desliza de lado.
+- [x] Media — (hecho: en ≤720px se ve un día a la vez, empezando por hoy, con botón de íconos para la semana; falta probarlo en el teléfono) Menú semanal: se ven 2 de 7 días y el resto se desliza; las comidas largas quedan de 4 renglones. Valorar una vista de un día a la vez.
+- [x] Media — (hecho: sigue deslizándose pero con desvanecido a los lados y los días con más espacio; falta probarlo en el teléfono) Reporte: la semana también se desliza de lado.
 - [x] Baja — Rutina: el enlace para volver a "Día a día" y el interruptor son chicos.
 
 ### Finanzas
@@ -127,7 +127,7 @@ Empezar por lo que arregla varias pantallas a la vez, todo en la rama `movil`.
 1. Botones flotantes: que no tapen contenido en ninguna pantalla.
 2. Filas de Tareas y Papelera: nombre completo, con los datos en un segundo renglón.
 3. (Hecho: `components/ui/ScrollTabs`, usado por Día a día, Finanzas, Proyectos, Escritos, Perfil y Escuela; falta probarlo en el teléfono.) Un solo componente de pestañas para el teléfono: un renglón, con pista de que se desliza.
-4. Horario de Escuela y Menú semanal: vista de un día a la vez.
+4. Horario de Escuela y Menú semanal: vista de un día a la vez (hecho en los dos).
 5. Tabla de Membresías como tarjetas (hecho).
 6. Áreas de toque de 44 px.
 7. (Hecho en móvil: entran con `navModules(sections, { mobile: true })`. Para el escritorio, propuesta a Celeste en `para-celeste.md`.)
