@@ -47,3 +47,43 @@ Cosas que salieron de revisar la versión de teléfono y que **también conviene
 **Cambio:** se movió a `DailyHeader`, al lado del título "Día a día" (el canvas también lo pone en el encabezado). Aparece en las cinco partes, Metas incluida. En pantallas de 480px o menos se queda solo el ícono. Es el mismo componente en escritorio y teléfono.
 
 **Dónde:** `features/daily/components/DailyHeader.tsx` y `EditRoutineLink.tsx`; las páginas dejaron de pasarlo como `action` de `DailyToolbar`.
+
+## 6. Día a día: el texto de la franja con jerarquía (fecha arriba, lo demás en pastilla)
+
+**Hoy:** la franja de debajo de las pestañas era un solo texto gris con un punto medio: "Jueves 8 de octubre · rutina Entre semana". En el teléfono se partía a la mitad ("· rutina" en un renglón y "Entre semana" pegado en el otro) y todo tenía el mismo peso.
+
+**Cambio:** el texto principal (la fecha, "Tu diario", "Tus metas") va en el color del texto con peso 500, y lo secundario (la rutina, el mes del diario) en una **pastilla** (`ToolbarChip`, fondo `--surface-raised`, texto muted). Si no cabe junto a la fecha, la pastilla baja entera al siguiente renglón en vez de partirse. Aplica a escritorio y teléfono (mismo componente).
+
+**Dónde:** `features/daily/components/DailyToolbar.tsx/.module.css` (`.start` con `flex-wrap`, `.chip`), `TodayView.tsx` y `app/(dashboard)/dia-a-dia/(tabs)/diario/page.tsx`. `ToolbarChip` se exporta desde `features/daily/index.ts`.
+
+## 7. Píldoras con varios botones (`Segmented`): una sola línea que se desliza, y barras de pestañas sin scroll vertical
+
+**Hoy:** las píldoras de opciones (Área en Nueva meta, Estado, Repetir, Vista, Filtrar…) se partían en dos renglones cuando no cabían, y la píldora oscura de las pestañas (Día a día, Finanzas, Proyectos, Escritos) hacía scroll vertical.
+
+**Cambio:**
+- `Segmented` ya no tiene la prop `scroll`: **siempre** va en una sola línea y se desliza de lado con el desvanecido de `ScrollTabs` en el borde donde hay más opciones. Se quitó `scroll` de los tres sitios que lo pasaban (Metas, Escuela). Con el dedo (`pointer: coarse`) cada opción tiene 44px de área de toque (`::after`, sin crecer).
+- En `DailyTabs`, `FinanceTabs`, `ProjectTabs` y `WritingsTabs` se quitó `overflow-x: auto` del `<nav>`: ese `overflow` también activaba el vertical (el contenedor interior de `ScrollTabs` sobresale 2px por su margen negativo). Quien se desliza es solo el contenedor interior.
+
+**Dónde:** `components/ui/Segmented.tsx/.module.css` y los `*Tabs.module.css` de esos cuatro módulos. Aplica también a escritorio.
+
+## 8. Pestañas que se deslizan: el desvanecido y el centrado se recalculan si lo de dentro cambia de ancho
+
+**Hoy:** `ScrollTabs` centraba la pestaña activa y calculaba el desvanecido una sola vez. Si la tipografía terminaba de cargar después, las pestañas se ensanchaban sin que el contenedor cambiara, y se quedaban las medidas viejas: la pestaña elegida quedaba cortada bajo el degradado. Además centraba con `offsetLeft`, que cuenta desde el ancestro posicionado más cercano y no desde el contenedor.
+
+**Cambio:** `useScrollFades` también observa a los hijos (`ResizeObserver`), y `ScrollTabs` vuelve a centrar la activa (sin animación) cuando cambian de ancho, salvo que la persona ya haya deslizado a mano. El centrado se mide con `getBoundingClientRect`.
+
+**Dónde:** `components/ui/useScrollFades.ts` y `components/ui/ScrollTabs.tsx`. Aplica a escritorio y teléfono, y a todo lo que use `ScrollTabs`, `Segmented` o `ScrollFade`.
+
+## 9. Finanzas en el teléfono: lo mismo que en Día a día
+
+**Hoy:** en ≤720px el selector de mes quedaba a la izquierda y "Movimiento" en otra fila a la izquierda; las cuatro cifras del Resumen eran cuatro tarjetas altas; el detalle de cada movimiento se cortaba con puntos; las tarjetas de Membresías ocupaban tres tarjetas altas; en Ahorros y deudas el campo y los botones se partían en tres renglones.
+
+**Cambio (solo ≤720px, o ≤620px en las cifras; la compu se queda igual):**
+- `FinanceToolbar`: lo de la izquierda ocupa su fila y la acción baja a la suya, a todo el ancho. `MonthSwitcher` centrado, con flechas de 44px de toque.
+- `SummaryView`: las cuatro cifras en dos por dos (ícono arriba del nombre, cifra a 26px).
+- `MovementRow`: el detalle (`.sub`) pasa a un segundo renglón.
+- `SavingsDebtsView`: el monto ocupa su renglón y los botones reparten el de abajo.
+- `MembershipsView`: las tarjetas de pago van dentro de un `ScrollFade` (`.tiles`): columna en la compu y fila que se desliza (con `scroll-snap`) en el teléfono. El padding/margen negativo deja sitio a la sombra y al anillo de la elegida.
+- 44px de toque con el dedo (`pointer: coarse`): flechas del mes, botes de basura (ahorros, presupuesto, tarjetas), muestras de color y categorías del formulario.
+
+**Dónde:** `features/finance/components/` (los `.module.css` de cada vista y `MembershipsView.tsx`).

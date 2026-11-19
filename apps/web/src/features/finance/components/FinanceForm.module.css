@@ -234,3 +234,10 @@
     transform: none;
   }
 }
+
+/* Con el dedo, las categorías miden 44px de alto (miden 38px). */
+@media (pointer: coarse) {
+  .category {
+    min-height: 44px;
+  }
+}

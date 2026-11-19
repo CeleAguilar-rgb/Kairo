@@ -6,6 +6,7 @@ import { useState, useTransition } from 'react'
 import { useCalmEntry } from '@/components/layout/SectionPanel'
 import { Button } from '@/components/ui/Button'
 import { Card, LineIcon } from '@/components/ui/Card'
+import { ScrollFade } from '@/components/ui/ScrollFade'
 import { Modal } from '@/components/ui/Modal'
 import { useToast } from '@/components/ui/Toast'
 import { dayOfMonth, diffDays, formatMonthShort, type IsoDate } from '@/lib/dates'
@@ -73,16 +74,18 @@ export function MembershipsView({ view, today }: { view: MembershipsData; today:
             <span className={styles.hint}>Toca una para filtrar</span>
           </div>
 
-          {view.cards.map((card) => (
-            <CardTile
-              key={card.id}
-              card={card}
-              selected={filter === card.id}
-              dimmed={filter !== null && filter !== card.id}
-              onPick={() => setSelected(filter === card.id ? null : card.id)}
-              onDelete={() => setDeleting(card)}
-            />
-          ))}
+          <ScrollFade className={styles.tiles}>
+            {view.cards.map((card) => (
+              <CardTile
+                key={card.id}
+                card={card}
+                selected={filter === card.id}
+                dimmed={filter !== null && filter !== card.id}
+                onPick={() => setSelected(filter === card.id ? null : card.id)}
+                onDelete={() => setDeleting(card)}
+              />
+            ))}
+          </ScrollFade>
 
           <div className={styles.cardActions}>
             <Button variant="ghost" onClick={() => setPanel({ type: 'card' })}>

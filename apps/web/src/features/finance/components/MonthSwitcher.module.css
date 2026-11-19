@@ -42,3 +42,23 @@
   opacity: 0.4;
   cursor: default;
 }
+
+@media (max-width: 720px) {
+  .switcher {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+/* Con el dedo, las flechas llegan a 44px de área de toque (miden 40px) sin crecer. */
+@media (pointer: coarse) {
+  .arrow {
+    position: relative;
+  }
+
+  .arrow::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+  }
+}

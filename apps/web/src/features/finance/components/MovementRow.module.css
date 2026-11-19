@@ -129,3 +129,12 @@ div.row {
     background: transparent;
   }
 }
+
+/* Teléfono: "Comida fuera · Débito ••4417 · hoy" pasa a un segundo renglón en vez de cortarse con puntos. */
+@media (max-width: 720px) {
+  .sub {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+}

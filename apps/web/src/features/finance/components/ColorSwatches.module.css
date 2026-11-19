@@ -36,3 +36,16 @@
     transition: none;
   }
 }
+
+/* Con el dedo, cada muestra llega a 44px de área de toque (mide 36px) sin crecer. */
+@media (pointer: coarse) {
+  .swatch {
+    position: relative;
+  }
+
+  .swatch::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+  }
+}

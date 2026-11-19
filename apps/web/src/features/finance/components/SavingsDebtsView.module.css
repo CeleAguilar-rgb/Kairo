@@ -233,3 +233,28 @@
     transition: none;
   }
 }
+
+/* Teléfono: el monto ocupa su renglón y los botones (Aportar / Retirar / Registrar pago) reparten el de abajo. */
+@media (max-width: 720px) {
+  .quickInput {
+    flex: 1 1 100%;
+    width: auto;
+  }
+
+  .quickButton {
+    flex: 1 1 0;
+  }
+}
+
+/* Con el dedo, el bote de basura llega a 44px de área de toque (mide 36px) sin crecer. */
+@media (pointer: coarse) {
+  .trash {
+    position: relative;
+  }
+
+  .trash::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+  }
+}
