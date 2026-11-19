@@ -19,20 +19,19 @@ type SegmentedProps<T extends string> = {
   mode?: 'radio' | 'toggle'
   // 'glass' sobre el fondo de la página, 'raised' dentro de un panel.
   tone?: 'glass' | 'raised'
-  // Una sola línea que se desliza de lado si no cabe (con pista en el borde), en vez de partirse en renglones.
-  scroll?: boolean
 }
 
 // Grupo de opciones en una píldora (canvas: Lista/Tablero, Estado). La opción
 // elegida tiene un fondo oscuro que se desliza de una a otra (layoutId). Cada
 // instancia usa su propio id de layout para no robarse la píldora entre sí.
-export function Segmented<T extends string>({ label, value, options, onChange, mode = 'toggle', tone = 'glass', scroll = false }: SegmentedProps<T>) {
+// Siempre en una sola línea: si las opciones no caben, la píldora se desliza de lado con el desvanecido de
+// ScrollTabs en el borde donde hay más (nunca se parte en renglones).
+export function Segmented<T extends string>({ label, value, options, onChange, mode = 'toggle', tone = 'glass' }: SegmentedProps<T>) {
   const groupId = useId()
-  const Group = scroll ? ScrollGroup : 'div'
 
   return (
     <LayoutGroup id={groupId}>
-      <Group
+      <ScrollGroup
         role={mode === 'radio' ? 'radiogroup' : 'group'}
         aria-label={label}
         className={[styles.group, tone === 'raised' ? styles.raised : styles.glass].join(' ')}
@@ -54,7 +53,7 @@ export function Segmented<T extends string>({ label, value, options, onChange, m
             </button>
           )
         })}
-      </Group>
+      </ScrollGroup>
     </LayoutGroup>
   )
 }

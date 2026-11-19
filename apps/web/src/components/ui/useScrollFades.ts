@@ -22,12 +22,15 @@ export function useScrollFades<T extends HTMLElement>() {
     scroller.style.setProperty('--fade-end', `${Math.min(FADE, Math.max(0, hiddenEnd))}px`)
   }, [])
 
-  // Se recalcula si cambia el tamaño del contenedor (girar el teléfono, abrir un panel…).
+  // Se recalcula si cambia el tamaño del contenedor (girar el teléfono, abrir un panel…) o el de lo que lleva
+  // dentro: cuando la tipografía termina de cargar las pestañas se ensanchan sin que el contenedor cambie, y
+  // sin mirar a los hijos el desvanecido se quedaba con las medidas de antes (cortaba la pestaña elegida).
   useEffect(() => {
     const scroller = ref.current
     if (!scroller) return
     const observer = new ResizeObserver(update)
     observer.observe(scroller)
+    for (const child of Array.from(scroller.children)) observer.observe(child)
     return () => observer.disconnect()
   }, [update])
 
