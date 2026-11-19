@@ -2,8 +2,35 @@
   gap: var(--space-5);
 }
 
+/* La cuadrícula llega hasta el borde de la tarjeta (se anula el padding de Card con un margen negativo y
+   se devuelve por dentro): así el desvanecido nace en la orilla y no a media tarjeta. */
 .scroll {
-  overflow-x: auto;
+  margin-inline: calc(-1 * var(--space-11));
+  padding-inline: var(--space-11);
+}
+
+.viewToggle {
+  all: unset;
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  color: var(--text);
+  cursor: pointer;
+  transition: background var(--duration-base) ease;
+}
+
+.viewToggle:hover {
+  background: var(--surface-hover);
+}
+
+.viewToggle:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
 }
 
 .grid {
@@ -54,4 +81,34 @@
 
 .blockMeta {
   opacity: 0.8;
+}
+
+/* Vista "Por día": un bloque por día, las clases una debajo de otra. */
+.dayList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.dayGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.dayTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.dayBlock {
+  box-sizing: border-box;
+  border-radius: var(--radius-14);
+  padding: var(--space-4) var(--space-5);
+  font-size: 14px;
+  line-height: 1.3;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }

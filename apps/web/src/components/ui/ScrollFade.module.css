@@ -1,0 +1,18 @@
+/* Ver ScrollFade.tsx. --fade-start y --fade-end los escribe useScrollFades según lo que quede escondido. */
+.fade {
+  overflow-x: auto;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--fade-start, 0px),
+    #000 calc(100% - var(--fade-end, 0px)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 var(--fade-start, 0px),
+    #000 calc(100% - var(--fade-end, 0px)),
+    transparent 100%
+  );
+}
