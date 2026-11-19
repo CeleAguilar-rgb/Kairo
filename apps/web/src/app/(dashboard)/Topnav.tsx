@@ -242,7 +242,8 @@ export function Topnav({ profile, sections }: TopnavProps) {
             className={[styles.iconButton, styles.collapsible].join(' ')}
             data-collapsible=""
             data-order="3"
-            aria-label="Buscar (Ctrl+K)"
+            aria-label="Buscar"
+            title="Buscar (Ctrl+K)"
             aria-expanded={shortcuts.open === 'search'}
             onClick={() => shortcuts.toggle('search')}
           >

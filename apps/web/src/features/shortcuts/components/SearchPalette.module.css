@@ -142,7 +142,8 @@
   color: var(--text-muted);
 }
 
-.kbd {
+.kbd,
+.keyHint {
   font: inherit;
   font-size: 12px;
   padding: 1px 7px;
@@ -150,4 +151,13 @@
   border: 1px solid var(--border);
   background: var(--surface-muted);
   color: var(--text-muted);
+}
+
+/* Las pistas de teclas (Esc, Enter, flechas) no tienen sentido sin teclado: en pantallas táctiles se quitan.
+   Para cerrar se toca fuera de la ventana; para abrir un resultado, el resultado. El "+" de "Empieza con +"
+   se queda: se puede escribir en el teclado de pantalla. */
+@media (hover: none) {
+  .keyHint {
+    display: none;
+  }
 }
