@@ -2,7 +2,7 @@
 
 > Léelo al empezar cada sesión. Actualízalo al terminar. Máximo ~60 líneas: es un resumen, no un diario. El detalle va en `sessions/`.
 
-**Última actualización:** 2026-11-11 · Temas de color (12 temas × 3 intensidades) hechos directo en `main`, sin commit. Siguen pendientes los adornos de temporada y probar los avisos en el navegador
+**Última actualización:** 2026-11-19 · Versión de teléfono en la rama `movil` (Día a día, Finanzas, Proyectos y Agenda hechos; faltan Escritos, Recordatorios y Escuela). Siguen pendientes los adornos de temporada y probar los avisos en el navegador
 
 ## Fase actual
 
@@ -10,6 +10,7 @@
 
 ## Lo último que se hizo
 
+- **2026-11-18 y 19 · Versión de teléfono, en la rama `movil` (no está en `main`, sin push).** Se recorre `docs/movil/revision.md` pantalla por pantalla: barra inferior de 5 secciones, pestañas y chips que se deslizan en una línea (`ScrollTabs`, `ChipRow`), áreas de toque de 44 px con dedo, y Día a día, Finanzas, Proyectos y Agenda ya hechos (en Agenda la semana es una lista por día). Lo que Celeste debe adoptar en escritorio está en `docs/movil/para-celeste.md` (puntos 1 a 13). Verificado en el emulador de 375 px, no en un teléfono real. Detalle en `sessions/2026-11-19-telefono.md`.
 - **2026-11-11 · Temas de color.**
   - 12 temas y 3 intensidades (Sutil, Teñido, Intenso) en Perfil → Preferencias.
   - Se guarda en `profiles.color_theme` y `theme_intensity` (migración `0015`, aplicada) con `PATCH /v1/me/appearance`, y la cookie `kairo_appearance` es su copia.
@@ -33,6 +34,8 @@
 - **2026-10-13/14 · Shell del dashboard y primeros tests** (Jest + Supertest contra la base real). **Fase 0:** login completo (invitación, entrar, recuperar contraseña, guard global por JWKS), Motion integrado. Decisión #26: código por correo pasó a "Después". Detalle en `sessions/2026-10-10-*.md` a `2026-10-13-*.md`.
 
 ## Siguiente paso
+
+**Teléfono (rama `movil`):** seguir con **Escritos, Recordatorios y Escuela** según `docs/movil/revision.md` (en la nota de la sesión están los archivos con `overflow-x: auto` a revisar), probar todo en un teléfono real y, cuando la usuaria lo apruebe, pasar `movil` a `main` por Pull Request.
 
 **Probar los avisos en el navegador con tu cuenta:** correr `pnpm jobs:run minute` en `apps/api` (solo crea avisos de tus recordatorios pendientes) y revisar la campana, "Marcar todo como leído" y "Activar" los avisos del navegador. **Después, decidir los adornos de temporada** (`Temporadas.dc.html`, 11 temporadas): es lo único de "lo global" que falta. Con eso la Fase 1b queda completa y lo que sigue es **desplegar** (la API ya está en Vercel; falta desplegar el front y aplicar `src/jobs/cron.sql` en Supabase con la dirección de la API; ver la lista de abajo).
 
