@@ -152,6 +152,13 @@
   font-size: 14px;
 }
 
+/* 40px de alto: con el dedo se sube a 44px. */
+@media (pointer: coarse) {
+  .more {
+    min-height: 44px;
+  }
+}
+
 .more svg {
   transition: transform var(--duration-base) var(--ease-out);
 }

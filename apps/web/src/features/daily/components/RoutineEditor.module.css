@@ -40,6 +40,19 @@
   color: var(--text);
 }
 
+/* Con el dedo, un área de toque de 44px alrededor del enlace sin mover nada. */
+@media (pointer: coarse) {
+  .back {
+    position: relative;
+  }
+
+  .back::after {
+    content: '';
+    position: absolute;
+    inset: -14px -8px;
+  }
+}
+
 .back:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 3px;

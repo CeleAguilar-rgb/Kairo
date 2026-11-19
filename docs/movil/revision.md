@@ -25,7 +25,7 @@ A 320 y 360 px de ancho ninguna pantalla se desborda de la página; lo que se ve
 | Pestañas que se salen por la derecha sin pista de que se deslizan | Perfil, Finanzas, Día a día, Escritos, Proyecto | Media (hecho con ScrollTabs) | Degradado o flecha al borde, y llevar la pestaña activa a la vista |
 | Texto de pestañas partido en dos renglones | Perfil ("Mi perfil", "Mis secciones") | Media (hecho) | `white-space: nowrap` en las pestañas |
 | Cada módulo resuelve las pestañas distinto (unas se deslizan, otras bajan de renglón) | Escuela y Proyectos bajan de renglón; los demás se deslizan | Baja (hecho: todas se deslizan en una línea) | Elegir un solo comportamiento |
-| Casillas y enlaces chicos para el dedo (24–32 px) | Casillas de tareas y rutina, "Ver todos", "Mover de hora", "Día a día" en Rutina | Media | Área de toque de 44 px aunque el ícono siga chico |
+| Casillas y enlaces chicos para el dedo (24–32 px) | Casillas de tareas y rutina, "Ver todos", "Mover de hora", "Día a día" en Rutina | Media (hecho: área de toque de 44 px con `::after` y `@media (pointer: coarse)`) | Área de toque de 44 px aunque el ícono siga chico |
 | Escuela y Recordatorios no aparecen en la barra ni en "Más" | Menú "Más" (solo Proyectos, Finanzas y Escritos) | Media (hecho en móvil) | Están con `inNav: false`; confirmar con Celeste si es a propósito |
 | El tamaño de letra grande del teléfono empeora todo lo anterior | Todo | Media | Probar siempre también con letra grande |
 
@@ -57,7 +57,7 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 - [x] Media — Las pestañas (Hoy, Menú, Reporte, Diario, Metas) se salen por la derecha.
 - [ ] Media — Menú semanal: se ven 2 de 7 días y el resto se desliza; las comidas largas quedan de 4 renglones. Valorar una vista de un día a la vez.
 - [ ] Media — Reporte: la semana también se desliza de lado.
-- [ ] Baja — Rutina: el enlace para volver a "Día a día" y el interruptor son chicos.
+- [x] Baja — Rutina: el enlace para volver a "Día a día" y el interruptor son chicos.
 
 ### Finanzas
 
@@ -65,7 +65,7 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 - [ ] Media — Membresías: la tabla mide más del doble del ancho y se desliza; mejor como tarjetas.
 - [ ] Media — Membresías: el + tapa "$0 al mes" de la tarjeta de efectivo.
 - [ ] Baja — Movimientos: descripciones cortadas ("Comida fuera · Débito ••4417 · hoy").
-- [ ] Baja — Presupuesto: los interruptores son chicos.
+- [x] Baja — Presupuesto: los interruptores son chicos.
 
 ### Proyectos
 
@@ -113,7 +113,7 @@ Nota sobre los botones flotantes: hoy el contenido ya deja espacio al final de l
 - [x] **Alta** — (hecho, opción A; falta probarlo en el teléfono) Barra inferior sin "Más": muestra las primeras 5 secciones del orden de la persona (Perfil → Mis secciones); las demás van en el menú del avatar. Con 5 o menos se muestran todas, y con 1 sola no hay barra. Resuelve de paso que Escuela y Recordatorios no tengan acceso.
 - [x] **Alta** — (hecho: `position: sticky` + degradado + `viewport-fit=cover`; falta probarlo en el teléfono) La barra superior se esconde con un poco de scroll en el teléfono. Debe quedarse fija, sin sobreponerse a la cámara ni a la hora del sistema (zona segura: `env(safe-area-inset-top)` y `viewport-fit=cover`).
 - [ ] Media — Al cambiar de pestaña y volver, no se conserva dónde se había dejado el scroll. Guardar la posición por pantalla. Es complicado: probar primero en una pantalla.
-- [ ] Media — Quitar los textos de atajos de teclado de PC (por ejemplo "Ctrl+K" y las teclas en la búsqueda) cuando se usa el teléfono. Decidir si la función de esos atajos hace falta como botón táctil y cómo se implementa.
+- [x] Media — (hecho: la búsqueda oculta Esc, Enter y flechas en pantallas táctiles con `@media (hover: none)`; "Ctrl+K" pasó de la etiqueta a un tooltip) Quitar los textos de atajos de teclado de PC (por ejemplo "Ctrl+K" y las teclas en la búsqueda) cuando se usa el teléfono. Decidir si la función de esos atajos hace falta como botón táctil y cómo se implementa.
 
 **Opciones para la barra inferior** (por decidir):
 1. Barra con 4 secciones fijas + un botón que abre una hoja con todas (es "Más" otra vez, pero con todo adentro).
