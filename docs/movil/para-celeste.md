@@ -87,3 +87,15 @@ Cosas que salieron de revisar la versión de teléfono y que **también conviene
 - 44px de toque con el dedo (`pointer: coarse`): flechas del mes, botes de basura (ahorros, presupuesto, tarjetas), muestras de color y categorías del formulario.
 
 **Dónde:** `features/finance/components/` (los `.module.css` de cada vista y `MembershipsView.tsx`).
+
+**Añadido al punto 9:** en Presupuesto, "Así vas" sube arriba de las categorías cuando la página es de una sola columna (≤1080px, tableta y teléfono). `BudgetView.module.css`: `.side { display: contents }` y `.summary { order: -1 }`; Avisos y "Para el próximo mes" se quedan después de las categorías. Efecto secundario: en esa vista las tarjetas de `.side` ya no entran con el `fadeUp` del contenedor (una caja con `display: contents` no se pinta), solo aparecen. En la compu no cambia nada.
+
+## 10. Filas de chips: una sola línea que se desliza (`ChipRow`)
+
+**Hoy:** los filtros, etiquetas, prioridades y demás chips se partían en dos o tres renglones (`flex-wrap: wrap`) cuando no cabían, distinto a las píldoras y pestañas, que ya se deslizaban.
+
+**Cambio:** componente nuevo `components/ui/ChipRow.tsx/.module.css`: un `ScrollFade` (una línea, desvanecido en las orillas, sin barra) con `flex-wrap: nowrap`, hijos sin encogerse ni partir el texto, y un padding vertical con margen negativo para que no recorte el aro de foco. El contenedor de cada pantalla conserva su `display: flex` y su `gap`; solo se le quitó el `flex-wrap`. Con el dedo (`pointer: coarse`) los chips de 36–40px miden 44px.
+
+**Dónde (se cambió `<div>` por `<ChipRow>`):** Papelera (filtros; con `.filtersWrap` que conserva su espacio), Personajes (tabla y pestaña del mundo), Captura rápida ("¿Cuándo?"), Tareas (prioridad), Finanzas (categoría del movimiento), Diario (etiquetas), Escuela (días de la materia) e Inicio (chips de "Ajustar"). Aplica también a escritorio: si caben, se ven igual que antes; si no, se deslizan.
+
+**No se tocó:** avatares, temas, muestras de color y selectores de íconos (son cuadrículas de elegir, no filtros) ni la barra de portada.

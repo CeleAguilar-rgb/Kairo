@@ -13,6 +13,7 @@ import { EmptyState } from '@/components/ui/EmptyState'
 import { Segmented } from '@/components/ui/Segmented'
 import { useToast } from '@/components/ui/Toast'
 import { fadeUp, staggerList } from '@/lib/motion'
+import { ChipRow } from '@/components/ui/ChipRow'
 
 import { createCharacterAction } from '../entry-actions'
 import { updateTemplateAction } from '../world-actions'
@@ -126,13 +127,13 @@ export function CharactersDatabase({ view }: { view: CharacterDbView }) {
               <Segmented label="Vista" value={mode} onChange={setMode} options={VIEW_OPTIONS} />
               <span className={styles.spacer} />
               {groupField ? (
-                <div className={styles.filters} role="group" aria-label={`Filtrar por ${groupField.name.toLowerCase()}`}>
+                <ChipRow className={styles.filters} role="group" aria-label={`Filtrar por ${groupField.name.toLowerCase()}`}>
                   {[{ id: 'all', label: 'Todos' }, ...groupField.options].map((option) => (
                     <button key={option.id} type="button" className={[styles.filter, filter === option.id ? styles.filterOn : null].filter(Boolean).join(' ')} aria-pressed={filter === option.id} onClick={() => setFilter(option.id)}>
                       {option.label}
                     </button>
                   ))}
-                </div>
+                </ChipRow>
               ) : null}
               <div
                 className={styles.menuWrap}

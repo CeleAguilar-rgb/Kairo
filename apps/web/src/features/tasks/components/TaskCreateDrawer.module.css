@@ -79,7 +79,6 @@
 
 .priorities {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--space-3);
 }
 
@@ -231,4 +230,11 @@
 
 .submit {
   flex: 1;
+}
+
+/* Con el dedo, los chips de prioridad miden 44px. */
+@media (pointer: coarse) {
+  .priority {
+    min-height: 44px;
+  }
 }

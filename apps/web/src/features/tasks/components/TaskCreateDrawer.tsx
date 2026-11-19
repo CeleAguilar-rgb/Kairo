@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/Input'
 import { Segmented } from '@/components/ui/Segmented'
 import { Select } from '@/components/ui/Select'
 import { DURATION, EASE_OUT, SPRING } from '@/lib/motion'
+import { ChipRow } from '@/components/ui/ChipRow'
 
 import { PRIORITY_LABEL, STATUS_LABEL } from '../types'
 
@@ -151,7 +152,7 @@ function TaskCreateForm({ projects, defaultProjectId, pending, onClose, onCreate
 
         <div className={styles.field}>
           <span className={styles.label}>Prioridad</span>
-          <div role="radiogroup" aria-label="Prioridad" className={styles.priorities}>
+          <ChipRow role="radiogroup" aria-label="Prioridad" className={styles.priorities}>
             {TASK_PRIORITIES.map((value) => {
               const selected = priority === value
               return (
@@ -170,7 +171,7 @@ function TaskCreateForm({ projects, defaultProjectId, pending, onClose, onCreate
                 </motion.button>
               )
             })}
-          </div>
+          </ChipRow>
         </div>
 
         <Input

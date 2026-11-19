@@ -10,6 +10,7 @@ import { LineIcon } from '@/components/ui/Card'
 import { Doodle } from '@/components/ui/Doodle'
 import { useToast } from '@/components/ui/Toast'
 import { listItem } from '@/lib/motion'
+import { ChipRow } from '@/components/ui/ChipRow'
 
 import { emptyTrashAction, purgeFromTrashAction, restoreFromTrashAction } from '../actions'
 import { contentsText, daysLeft, GROUP_LABEL, GROUP_LETTER, itemMeta, itemName } from '../trash-text'
@@ -118,7 +119,8 @@ export function TrashView({ items: initialItems, nowIso, timeZone }: TrashViewPr
       </AnimatePresence>
 
       <section className={styles.card} aria-label="Elementos en la papelera">
-        <div role="group" aria-label="Filtrar" className={styles.filters}>
+        <div className={styles.filtersWrap}>
+        <ChipRow role="group" aria-label="Filtrar" className={styles.filters}>
           {(['all', ...groups] as Filter[]).map((value) => {
             const count = items.filter((item) => value === 'all' || item.group === value).length
             const selected = filter === value
@@ -129,6 +131,7 @@ export function TrashView({ items: initialItems, nowIso, timeZone }: TrashViewPr
               </button>
             )
           })}
+        </ChipRow>
         </div>
 
         <ul className={styles.list}>

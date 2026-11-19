@@ -21,6 +21,7 @@ import { RemindersCard, type Reminder } from '@/features/reminders'
 import { TodayTasksCard, type Task } from '@/features/tasks'
 import type { IsoDate } from '@/lib/dates'
 import { DURATION, EASE_OUT, SPRING } from '@/lib/motion'
+import { ChipRow } from '@/components/ui/ChipRow'
 
 import { HOME_CARDS, type HomeCardId } from '../cards'
 
@@ -271,7 +272,7 @@ export function HomeView(props: HomeViewProps) {
                   tu perfil.
                 </span>
               </div>
-              <div className={styles.chips}>
+              <ChipRow className={styles.chips}>
                 {available.map((card) => {
                   const on = !hidden.has(card.id)
                   return (
@@ -316,7 +317,7 @@ export function HomeView(props: HomeViewProps) {
                     </motion.button>
                   )
                 })}
-              </div>
+              </ChipRow>
               <Link href="/perfil" className={styles.adjustLink}>
                 Cambiar mis secciones
               </Link>
