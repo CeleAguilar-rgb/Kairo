@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { ScrollTabs } from '@/components/ui/ScrollTabs'
 import type { Profile, UserSection } from '@/lib/account/api'
 import { PerfilTab } from './PerfilTab'
 import styles from './PerfilView.module.css'
@@ -39,7 +40,7 @@ export function PerfilView({ profile, sections }: PerfilViewProps) {
       <h1 className={styles.title}>Mi perfil</h1>
 
       <div className={styles.layout}>
-        <nav className={styles.side} aria-label="Ajustes">
+        <ScrollTabs className={styles.side} aria-label="Ajustes">
           {TABS.map((item) => (
             <button
               key={item.id}
@@ -64,7 +65,7 @@ export function PerfilView({ profile, sections }: PerfilViewProps) {
               {item.name}
             </button>
           ))}
-        </nav>
+        </ScrollTabs>
 
         <div className={styles.panel}>
           {tab === 'perfil' ? <PerfilTab profile={profile} /> : null}

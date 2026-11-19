@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { usePendingHref } from '@/components/layout/Navigation'
+import { ScrollTabs } from '@/components/ui/ScrollTabs'
 import { SPRING } from '@/lib/motion'
 
 import styles from './FinanceTabs.module.css'
@@ -29,7 +30,7 @@ export function FinanceTabs() {
 
   return (
     <LayoutGroup id="finance-tabs">
-      <nav className={styles.tabs} aria-label="Finanzas" data-tab-switch>
+      <ScrollTabs className={styles.tabs} aria-label="Finanzas" data-tab-switch>
         {TABS.map((tab) => {
           const active = tab.href === BASE ? target === BASE : target.startsWith(tab.href)
           return (
@@ -39,7 +40,7 @@ export function FinanceTabs() {
             </Link>
           )
         })}
-      </nav>
+      </ScrollTabs>
     </LayoutGroup>
   )
 }
