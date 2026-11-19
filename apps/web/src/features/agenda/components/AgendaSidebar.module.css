@@ -212,3 +212,10 @@
   font-size: 13px;
   color: var(--text-muted);
 }
+
+/* Con el dedo, las acciones del panel miden 44px. */
+@media (pointer: coarse) {
+  .action {
+    min-height: 44px;
+  }
+}

@@ -113,3 +113,15 @@ Cosas que salieron de revisar la versión de teléfono y que **también conviene
 - **Barra vertical:** `.filterScroll` (Archivos) y `.statusWrap` (formulario) tenían `overflow-x: auto` alrededor de un `Segmented`, que ya se desliza solo. `overflow-x: auto` fuerza `overflow-y` y salía una barra. Se les quitó el overflow.
 
 **Dónde:** `features/projects/components/` (los `.module.css` de cada vista y `ProjectSummary.tsx`, `ProjectHeader.tsx`, `ProjectsView.tsx`, que solo agregan una clase).
+
+## 12. Agenda en el teléfono
+
+**Hoy:** la semana se deslizaba sin ninguna pista; en el mes "+3 más" partía en dos renglones; en el cajón de "Nuevo evento" la hora de fin se salía de la pantalla (`grid-template-columns: 1fr auto 1fr` deja que cada hora pida su ancho natural) y "Tipo" dibujaba una barra vertical (`overflow-x: auto` alrededor de un `Segmented`, el mismo caso del punto 11).
+
+**Cambio:**
+- `WeekView` y `MonthView`: el contenedor es un `ScrollFade` con margen negativo y padding de `--space-7` (el de la tarjeta `.calendar`), para que el desvanecido llegue a la orilla de la tarjeta.
+- `MonthView`: "más" en un `<span className={styles.moreWord}>` que se oculta en ≤720px (queda "+3").
+- `EventDrawer.module.css`: `.times` con `minmax(0, 1fr) auto minmax(0, 1fr)` y `min-width: 0` en los hijos; menos `gap` en ≤480px para que "02:00 a. m." quepa completo; `.segmentedWrap` sin `overflow`.
+- Con el dedo (`pointer: coarse`): `.action` del panel lateral y `.menuItem` del detalle a 44px; los chips de "Todo el día" (`EntryParts`) a 36px a propósito, porque van apilados y 44px los volvería muy altos.
+
+**Dónde:** `features/agenda/components/` (`WeekView`, `MonthView`, `EventDrawer`, `EntryParts`, `AgendaSidebar`, `EventDetailDrawer`).

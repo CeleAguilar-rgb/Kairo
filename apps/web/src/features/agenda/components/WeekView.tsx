@@ -1,3 +1,4 @@
+import { ScrollFade } from '@/components/ui/ScrollFade'
 import { dayOfMonth, formatLongDay, weekdayOf, WEEKDAYS_SHORT, type IsoDate } from '@/lib/dates'
 
 import { hourRange, HOUR_PX, weekDays } from '../agenda-utils'
@@ -26,7 +27,7 @@ export function WeekView({ anchor, entries, today, nowMinutes, hourFormat, weekS
   const range = hourRange(entries.filter((entry) => days.includes(entry.date)))
 
   return (
-    <div className={styles.scroll}>
+    <ScrollFade className={styles.scroll}>
       <div className={styles.week}>
         <div className={styles.head}>
           <span />
@@ -64,6 +65,6 @@ export function WeekView({ anchor, entries, today, nowMinutes, hourFormat, weekS
           variant="week"
         />
       </div>
-    </div>
+    </ScrollFade>
   )
 }

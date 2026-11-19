@@ -1,6 +1,9 @@
 /* En pantallas angostas la semana se desliza de lado: siete columnas apretadas no se leen */
+/* El desvanecido llega a la orilla de la tarjeta (no a la del contenido): se le quita el padding de la tarjeta
+   (.calendar, --space-7) y se le devuelve como padding. */
 .scroll {
-  overflow-x: auto;
+  margin-inline: calc(var(--space-7) * -1);
+  padding-inline: var(--space-7);
 }
 
 .week {
