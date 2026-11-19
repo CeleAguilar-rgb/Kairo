@@ -58,13 +58,14 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 - [x] Media — (hecho: en ≤720px se ve un día a la vez, empezando por hoy, con botón de íconos para la semana; falta probarlo en el teléfono) Menú semanal: se ven 2 de 7 días y el resto se desliza; las comidas largas quedan de 4 renglones. Valorar una vista de un día a la vez.
 - [x] Media — (hecho: sigue deslizándose pero con desvanecido a los lados y los días con más espacio; falta probarlo en el teléfono) Reporte: la semana también se desliza de lado.
 - [x] Baja — Rutina: el enlace para volver a "Día a día" y el interruptor son chicos.
+- [x] Media — (hecho, falta probar en el teléfono) El resto de Día a día con lo ya hecho: filtro de Metas con scroll, pestañas de Rutinas en una línea con desvanecido, días de la rutina y botones de confirmar a 44 px con dedo, y las 5 caritas del Diario en una sola fila. Además, el texto de la franja (fecha + rutina, mes del diario) con jerarquía: texto principal y pastilla.
 
 ### Finanzas
 
 - [x] Media — Pestañas cortadas ("Ahorros y deu…"); hay 5 y solo caben 2 y media.
 - [x] Media — (hecho: en ≤720px cada fila es una tarjeta con CSS grid; falta probarlo en el teléfono) Membresías: la tabla mide más del doble del ancho y se desliza; mejor como tarjetas.
 - [ ] Media — Membresías: el + tapa "$0 al mes" de la tarjeta de efectivo.
-- [ ] Baja — Movimientos: descripciones cortadas ("Comida fuera · Débito ••4417 · hoy").
+- [x] Baja — (hecho, falta probar en el teléfono) Movimientos: descripciones cortadas ("Comida fuera · Débito ••4417 · hoy").
 - [x] Baja — Presupuesto: los interruptores son chicos.
 
 ### Proyectos
@@ -143,3 +144,5 @@ En el teléfono no hay hover: todo lo que aparece solo al pasar el mouse hay que
 - [x] Botón de borrar en la lista de Tareas (`TaskList.module.css`) y en el tablero (`TaskBoard.module.css`) — se ve siempre, a la derecha de la fila.
 - [x] Botón "hecho" de Recordatorios — ya estaba resuelto.
 - [ ] Revisar a mano en el teléfono: fondo de las filas y píldoras que cambian con `:hover` (solo estética, no esconden nada).
+- [x] Media — (hecho, falta probar en el teléfono) Píldoras con varios botones (`Segmented`: Área, Estado, Repetir, Vista, Filtrar…) siempre en una línea que se desliza con desvanecido y 44 px de toque; y las barras de pestañas ya no hacen scroll vertical.
+- [x] Media — (hecho, falta probar en el teléfono) Finanzas completo con lo ya hecho: selector de mes centrado y acción ("Movimiento", "Agregar membresía") en su fila a todo el ancho; Resumen con las cuatro cifras en dos por dos; detalle de los movimientos en dos renglones en vez de cortarse; Ahorros y deudas con el monto y los botones repartidos; tarjetas de Membresías en una fila que se desliza con desvanecido; botes de basura, muestras de color y categorías a 44 px con el dedo.

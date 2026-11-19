@@ -315,3 +315,16 @@
     transition: none;
   }
 }
+
+/* Con el dedo, el bote de basura llega a 44px de área de toque (mide 40px) sin crecer. */
+@media (pointer: coarse) {
+  .trash {
+    position: relative;
+  }
+
+  .trash::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+  }
+}

@@ -95,8 +95,54 @@
 
 /* --- Tarjetas --- */
 
+/* Las tarjetas de pago: una columna en la compu y, en el teléfono, una fila que se desliza de lado (con el
+   desvanecido de ScrollFade) en vez de tres tarjetas altas una bajo otra. El padding deja sitio a la sombra y al
+   anillo de la elegida (overflow los recortaría) y el margen negativo lo anula en el diseño. */
+.tiles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-9) var(--space-5);
+  margin: calc(var(--space-9) * -1) calc(var(--space-5) * -1);
+  scrollbar-width: none;
+}
+
+.tiles::-webkit-scrollbar {
+  display: none;
+}
+
 .tileWrap {
   position: relative;
+}
+
+@media (max-width: 720px) {
+  .tiles {
+    flex-direction: row;
+    gap: var(--space-5);
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: var(--space-5);
+  }
+
+  .tileWrap {
+    flex: 0 0 min(260px, 78%);
+    scroll-snap-align: start;
+  }
+
+  /* Los dos totales de la franja, repartidos y centrados */
+  .stat {
+    flex: 1;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* Con el dedo, el bote de la tarjeta llega a 44px de área de toque (mide 36px) sin crecer. */
+@media (pointer: coarse) {
+  .tileTrash::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+  }
 }
 
 .tile {

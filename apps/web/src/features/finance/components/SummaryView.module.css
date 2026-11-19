@@ -40,7 +40,7 @@
 
 @media (max-width: 620px) {
   .s3 {
-    grid-column: span 12;
+    grid-column: span 6;
   }
 }
 
@@ -388,5 +388,28 @@
 @media (prefers-reduced-motion: reduce) {
   .bar {
     transform: none;
+  }
+}
+
+/* Teléfono: las cuatro cifras en dos por dos (no cuatro tarjetas una bajo otra). Con la mitad del ancho el ícono va
+   arriba del nombre, y la cifra baja un poco de tamaño para que "$18,500" quepa. */
+@media (max-width: 620px) {
+  .grid {
+    gap: var(--space-5);
+  }
+
+  .s3 .stat {
+    padding: var(--space-8);
+    gap: var(--space-3);
+  }
+
+  .s3 .statHead {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .s3 .big {
+    font-size: 26px;
   }
 }
