@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Gochi_Hand, Outfit } from 'next/font/google'
 import { MotionConfig } from 'motion/react'
 import { readAppearance, readThemePreference } from '@/lib/theme/preference'
@@ -29,6 +29,10 @@ export const metadata: Metadata = {
     apple: '/kairo-logo/kairo-app-claro-512.png',
   },
 }
+
+// "cover" deja que la página se dibuje bajo la cámara y la hora cuando la app va a pantalla
+// completa o instalada; sin esto env(safe-area-inset-top) siempre vale 0.
+export const viewport: Viewport = { viewportFit: 'cover' }
 
 export default async function RootLayout({ children }: LayoutProps<'/'>) {
   const themePreference = await readThemePreference()
