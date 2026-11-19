@@ -1,0 +1,7 @@
+/* Entre la barra de abajo (50) y el panel flotante del pomodoro (55), el panel del "+" y el botón (58). */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 54;
+  background: var(--scrim);
+}

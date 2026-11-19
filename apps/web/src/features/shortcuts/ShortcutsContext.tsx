@@ -2,6 +2,8 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 
+import { useFocus } from '@/features/focus'
+
 import { NotificationsPanel } from './components/NotificationsPanel'
 import { QuickCapture } from './components/QuickCapture'
 import { SearchPalette } from './components/SearchPalette'
@@ -40,6 +42,16 @@ type ShortcutsProviderProps = {
 export function ShortcutsProvider({ children, timeZone, demo }: ShortcutsProviderProps) {
   const [open, setOpen] = useState<ShortcutPanel | null>(null)
   const [notifications, setNotifications] = useState<NotificationsPanelData | null>(null)
+  const focus = useFocus()
+  const setFocusExpanded = focus.setExpanded
+  const focusExpanded = focus.expanded
+
+  // Un solo panel flotante a la vez: si se abre el pomodoro (desde el reloj, el "+" o el detalle de una tarea),
+  // el atajo que estuviera abierto se cierra. La otra dirección (abrir un atajo cierra el pomodoro) va en toggle.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (focusExpanded) setOpen(null)
+  }, [focusExpanded])
 
   // Los avisos se piden al entrar, al abrir la campana y al volver a la pestaña: los crean las tareas programadas,
   // no esta pantalla, así que no hay otro momento en que se sepa que llegó uno. Si falla, se queda lo que había.
@@ -82,11 +94,14 @@ export function ShortcutsProvider({ children, timeZone, demo }: ShortcutsProvide
   const value = useMemo<ShortcutsValue>(
     () => ({
       open,
-      toggle: (panel) => setOpen((current) => (current === panel ? null : panel)),
+      toggle: (panel) => {
+        setFocusExpanded(false)
+        setOpen((current) => (current === panel ? null : panel))
+      },
       close: () => setOpen(null),
       unread: notifications?.unread ?? 0,
     }),
-    [open, notifications],
+    [open, notifications, setFocusExpanded],
   )
 
   return (

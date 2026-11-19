@@ -60,9 +60,54 @@ function useDoodles() {
   return context
 }
 
+// Los doodles para pegar y el botón de quitarlos. Lo usan la bandeja del header y, en el teléfono (donde el
+// lápiz no cabe en la barra), el menú del avatar. `compact` los acomoda en 3 columnas para el menú angosto.
+export function DoodlePicker({ compact = false }: { compact?: boolean }) {
+  const { placed, add, clear } = useDoodles()
+
+  return (
+    <>
+      <motion.div
+        className={[styles.trayGrid, compact ? styles.trayGridCompact : null].filter(Boolean).join(' ')}
+        variants={staggerList(0.03, 0.05)}
+        initial="hidden"
+        animate="show"
+      >
+        {DOODLE_KINDS.map((kind) => (
+          <motion.button
+            key={kind}
+            type="button"
+            className={styles.doodleButton}
+            aria-label={`Agregar ${DOODLE_LABEL[kind].toLowerCase()}`}
+            onClick={() => add(kind)}
+            variants={{ hidden: { opacity: 0, scale: 0.6 }, show: { opacity: 1, scale: 1, transition: SPRING.pop } }}
+            whileHover={{ rotate: -6, scale: 1.06 }}
+            whileTap={{ scale: 0.85 }}
+          >
+            <Doodle kind={kind} size={38} />
+          </motion.button>
+        ))}
+      </motion.div>
+      <AnimatePresence>
+        {placed.length > 0 ? (
+          <motion.button
+            type="button"
+            className={styles.clear}
+            onClick={clear}
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+          >
+            Quitar doodles
+          </motion.button>
+        ) : null}
+      </AnimatePresence>
+    </>
+  )
+}
+
 // Botón del lápiz + bandeja (header).
 export function DoodleTray({ buttonClassName, openClassName }: { buttonClassName: string; openClassName: string }) {
-  const { placed, add, clear } = useDoodles()
   const [open, setOpen] = useState(false)
   const wrapRef = useRef<HTMLDivElement>(null)
 
@@ -106,36 +151,7 @@ export function DoodleTray({ buttonClassName, openClassName }: { buttonClassName
               <span className={styles.trayTitle}>Doodles</span>
               <span className={styles.trayHint}>Toca para pegarlo</span>
             </div>
-            <motion.div className={styles.trayGrid} variants={staggerList(0.03, 0.05)} initial="hidden" animate="show">
-              {DOODLE_KINDS.map((kind) => (
-                <motion.button
-                  key={kind}
-                  type="button"
-                  className={styles.doodleButton}
-                  aria-label={`Agregar ${DOODLE_LABEL[kind].toLowerCase()}`}
-                  onClick={() => add(kind)}
-                  variants={{ hidden: { opacity: 0, scale: 0.6 }, show: { opacity: 1, scale: 1, transition: SPRING.pop } }}
-                  whileHover={{ rotate: -6, scale: 1.06 }}
-                  whileTap={{ scale: 0.85 }}
-                >
-                  <Doodle kind={kind} size={38} />
-                </motion.button>
-              ))}
-            </motion.div>
-            <AnimatePresence>
-              {placed.length > 0 ? (
-                <motion.button
-                  type="button"
-                  className={styles.clear}
-                  onClick={clear}
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
-                >
-                  Quitar doodles
-                </motion.button>
-              ) : null}
-            </AnimatePresence>
+            <DoodlePicker />
           </motion.div>
         ) : null}
       </AnimatePresence>

@@ -90,6 +90,24 @@
     bottom: calc(96px + 60px + var(--space-4));
   }
 
+  /* Centrado en la pantalla (no sobre el botón), como el panel del "+". Sin transform: Motion lo usa para
+     animar la entrada. El dock no tiene transform con el panel abierto, así que fixed es respecto a la pantalla. */
+  .panel {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    height: fit-content;
+    max-height: calc(100dvh - var(--space-9) * 2);
+    overflow-y: auto;
+    transform-origin: center;
+  }
+
+  /* La píldora ya no existe en el teléfono: el avance se ve en el anillo del "+" y el pomodoro se abre
+     desde el reloj de la barra de arriba (Topnav) o manteniendo presionado el "+" (QuickCapture). */
+  .pill {
+    display: none;
+  }
+
   /* !important: Motion pone opacidad y escala en línea según `compact`, y aquí manda la pantalla. */
   .pillBody {
     display: none;
@@ -149,6 +167,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-7);
+  transform-origin: bottom right;
 }
 
 .panelHead {

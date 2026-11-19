@@ -6,6 +6,7 @@ import { useToast } from '@/components/ui/Toast'
 
 import { recordFocusSessionAction } from './actions'
 import type { FocusTask } from './types'
+import { FOCUS_PRESETS } from './mock'
 import { useFocusTimer } from './use-focus-timer'
 import { FocusPlayer } from './components/FocusPlayer'
 
@@ -20,6 +21,9 @@ type FocusContextValue = {
   // Con `id` el tiempo se le guarda a esa tarea; sin él (un texto suelto) solo se guarda el tiempo.
   focusOnTask: (task: FocusTask) => void
   timer: ReturnType<typeof useFocusTimer>
+  // Lo mínimo para dibujar el avance fuera del reproductor (el anillo alrededor del "+" en el teléfono):
+  // si corre, qué fracción del tramo va (0 a 1) y si es trabajo o descanso.
+  progress: { running: boolean; fraction: number; phase: 'work' | 'break' }
 }
 
 const FocusContext = createContext<FocusContextValue | null>(null)
@@ -63,6 +67,12 @@ export function FocusProvider({ children, sessionsToday, tasks }: FocusProviderP
     if (completed) save(completed)
   }, [completed])
 
+  const preset = FOCUS_PRESETS[timer.state.presetIndex]
+  const phaseSeconds = (timer.state.phase === 'work' ? preset.workMinutes : preset.breakMinutes) * 60
+  const fraction = phaseSeconds === 0 ? 0 : 1 - timer.state.secondsLeft / phaseSeconds
+  const running = timer.state.running
+  const phase = timer.state.phase
+
   const api = useMemo<FocusContextValue>(
     () => ({
       expanded,
@@ -77,8 +87,9 @@ export function FocusProvider({ children, sessionsToday, tasks }: FocusProviderP
         setExpanded(true)
       },
       timer,
+      progress: { running, fraction, phase },
     }),
-    [expanded, current, tasks.length, timer],
+    [expanded, current, tasks.length, timer, running, fraction, phase],
   )
 
   return (
