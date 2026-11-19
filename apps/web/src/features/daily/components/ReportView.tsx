@@ -9,6 +9,7 @@ import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Card, LineIcon } from '@/components/ui/Card'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { CountUp, ProgressBar } from '@/components/ui/Progress'
+import { ScrollFade } from '@/components/ui/ScrollFade'
 import { dayOfMonth, formatWallTime, WEEKDAYS_SHORT, weekdayOf, type IsoDate } from '@/lib/dates'
 import { EASE_OUT, fadeUp, staggerList } from '@/lib/motion'
 
@@ -156,7 +157,7 @@ export function ReportView({ report, today, hourFormat }: ReportViewProps) {
             </ul>
           </div>
 
-          <div className={styles.scroller}>
+          <ScrollFade className={styles.scroller}>
             <div className={styles.matrix}>
               <span />
               {dates.map((date) => (
@@ -181,7 +182,7 @@ export function ReportView({ report, today, hourFormat }: ReportViewProps) {
                 )
               })}
             </div>
-          </div>
+          </ScrollFade>
 
           {selectedRow && selectedCell ? (
             <div className={styles.detail} role="status">

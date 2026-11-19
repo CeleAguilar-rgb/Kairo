@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { isoDateSchema } from '@kairo/shared'
 import { redirect } from 'next/navigation'
 
-import { DailyToolbar, EditRoutineLink, ReportView, WeekSwitcher } from '@/features/daily'
+import { DailyToolbar, ReportView, WeekSwitcher } from '@/features/daily'
 import { getReportWeek } from '@/features/daily/api'
 import { getMe } from '@/lib/account/api'
 import { addDays, startOfWeek, todayIn } from '@/lib/dates'
@@ -36,7 +36,7 @@ export default async function DailyReportPage({ searchParams }: PageProps) {
 
   return (
     <>
-      <DailyToolbar action={<EditRoutineLink />}>
+      <DailyToolbar>
         <WeekSwitcher
           weekStart={weekStart}
           prevHref={weekStart > oldestStart ? `${BASE}?semana=${addDays(weekStart, -7)}` : null}

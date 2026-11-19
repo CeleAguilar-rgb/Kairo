@@ -39,3 +39,11 @@ Cosas que salieron de revisar la versión de teléfono y que **también conviene
 - El menú del avatar vive dentro de la barra sticky (su propia capa), así que mientras está abierto la barra sube de capa (`.header[data-panel-open]`) y el velo va dentro de ella (`--scrim-z`).
 
 **Dónde:** `Topnav.tsx/.module.css`, `Doodles.tsx/.module.css`, `NotificationsPanel.tsx/.module.css`, `QuickCapture`, `FocusPlayer`, `ShortcutsContext.tsx`.
+
+## 5. Día a día: "Editar rutina" junto al título (no en cada franja)
+
+**Hoy:** el botón "Editar rutina" se repetía en la franja de debajo de las pestañas de Hoy, Menú, Reporte y Diario, a la derecha. Es lo mismo en todas las partes, así que por jerarquía pertenece a la pantalla, no a cada franja.
+
+**Cambio:** se movió a `DailyHeader`, al lado del título "Día a día" (el canvas también lo pone en el encabezado). Aparece en las cinco partes, Metas incluida. En pantallas de 480px o menos se queda solo el ícono. Es el mismo componente en escritorio y teléfono.
+
+**Dónde:** `features/daily/components/DailyHeader.tsx` y `EditRoutineLink.tsx`; las páginas dejaron de pasarlo como `action` de `DailyToolbar`.
