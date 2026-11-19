@@ -10,6 +10,14 @@
   min-width: 760px;
 }
 
+/* En el teléfono la rejilla de siete columnas no cabe ni deslizando bien: en su lugar va la lista por día
+   (WeekList, que solo se ve aquí). */
+@media (max-width: 720px) {
+  .scroll {
+    display: none;
+  }
+}
+
 .head {
   display: grid;
   grid-template-columns: 64px repeat(7, minmax(0, 1fr));

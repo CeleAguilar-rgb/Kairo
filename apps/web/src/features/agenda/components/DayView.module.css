@@ -96,3 +96,11 @@
   font-size: 13px;
   color: var(--text-muted);
 }
+
+/* Teléfono: "Todo el día" arriba, en su propio renglón, y debajo lo que dura todo el día. A un lado de los chips
+   los empujaba y rompía la vista. */
+@media (max-width: 720px) {
+  .allDayLabel {
+    width: 100%;
+  }
+}
