@@ -48,9 +48,9 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 
 ### Agenda
 
-- [ ] Media — Las tareas de "Todo el día" se cortan ("Terminar el diseño del dashb…").
+- [x] Media — (hecho, falta probar en el teléfono) Las tareas de "Todo el día" se cortan ("Terminar el diseño del dashb…"). Ya se ven completas en la vista Día (los chips se parten en renglones).
 - [x] Media — (descartado: el + ya no es problema en ninguna parte, según el usuario) Los botones flotantes tapan la columna de horas.
-- [ ] Pendiente — Revisar las vistas Semana y Mes.
+- [x] Pendiente — (hecho, falta probar en el teléfono) Vistas Semana y Mes revisadas: la semana se desliza con desvanecido a la orilla de la tarjeta, el mes ya era una cuadrícula de barritas (ahora "+3" en vez de "+3 más" en dos renglones) y el cajón "Nuevo evento" ya no se sale de la pantalla (hora de fin) ni dibuja barra vertical en "Tipo".
 
 ### Día a día
 

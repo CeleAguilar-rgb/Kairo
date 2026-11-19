@@ -1,3 +1,4 @@
+import { ScrollFade } from '@/components/ui/ScrollFade'
 import { dayOfMonth, formatDayMonth, WEEKDAYS_SHORT, type IsoDate } from '@/lib/dates'
 
 import { byTime, monthGrid } from '../agenda-utils'
@@ -22,7 +23,7 @@ export function MonthView({ anchor, entries, today, weekStart, onOpenDay }: Mont
   const names = Array.from({ length: 7 }, (_, index) => WEEKDAYS_SHORT[((weekStart === 'monday' ? 1 : 0) + index) % 7])
 
   return (
-    <div className={styles.scroll}>
+    <ScrollFade className={styles.scroll}>
       <div className={styles.month}>
         <div className={styles.dows}>
           {names.map((name) => (
@@ -49,12 +50,14 @@ export function MonthView({ anchor, entries, today, weekStart, onOpenDay }: Mont
                     {entry.title}
                   </span>
                 ))}
-                {items.length > 3 ? <span className={styles.more}>+{items.length - 3} más</span> : null}
+                {items.length > 3 ? <span className={styles.more}>+{items.length - 3}
+                    <span className={styles.moreWord}> más</span>
+                  </span> : null}
               </button>
             )
           })}
         </div>
       </div>
-    </div>
+    </ScrollFade>
   )
 }

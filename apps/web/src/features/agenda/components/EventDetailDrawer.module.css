@@ -187,3 +187,10 @@
 .edit {
   width: 100%;
 }
+
+/* Con el dedo, las opciones del menú miden 44px. */
+@media (pointer: coarse) {
+  .menuItem {
+    min-height: 44px;
+  }
+}

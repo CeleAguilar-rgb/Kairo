@@ -108,3 +108,10 @@
     transform: none;
   }
 }
+
+/* Con el dedo, los chips de "Todo el día" miden 36px (son muchos y van apilados: 44px los volvería muy altos). */
+@media (pointer: coarse) {
+  .chip {
+    min-height: 36px;
+  }
+}
