@@ -27,3 +27,10 @@ export function DailyToolbar({ children, action }: DailyToolbarProps) {
     </motion.div>
   )
 }
+
+// Lo secundario de la franja, aparte del texto principal: "rutina Entre semana", el mes del diario. Es una
+// pastilla que baja entera a otro renglón si no cabe junto al texto (antes todo era un solo texto con un
+// punto medio, y se partía a la mitad: "· rutina" arriba y "Entre semana" abajo).
+export function ToolbarChip({ children }: { children: ReactNode }) {
+  return <span className={styles.chip}>{children}</span>
+}

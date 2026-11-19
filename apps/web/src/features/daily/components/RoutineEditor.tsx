@@ -9,6 +9,7 @@ import { PageHeading } from '@/components/layout/PageHeading'
 import { Button } from '@/components/ui/Button'
 import { ButtonLink } from '@/components/ui/ButtonLink'
 import { Card, LineIcon } from '@/components/ui/Card'
+import { ScrollFade } from '@/components/ui/ScrollFade'
 import { Doodle } from '@/components/ui/Doodle'
 import { Input } from '@/components/ui/Input'
 import { Modal } from '@/components/ui/Modal'
@@ -144,6 +145,7 @@ export function RoutineEditor({ routines, blocks, links, hourFormat }: RoutineEd
       </div>
 
       <LayoutGroup id={tabsId}>
+        <ScrollFade className={styles.tabsScroll}>
         <div role="tablist" aria-label="Rutinas" className={styles.tabs}>
           {list.map((item) => {
             const active = item.id === routine?.id
@@ -172,6 +174,7 @@ export function RoutineEditor({ routines, blocks, links, hourFormat }: RoutineEd
             Nueva rutina
           </button>
         </div>
+        </ScrollFade>
       </LayoutGroup>
 
       {routine ? (
