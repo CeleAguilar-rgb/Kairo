@@ -56,8 +56,11 @@
 
 /* --- La tabla ------------------------------------------------------------------------------------------ */
 
+/* El que se desliza es ScrollFade (con su desvanecido); aquí solo el padding vertical que evita recortar los aros
+   de foco de las celdas, anulado con un margen negativo. */
 .scroll {
-  overflow-x: auto;
+  padding-block: var(--space-2);
+  margin-block: calc(var(--space-2) * -1);
 }
 
 .matrix {
@@ -65,6 +68,15 @@
   grid-template-columns: 150px repeat(var(--eras), minmax(150px, 1fr));
   gap: var(--space-3);
   min-width: 780px;
+}
+
+/* Teléfono: la primera columna y las eras son más angostas, y ya no se fuerza un ancho mínimo
+   (con pocas eras la tabla cabe sin deslizar). */
+@media (max-width: 720px) {
+  .matrix {
+    grid-template-columns: 112px repeat(var(--eras), minmax(140px, 1fr));
+    min-width: 0;
+  }
 }
 
 .eraHead {

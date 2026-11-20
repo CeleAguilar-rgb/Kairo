@@ -139,3 +139,15 @@ Cosas que salieron de revisar la versión de teléfono y que **también conviene
 - Nuevo `WeekList.tsx/.module.css`: la semana en el teléfono es una lista, un bloque por día (fecha a la izquierda, tarjetas a la derecha). Usa `byTime` (lo de todo el día primero, luego por hora) y los colores de `entry-types.module.css`. Un día vacío se pliega a una línea "Sin nada". `WeekView` renderiza las dos cosas y el CSS decide cuál se ve: `.scroll { display: none }` (la rejilla) en ≤720px y `.list { display: none }` (la lista) fuera de ese ancho.
 
 **Dónde:** `features/agenda/components/` (`AgendaView`, `AgendaSidebar`, `AgendaFilters`, `DayView`, `WeekView`, `WeekList`).
+
+## 14. Escuela, Escritos y Recordatorios en el teléfono
+
+**Hoy:** el horario de Escuela abría en "Semana" (una cuadrícula de 720 px donde en el teléfono solo se veían lunes y martes) aunque ya existía la vista "Por día"; la tabla de calificaciones medía 480 px y su `overflow-x: auto` dibujaba una barra vertical; en Escritos, la matriz región × era del resumen, la fila de historias, la tabla y el tablero de la base de personajes se deslizaban con un `overflow-x: auto` propio (sin pista ni desvanecido, y con la misma barra vertical); y en el formulario de Recordatorios la fila "Repetir" tenía su propio `overflow-x`.
+
+**Cambio:**
+- `ScheduleGrid.tsx`: abre en "Por día" en el teléfono con `useNarrowScreen` (solo el valor por defecto; si la persona elige otra vista, esa manda).
+- `GradesTable` (≤720px): cada materia es una tarjeta (nombre arriba; parciales y promedio en una fila con su etiqueta sacada de `data-label`) en vez de una tabla de 480 px. El encabezado se oculta a la vista pero lo siguen leyendo los lectores de pantalla.
+- Escritos: `SummaryTab` (matriz), `CharactersDatabase` (tabla y tablero) usan `ScrollFade`, y `StoriesTab` (tarjetas de historias) usa `ChipRow`. La matriz del resumen es más angosta en el teléfono (`112px` + eras de `140px`, sin ancho mínimo). `.headText` de la ficha de historia usa `min-width: min(100%, 240px)`.
+- `ReminderForm`: se quitó el `overflow-x` de `.segmentedWrap` (Segmented ya se desliza solo); `.date` y `.time` no pasan del ancho de la tarjeta.
+
+**Dónde:** `features/school/components/` (`ScheduleGrid`, `GradesTable`), `features/writings/components/` (`CharactersDatabase`, `world/SummaryTab`, `world/StoriesTab`) y `features/reminders/components/ReminderForm.module.css`.

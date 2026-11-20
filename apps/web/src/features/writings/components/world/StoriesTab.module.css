@@ -5,11 +5,11 @@
   gap: var(--space-6);
 }
 
+/* Una sola línea que se desliza: el overflow, el desvanecido y el padding vertical los pone ChipRow
+   (un overflow-x propio aquí dibujaba una barra vertical). */
 .cards {
   display: flex;
   gap: var(--space-4);
-  overflow-x: auto;
-  padding: 2px;
 }
 
 .card {
@@ -107,7 +107,8 @@
 
 .headText {
   flex: 1;
-  min-width: 240px;
+  /* min(100%, …): en el teléfono 240px no caben junto a la portada y empujaban el ancho de la tarjeta. */
+  min-width: min(100%, 240px);
   display: flex;
   flex-direction: column;
   gap: var(--space-3);

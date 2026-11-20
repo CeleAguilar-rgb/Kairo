@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useState, type FormEvent } from 'react'
 
 import { LineIcon } from '@/components/ui/Card'
+import { ChipRow } from '@/components/ui/ChipRow'
 import { fadeUp, staggerList } from '@/lib/motion'
 
 import { createChapterAction, createStoryAction, deleteStoryAction, updateStoryAction } from '../../story-actions'
@@ -36,7 +37,8 @@ export function StoriesTab({ initialStoryId }: { initialStoryId: string | null }
 
   return (
     <motion.div className={tab.wrap} variants={staggerList(0.05)} initial="hidden" animate="show">
-      <motion.div className={tab.cards} variants={fadeUp}>
+      <motion.div variants={fadeUp}>
+       <ChipRow className={tab.cards}>
         {bundle.stories.map((item) => {
           const on = item.id === story?.id
           return (
@@ -56,6 +58,7 @@ export function StoriesTab({ initialStoryId }: { initialStoryId: string | null }
           <LineIcon d="M12 5v14M5 12h14" size={16} strokeWidth={2} />
           Nueva historia
         </button>
+       </ChipRow>
       </motion.div>
 
       {story ? (

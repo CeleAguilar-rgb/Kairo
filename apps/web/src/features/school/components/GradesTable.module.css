@@ -96,3 +96,81 @@
   font-size: 13px;
   color: var(--text-muted);
 }
+
+/* Teléfono: cada materia es una tarjeta (nombre arriba, parciales y promedio en una fila con su etiqueta)
+   en vez de una tabla de 480 px. Así no hay barra de deslizar ni el overflow-x que dibujaba una barra vertical. */
+@media (max-width: 720px) {
+  .scroll {
+    overflow: visible;
+  }
+
+  .table {
+    min-width: 0;
+  }
+
+  /* Encabezado oculto a la vista pero leído por lectores de pantalla; las etiquetas salen de data-label. */
+  .table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .table tbody {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .table tr {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-3) var(--space-4);
+    padding: var(--space-5) 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .table tr:last-child {
+    border-bottom: 0;
+  }
+
+  .table td {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    height: auto;
+    padding: 0;
+    border-bottom: 0;
+    min-width: 0;
+  }
+
+  .table td[data-label]::before {
+    content: attr(data-label);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+
+  .table td.name {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .gradeInput {
+    width: 100%;
+    max-width: 72px;
+    height: 44px;
+    margin-left: calc(var(--space-3) * -1);
+  }
+
+  /* El promedio es solo texto: con line-height de 44px (el alto de las casillas) queda centrado a la misma
+     altura que los parciales. La etiqueta de arriba vuelve a su interlineado normal. */
+  .average {
+    line-height: 44px;
+  }
+
+  .average::before {
+    line-height: normal;
+  }
+}

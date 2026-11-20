@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { Card, CardHeader, LineIcon } from '@/components/ui/Card'
 import { EmptyState } from '@/components/ui/EmptyState'
 import { ScrollFade } from '@/components/ui/ScrollFade'
+import { useNarrowScreen } from '@/lib/use-narrow-screen'
 
 import { buildScheduleGrid, formatHour } from '../school-utils'
 import type { ScheduleBlock } from '../school-utils'
@@ -22,7 +23,11 @@ import styles from './ScheduleGrid.module.css'
 type ScheduleView = 'week' | 'days'
 
 export function ScheduleGrid({ subjects }: { subjects: Subject[] }) {
-  const [view, setView] = useState<ScheduleView>('week')
+  // En el teléfono abre "Por día" (una cuadrícula de 720 px obliga a deslizar y solo se verían lunes y martes);
+  // si la persona elige otra vista, esa manda. Es un valor por defecto, no esconde nada (eso es del CSS).
+  const narrow = useNarrowScreen()
+  const [picked, setPicked] = useState<ScheduleView | null>(null)
+  const view: ScheduleView = picked ?? (narrow ? 'days' : 'week')
 
   if (subjects.length === 0) {
     return (
@@ -50,7 +55,7 @@ export function ScheduleGrid({ subjects }: { subjects: Subject[] }) {
             className={styles.viewToggle}
             aria-label={view === 'week' ? 'Ver el horario por día' : 'Ver el horario de la semana'}
             title={view === 'week' ? 'Por día' : 'Semana'}
-            onClick={() => setView(view === 'week' ? 'days' : 'week')}
+            onClick={() => setPicked(view === 'week' ? 'days' : 'week')}
           >
             {/* Muestra la vista a la que se cambia: la lista para ir a "Por día", la cuadrícula para volver. */}
             <LineIcon
