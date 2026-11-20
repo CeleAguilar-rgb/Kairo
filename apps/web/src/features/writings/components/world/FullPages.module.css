@@ -7,7 +7,8 @@
 
 .top {
   position: sticky;
-  top: 0;
+  /* Debajo de la barra fija de arriba del teléfono (0 en escritorio): con top: 0 quedaba detrás de ella al bajar. */
+  top: var(--topnav-height);
   z-index: 2;
   display: flex;
   flex-wrap: wrap;
@@ -118,12 +119,19 @@
 .title {
   all: unset;
   box-sizing: border-box;
+  display: block;
   width: 100%;
   font-size: 40px;
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.15;
   border-radius: var(--radius-8);
+  /* Textarea que crece con el nombre (igual que .summary): sin barra ni tirador de tamaño. */
+  field-sizing: content;
+  overflow: hidden;
+  resize: none;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .title:hover,
@@ -189,5 +197,12 @@
 
   .title {
     font-size: 30px;
+  }
+
+  /* "Personaje · Sudria" ya lo dice la etiqueta de la hoja; en la barra de arriba (con "Profundizar" y "Editar") solo
+     quedaba "Per…" cortado. Se oculta pero sigue ocupando el hueco sobrante (flex: 1): así los botones se quedan
+     pegados a la derecha, como en escritorio. */
+  .kicker {
+    visibility: hidden;
   }
 }

@@ -151,3 +151,19 @@ Cosas que salieron de revisar la versión de teléfono y que **también conviene
 - `ReminderForm`: se quitó el `overflow-x` de `.segmentedWrap` (Segmented ya se desliza solo); `.date` y `.time` no pasan del ancho de la tarjeta.
 
 **Dónde:** `features/school/components/` (`ScheduleGrid`, `GradesTable`), `features/writings/components/` (`CharactersDatabase`, `world/SummaryTab`, `world/StoriesTab`) y `features/reminders/components/ReminderForm.module.css`.
+
+
+## 15. Teléfono: scroll por pantalla, barras pegajosas, títulos que bajan de renglón y la hoja de captura con teclado
+
+**Hoy:** (1) al irse a otra sección con la barra de abajo y volver, la pantalla abría arriba del todo (Next.js siempre sube al inicio al navegar por un enlace); (2) en el teléfono la barra de arriba es fija, y todo lo que era `position: sticky` con `top: 0` (la barra de formato del editor de páginas, la barra "volver / Profundizar / Editar" de las fichas) quedaba **detrás** de ella al bajar; (3) la barra de formato envuelta medía 3 renglones (122 px); (4) el título de una página y el nombre de una ficha eran un `<input>` de una línea y cortaban los nombres largos; (5) la hoja de captura rápida, centrada, dejaba "Guardar" detrás del teclado; (6) el campo de "Agregar tarea" decía "escribe y presiona Enter" y se cortaba.
+
+**Cambio:**
+- `lib/scroll-memory.ts` + `NavigationProvider` (`components/layout/Navigation.tsx`): se guarda el scroll en el **clic** del enlace (si se guardara al desplazarse, la pantalla de carga encoge la página y el navegador recorta el scroll a 0) y se restaura al llegar, esperando a que la página tenga altura. Solo cuando se llega por un enlace (con "atrás" Next ya restaura), nunca en un cambio de pestaña dentro de una pantalla, y se rinde si la persona empieza a desplazarse. Es solo en memoria.
+- Token nuevo `--topnav-height` (`styles/tokens.css`): 0 en escritorio, el alto de la barra fija en el teléfono. `EditorToolbar` y `FullPages` lo usan en `top` de su `position: sticky`. Cualquier sticky nuevo debe usarlo.
+- `EditorToolbar`: la tarjeta (fondo, borde, sombra) y dentro una fila `ScrollFade`; en ≤720px la fila no envuelve y se desliza (sin barra de scroll, los botones no se encogen). Con el dedo los botones miden 44 px. En escritorio queda igual.
+- Título de página (`PageEditor`) y nombre de ficha (`FullPages`): `textarea` con `field-sizing: content`, como ya hacía el resumen de la ficha. Enter no hace salto de línea.
+- `PageEditor`: "Guardado" y "···" van juntos en `.tools` y bajan juntos si no caben junto a las migas. `FullPages` oculta (`visibility: hidden`, sigue ocupando el hueco) el texto "Personaje · Sudria" de la barra de arriba en ≤720px.
+- `QuickCapture.module.css`: en ≤720px, `.panel:focus-within { margin-block: var(--space-9) auto }` alinea la hoja arriba mientras se escribe.
+- `TaskList`: el placeholder del campo rápido es "Agregar tarea…" en el teléfono (`useNarrowScreen`) y termina en puntos suspensivos si no cabe.
+
+**Dónde:** `lib/scroll-memory.ts`, `components/layout/Navigation.tsx`, `styles/tokens.css`, `features/writings/components/editor/` (`EditorToolbar`, `PageEditor`), `features/writings/components/world/FullPages.*`, `features/shortcuts/components/QuickCapture.module.css`, `features/tasks/components/TaskList.*`.

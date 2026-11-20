@@ -30,6 +30,8 @@
 
 .quickInput::placeholder {
   color: var(--text-subtle);
+  /* Si aun así no cabe (pantalla muy angosta o letra grande), puntos suspensivos en vez de cortar la letra. */
+  text-overflow: ellipsis;
 }
 
 .quickInput:focus-visible {

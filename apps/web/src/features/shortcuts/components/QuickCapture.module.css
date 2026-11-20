@@ -221,6 +221,12 @@
     overflow-y: auto;
     transform-origin: center;
   }
+
+  /* Mientras se escribe (foco dentro del panel) el teclado del teléfono tapa la mitad de abajo de la pantalla y no
+     achica la página: centrado, "Guardar" quedaría detrás de él. Alineado arriba se ve entero. */
+  .panel:focus-within {
+    margin-block: var(--space-9) auto;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

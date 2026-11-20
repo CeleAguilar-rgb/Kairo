@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/Checkbox'
 import { Doodle } from '@/components/ui/Doodle'
 import type { IsoDate } from '@/lib/dates'
 import { DURATION, EASE_OUT, SPRING } from '@/lib/motion'
+import { useNarrowScreen } from '@/lib/use-narrow-screen'
 import { useEntering } from '@/lib/use-entering'
 
 import { dueLabel, dueTone, type TaskGroup } from '../grouping'
@@ -150,6 +151,8 @@ export function TaskList({ groups, today, weekEnd, openId, recentId, quickProjec
 // componentes animados).
 function QuickAdd({ projectName, onAdd }: { projectName: string; onAdd: (title: string) => void }) {
   const [value, setValue] = useState('')
+  // En el teléfono no se "presiona Enter" (el teclado trae su propio botón): el texto corto evita que se corte.
+  const narrow = useNarrowScreen()
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault()
@@ -171,7 +174,7 @@ function QuickAdd({ projectName, onAdd }: { projectName: string; onAdd: (title: 
         id="quick-task"
         className={styles.quickInput}
         type="text"
-        placeholder="Agregar tarea… escribe y presiona Enter"
+        placeholder={narrow ? 'Agregar tarea…' : 'Agregar tarea… escribe y presiona Enter'}
         value={value}
         maxLength={200}
         onChange={(event) => setValue(event.target.value)}

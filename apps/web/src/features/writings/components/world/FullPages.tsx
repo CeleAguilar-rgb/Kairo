@@ -98,7 +98,23 @@ function EntryPageBody({ initial }: { initial: Entry }) {
             <label htmlFor="entry-title" className={styles.srOnly}>
               Nombre
             </label>
-            <input id="entry-title" className={page.title} type="text" value={name.value} maxLength={80} onChange={(event) => name.onChange(event.target.value)} onBlur={name.commit} />
+            {/* Textarea y no <input>: así un nombre largo baja de renglón en el teléfono en vez de cortarse. Enter
+                confirma (no hace salto de línea), como en un campo de una línea. */}
+            <textarea
+              id="entry-title"
+              className={page.title}
+              rows={1}
+              value={name.value}
+              maxLength={80}
+              onChange={(event) => name.onChange(event.target.value.replace(/\s*\n+\s*/g, ' '))}
+              onBlur={name.commit}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                  event.preventDefault()
+                  event.currentTarget.blur()
+                }
+              }}
+            />
             <textarea className={page.summary} value={summary.value} maxLength={2000} placeholder="Un resumen corto, dos o tres líneas" aria-label="Resumen" onChange={(event) => summary.onChange(event.target.value)} onBlur={summary.commit} />
 
             <FillSections entry={entry} template={template} editing />
