@@ -1,17 +1,24 @@
+/* La tarjeta (fondo, borde, sombra) y, dentro, la fila de botones. Van separadas porque ScrollFade pone una máscara
+   en su caja y recortaría la sombra de la tarjeta. */
 .toolbar {
   position: sticky;
-  top: var(--space-3);
+  /* Debajo de la barra fija de arriba (en el teléfono; en escritorio --topnav-height vale 0), no detrás de ella. */
+  top: calc(var(--topnav-height) + var(--space-3));
   z-index: 10;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 2px;
   margin-bottom: var(--space-4);
-  padding: var(--space-2);
   border-radius: var(--radius-18);
   background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-md);
+}
+
+/* Escritorio: los botones se acomodan en renglones. Teléfono: una sola fila que se desliza. */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-2);
 }
 
 .separator {
@@ -117,8 +124,42 @@
   text-decoration: line-through;
 }
 
+@media (max-width: 720px) {
+  /* Una sola fila: lo que no cabe se desliza (con desvanecido) en vez de crecer a 3 renglones, que con el teclado
+     abierto se comían media pantalla. Nada se encoge: cada botón conserva su tamaño. */
+  .row {
+    flex-wrap: nowrap;
+  }
+
+  .row > * {
+    flex-shrink: 0;
+  }
+
+  /* El desvanecido de los bordes ya avisa que hay más: sin barra de scroll (en el navegador se dibujaba debajo). */
+  .row {
+    scrollbar-width: none;
+  }
+
+  .row::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tool {
     transition: none;
+  }
+}
+
+/* Con el dedo, los botones miden 44px. */
+@media (pointer: coarse) {
+  .insert,
+  .block {
+    min-height: 44px;
+  }
+
+  .tool {
+    width: 44px;
+    height: 44px;
   }
 }

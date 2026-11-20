@@ -36,15 +36,15 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 ### Inicio
 
 - [x] Media — Las tarjetas de números (pendientes, proyectos, $ por pagar) quedan dos arriba y una abajo, con huecos. (Una fila de 3 columnas con el contenido en vertical.)
-- [ ] Media — El "25" del pomodoro queda encima de "Pendientes de hoy" y de las flechas de las tareas.
-- [ ] Baja — Los títulos de tareas largos se cortan en la tarjeta.
+- [x] Media — (descartado: el + y el "25" ya no son problema en ninguna parte, según el usuario; revisado a 375 px) El "25" del pomodoro queda encima de "Pendientes de hoy" y de las flechas de las tareas.
+- [x] Baja — (revisado a 375 px, sin cambios) Los títulos de tareas largos se cortan en la tarjeta. Ya se parten en dos renglones con puntos suspensivos.
 
 ### Tareas
 
 - [x] **Alta** — (hecho: dos renglones; falta probarlo en el teléfono) En la lista, el nombre de la tarea se reduce a 1–6 letras ("T…", "Termin…"). La fila móvil reserva 56 px para la prioridad, pero el chip "Media" mide más y se come el nombre (`features/tasks/components/TaskList.module.css`, `.rowButton` dentro de `@media (max-width: 720px)`). Pasar prioridad y fecha a un segundo renglón.
-- [ ] Media — El texto "Agregar tarea… escribe y presiona Enter" se corta.
+- [x] Media — (hecho y visto a 375 px) El texto "Agregar tarea… escribe y presiona Enter" se corta. En el teléfono dice solo "Agregar tarea…" (no se "presiona Enter", el teclado trae su botón) y, si aun así no cupiera, termina en puntos suspensivos.
 - [x] Media — (descartado: el + ya no es problema en ninguna parte, según el usuario) El botón + tapa la fecha y el bote de basura de las filas de abajo.
-- [ ] Pendiente — Revisar la vista Tablero en teléfono.
+- [x] Pendiente — (revisado a 375 px, sin cambios) Vista Tablero de Tareas en teléfono.
 
 ### Agenda
 
@@ -92,7 +92,13 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 - [x] Media — Las pestañas del mundo miden 804 px (más del doble del ancho) y se deslizan sin pista.
 - [x] Media — (hecho y visto a 375 px, con `ScrollFade`) El resumen del mundo tiene otra fila que se desliza (782 px).
 - [x] Media — (hecho con `ScrollFade` y `ChipRow`; visto a 375 px la tabla y las historias, el tablero no: el demo no trae una propiedad de Selección) Historias (tarjetas), tabla y tablero de la base de personajes se deslizaban con su propio `overflow-x`, sin pista y con barra vertical.
-- [ ] Pendiente — Revisar el editor de páginas, las fichas y el mapa con el teclado abierto.
+- [x] Pendiente — (hecho y visto a 375 px; el teclado se simuló con una ventana de 375×480, que no es lo mismo que un teléfono de verdad) Editor de páginas, fichas y mapa con el teclado abierto:
+  - El título de la página y el nombre de la ficha eran `<input>` de una línea y cortaban los nombres largos ("Jericó Lucienne Bonaven…"). Ahora son `textarea` con `field-sizing: content` (como el resumen de la ficha) y bajan de renglón. Enter no hace salto de línea: en la página pasa al cuerpo; en la ficha confirma el nombre.
+  - La barra de formato del editor era pegajosa pero quedaba **detrás de la barra de arriba** al bajar, y envuelta medía 3 renglones (122 px, un cuarto de la pantalla con el teclado). Ahora va en una sola fila que se desliza (`ScrollFade`, sin barra de scroll), con botones de 44 px con el dedo, y se pega **debajo** de la barra de arriba.
+  - La barra de la ficha (volver, "Profundizar", "Editar") tenía el mismo problema de quedar detrás; se pega debajo. Además se oculta el texto "Personaje · Sudria" de esa barra en el teléfono (solo quedaba "Per…"; ya lo dice la etiqueta de la hoja).
+  - El renglón de migas del editor: "Guardado hace 4 h" y "···" van juntos (`.tools`) y bajan juntos al siguiente renglón si no caben.
+  - Nuevo token `--topnav-height` (`styles/tokens.css`): 0 en escritorio y, en el teléfono, el alto de la barra fija. Cualquier `position: sticky` nuevo debe usarlo en su `top`.
+  - El mapa de la región es solo una zona para subir una imagen (un botón), y el mapa que se inserta en una página cabe en 351 px: no hay nada que escribir ahí, sin cambios.
 
 ### Recordatorios
 
@@ -108,12 +114,12 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 ### Papelera
 
 - [x] **Alta** — (hecho: botones en un segundo renglón; falta probarlo en el teléfono) Los nombres se reducen a una letra ("B…") y la descripción queda de una palabra por renglón, porque "Restaurar" ocupa casi toda la fila (`features/trash/components/TrashView.module.css`, `.row` en móvil). Poner "Restaurar" debajo o como ícono.
-- [ ] Baja — Los filtros ocupan 3 renglones.
+- [x] Baja — (resuelto con `ChipRow`, visto a 375 px) Los filtros ocupan 3 renglones. Ahora van en una sola línea que se desliza.
 
 ### Menú "Más", captura rápida y avisos
 
-- [ ] Pendiente — Con el + abierto, revisar que la hoja quepa entera con el teclado arriba.
-- [ ] Pendiente — Revisar el panel de avisos y la búsqueda en teléfono.
+- [x] Pendiente — (hecho; con el teclado simulado a 375×480, falta probarlo en un teléfono de verdad) Con el + abierto, revisar que la hoja quepa entera con el teclado arriba. Centrada, "Guardar" quedaba detrás del teclado: mientras se escribe (`:focus-within`) la hoja se alinea arriba.
+- [x] Pendiente — (revisado a 375 px, sin cambios) Panel de avisos y búsqueda en teléfono.
 
 ## Segunda ronda (2026-11-18, dicho por la usuaria)
 
@@ -121,7 +127,7 @@ Nota sobre los botones flotantes: **ya no es un problema en ninguna parte** (con
 
 - [x] **Alta** — (hecho, opción A; falta probarlo en el teléfono) Barra inferior sin "Más": muestra las primeras 5 secciones del orden de la persona (Perfil → Mis secciones); las demás van en el menú del avatar. Con 5 o menos se muestran todas, y con 1 sola no hay barra. Resuelve de paso que Escuela y Recordatorios no tengan acceso.
 - [x] **Alta** — (hecho: `position: sticky` + degradado + `viewport-fit=cover`; falta probarlo en el teléfono) La barra superior se esconde con un poco de scroll en el teléfono. Debe quedarse fija, sin sobreponerse a la cámara ni a la hora del sistema (zona segura: `env(safe-area-inset-top)` y `viewport-fit=cover`).
-- [ ] Media — Al cambiar de pestaña y volver, no se conserva dónde se había dejado el scroll. Guardar la posición por pantalla. Es complicado: probar primero en una pantalla.
+- [x] Media — (hecho y visto a 375 px: scroll 650 en Tareas → Agenda arranca arriba → volver a Tareas deja en 650) Al cambiar de sección y volver, no se conservaba dónde se había dejado el scroll. Ahora `lib/scroll-memory.ts` guarda la posición al hacer clic en el enlace (la pantalla de carga encoge la página y el navegador recorta el scroll a 0 si se guardara después) y `NavigationProvider` la restaura al llegar. Solo cuando se llega por un enlace (con "atrás" Next ya restaura solo), nunca en un cambio de pestaña dentro de una pantalla, y se rinde si la persona empieza a desplazarse. Vive en memoria: se pierde al recargar.
 - [x] Media — (hecho: la búsqueda oculta Esc, Enter y flechas en pantallas táctiles con `@media (hover: none)`; "Ctrl+K" pasó de la etiqueta a un tooltip) Quitar los textos de atajos de teclado de PC (por ejemplo "Ctrl+K" y las teclas en la búsqueda) cuando se usa el teléfono. Decidir si la función de esos atajos hace falta como botón táctil y cómo se implementa.
 
 **Opciones para la barra inferior** (por decidir):

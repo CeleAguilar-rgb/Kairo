@@ -138,6 +138,11 @@
   --z-drawer: 70;
   --z-toast: 80;
 
+  /* Alto de la barra fija de arriba (Topnav). En escritorio no es fija, así que vale 0; en el teléfono (más abajo)
+     mide lo que sus íconos más el aire de arriba. Lo usan los elementos "pegajosos" (position: sticky) para quedar
+     debajo de ella y no detrás. */
+  --topnav-height: 0px;
+
   /* Anchos de paneles y desenfoque del fondo detrás de ellos (scrim del canvas) */
   --panel-md: 440px;
   --panel-lg: 560px;
@@ -146,4 +151,12 @@
   /* Fuentes — las variables --font-outfit/--font-gochi las define next/font en layout.tsx */
   --font-sans: var(--font-outfit), system-ui, sans-serif;
   --font-script: var(--font-gochi), cursive;
+}
+
+/* Teléfono: la barra de arriba es fija (ver Topnav.module.css). Su alto es el aire de arriba (o la zona segura de la
+   cámara, lo que sea mayor) más los 44px de sus íconos: si se cambia uno, hay que cambiar el otro. */
+@media (max-width: 720px) {
+  :root {
+    --topnav-height: calc(max(var(--space-6), env(safe-area-inset-top)) + 44px);
+  }
 }
