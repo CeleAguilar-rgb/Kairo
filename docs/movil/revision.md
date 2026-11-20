@@ -82,18 +82,21 @@ Las fallas graves están en Tareas, Papelera y el horario de Escuela. Lo demás 
 
 ### Escuela
 
-- [ ] **Alta** — El horario de clases mide 720 px y solo se ven Lunes y Martes. Mejor una vista por día en teléfono.
+- [x] **Alta** — (hecho y visto a 375 px: abre en "Por día" en el teléfono) El horario de clases mide 720 px y solo se ven Lunes y Martes. Mejor una vista por día en teléfono.
+- [x] Media — (hecho y visto a 375 px: cada materia es una tarjeta en ≤720px) La tabla de Calificaciones medía 480 px y su `overflow-x` dibujaba una barra vertical.
 - [x] Media — Pestañas en dos renglones (Calificaciones baja sola).
 - [x] Media — No se llega a Escuela desde la barra ni desde "Más".
 
 ### Escritos
 
 - [x] Media — Las pestañas del mundo miden 804 px (más del doble del ancho) y se deslizan sin pista.
-- [ ] Media — El resumen del mundo tiene otra fila que se desliza (782 px).
+- [x] Media — (hecho y visto a 375 px, con `ScrollFade`) El resumen del mundo tiene otra fila que se desliza (782 px).
+- [x] Media — (hecho con `ScrollFade` y `ChipRow`; visto a 375 px la tabla y las historias, el tablero no: el demo no trae una propiedad de Selección) Historias (tarjetas), tabla y tablero de la base de personajes se deslizaban con su propio `overflow-x`, sin pista y con barra vertical.
 - [ ] Pendiente — Revisar el editor de páginas, las fichas y el mapa con el teclado abierto.
 
 ### Recordatorios
 
+- [x] Media — (hecho y visto a 375 px) La fila "Repetir" del formulario tenía su propio `overflow-x` (barra vertical) y los campos de fecha y hora podían pasar del ancho de la tarjeta.
 - [x] Media — (descartado: el + ya no es problema en ninguna parte, según el usuario) El "25" y el + tapan los íconos de alarma de la derecha.
 - [x] Media — No se llega a Recordatorios desde la barra ni desde "Más" (solo por la campana o Inicio).
 
