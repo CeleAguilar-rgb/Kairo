@@ -2,7 +2,7 @@
 
 > Léelo al empezar cada sesión. Actualízalo al terminar. Máximo ~60 líneas: es un resumen, no un diario. El detalle va en `sessions/`.
 
-**Última actualización:** 2026-11-11 · Temas de color (12 temas × 3 intensidades) hechos directo en `main`, sin commit. Siguen pendientes los adornos de temporada y probar los avisos en el navegador
+**Última actualización:** 2026-11-22 · Versión de teléfono en la rama `movil` (todas las pantallas revisadas a 375 px en el demo, ahora con el menú de arriba en una sola fila; falta el tablero de personajes y probar en un teléfono real). Siguen pendientes los adornos de temporada y probar los avisos en el navegador
 
 ## Fase actual
 
@@ -10,6 +10,10 @@
 
 ## Lo último que se hizo
 
+- **2026-11-22 · Teléfono: el menú de arriba en una sola fila (rama `movil`, sin commit).** Pestañas de iconos centradas (`IconTabs`) en Finanzas, Día a día, Escritos y Escuela; "Filtrar" con cajón (`FilterSheet`) en Agenda, Tareas, Movimientos y Papelera (con "Vaciar papelera" al lado); filtros de Proyectos y Metas como barra de iconos; la fecha de Agenda es la navegación; el mes de Finanzas sube al encabezado; y **el "+" flotante ejecuta la acción de cada pantalla** (`usePageAction`/`AddButton`), así el botón de arriba ya no se ve en el teléfono. Escuela y Escritos no se movieron (en proceso). `tsc` y `eslint` pasan; visto a 375 px y comprobado en 1280 px. Detalle en `sessions/2026-11-22-telefono-menus-una-fila.md`.
+- **2026-11-20 · Teléfono: pantallas a medias, teclado y scroll por pantalla (CSS y un poco de marcado, rama `movil`, sin commit).** Se conserva el scroll al cambiar de sección (`lib/scroll-memory.ts`), la hoja de captura rápida se alinea arriba al escribir, el campo de Tareas dice "Agregar tarea…", los títulos de páginas y fichas bajan de renglón, la barra de formato del editor va en una fila que se desliza, y las barras pegajosas quedan debajo de la barra de arriba (token `--topnav-height`). `tsc` y `eslint` pasan; visto a 375 px, el teclado solo simulado. Detalle en `sessions/2026-11-20-telefono-pantallas-pendientes.md`.
+- **2026-11-20 · Teléfono: Escuela, Escritos y Recordatorios revisados (CSS, rama `movil`, sin commit).** Horario de Escuela abre "Por día" en el teléfono, Calificaciones como tarjetas, y Escritos y Recordatorios sin `overflow-x` propio (`ScrollFade`/`ChipRow`). `tsc` y `eslint` pasan y se vio a 375 px en el demo (el tablero de personajes no: el demo no trae una propiedad de Selección). Detalle en `sessions/2026-11-20-telefono-escuela-escritos-recordatorios.md`.
+- **2026-11-18 y 19 · Versión de teléfono, en la rama `movil` (no está en `main`, sin push).** Se recorre `docs/movil/revision.md` pantalla por pantalla: barra inferior de 5 secciones, pestañas y chips que se deslizan en una línea (`ScrollTabs`, `ChipRow`), áreas de toque de 44 px con dedo, y Día a día, Finanzas, Proyectos y Agenda ya hechos (en Agenda la semana es una lista por día). Lo que Celeste debe adoptar en escritorio está en `docs/movil/para-celeste.md` (puntos 1 a 13). Verificado en el emulador de 375 px, no en un teléfono real. Detalle en `sessions/2026-11-19-telefono.md`.
 - **2026-11-11 · Temas de color.**
   - 12 temas y 3 intensidades (Sutil, Teñido, Intenso) en Perfil → Preferencias.
   - Se guarda en `profiles.color_theme` y `theme_intensity` (migración `0015`, aplicada) con `PATCH /v1/me/appearance`, y la cookie `kairo_appearance` es su copia.
@@ -33,6 +37,8 @@
 - **2026-10-13/14 · Shell del dashboard y primeros tests** (Jest + Supertest contra la base real). **Fase 0:** login completo (invitación, entrar, recuperar contraseña, guard global por JWKS), Motion integrado. Decisión #26: código por correo pasó a "Después". Detalle en `sessions/2026-10-10-*.md` a `2026-10-13-*.md`.
 
 ## Siguiente paso
+
+**Teléfono (rama `movil`):** todas las pantallas están revisadas y vistas a 375 px en el demo (2026-11-22), incluido el teclado simulado, el scroll por pantalla y el menú de arriba en una fila. Falta el tablero de la base de personajes (la usuaria lo pospuso: está en desarrollo), probar todo en un teléfono real (teclado abierto, modo oscuro, letra grande) y, cuando lo apruebe, pasar `movil` a `main` por Pull Request.
 
 **Probar los avisos en el navegador con tu cuenta:** correr `pnpm jobs:run minute` en `apps/api` (solo crea avisos de tus recordatorios pendientes) y revisar la campana, "Marcar todo como leído" y "Activar" los avisos del navegador. **Después, decidir los adornos de temporada** (`Temporadas.dc.html`, 11 temporadas): es lo único de "lo global" que falta. Con eso la Fase 1b queda completa y lo que sigue es **desplegar** (la API ya está en Vercel; falta desplegar el front y aplicar `src/jobs/cron.sql` en Supabase con la dirección de la API; ver la lista de abajo).
 

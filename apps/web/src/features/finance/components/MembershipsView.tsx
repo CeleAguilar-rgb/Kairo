@@ -4,8 +4,10 @@ import { motion } from 'motion/react'
 import { useState, useTransition } from 'react'
 
 import { useCalmEntry } from '@/components/layout/SectionPanel'
+import { AddButton } from '@/components/ui/AddButton'
 import { Button } from '@/components/ui/Button'
 import { Card, LineIcon } from '@/components/ui/Card'
+import { ScrollFade } from '@/components/ui/ScrollFade'
 import { Modal } from '@/components/ui/Modal'
 import { useToast } from '@/components/ui/Toast'
 import { dayOfMonth, diffDays, formatMonthShort, type IsoDate } from '@/lib/dates'
@@ -28,7 +30,8 @@ const SOON_DAYS = 3
 
 // Membresías (Finanzas.dc.html y FinMembresia.dc.html): las tarjetas con lo que cada una paga al mes (tocar una
 // filtra la tabla) y la tabla de membresías con su próximo cobro. Un toque en una membresía la abre para
-// corregirla, pausarla o borrarla.
+// corregirla, pausarla o borrarla. En el teléfono la tabla no cabe: cada fila se vuelve una tarjeta (solo CSS, ver
+// MembershipsView.module.css) y el `data-label` de las celdas pone el nombre de la columna que ya no se ve.
 export function MembershipsView({ view, today }: { view: MembershipsData; today: IsoDate }) {
   const calm = useCalmEntry()
   const [selected, setSelected] = useState<string | null>(null)
@@ -40,14 +43,7 @@ export function MembershipsView({ view, today }: { view: MembershipsData; today:
 
   return (
     <>
-      <FinanceToolbar
-        action={
-          <Button onClick={() => setPanel({ type: 'membership', membership: null })}>
-            <LineIcon d={FINANCE_ICON.plus} size={16} strokeWidth={2} />
-            Agregar membresía
-          </Button>
-        }
-      >
+      <FinanceToolbar action={<AddButton label="Agregar membresía" onClick={() => setPanel({ type: 'membership', membership: null })} />}>
         <span className={styles.stat}>
           <span className={styles.statValue}>{formatMoney(view.monthlyCents)}</span>
           <span className={styles.statLabel}>en membresías al mes</span>
@@ -72,16 +68,18 @@ export function MembershipsView({ view, today }: { view: MembershipsData; today:
             <span className={styles.hint}>Toca una para filtrar</span>
           </div>
 
-          {view.cards.map((card) => (
-            <CardTile
-              key={card.id}
-              card={card}
-              selected={filter === card.id}
-              dimmed={filter !== null && filter !== card.id}
-              onPick={() => setSelected(filter === card.id ? null : card.id)}
-              onDelete={() => setDeleting(card)}
-            />
-          ))}
+          <ScrollFade className={styles.tiles}>
+            {view.cards.map((card) => (
+              <CardTile
+                key={card.id}
+                card={card}
+                selected={filter === card.id}
+                dimmed={filter !== null && filter !== card.id}
+                onPick={() => setSelected(filter === card.id ? null : card.id)}
+                onDelete={() => setDeleting(card)}
+              />
+            ))}
+          </ScrollFade>
 
           <div className={styles.cardActions}>
             <Button variant="ghost" onClick={() => setPanel({ type: 'card' })}>
@@ -200,7 +198,7 @@ function MembershipRow({ membership, today, dimmed, onOpen }: { membership: Memb
           </span>
         </button>
       </td>
-      <td>
+      <td data-label="Próximo cobro">
         {paused ? (
           <span className={styles.hint}>—</span>
         ) : (
@@ -209,7 +207,9 @@ function MembershipRow({ membership, today, dimmed, onOpen }: { membership: Memb
           </span>
         )}
       </td>
-      <td className={styles.cardCell}>{cardLabel(membership.card)}</td>
+      <td className={styles.cardCell} data-label="Tarjeta">
+        {cardLabel(membership.card)}
+      </td>
       <td>
         <span className={[styles.status, paused ? styles.statusPaused : styles.statusActive].join(' ')}>{paused ? 'Pausada' : 'Activa'}</span>
       </td>

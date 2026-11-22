@@ -266,3 +266,10 @@
     transform: none;
   }
 }
+
+/* Sin mouse (pantallas táctiles) no hay hover: el botón de borrar se ve siempre, a la derecha. */
+@media (hover: none) {
+  .delete {
+    opacity: 1;
+  }
+}

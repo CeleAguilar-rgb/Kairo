@@ -115,6 +115,19 @@
     text-decoration-color var(--duration-base) ease;
 }
 
+/* Con el dedo, 32px de alto es poco: el área de toque llega a 44px sin cambiar cómo se ve el enlace. */
+@media (pointer: coarse) {
+  .link {
+    position: relative;
+  }
+
+  .link::after {
+    content: '';
+    position: absolute;
+    inset: -6px 0;
+  }
+}
+
 .link:hover {
   background: var(--surface-hover);
   text-decoration-color: currentColor;
@@ -147,4 +160,17 @@
 .iconDark {
   background: var(--surface-inverted);
   color: var(--text-on-inverted);
+}
+
+/* inline: título y acción en la misma línea; el que cede es el título (puede partirse en dos renglones). */
+.headerInline {
+  flex-wrap: nowrap;
+}
+
+/* Sin mouse no hay hover: en pantallas táctiles la flecha de los enlaces ("Día a día ›") se ve siempre. */
+@media (hover: none) {
+  .linkArrow {
+    opacity: 1;
+    transform: none;
+  }
 }

@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 import { LineIcon } from '@/components/ui/Card'
 import { fadeUp, staggerList } from '@/lib/motion'
+import { ChipRow } from '@/components/ui/ChipRow'
 
 import { createCharacterAction, createWorldNoteAction } from '../../entry-actions'
 import { characterGroups, characterPlace, displayName, filledSections, homeRegionOf, isDarkPlace, kingdomOf, kingdomTone, sectionEntries, speciesDoodleOf, templateByKey, templateOfEntry } from '../../world-utils'
@@ -37,14 +38,14 @@ export function CharactersTab({ initialGroup }: { initialGroup: string | null })
   return (
     <motion.div className={tab.wrap} variants={staggerList(0.03)} initial="hidden" animate="show">
       <motion.div className={styles.row} variants={fadeUp}>
-        <div className={[styles.chips, styles.spacer].join(' ')} role="group" aria-label="Filtrar personajes">
+        <ChipRow className={[styles.chips, styles.spacer].join(' ')} role="group" aria-label="Filtrar personajes">
           {groups.map((item) => (
             <button key={item.id} type="button" className={[tab.filter, group === item.id ? tab.filterOn : null].filter(Boolean).join(' ')} aria-pressed={group === item.id} onClick={() => setGroup(item.id)}>
               {item.label}
               <span className={tab.filterCount}>{item.count}</span>
             </button>
           ))}
-        </div>
+        </ChipRow>
         <button type="button" className={tab.addDark} onClick={add}>
           <LineIcon d="M12 5v14M5 12h14" size={16} strokeWidth={2} />
           Nuevo personaje

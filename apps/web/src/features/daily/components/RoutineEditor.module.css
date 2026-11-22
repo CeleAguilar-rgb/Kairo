@@ -40,6 +40,19 @@
   color: var(--text);
 }
 
+/* Con el dedo, un área de toque de 44px alrededor del enlace sin mover nada. */
+@media (pointer: coarse) {
+  .back {
+    position: relative;
+  }
+
+  .back::after {
+    content: '';
+    position: absolute;
+    inset: -14px -8px;
+  }
+}
+
 .back:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
@@ -47,10 +60,24 @@
 }
 
 /* Las pestañas de rutinas */
+/* Una sola línea que se desliza si no caben (como las pestañas de las demás pantallas). El desvanecido llega a la
+   orilla de la pantalla: se le quita el margen de la página y se le devuelve como padding. */
+.tabsScroll {
+  margin-inline: calc(var(--space-14) * -1);
+  padding-inline: var(--space-14);
+}
+
+@media (max-width: 720px) {
+  .tabsScroll {
+    margin-inline: calc(var(--space-5) * -1);
+    padding-inline: var(--space-5);
+  }
+}
+
 .tabs {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--space-2);
+  width: max-content;
 }
 
 .tab,
@@ -174,6 +201,19 @@
   transition:
     background var(--duration-base) ease,
     color var(--duration-base) ease;
+}
+
+/* Con el dedo, los días de la rutina llegan a 44px de área de toque sin crecer. */
+@media (pointer: coarse) {
+  .day {
+    position: relative;
+  }
+
+  .day::after {
+    content: '';
+    position: absolute;
+    inset: -2px 0;
+  }
 }
 
 .day:hover:not(.dayOn) {

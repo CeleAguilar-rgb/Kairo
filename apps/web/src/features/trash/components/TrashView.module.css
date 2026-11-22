@@ -55,11 +55,22 @@
   border: 1px solid var(--border);
 }
 
+/* El espacio de arriba y de abajo va en el contenedor: el padding de ChipRow es solo para el aro de foco. */
+.filtersWrap {
+  padding: var(--space-2) 0 var(--space-5);
+}
+
 .filters {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--space-2);
-  padding: var(--space-2) 0 var(--space-5);
+}
+
+/* Teléfono: "Filtrar" y "Vaciar papelera" en una sola fila, cada uno en su extremo. */
+.phoneBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
 }
 
 .filter,
@@ -264,8 +275,30 @@
 }
 
 @media (max-width: 720px) {
+  /* Dos renglones: la letra y el nombre arriba con todo el ancho, y abajo los botones. Antes los
+     botones ("Restaurar", "Borrar para siempre") iban en una columna `auto` que se quedaba con casi
+     todo el ancho y le dejaba al nombre una sola letra. */
   .row {
-    grid-template-columns: 44px minmax(0, 1fr) auto;
+    grid-template-columns: 44px minmax(0, 1fr);
+    row-gap: var(--space-3);
+    padding: var(--space-4) 0;
+  }
+
+  .actions {
+    grid-column: 1 / -1;
+  }
+
+  /* La pregunta y sus dos botones en una sola línea: la pregunta es la que cede (puede partirse
+     en dos), los botones no, para que nunca baje una tercera línea. */
+  .asking {
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+
+  .askText {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: left;
   }
 
   .left {
@@ -277,5 +310,13 @@
   .filter,
   .filterOn {
     transition: none;
+  }
+}
+
+/* Con el dedo, los filtros miden 44px. */
+@media (pointer: coarse) {
+  .filter,
+  .filterOn {
+    min-height: 44px;
   }
 }

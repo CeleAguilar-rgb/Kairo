@@ -19,6 +19,22 @@
   transform-origin: top right;
 }
 
+/* En el teléfono, al centro de la pantalla (no colgando del lápiz), como los demás paneles. Sin transform:
+   Motion lo usa para animar la entrada; inset + margin auto + height fit-content centran solos. */
+@media (max-width: 720px) {
+  .tray {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    height: fit-content;
+    width: min(300px, calc(100% - var(--space-9) * 2));
+    max-height: calc(100dvh - var(--space-9) * 2);
+    overflow-y: auto;
+    box-sizing: border-box;
+    transform-origin: center;
+  }
+}
+
 .trayHead {
   display: flex;
   align-items: center;
@@ -38,6 +54,12 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--space-2);
+}
+
+/* En el menú del avatar (teléfono) caben 3 por renglón. */
+.trayGridCompact {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-items: center;
 }
 
 .doodleButton {

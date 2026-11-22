@@ -1,3 +1,4 @@
+import { ScrollFade } from '@/components/ui/ScrollFade'
 import { dayOfMonth, formatLongDay, weekdayOf, WEEKDAYS_SHORT, type IsoDate } from '@/lib/dates'
 
 import { hourRange, HOUR_PX, weekDays } from '../agenda-utils'
@@ -5,6 +6,7 @@ import type { AgendaEntry } from '../types'
 
 import { EntryChip } from './EntryParts'
 import { TimeGrid } from './TimeGrid'
+import { WeekList } from './WeekList'
 import styles from './WeekView.module.css'
 
 type WeekViewProps = {
@@ -26,44 +28,47 @@ export function WeekView({ anchor, entries, today, nowMinutes, hourFormat, weekS
   const range = hourRange(entries.filter((entry) => days.includes(entry.date)))
 
   return (
-    <div className={styles.scroll}>
-      <div className={styles.week}>
-        <div className={styles.head}>
-          <span />
-          {days.map((date) => (
-            <button key={date} type="button" className={styles.dayHead} aria-label={`Ver el ${formatLongDay(date)}`} onClick={() => onOpenDay(date)}>
-              <span className={styles.dow}>{WEEKDAYS_SHORT[weekdayOf(date)]}</span>
-              <span className={[styles.num, date === today ? styles.numToday : null].filter(Boolean).join(' ')}>{dayOfMonth(date)}</span>
-            </button>
-          ))}
-        </div>
+    <>
+      <WeekList days={days} entries={entries} today={today} hourFormat={hourFormat} selectedId={selectedId} onSelect={onSelect} onOpenDay={onOpenDay} />
+      <ScrollFade className={styles.scroll}>
+        <div className={styles.week}>
+          <div className={styles.head}>
+            <span />
+            {days.map((date) => (
+              <button key={date} type="button" className={styles.dayHead} aria-label={`Ver el ${formatLongDay(date)}`} onClick={() => onOpenDay(date)}>
+                <span className={styles.dow}>{WEEKDAYS_SHORT[weekdayOf(date)]}</span>
+                <span className={[styles.num, date === today ? styles.numToday : null].filter(Boolean).join(' ')}>{dayOfMonth(date)}</span>
+              </button>
+            ))}
+          </div>
 
-        <div className={styles.allDay}>
-          <span className={styles.allDayLabel}>Todo el día</span>
-          {days.map((date) => (
-            <div key={date} className={styles.allDayCell}>
-              {entries
-                .filter((entry) => entry.date === date && entry.allDay)
-                .map((entry) => (
-                  <EntryChip key={entry.id} entry={entry} selected={selectedId === entry.id} onSelect={onSelect} />
-                ))}
-            </div>
-          ))}
-        </div>
+          <div className={styles.allDay}>
+            <span className={styles.allDayLabel}>Todo el día</span>
+            {days.map((date) => (
+              <div key={date} className={styles.allDayCell}>
+                {entries
+                  .filter((entry) => entry.date === date && entry.allDay)
+                  .map((entry) => (
+                    <EntryChip key={entry.id} entry={entry} selected={selectedId === entry.id} onSelect={onSelect} />
+                  ))}
+              </div>
+            ))}
+          </div>
 
-        <TimeGrid
-          days={days}
-          entries={entries}
-          range={range}
-          hourPx={HOUR_PX.week}
-          today={today}
-          nowMinutes={nowMinutes}
-          hourFormat={hourFormat}
-          selectedId={selectedId}
-          onSelect={onSelect}
-          variant="week"
-        />
-      </div>
-    </div>
+          <TimeGrid
+            days={days}
+            entries={entries}
+            range={range}
+            hourPx={HOUR_PX.week}
+            today={today}
+            nowMinutes={nowMinutes}
+            hourFormat={hourFormat}
+            selectedId={selectedId}
+            onSelect={onSelect}
+            variant="week"
+          />
+        </div>
+      </ScrollFade>
+    </>
   )
 }

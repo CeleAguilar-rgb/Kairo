@@ -59,3 +59,20 @@
   align-items: center;
   gap: var(--space-3);
 }
+
+/* Una línea, sin partirse en renglones (ver ScrollTabs). Sigue siendo inline-flex (como .group) para que en un
+   contenedor normal la píldora mida lo que miden sus opciones y no todo el ancho. */
+.noWrap {
+  flex-wrap: nowrap;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Con el dedo, cada opción llega a 44px de área de toque (mide 36px) sin crecer ni mover nada. */
+@media (pointer: coarse) {
+  .option::after {
+    content: '';
+    position: absolute;
+    inset: -4px 0;
+  }
+}

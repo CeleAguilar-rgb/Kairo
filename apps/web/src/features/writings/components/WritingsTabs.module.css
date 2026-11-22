@@ -4,7 +4,8 @@
   padding: var(--space-1);
   align-self: flex-start;
   max-width: 100%;
-  overflow-x: auto;
+  /* Sin overflow aquí: el que se desliza es el contenedor interior de ScrollTabs. Con overflow-x el nav
+     también hacía scroll vertical (el interior sobresale 2px por su margen negativo). */
   box-sizing: border-box;
   border-radius: var(--radius-pill);
   background: var(--surface-glass);

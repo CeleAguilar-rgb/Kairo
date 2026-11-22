@@ -1,0 +1,9 @@
+/* El cuadrito de color de cada tipo, dentro del cajón de AgendaFilters.tsx. Cada tipo trae su fondo, texto y borde de
+   entry-types.module.css; aquí solo el tamaño. */
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  border: 1.5px solid;
+}

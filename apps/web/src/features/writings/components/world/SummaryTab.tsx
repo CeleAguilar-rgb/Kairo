@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useState, type CSSProperties } from 'react'
 
 import { LineIcon } from '@/components/ui/Card'
+import { ScrollFade } from '@/components/ui/ScrollFade'
 import { fadeUp, staggerList } from '@/lib/motion'
 
 import { updateWorldAction } from '../../world-actions'
@@ -110,7 +111,7 @@ function Matrix() {
       {bundle.eras.length === 0 ? (
         <p className={styles.hint}>Cuando agregues eras en la línea del tiempo, aquí verás qué pasa en cada región en cada una.</p>
       ) : (
-        <div className={tab.scroll}>
+        <ScrollFade className={tab.scroll}>
           <div className={tab.matrix} style={{ '--eras': bundle.eras.length } as CSSProperties}>
             <span />
             {bundle.eras.map((era, position) => (
@@ -123,7 +124,7 @@ function Matrix() {
               <MatrixRowView key={row.id} row={row} onOpen={go} />
             ))}
           </div>
-        </div>
+        </ScrollFade>
       )}
     </section>
   )

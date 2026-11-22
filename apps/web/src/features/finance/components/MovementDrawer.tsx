@@ -14,6 +14,7 @@ import { useToast } from '@/components/ui/Toast'
 import type { IsoDate } from '@/lib/dates'
 import { fieldErrors } from '@/lib/form-errors'
 import { formatMoney } from '@/lib/money'
+import { ChipRow } from '@/components/ui/ChipRow'
 
 import { FINANCE_ICON, TRANSACTION_KIND_LABEL } from '../finance-meta'
 import { cardLabel, defaultCategoryId, moneyInputText, parseMoneyInput } from '../finance-utils'
@@ -203,7 +204,7 @@ function MovementForm({ transaction, today, view, onClose, onSaved, onDeleted }:
             <span className={styles.label} id="mv-category-label">
               Categoría
             </span>
-            <div role="radiogroup" aria-labelledby="mv-category-label" className={styles.categories}>
+            <ChipRow role="radiogroup" aria-labelledby="mv-category-label" className={styles.categories}>
               {visibleCategories.map((category) => (
                 <button
                   key={category.id}
@@ -219,7 +220,7 @@ function MovementForm({ transaction, today, view, onClose, onSaved, onDeleted }:
                   {category.name}
                 </button>
               ))}
-            </div>
+            </ChipRow>
             {errors.categoryId ? <span className={styles.error}>{errors.categoryId}</span> : null}
           </div>
         ) : null}

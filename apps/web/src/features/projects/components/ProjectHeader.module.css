@@ -197,3 +197,26 @@
   border: 1.5px solid var(--text-subtle);
   flex-shrink: 0;
 }
+
+/* Teléfono: "Editar proyecto" (la acción principal) y "···" en una fila, y "Ver en el tablero" a todo lo ancho
+   debajo. a.editLink (y no .editLink) para ganarle en especificidad al padding de .button, que viene de otro módulo. */
+@media (max-width: 720px) {
+  .actions {
+    flex: 1 1 100%;
+  }
+
+  a.editLink {
+    order: 1;
+    flex: 1 1 0;
+    justify-content: center;
+  }
+
+  .moreWrap {
+    order: 2;
+  }
+
+  .boardLink {
+    order: 3;
+    flex: 1 1 100%;
+  }
+}

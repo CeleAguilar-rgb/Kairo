@@ -6,8 +6,10 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState, useTransition } from 'react'
 
 import { PageHeading } from '@/components/layout/PageHeading'
+import { AddButton } from '@/components/ui/AddButton'
 import { Button } from '@/components/ui/Button'
 import { Card, LineIcon } from '@/components/ui/Card'
+import responsive from '@/components/ui/responsive.module.css'
 import { Segmented } from '@/components/ui/Segmented'
 import { useToast } from '@/components/ui/Toast'
 import { addDays, addMonths, formatDayMonth, minutesNowIn, minutesToWallTime, startOfMonth, type IsoDate } from '@/lib/dates'
@@ -18,6 +20,7 @@ import { createEventAction, deleteEventAction, duplicateEventAction, moveEventAc
 import { byTime, dayLabel, FILTER_TYPES, heading, rangeLabel, shiftAnchor, weekDays, type AgendaView as View } from '../agenda-utils'
 import { isEventEntry, type AgendaEntry, type AgendaEntryType, type EventKind } from '../types'
 
+import { AgendaFilters } from './AgendaFilters'
 import styles from './AgendaView.module.css'
 import { AgendaSidebar } from './AgendaSidebar'
 import { DayView } from './DayView'
@@ -156,6 +159,8 @@ export function AgendaView({ entries, projects, today, nowMinutes, timeZone, hou
   }
 
   const step = (stepValue: 1 | -1) => go(view, shiftAnchor(anchor, view, stepValue), stepValue)
+  const goToday = () => go(view, today, anchor > today ? -1 : anchor < today ? 1 : 0)
+  const unit = view === 'day' ? 'Día' : view === 'week' ? 'Semana' : 'Mes'
 
   const openCreate = (date: IsoDate, startMin?: number) => {
     setServerErrors({})
@@ -262,7 +267,7 @@ export function AgendaView({ entries, projects, today, nowMinutes, timeZone, hou
       <section className={styles.hero}>
         <PageHeading title={heading(view, anchor, today, weekStart)} squiggleWidth={220}>
           <motion.p
-            className={styles.range}
+            className={[styles.range, responsive.hideOnPhone].join(' ')}
             aria-live="polite"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -270,6 +275,26 @@ export function AgendaView({ entries, projects, today, nowMinutes, timeZone, hou
           >
             {rangeLabel(view, anchor, weekStart, dayCount)}
           </motion.p>
+
+          {/* Teléfono: el renglón de la fecha es también la navegación (flechas a los lados; tocar la fecha lleva a
+              hoy), así los controles de abajo caben en una sola fila. */}
+          <motion.div
+            className={[styles.rangeNav, responsive.phoneOnly].join(' ')}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, ease: EASE_OUT, delay: 0.14 }}
+          >
+            <button type="button" className={styles.iconButton} aria-label={`${unit} anterior`} onClick={() => step(-1)}>
+              <LineIcon d="M15 6l-6 6 6 6" size={18} strokeWidth={2} />
+            </button>
+            <button type="button" className={styles.rangeButton} title="Ir a hoy" onClick={goToday}>
+              {/* Solo el día ("Domingo 22 de noviembre"): cuántas cosas hay ya se ve en la lista de abajo. */}
+              <span aria-live="polite">{view === 'day' ? dayLabel(anchor) : rangeLabel(view, anchor, weekStart, dayCount)}</span>
+            </button>
+            <button type="button" className={styles.iconButton} aria-label={`${unit} siguiente`} onClick={() => step(1)}>
+              <LineIcon d="M9 6l6 6-6 6" size={18} strokeWidth={2} />
+            </button>
+          </motion.div>
         </PageHeading>
 
         <motion.div
@@ -284,21 +309,19 @@ export function AgendaView({ entries, projects, today, nowMinutes, timeZone, hou
             onChange={(next) => go(next, anchor, 0)}
             options={VIEW_OPTIONS}
           />
-          <div className={styles.nav}>
-            <button type="button" className={styles.iconButton} aria-label={view === 'day' ? 'Día anterior' : view === 'week' ? 'Semana anterior' : 'Mes anterior'} onClick={() => step(-1)}>
+          <div className={[styles.nav, responsive.hideOnPhone].join(' ')}>
+            <button type="button" className={styles.iconButton} aria-label={`${unit} anterior`} onClick={() => step(-1)}>
               <LineIcon d="M15 6l-6 6 6 6" size={18} strokeWidth={2} />
             </button>
-            <Button variant="secondary" onClick={() => go(view, today, anchor > today ? -1 : anchor < today ? 1 : 0)}>
+            <Button variant="secondary" onClick={goToday}>
               Hoy
             </Button>
-            <button type="button" className={styles.iconButton} aria-label={view === 'day' ? 'Día siguiente' : view === 'week' ? 'Semana siguiente' : 'Mes siguiente'} onClick={() => step(1)}>
+            <button type="button" className={styles.iconButton} aria-label={`${unit} siguiente`} onClick={() => step(1)}>
               <LineIcon d="M9 6l6 6-6 6" size={18} strokeWidth={2} />
             </button>
           </div>
-          <Button onClick={() => openCreate(view === 'day' || view === 'month' ? anchor : today)}>
-            <LineIcon d="M12 5v14M5 12h14" size={16} strokeWidth={2} />
-            Nuevo evento
-          </Button>
+          <AgendaFilters counts={counts} hidden={hidden} onToggle={toggleFilter} />
+          <AddButton label="Nuevo evento" onClick={() => openCreate(view === 'day' || view === 'month' ? anchor : today)} />
         </motion.div>
       </section>
 

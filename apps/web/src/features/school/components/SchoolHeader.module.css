@@ -12,6 +12,7 @@
 
 .actions {
   display: flex;
+  max-width: 100%;
   align-items: center;
   flex-wrap: wrap;
   gap: var(--space-3);

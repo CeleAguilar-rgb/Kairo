@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import { createContext, useContext, useEffect, useEffectEvent, useMemo, useRef, useState, type ReactNode } from 'react'
 
 import GeneralLoading from '@/components/layout/GeneralLoading'
+import { forgetPendingRestore, rememberScroll, restoreScroll, skipRestore } from '@/lib/scroll-memory'
 import styles from './Navigation.module.css'
 
 // Next.js solo cambia de página cuando ya tiene la respuesta del servidor. En ese
@@ -57,13 +58,27 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
     if (url.origin !== window.location.origin || url.pathname === pathname) return
 
     const tabSwitch = anchor.closest('[data-tab-switch]') !== null
+    // Scroll por pantalla: al salir de una sección se guarda dónde iba para dejarla igual si se vuelve a ella.
+    // Un cambio de pestaña dentro de una pantalla arranca arriba, y un segundo clic mientras la primera
+    // navegación sigue en curso no guarda nada (la página ya está atenuada u oculta por la carga).
+    if (tabSwitch) skipRestore()
+    else if (!(pending && pending.from === pathname)) rememberScroll(pathname)
     setPending({ href: url.pathname, from: pathname, tabSwitch })
     setLoaderShown(false)
     clearTimeout(giveUp.current)
-    giveUp.current = setTimeout(() => setPending(null), GIVE_UP_MS)
+    giveUp.current = setTimeout(() => {
+      setPending(null)
+      forgetPendingRestore()
+    }, GIVE_UP_MS)
     clearTimeout(loaderTimer.current)
     if (!tabSwitch) loaderTimer.current = setTimeout(() => setLoaderShown(true), LOADER_DELAY_MS)
   })
+
+  // Al llegar a una pantalla nueva por un enlace, vuelve al scroll con el que se dejó (si se había visitado).
+  // Este efecto corre después del que sube la página al inicio (el de Next), así que el último en moverla es este.
+  useEffect(() => {
+    restoreScroll(pathname)
+  }, [pathname])
 
   useEffect(() => {
     document.addEventListener('click', handleClick)

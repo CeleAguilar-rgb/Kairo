@@ -13,6 +13,7 @@ import { Drawer } from '@/components/ui/Drawer'
 import { Input } from '@/components/ui/Input'
 import { useToast } from '@/components/ui/Toast'
 import { fieldErrors } from '@/lib/form-errors'
+import { ChipRow } from '@/components/ui/ChipRow'
 
 import { createSubjectAction } from '../actions'
 import { SUBJECT_COLOR_LABEL, WEEKDAY_LABEL, WEEKDAY_SHORT } from '../types'
@@ -168,7 +169,7 @@ function SubjectForm({
           <span className={styles.label} id="subject-days-label">
             Días de clase
           </span>
-          <div
+          <ChipRow
             role="group"
             aria-labelledby="subject-days-label"
             className={styles.days}
@@ -188,7 +189,7 @@ function SubjectForm({
                 </button>
               )
             })}
-          </div>
+          </ChipRow>
           {errors.days ? (
             <span className={styles.error} role="alert">
               {errors.days}

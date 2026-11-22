@@ -21,3 +21,21 @@
   align-items: center;
   gap: var(--space-4);
 }
+
+/* En el teléfono la acción ("Agregar membresía") no se ve (AddButton: la hace el "+" flotante) y el selector de mes
+   está bajo el título; lo que queda en la franja (los totales de membresías, las frases de Ahorros y Presupuesto)
+   ocupa todo el ancho. */
+@media (max-width: 720px) {
+  .bar {
+    gap: var(--space-5);
+  }
+
+  .start {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .action {
+    flex: none;
+  }
+}

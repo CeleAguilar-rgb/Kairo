@@ -149,7 +149,6 @@
 
 .tags {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--space-2);
 }
 
@@ -437,4 +436,26 @@
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/* Con el dedo, las etiquetas y los botones de confirmar miden 44px. */
+@media (pointer: coarse) {
+  .tag,
+  .confirmCancel,
+  .confirmDo {
+    min-height: 44px;
+  }
+}
+
+/* En el teléfono las 5 caritas van en una sola fila (no 4 y 1 abajo): se reparten el ancho. "Muy mal" cabe
+   en cada una a 12px. */
+@media (max-width: 720px) {
+  .moods {
+    flex-wrap: nowrap;
+  }
+
+  .mood {
+    flex: 1 1 0;
+    min-width: 0;
+  }
 }

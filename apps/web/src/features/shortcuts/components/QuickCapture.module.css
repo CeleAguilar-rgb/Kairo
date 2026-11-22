@@ -12,10 +12,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--action);
-  color: var(--on-action);
+  /* Lavanda (el acento): contrasta con el fondo claro y con las tarjetas oscuras sin bordes ni trucos. */
+  background: var(--accent);
+  color: var(--accent-ink);
   box-shadow: var(--shadow-lg);
   cursor: pointer;
+  /* Mantener presionado abre el pomodoro: sin esto el teléfono lo toma por selección de texto, lupa o menú. */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
 }
 
 .fab:focus-visible {
@@ -124,7 +130,6 @@
 
 .whens {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--space-2);
 }
 
@@ -164,20 +169,78 @@
   color: var(--text);
 }
 
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* El anillo de avance solo existe en el teléfono: en escritorio el pomodoro tiene su propia píldora. */
+.fabRing {
+  display: none;
+}
+
+/* El anillo se dibuja sobre el fondo lavanda del botón: usa la tinta del acento (--accent-ink), la misma
+   del ícono "+", para que siempre contraste. */
+.fabRingTrack {
+  stroke: var(--accent-ink);
+  opacity: 0.25;
+}
+
+.fabRingWork {
+  stroke: var(--accent-ink);
+  transition: stroke-dashoffset 1s linear;
+}
+
 @media (max-width: 720px) {
+  /* Encima del botón, del mismo tamaño y en el mismo lugar (sube 96px por la barra de abajo). */
+  .fabRing {
+    display: block;
+    position: fixed;
+    right: var(--space-9);
+    bottom: 96px;
+    z-index: 59;
+    pointer-events: none;
+  }
+
   /* En teléfono el menú de secciones vive abajo (canvas, .topnav fija): el "+" sube por encima de él. */
   .fab {
     bottom: 96px;
   }
 
+  /* Centrado en la pantalla (no sobre el botón): así se siente igual que los demás paneles. Sin transform:
+     Motion ya lo usa para animar la entrada; inset + margin auto + height fit-content centran solos. */
   .panel {
-    bottom: 168px;
+    inset: 0;
+    margin: auto;
+    height: fit-content;
+    max-height: calc(100dvh - var(--space-9) * 2);
+    overflow-y: auto;
+    transform-origin: center;
+  }
+
+  /* Mientras se escribe (foco dentro del panel) el teclado del teléfono tapa la mitad de abajo de la pantalla y no
+     achica la página: centrado, "Guardar" quedaría detrás de él. Alineado arriba se ve entero. */
+  .panel:focus-within {
+    margin-block: var(--space-9) auto;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .kind,
-  .kindOn {
+  .kindOn,
+  .fabRingWork {
     transition: none;
+  }
+}
+
+/* Con el dedo, los chips de "¿Cuándo?" miden 44px. */
+@media (pointer: coarse) {
+  .when,
+  .whenOn {
+    min-height: 44px;
   }
 }

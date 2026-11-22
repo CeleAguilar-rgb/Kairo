@@ -47,12 +47,14 @@ type CardHeaderProps = {
   icon: ReactNode
   iconTone?: IconTone
   action?: ReactNode
+  // La acción se queda a la derecha aunque el título se apriete (lo normal es que baje a otro renglón si no cabe).
+  inline?: boolean
 }
 
 // Encabezado de tarjeta del canvas: [ícono] Título · subtítulo ............ acción
-export function CardHeader({ id, title, subtitle, icon, iconTone = 'accent', action }: CardHeaderProps) {
+export function CardHeader({ id, title, subtitle, icon, iconTone = 'accent', action, inline = false }: CardHeaderProps) {
   return (
-    <div className={styles.header}>
+    <div className={[styles.header, inline ? styles.headerInline : null].filter(Boolean).join(' ')}>
       <div className={styles.heading}>
         <span className={[styles.icon, ICON_TONE_CLASS[iconTone]].join(' ')} aria-hidden="true">
           {icon}

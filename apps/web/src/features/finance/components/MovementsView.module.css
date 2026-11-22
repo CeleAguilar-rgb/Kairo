@@ -17,6 +17,20 @@
   font-size: 14px;
 }
 
+/* Teléfono: "Filtrar" a la izquierda y lo que entró y salió apilado a la derecha, en una sola fila. */
+@media (max-width: 720px) {
+  .bar {
+    flex-wrap: nowrap;
+  }
+
+  .sums {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    gap: var(--space-1);
+  }
+}
+
 .sumIn {
   color: var(--accent-ink);
   font-weight: 600;

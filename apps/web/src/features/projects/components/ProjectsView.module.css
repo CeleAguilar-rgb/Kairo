@@ -82,3 +82,20 @@
 .newHint {
   font-size: 13px;
 }
+
+/* Teléfono: el filtro y "Nuevo proyecto" a todo lo ancho, tarjetas un poco más juntas y la casilla punteada más baja. */
+@media (max-width: 720px) {
+  /* Sin esto el contenedor crece al ancho de la píldora entera (que se desliza) y se sale de la pantalla. */
+  .controls {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .gallery {
+    gap: var(--space-6);
+  }
+
+  .newTile {
+    min-height: 160px;
+  }
+}

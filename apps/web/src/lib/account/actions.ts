@@ -1,13 +1,17 @@
 'use server'
 
-import type {
-  CompleteOnboardingInput,
-  UpdateProfileInput,
-  UpdateSectionsInput,
+import {
+  updateSectionsSchema,
+  type CompleteOnboardingInput,
+  type UpdateProfileInput,
+  type UpdateSectionsInput,
 } from '@kairo/shared'
 import { revalidatePath } from 'next/cache'
+import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { api, ApiError } from '@/lib/api-client'
+import { DEMO_MODE } from '@/lib/demo'
+import { DEMO_SECTIONS_COOKIE, encodeDemoSections } from './demo-sections'
 
 type ActionResult = { error: string } | undefined
 
@@ -52,6 +56,21 @@ export async function updateProfile(
 export async function updateSections(
   input: UpdateSectionsInput,
 ): Promise<ActionResult> {
+  // En demo no hay API: la lista se valida igual y se guarda en una cookie (demo-sections.ts).
+  if (DEMO_MODE) {
+    const parsed = updateSectionsSchema.safeParse(input)
+    if (!parsed.success) return { error: 'No pudimos guardar el orden. Intenta de nuevo.' }
+    const store = await cookies()
+    store.set(DEMO_SECTIONS_COOKIE, encodeDemoSections(parsed.data.sections), {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 30,
+      sameSite: 'lax',
+      httpOnly: true,
+    })
+    revalidatePath('/', 'layout')
+    return
+  }
+
   try {
     await api.patch('/me/sections', input)
   } catch (error) {

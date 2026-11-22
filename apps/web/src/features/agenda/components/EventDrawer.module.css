@@ -86,7 +86,7 @@
   display: flex;
   align-self: flex-start;
   max-width: 100%;
-  overflow-x: auto;
+  min-width: 0;
 }
 
 .toggleRow {
@@ -97,9 +97,21 @@
 
 .times {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  /* minmax(0, 1fr): sin el 0 cada hora pide su ancho natural y la segunda se salía del cajón en el teléfono. */
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: end;
   gap: var(--space-4);
+}
+
+.times > * {
+  min-width: 0;
+}
+
+/* Teléfono: menos aire alrededor del guion para que "02:00 a. m." quepa completo en cada hora. */
+@media (max-width: 480px) {
+  .times {
+    gap: var(--space-2);
+  }
 }
 
 .dash {

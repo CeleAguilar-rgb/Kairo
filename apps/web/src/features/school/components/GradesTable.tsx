@@ -149,7 +149,7 @@ export function GradesTable({ subjects, onSave }: GradesTableProps) {
                   {subject.name}
                 </td>
                 {FIELDS.map((field) => (
-                  <td key={field}>
+                  <td key={field} data-label={GRADE_LABEL[field]}>
                     <GradeCell
                       label={`${GRADE_LABEL[field]} de ${subject.name}`}
                       value={subject.grades[field]}
@@ -157,7 +157,7 @@ export function GradesTable({ subjects, onSave }: GradesTableProps) {
                     />
                   </td>
                 ))}
-                <td className={styles.average}>
+                <td className={styles.average} data-label="Promedio">
                   {formatGrade(subjectAverage(subject.grades))}
                 </td>
               </tr>

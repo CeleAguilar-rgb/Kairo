@@ -355,3 +355,22 @@
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }
+
+/* Una sola columna (tableta y teléfono): el avance sube arriba de todo, porque es lo primero que se quiere ver de un
+   proyecto. Para reordenar entre `.main` y `.side` se les quita la caja (`display: contents`) y sus tarjetas pasan a
+   ser, todas, hijas directas del grid; `order` hace el resto. En la compu no cambia nada. */
+@media (max-width: 1080px) {
+  .main,
+  .side {
+    display: contents;
+  }
+
+  .main > *,
+  .side > * {
+    grid-column: 1 / -1;
+  }
+
+  .side > .avanceWrap {
+    order: -1;
+  }
+}

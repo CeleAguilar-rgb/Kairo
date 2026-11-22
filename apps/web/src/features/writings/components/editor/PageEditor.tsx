@@ -320,35 +320,37 @@ export function PageEditor({ view }: { view: PageEditorView }) {
             )}
           </span>
         ))}
-        <span className={styles.crumbSpacer} />
-        <span className={[styles.saved, saveState === 'error' ? styles.savedError : null].filter(Boolean).join(' ')} role="status" aria-live="polite">
-          <LineIcon d={WRITING_ICON.check} size={14} strokeWidth={2.2} />
-          {saveText}
-        </span>
-        <div
-          className={styles.menuWrap}
-          onBlur={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget)) setMenuOpen(false)
-          }}
-          onKeyDown={(event) => {
-            if (event.key === 'Escape') setMenuOpen(false)
-          }}
-        >
-          <button type="button" className={styles.more} aria-label="Opciones de la página" aria-haspopup="menu" aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>
-            <LineIcon d={WRITING_ICON.more} size={20} strokeWidth={3} />
-          </button>
-          {menuOpen ? (
-            <div className={styles.menu} role="menu">
-              <button type="button" role="menuitem" className={styles.menuItem} onClick={downloadText}>
-                <LineIcon d="M12 3v12M7 10l5 5 5-5M5 21h14" size={16} />
-                Descargar como texto
-              </button>
-              <button type="button" role="menuitem" className={[styles.menuItem, styles.menuDanger].join(' ')} onClick={askDelete}>
-                <LineIcon d={WRITING_ICON.trash} size={16} />
-                Borrar página
-              </button>
-            </div>
-          ) : null}
+        {/* Estado y menú van juntos: si no caben en el renglón de las migas, bajan los dos y no uno suelto. */}
+        <div className={styles.tools}>
+          <span className={[styles.saved, saveState === 'error' ? styles.savedError : null].filter(Boolean).join(' ')} role="status" aria-live="polite">
+            <LineIcon d={WRITING_ICON.check} size={14} strokeWidth={2.2} />
+            {saveText}
+          </span>
+          <div
+            className={styles.menuWrap}
+            onBlur={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget)) setMenuOpen(false)
+            }}
+            onKeyDown={(event) => {
+              if (event.key === 'Escape') setMenuOpen(false)
+            }}
+          >
+            <button type="button" className={styles.more} aria-label="Opciones de la página" aria-haspopup="menu" aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>
+              <LineIcon d={WRITING_ICON.more} size={20} strokeWidth={3} />
+            </button>
+            {menuOpen ? (
+              <div className={styles.menu} role="menu">
+                <button type="button" role="menuitem" className={styles.menuItem} onClick={downloadText}>
+                  <LineIcon d="M12 3v12M7 10l5 5 5-5M5 21h14" size={16} />
+                  Descargar como texto
+                </button>
+                <button type="button" role="menuitem" className={[styles.menuItem, styles.menuDanger].join(' ')} onClick={askDelete}>
+                  <LineIcon d={WRITING_ICON.trash} size={16} />
+                  Borrar página
+                </button>
+              </div>
+            ) : null}
+          </div>
         </div>
       </nav>
 
@@ -379,15 +381,19 @@ export function PageEditor({ view }: { view: PageEditorView }) {
         <label htmlFor="pg-t" className={styles.srOnly}>
           Título de la página
         </label>
-        <input
+        {/* Un textarea que crece con su texto (field-sizing, como el resumen de las fichas): un <input> no parte
+            el texto en renglones, y en el teléfono (letra de 32px, 350px de ancho) un título como
+            "0.- Antecedentes de Vadronia" se cortaba. Enter no hace salto de línea: pasa al cuerpo. */}
+        <textarea
           id="pg-t"
           className={styles.titleInput}
-          type="text"
+          rows={1}
           value={title}
           maxLength={120}
           placeholder="Sin título"
           autoComplete="off"
-          onChange={(event) => handleTitle(event.target.value)}
+          spellCheck
+          onChange={(event) => handleTitle(event.target.value.replace(/\s*\n+\s*/g, ' '))}
           onBlur={flushNow}
           onKeyDown={(event) => {
             if (event.key === 'Enter') {

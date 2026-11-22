@@ -160,8 +160,55 @@
 }
 
 @media (max-width: 720px) {
+  /* Fija arriba al hacer scroll. Dos partes: la barra (logo e íconos) con el color de la página
+     sólido, para que nada del contenido se vea detrás del avatar, y debajo una franja que se
+     desvanece (::after), para que el contenido se pierda al pasar sin que se note dónde
+     termina la barra. Las paradas del degradado siguen una curva suave (no una recta): con
+     una recta se ve dónde empieza y dónde acaba el desvanecido.
+     El padding-top respeta la cámara y la hora cuando la app corre a pantalla completa o
+     instalada (env() vale 0 en Chrome normal, donde el sistema ya reserva ese espacio).
+     El z-index la deja encima del contenido y del menú del avatar, que cuelga de ella. */
   .header {
-    padding: var(--space-6) var(--space-5) 0;
+    position: sticky;
+    top: 0;
+    z-index: var(--z-popover);
+    /* Alto de la barra sólida: el último valor del padding (abajo) es lo que separa los íconos de donde
+       empieza el desvanecido. Con 0 el degradado arranca justo debajo de los botones. */
+    padding: max(var(--space-6), env(safe-area-inset-top)) var(--space-5) 0;
+    background: var(--bg);
+    /* El velo de los menús vive dentro de la barra: arriba de todo, pero debajo del menú (z-index 20). */
+    --scrim-z: 1;
+    /* Al cerrar el menú la barra espera lo que dura el velo en desvanecerse (0.2s) antes de bajar de capa. */
+    transition: z-index 0s linear 0.2s;
+  }
+
+  /* Con el menú del avatar o los doodles abiertos la barra sube sobre la barra de abajo, el "+" y el reproductor
+     para que el velo los oscurezca también. */
+  .header[data-panel-open] {
+    z-index: var(--z-drawer);
+    transition-delay: 0s;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    /* Alto del desvanecido. Más alto = más suave pero tapa más contenido. */
+    height: 24px;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      var(--bg) 0%,
+      color-mix(in srgb, var(--bg) 94%, transparent) 12%,
+      color-mix(in srgb, var(--bg) 82%, transparent) 25%,
+      color-mix(in srgb, var(--bg) 60%, transparent) 40%,
+      color-mix(in srgb, var(--bg) 38%, transparent) 55%,
+      color-mix(in srgb, var(--bg) 20%, transparent) 70%,
+      color-mix(in srgb, var(--bg) 7%, transparent) 85%,
+      transparent 100%
+    );
   }
 
   /* En el teléfono las secciones viven en la barra de abajo (BottomTabs, AppMas.dc.html). */
@@ -211,6 +258,21 @@
   gap: var(--space-2);
 }
 
+/* En el teléfono el menú sale al centro de la pantalla (no colgando del avatar), como los demás paneles.
+   Sin transform: Motion lo usa para animar la entrada; inset + margin auto + height fit-content centran solos. */
+@media (max-width: 720px) {
+  .menu {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    height: fit-content;
+    width: min(280px, calc(100% - var(--space-9) * 2));
+    max-height: calc(100dvh - var(--space-9) * 2);
+    overflow-y: auto;
+    transform-origin: center;
+  }
+}
+
 .menuHeader {
   padding: var(--space-4) var(--space-5) var(--space-5);
   border-bottom: 1px solid var(--border-soft);
@@ -241,6 +303,84 @@
 
 .menuItemDanger {
   color: var(--danger);
+}
+
+/* Las secciones que no caben en la barra de abajo: solo existen en el teléfono; arriba de 720px
+   ya están todas en el nav del Topnav. */
+.menuSections {
+  display: none;
+}
+
+.menuIcon {
+  flex-shrink: 0;
+  margin-right: var(--space-4);
+}
+
+.menuItemActive {
+  font-weight: 600;
+  background: var(--surface-hover);
+}
+
+@media (max-width: 720px) {
+  .menuSections {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+}
+
+/* Las herramientas que dejan la barra por falta de espacio (Topnav.tsx): solo en teléfonos angostos. */
+.menuTools {
+  display: none;
+}
+
+.menuDot {
+  width: 8px;
+  height: 8px;
+  margin-left: var(--space-3);
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Barra apretada: Topnav.tsx mide cuánto cabe y escribe en el <header> data-hidden = cuántos botones se
+   esconden (0 a 3). Se van en orden: 1 doodles, 2 avisos, 3 lupa (data-order de cada uno). Los escondidos
+   siguen midiendo su ancho (fuera del flujo, invisibles) y su opción aparece en el menú del avatar.
+   "Escondido" = su data-order es menor o igual que data-hidden. Solo en teléfono. */
+@media (max-width: 720px) {
+  .tools {
+    position: relative;
+  }
+
+  .header:is([data-hidden='1'], [data-hidden='2'], [data-hidden='3']) .collapsible[data-order='1'],
+  .header:is([data-hidden='2'], [data-hidden='3']) .collapsible[data-order='2'],
+  .header[data-hidden='3'] .collapsible[data-order='3'] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* El menú solo muestra el hueco de los que se fueron. */
+  .menuTools {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .menuTools [data-order] {
+    display: none;
+  }
+
+  .header:is([data-hidden='1'], [data-hidden='2'], [data-hidden='3']) .menuTools [data-order='1'],
+  .header:is([data-hidden='2'], [data-hidden='3']) .menuTools [data-order='2'],
+  .header[data-hidden='3'] .menuTools [data-order='3'] {
+    display: flex;
+  }
+
+  .header[data-hidden='0'] .menuTools {
+    display: none;
+  }
 }
 
 .menuItem:hover,
@@ -285,4 +425,43 @@
     max-width: 100%;
     overflow-x: auto;
   }
+}
+
+/* El reloj del pomodoro solo existe en el teléfono: arriba de 720px el pomodoro tiene su píldora abajo. */
+.focusButton {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .focusButton {
+    display: inline-flex;
+  }
+}
+
+/* Corriendo, el reloj se ensancha en un chip con el tiempo. Los dígitos son tabulares para que el chip no
+   cambie de ancho cada segundo. */
+.focusRunning {
+  width: auto;
+  min-width: 44px;
+  gap: var(--space-2);
+  padding: 0 var(--space-5);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.focusRunning:hover {
+  background: var(--accent-soft);
+}
+
+.focusTime {
+  font-size: 14px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Con el panel abierto el chip se invierte igual que los demás botones de la barra. */
+.focusRunning.iconButtonOpen,
+.focusRunning.iconButtonOpen:hover {
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
 }

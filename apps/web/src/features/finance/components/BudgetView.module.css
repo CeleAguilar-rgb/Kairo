@@ -315,3 +315,29 @@
     transition: none;
   }
 }
+
+/* Con el dedo, el bote de basura llega a 44px de área de toque (mide 40px) sin crecer. */
+@media (pointer: coarse) {
+  .trash {
+    position: relative;
+  }
+
+  .trash::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+  }
+}
+
+/* Una sola columna (tableta y teléfono): "Así vas" sube arriba de las categorías, como lo primero que se quiere ver.
+   .side deja de ser una caja (display: contents) para que sus tarjetas se acomoden en la columna de .cols y
+   "Así vas" pueda pasar delante con order; Avisos y "Para el próximo mes" se quedan después de las categorías. */
+@media (max-width: 1080px) {
+  .side {
+    display: contents;
+  }
+
+  .summary {
+    order: -1;
+  }
+}

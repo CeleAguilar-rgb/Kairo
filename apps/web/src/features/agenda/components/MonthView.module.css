@@ -1,5 +1,7 @@
+/* Igual que en la semana: el desvanecido llega a la orilla de la tarjeta. */
 .scroll {
-  overflow-x: auto;
+  margin-inline: calc(var(--space-7) * -1);
+  padding-inline: var(--space-7);
 }
 
 .month {
@@ -117,5 +119,10 @@
 
   .more {
     padding-left: 0;
+  }
+
+  /* "+3 más" partía en dos renglones: en el celular queda solo "+3". */
+  .moreWord {
+    display: none;
   }
 }

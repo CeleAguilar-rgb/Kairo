@@ -1,0 +1,98 @@
+.trigger {
+  gap: var(--space-3);
+}
+
+/* Con algún filtro puesto el botón se tiñe, para que se note sin abrir el cajón. */
+.triggerOn {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 var(--space-2);
+  box-sizing: border-box;
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted);
+  color: var(--text-on-inverted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+  flex: 1;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.groupLabel {
+  padding: 0 var(--space-3) var(--space-2);
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.option {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  min-height: 48px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  color: var(--text);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--duration-base) ease;
+}
+
+.option:hover {
+  background: var(--surface-hover);
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.optionOn {
+  background: var(--surface-muted);
+}
+
+.optionLabel {
+  flex: 1;
+  min-width: 0;
+}
+
+.optionCount {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* El hueco de la marca siempre existe, para que los números no se muevan al elegir. */
+.tick {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  flex: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .option {
+    transition: none;
+  }
+}

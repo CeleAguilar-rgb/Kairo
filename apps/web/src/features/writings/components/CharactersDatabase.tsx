@@ -10,9 +10,11 @@ import { PageHeading } from '@/components/layout/PageHeading'
 import { Button } from '@/components/ui/Button'
 import { Card, LineIcon } from '@/components/ui/Card'
 import { EmptyState } from '@/components/ui/EmptyState'
+import { ScrollFade } from '@/components/ui/ScrollFade'
 import { Segmented } from '@/components/ui/Segmented'
 import { useToast } from '@/components/ui/Toast'
 import { fadeUp, staggerList } from '@/lib/motion'
+import { ChipRow } from '@/components/ui/ChipRow'
 
 import { createCharacterAction } from '../entry-actions'
 import { updateTemplateAction } from '../world-actions'
@@ -126,13 +128,13 @@ export function CharactersDatabase({ view }: { view: CharacterDbView }) {
               <Segmented label="Vista" value={mode} onChange={setMode} options={VIEW_OPTIONS} />
               <span className={styles.spacer} />
               {groupField ? (
-                <div className={styles.filters} role="group" aria-label={`Filtrar por ${groupField.name.toLowerCase()}`}>
+                <ChipRow className={styles.filters} role="group" aria-label={`Filtrar por ${groupField.name.toLowerCase()}`}>
                   {[{ id: 'all', label: 'Todos' }, ...groupField.options].map((option) => (
                     <button key={option.id} type="button" className={[styles.filter, filter === option.id ? styles.filterOn : null].filter(Boolean).join(' ')} aria-pressed={filter === option.id} onClick={() => setFilter(option.id)}>
                       {option.label}
                     </button>
                   ))}
-                </div>
+                </ChipRow>
               ) : null}
               <div
                 className={styles.menuWrap}
@@ -200,7 +202,7 @@ type TableProps = { fields: TemplateField[]; names: Record<string, string>; rows
 
 function Table({ fields, names, rows, activeId, onOpen, onRemoveField }: TableProps) {
   return (
-    <div className={styles.tableWrap}>
+    <ScrollFade className={styles.tableWrap}>
       <table className={styles.table}>
         <thead>
           <tr>
@@ -240,7 +242,7 @@ function Table({ fields, names, rows, activeId, onOpen, onRemoveField }: TablePr
           ))}
         </tbody>
       </table>
-    </div>
+    </ScrollFade>
   )
 }
 
@@ -286,7 +288,7 @@ function Board({ fields, groupField, rows, filter, onOpen }: BoardProps) {
   const columns = [...options.map((option) => ({ id: option.id, label: option.label, tone: option.tone, rows: rows.filter((row) => row.groupId === option.id) })), ...(unassigned.length ? [{ id: 'none', label: `Sin ${groupField.name.toLowerCase()}`, tone: 'muted' as const, rows: unassigned }] : [])]
 
   return (
-    <div className={styles.board}>
+    <ScrollFade className={styles.board}>
       {columns.map((column) => (
         <div key={column.id} className={styles.column}>
           <div className={styles.columnTop}>
@@ -304,6 +306,6 @@ function Board({ fields, groupField, rows, filter, onOpen }: BoardProps) {
           ))}
         </div>
       ))}
-    </div>
+    </ScrollFade>
   )
 }

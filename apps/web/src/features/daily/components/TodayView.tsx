@@ -15,8 +15,7 @@ import { completeFocusTaskAction, toggleRoutineBlockAction } from '../routine-ac
 import { dayProgress, isLateMark } from '../routine-utils'
 import type { MealPlan, RoutineBlockToday, RoutineDay, Streak } from '../types'
 
-import { DailyToolbar } from './DailyToolbar'
-import { EditRoutineLink } from './EditRoutineLink'
+import { DailyToolbar, ToolbarChip } from './DailyToolbar'
 import { RoutineTimeline } from './RoutineTimeline'
 import { DayProgressCard, StreaksCard, TodayMenuCard } from './TodayCards'
 import styles from './TodayView.module.css'
@@ -90,9 +89,9 @@ export function TodayView({ day, streaks, meals, nowIso, timeZone, hourFormat, d
 
   return (
     <>
-      <DailyToolbar action={<EditRoutineLink />}>
-        {dateText}
-        {routineName ? ` · rutina ${routineName}` : ''}
+      <DailyToolbar>
+        <span>{dateText}</span>
+        {routineName ? <ToolbarChip>Rutina {routineName}</ToolbarChip> : null}
       </DailyToolbar>
 
       {visible.blocks.length === 0 ? (

@@ -212,3 +212,17 @@
   font-size: 13px;
   color: var(--text-muted);
 }
+
+/* En el teléfono "Mostrar" vive arriba del calendario como una fila de chips (AgendaFilters): esta tarjeta sobra. */
+@media (max-width: 720px) {
+  .filtersCard {
+    display: none;
+  }
+}
+
+/* Con el dedo, las acciones del panel miden 44px. */
+@media (pointer: coarse) {
+  .action {
+    min-height: 44px;
+  }
+}

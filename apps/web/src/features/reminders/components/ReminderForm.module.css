@@ -20,12 +20,14 @@
 
 .date {
   flex: 1;
-  min-width: 150px;
+  /* min(100%, …): en una tarjeta angosta no empuja más ancho del que hay. */
+  min-width: min(100%, 150px);
 }
 
 /* Con el formato de 12 horas el navegador escribe "10:00 a. m." y el ícono del reloj: 130px lo cortaba */
 .time {
   width: 170px;
+  max-width: 100%;
 }
 
 .field {
@@ -39,11 +41,13 @@
   font-size: 14px;
 }
 
+/* Sin overflow aquí: Segmented ya se desliza solo en una línea (con su desvanecido); un overflow-x en este
+   contenedor fuerza overflow-y y dibuja una barra vertical alrededor. */
 .segmentedWrap {
   display: flex;
   align-self: flex-start;
   max-width: 100%;
-  overflow-x: auto;
+  min-width: 0;
 }
 
 .formError {

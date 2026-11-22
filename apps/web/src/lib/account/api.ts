@@ -4,6 +4,7 @@ import { cache } from 'react'
 import { api, ApiError } from '@/lib/api-client'
 import { DEMO_MODE } from '@/lib/demo'
 import { DEMO_ME } from '@/lib/mock/demo-me'
+import { applyDemoSections } from './demo-sections'
 import { readAppearance, readThemePreference } from '@/lib/theme/preference'
 
 export type Profile = {
@@ -39,6 +40,8 @@ export const getMe = cache(async (): Promise<Me | null> => {
     const appearance = await readAppearance()
     return {
       ...DEMO_ME,
+      // Las secciones prendidas y su orden también vienen de una cookie (demo-sections.ts).
+      sections: await applyDemoSections(DEMO_ME.sections),
       profile: {
         ...DEMO_ME.profile,
         theme: await readThemePreference(),

@@ -32,7 +32,8 @@ packages/shared/   Esquemas Zod y tipos usados por web y api.
 docs/
 ├── guides/        Arquitectura, seguridad, base de datos, estilos, decisiones…
 ├── design/        Copia de las pantallas del canvas de diseño
-└── history/       Dónde nos quedamos y una nota por sesión
+├── history/       Dónde nos quedamos y una nota por sesión
+└── movil/         Revisión de la versión de teléfono (lista de arreglos)
 ```
 
 ## Reglas no negociables
@@ -66,6 +67,7 @@ docs/
 | Proponer cambiar una tecnología o patrón | `docs/guides/decisions.md` |
 | Desplegar, configurar Vercel o tareas programadas | `docs/guides/architecture.md` (Despliegue y Tareas programadas) |
 | Saber dónde nos quedamos, cerrar una sesión | `docs/history/current.md` y `docs/history/README.md` |
+| Trabajar la versión de teléfono (responsive) | `docs/movil/revision.md` |
 
 ## Cómo trabajar en este repo
 

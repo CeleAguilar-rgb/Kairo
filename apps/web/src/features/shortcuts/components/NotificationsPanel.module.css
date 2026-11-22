@@ -15,6 +15,19 @@
   box-shadow: var(--shadow-xl);
 }
 
+/* En el teléfono, al centro de la pantalla (no colgando de la campana), con el fondo oscurecido. Sin transform:
+   Motion lo usa para animar la entrada; inset + margin auto + height fit-content centran solos. */
+@media (max-width: 720px) {
+  .panel {
+    inset: 0;
+    margin: auto;
+    height: fit-content;
+    width: min(400px, calc(100% - var(--space-9) * 2));
+    max-height: calc(100dvh - var(--space-9) * 2);
+    transform-origin: center;
+  }
+}
+
 .header {
   display: flex;
   align-items: center;

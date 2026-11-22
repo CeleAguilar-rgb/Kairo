@@ -7,16 +7,43 @@
   min-height: 44px;
 }
 
+/* El texto principal de la franja (la fecha, "Tus metas") en el color del texto, como la fecha del selector de
+   semana. Lo secundario va en una pastilla (.chip) y, si no cabe a su lado, baja entero al renglón de abajo. */
 .start {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-3);
-  color: var(--text-muted);
+  gap: var(--space-2) var(--space-4);
+  color: var(--text);
   font-size: 17px;
+  font-weight: 500;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .action {
   display: flex;
   align-items: center;
   gap: var(--space-4);
+}
+
+/* En el teléfono lo de la izquierda ocupa lo que sobra y se centra: el selector de semana (flechas y fecha), la
+   fecha de hoy y su pastilla de rutina quedan en medio de la pantalla y no pegados a la izquierda. */
+@media (max-width: 720px) {
+  .start {
+    flex: 1;
+    min-width: 0;
+    justify-content: center;
+    text-align: center;
+  }
 }

@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
-import { ButtonLink } from '@/components/ui/ButtonLink'
-import { LineIcon } from '@/components/ui/Card'
+import { AddButton } from '@/components/ui/AddButton'
 import { FinanceToolbar, MonthSwitcher, SummaryView } from '@/features/finance'
 import { getFinanceMonth, getFinanceSummary } from '@/features/finance/api'
 import { monthHrefs } from '@/features/finance/finance-utils'
@@ -26,14 +25,7 @@ export default async function FinanceSummaryPage({ searchParams }: PageProps) {
 
   return (
     <>
-      <FinanceToolbar
-        action={
-          <ButtonLink href="/finanzas/movimientos?nuevo=1">
-            <LineIcon d="M12 5v14M5 12h14" size={16} strokeWidth={2} />
-            Movimiento
-          </ButtonLink>
-        }
-      >
+      <FinanceToolbar desktopOnly action={<AddButton href="/finanzas/movimientos?nuevo=1" label="Movimiento" />}>
         <MonthSwitcher month={month} prevHref={prevHref} nextHref={nextHref} />
       </FinanceToolbar>
 

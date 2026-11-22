@@ -30,6 +30,8 @@
 
 .quickInput::placeholder {
   color: var(--text-subtle);
+  /* Si aun así no cabe (pantalla muy angosta o letra grande), puntos suspensivos en vez de cortar la letra. */
+  text-overflow: ellipsis;
 }
 
 .quickInput:focus-visible {
@@ -209,8 +211,39 @@
 }
 
 @media (max-width: 720px) {
+  /* Dos renglones: el nombre con todo el ancho (hasta dos líneas) y debajo la prioridad y la fecha.
+     Antes iban en la misma línea con 56 px para la prioridad, que el chip "Media" desbordaba y le
+     quitaba el espacio al nombre. Los elementos se colocan por su orden: título, prioridad, fecha. */
   .rowButton {
-    grid-template-columns: minmax(0, 1fr) 56px 60px;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: var(--space-4);
+    row-gap: var(--space-2);
+    min-height: 0;
+    padding: var(--space-4) 0;
+  }
+
+  .title {
+    grid-column: 1 / -1;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  /* Con dos líneas, el tachado dibujado (::after) caería entre ellas: aquí se usa el nativo. */
+  .title::after {
+    display: none;
+  }
+
+  .titleDone {
+    text-decoration: line-through;
+  }
+
+  /* La fecha (último hijo) pegada a la izquierda, junto a la prioridad. */
+  .rowButton > :last-child {
+    justify-self: start;
+    text-align: left;
   }
 
   .hideSm {
@@ -225,5 +258,12 @@
 @media (prefers-reduced-motion: reduce) {
   .rowRecent {
     animation: none;
+  }
+}
+
+/* Sin mouse (pantallas táctiles) no hay hover: el botón de borrar se ve siempre, a la derecha. */
+@media (hover: none) {
+  .delete {
+    opacity: 1;
   }
 }

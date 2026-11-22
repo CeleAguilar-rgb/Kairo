@@ -510,8 +510,17 @@
   text-wrap: balance;
 }
 
-/* En pantallas angostas el filtro se desliza dentro de su tarjeta en lugar de salirse */
+/* El filtro (Segmented) ya se desliza solo si no cabe; este contenedor solo evita que se salga de su tarjeta. Sin
+   overflow aquí: overflow-x: auto fuerza también overflow-y y dibujaba una barra vertical. */
 .filterScroll {
   max-width: 100%;
-  overflow-x: auto;
+  min-width: 0;
+}
+
+/* Teléfono: "Subir archivo" a todo lo ancho, debajo del texto. */
+@media (max-width: 720px) {
+  .toolbar > button {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
 }

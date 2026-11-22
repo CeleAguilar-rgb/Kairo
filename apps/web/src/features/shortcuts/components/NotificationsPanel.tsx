@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { LineIcon } from '@/components/ui/Card'
+import { PanelScrim } from '@/components/ui/PanelScrim'
 import { useToast } from '@/components/ui/Toast'
 import { popover } from '@/lib/motion'
 import { focusFirst, useDialogFocus } from '@/lib/use-dialog-focus'
@@ -83,7 +84,9 @@ export function NotificationsPanel({ open, onClose, data, onChange, timeZone }: 
   const groups = data ? groupNotifications(data.items, timeZone) : []
 
   return createPortal(
-    <AnimatePresence>
+    <>
+      <PanelScrim open={open} onClose={onClose} mobileOnly />
+      <AnimatePresence>
       {open ? (
         <motion.section
           ref={panelRef}
@@ -140,7 +143,8 @@ export function NotificationsPanel({ open, onClose, data, onChange, timeZone }: 
           </Link>
         </motion.section>
       ) : null}
-    </AnimatePresence>,
+      </AnimatePresence>
+    </>,
     document.body,
   )
 }

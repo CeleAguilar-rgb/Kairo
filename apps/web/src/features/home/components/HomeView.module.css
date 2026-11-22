@@ -115,7 +115,6 @@
 
 .chips {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--space-3);
 }
 
@@ -197,4 +196,11 @@
   background: transparent;
   font: inherit;
   cursor: pointer;
+}
+
+/* Con el dedo, los chips de tarjetas miden 44px. */
+@media (pointer: coarse) {
+  .chip {
+    min-height: 44px;
+  }
 }

@@ -50,7 +50,6 @@
 
 .filters {
   display: flex;
-  flex-wrap: wrap;
   gap: var(--space-2);
 }
 
@@ -148,10 +147,10 @@
 }
 
 /* --- Tabla --- */
+/* Se desliza con ScrollFade (desvanecido en el borde); aquí solo el margen y el padding que dejan espacio a los aros de foco. */
 .tableWrap {
-  overflow-x: auto;
-  margin: 0 calc(var(--space-3) * -1);
-  padding: 0 var(--space-3);
+  margin: calc(var(--space-2) * -1) calc(var(--space-3) * -1);
+  padding: var(--space-2) var(--space-3);
 }
 
 .table {
@@ -314,7 +313,9 @@
   grid-auto-flow: column;
   grid-auto-columns: minmax(220px, 1fr);
   gap: var(--space-6);
-  overflow-x: auto;
+  /* Se desliza con ScrollFade; el padding deja ver el aro de foco de las tarjetas. */
+  padding-block: var(--space-2);
+  margin-block: calc(var(--space-2) * -1);
 }
 
 .column {
@@ -388,4 +389,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Con el dedo, los filtros miden 44px. */
+@media (pointer: coarse) {
+  .filter {
+    min-height: 44px;
+  }
 }

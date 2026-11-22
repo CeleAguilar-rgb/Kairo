@@ -1,0 +1,11 @@
+/* a.link (y no .link) para ganarle en especificidad al padding de .button, que viene de otro módulo. */
+@media (max-width: 480px) {
+  a.link {
+    width: 44px;
+    padding: 0;
+  }
+
+  .label {
+    display: none;
+  }
+}

@@ -1,10 +1,21 @@
 /* En pantallas angostas la semana se desliza de lado: siete columnas apretadas no se leen */
+/* El desvanecido llega a la orilla de la tarjeta (no a la del contenido): se le quita el padding de la tarjeta
+   (.calendar, --space-7) y se le devuelve como padding. */
 .scroll {
-  overflow-x: auto;
+  margin-inline: calc(var(--space-7) * -1);
+  padding-inline: var(--space-7);
 }
 
 .week {
   min-width: 760px;
+}
+
+/* En el teléfono la rejilla de siete columnas no cabe ni deslizando bien: en su lugar va la lista por día
+   (WeekList, que solo se ve aquí). */
+@media (max-width: 720px) {
+  .scroll {
+    display: none;
+  }
 }
 
 .head {

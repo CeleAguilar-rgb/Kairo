@@ -2,14 +2,17 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 
+import { useFocus } from '@/features/focus'
+
 import { NotificationsPanel } from './components/NotificationsPanel'
 import { QuickCapture } from './components/QuickCapture'
 import { SearchPalette } from './components/SearchPalette'
 import { listNotificationsAction } from './notification-actions'
 import type { NotificationsPanelData } from './types'
 
-// Cuál de los tres atajos está abierto (Atajos.dc.html): abrir uno cierra los otros.
-export type ShortcutPanel = 'search' | 'notifications' | 'capture'
+// Cuál panel flotante está abierto (Atajos.dc.html): abrir uno cierra los otros. Además de los tres atajos, el
+// menú del avatar y la bandeja de doodles del Topnav usan este mismo estado, así nunca hay dos menús a la vez.
+export type ShortcutPanel = 'search' | 'notifications' | 'capture' | 'menu' | 'doodles'
 
 type ShortcutsValue = {
   open: ShortcutPanel | null
@@ -40,6 +43,16 @@ type ShortcutsProviderProps = {
 export function ShortcutsProvider({ children, timeZone, demo }: ShortcutsProviderProps) {
   const [open, setOpen] = useState<ShortcutPanel | null>(null)
   const [notifications, setNotifications] = useState<NotificationsPanelData | null>(null)
+  const focus = useFocus()
+  const setFocusExpanded = focus.setExpanded
+  const focusExpanded = focus.expanded
+
+  // Un solo panel flotante a la vez: si se abre el pomodoro (desde el reloj, el "+" o el detalle de una tarea),
+  // el atajo que estuviera abierto se cierra. La otra dirección (abrir un atajo cierra el pomodoro) va en toggle.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (focusExpanded) setOpen(null)
+  }, [focusExpanded])
 
   // Los avisos se piden al entrar, al abrir la campana y al volver a la pestaña: los crean las tareas programadas,
   // no esta pantalla, así que no hay otro momento en que se sepa que llegó uno. Si falla, se queda lo que había.
@@ -78,15 +91,17 @@ export function ShortcutsProvider({ children, timeZone, demo }: ShortcutsProvide
 
   // Estable: el panel lo usa en un efecto (clic afuera).
   const closePanel = useCallback(() => setOpen(null), [])
+  const togglePanel = useCallback(
+    (panel: ShortcutPanel) => {
+      setFocusExpanded(false)
+      setOpen((current) => (current === panel ? null : panel))
+    },
+    [setFocusExpanded],
+  )
 
   const value = useMemo<ShortcutsValue>(
-    () => ({
-      open,
-      toggle: (panel) => setOpen((current) => (current === panel ? null : panel)),
-      close: () => setOpen(null),
-      unread: notifications?.unread ?? 0,
-    }),
-    [open, notifications],
+    () => ({ open, toggle: togglePanel, close: closePanel, unread: notifications?.unread ?? 0 }),
+    [open, notifications, togglePanel, closePanel],
   )
 
   return (
@@ -94,7 +109,7 @@ export function ShortcutsProvider({ children, timeZone, demo }: ShortcutsProvide
       {children}
       <SearchPalette open={open === 'search'} onClose={() => setOpen(null)} demo={demo} />
       <NotificationsPanel open={open === 'notifications'} onClose={closePanel} data={notifications} onChange={setNotifications} timeZone={timeZone} />
-      <QuickCapture open={open === 'capture'} onToggle={() => value.toggle('capture')} onClose={() => setOpen(null)} timeZone={timeZone} demo={demo} />
+      <QuickCapture open={open === 'capture'} onToggle={() => togglePanel('capture')} onClose={() => setOpen(null)} timeZone={timeZone} demo={demo} />
     </ShortcutsContext.Provider>
   )
 }

@@ -13,6 +13,7 @@ import { useToast } from '@/components/ui/Toast'
 import { formatDayMonth, formatLongDay, formatMonthYear, formatTime, type IsoDate } from '@/lib/dates'
 import { fieldErrors } from '@/lib/form-errors'
 import { EASE_OUT, fadeUp, listItem, staggerList } from '@/lib/motion'
+import { ChipRow } from '@/components/ui/ChipRow'
 
 import { deleteJournalAction, saveJournalAction } from '../journal-actions'
 import { averageMood, calendarWeekdays, monthCalendar } from '../journal-utils'
@@ -176,7 +177,7 @@ export function JournalView({ entries, today, daySummary, timeZone, hourFormat, 
             <span className={styles.label} id="journal-tags-label">
               Etiquetas
             </span>
-            <div role="group" aria-labelledby="journal-tags-label" className={styles.tags}>
+            <ChipRow role="group" aria-labelledby="journal-tags-label" className={styles.tags}>
               {JOURNAL_TAGS.map((tag) => {
                 const on = tags.includes(tag)
                 return (
@@ -191,7 +192,7 @@ export function JournalView({ entries, today, daySummary, timeZone, hourFormat, 
                   </button>
                 )
               })}
-            </div>
+            </ChipRow>
           </div>
 
           <div className={styles.summary}>

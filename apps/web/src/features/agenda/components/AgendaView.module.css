@@ -100,4 +100,49 @@
   .nav {
     gap: var(--space-2);
   }
+
+  /* Una sola fila de controles: Día/Semana/Mes y "Filtrar". Las flechas viven en el renglón de la fecha (.rangeNav,
+     abajo) y el "+" de nuevo evento es el flotante (AddButton se esconde en el teléfono). */
+  .controls {
+    flex: 1 1 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  /* Segmented trae align-self: flex-start de fábrica; aquí se centra (este selector pesa más). */
+  .controls > :first-child {
+    align-self: center;
+  }
+
+  /* El título con su fecha ocupa todo el ancho, para que la navegación de la fecha llegue de borde a borde. */
+  .hero > :first-child {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+}
+
+/* Teléfono: la fecha con una flecha a cada lado. Tocar la fecha vuelve a hoy. */
+.rangeNav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.rangeButton {
+  all: unset;
+  box-sizing: border-box;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: var(--space-3) var(--space-3);
+  border-radius: var(--radius-pill);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.rangeButton:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
 }

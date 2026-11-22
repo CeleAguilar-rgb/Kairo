@@ -4,6 +4,7 @@ import { FOCUS_DOTS } from '@kairo/shared'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState } from 'react'
 
+import { PanelScrim } from '@/components/ui/PanelScrim'
 import { DURATION, SPRING } from '@/lib/motion'
 
 import { useFocus } from '../FocusContext'
@@ -62,6 +63,16 @@ export function FocusPlayer() {
   const { state, reset, skipToBreak, choosePreset, toggleRun } = timer
   const scrolledDown = useHiddenWhileScrollingDown()
 
+  // Escape cierra el panel, como cualquier menú.
+  useEffect(() => {
+    if (!expanded) return
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') setExpanded(false)
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [expanded, setExpanded])
+
   const preset = FOCUS_PRESETS[state.presetIndex]
   const totalSeconds = (state.phase === 'work' ? preset.workMinutes : preset.breakMinutes) * 60
   const fractionDone = totalSeconds === 0 ? 0 : 1 - state.secondsLeft / totalSeconds
@@ -86,7 +97,9 @@ export function FocusPlayer() {
   const minutesLeft = Math.ceil(state.secondsLeft / 60)
 
   return (
-    // Con el panel abierto nunca se esconde: la persona lo está usando.
+    <>
+    <PanelScrim open={expanded} onClose={() => setExpanded(false)} />
+    {/* Con el panel abierto nunca se esconde: la persona lo está usando. */}
     <div className={[styles.dock, !expanded && scrolledDown ? styles.dockHidden : null].filter(Boolean).join(' ')}>
       <AnimatePresence>
         {expanded ? (
@@ -97,15 +110,9 @@ export function FocusPlayer() {
             initial={{ opacity: 0, y: 10, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1, transition: SPRING.panel }}
             exit={{ opacity: 0, y: 8, scale: 0.97, transition: { duration: 0.15 } }}
-            style={{ transformOrigin: 'bottom right' }}
           >
             <div className={styles.panelHead}>
               <span className={styles.panelTitle}>Enfoque</span>
-              <button type="button" className={styles.iconButton} aria-label="Minimizar" onClick={() => setExpanded(false)}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M6 9l6 6 6-6" />
-                </svg>
-              </button>
             </div>
 
             <div className={styles.ringWrap}>
@@ -266,5 +273,6 @@ export function FocusPlayer() {
         </AnimatePresence>
       </button>
     </div>
+    </>
   )
 }

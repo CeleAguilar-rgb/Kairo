@@ -1,0 +1,19 @@
+/* Ver ChipRow.tsx. El contenedor de cada pantalla pone display: flex y el gap; aquí van las tres cosas que hacen
+   falta para que se deslice. */
+.row {
+  flex-wrap: nowrap;
+  scrollbar-width: none;
+  /* Un padding vertical, anulado por un margen negativo, para que overflow no recorte el aro de foco de los chips. */
+  padding-block: var(--space-2);
+  margin-block: calc(var(--space-2) * -1);
+}
+
+.row::-webkit-scrollbar {
+  display: none;
+}
+
+/* Cada chip en una sola línea y sin encogerse: si no caben, se desliza. */
+.row > * {
+  flex-shrink: 0;
+  white-space: nowrap;
+}

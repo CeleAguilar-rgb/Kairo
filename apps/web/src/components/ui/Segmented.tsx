@@ -1,11 +1,12 @@
 'use client'
 
 import { LayoutGroup, motion } from 'motion/react'
-import { useId, type ReactNode } from 'react'
+import { useId, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 
 import { SPRING } from '@/lib/motion'
 
 import styles from './Segmented.module.css'
+import { ScrollTabs } from './ScrollTabs'
 
 type Option<T extends string> = { value: T; label: ReactNode }
 
@@ -23,12 +24,14 @@ type SegmentedProps<T extends string> = {
 // Grupo de opciones en una píldora (canvas: Lista/Tablero, Estado). La opción
 // elegida tiene un fondo oscuro que se desliza de una a otra (layoutId). Cada
 // instancia usa su propio id de layout para no robarse la píldora entre sí.
+// Siempre en una sola línea: si las opciones no caben, la píldora se desliza de lado con el desvanecido de
+// ScrollTabs en el borde donde hay más (nunca se parte en renglones).
 export function Segmented<T extends string>({ label, value, options, onChange, mode = 'toggle', tone = 'glass' }: SegmentedProps<T>) {
   const groupId = useId()
 
   return (
     <LayoutGroup id={groupId}>
-      <div
+      <ScrollGroup
         role={mode === 'radio' ? 'radiogroup' : 'group'}
         aria-label={label}
         className={[styles.group, tone === 'raised' ? styles.raised : styles.glass].join(' ')}
@@ -50,7 +53,12 @@ export function Segmented<T extends string>({ label, value, options, onChange, m
             </button>
           )
         })}
-      </div>
+      </ScrollGroup>
     </LayoutGroup>
   )
+}
+
+// ScrollTabs como <div> (un grupo de botones no es navegación), con el estilo de una sola línea.
+function ScrollGroup({ className, ...rest }: ComponentPropsWithoutRef<'div'>) {
+  return <ScrollTabs as="div" className={[styles.noWrap, className].filter(Boolean).join(' ')} {...rest} />
 }

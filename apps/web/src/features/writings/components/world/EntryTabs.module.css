@@ -148,3 +148,10 @@
   font-size: 24px;
   font-weight: 500;
 }
+
+/* Con el dedo, los filtros miden 44px. */
+@media (pointer: coarse) {
+  .filter {
+    min-height: 44px;
+  }
+}

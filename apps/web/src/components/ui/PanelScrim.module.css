@@ -1,0 +1,15 @@
+/* Entre la barra de abajo (50) y el panel flotante del pomodoro (55), el panel del "+" y el botón (58).
+   --scrim-z lo cambia quien lo pone dentro de otra capa (el Topnav lo usa dentro de su propio z-index). */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--scrim-z, 54);
+  background: var(--scrim);
+}
+
+/* Arriba de 720px (compu) esos menús cuelgan de su botón y no oscurecen el fondo. */
+@media (min-width: 721px) {
+  .mobileOnly {
+    display: none;
+  }
+}
