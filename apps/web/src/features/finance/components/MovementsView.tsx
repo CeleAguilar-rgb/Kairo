@@ -4,15 +4,16 @@ import { motion } from 'motion/react'
 import { useState } from 'react'
 
 import { useCalmEntry } from '@/components/layout/SectionPanel'
-import { Button } from '@/components/ui/Button'
-import { Card, LineIcon } from '@/components/ui/Card'
+import { AddButton } from '@/components/ui/AddButton'
+import { Card } from '@/components/ui/Card'
+import { FilterOptions, FilterSheet } from '@/components/ui/FilterSheet'
+import responsive from '@/components/ui/responsive.module.css'
 import { Segmented } from '@/components/ui/Segmented'
 import { useToast } from '@/components/ui/Toast'
 import type { IsoDate } from '@/lib/dates'
 import { formatMoney } from '@/lib/money'
 import { EASE_OUT } from '@/lib/motion'
 
-import { FINANCE_ICON } from '../finance-meta'
 import { groupByDay, inOutTotals, matchesFilter, monthWord, movementTitle, type MovementFilter } from '../finance-utils'
 import { undoFinanceAction } from '../transaction-actions'
 import type { MovementsView as MovementsData, Transaction } from '../types'
@@ -66,21 +67,31 @@ export function MovementsView({ view, today, prevHref, nextHref, openNew }: Move
 
   return (
     <>
-      <FinanceToolbar
-        action={
-          <Button onClick={() => setPanel({ id: null })}>
-            <LineIcon d={FINANCE_ICON.plus} size={16} strokeWidth={2} />
-            Movimiento
-          </Button>
-        }
-      >
+      <FinanceToolbar desktopOnly action={<AddButton label="Movimiento" onClick={() => setPanel({ id: null })} />}>
         <MonthSwitcher month={view.month} prevHref={prevHref} nextHref={nextHref} />
       </FinanceToolbar>
 
       <motion.div initial={calm ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, ease: EASE_OUT, delay: 0.12 }}>
         <Card as="section" className={styles.card} aria-label="Movimientos">
           <div className={styles.bar}>
-            <Segmented label="Tipo de movimiento" tone="raised" value={filter} onChange={setFilter} options={FILTERS} />
+            {/* Escritorio: los cuatro tipos en una píldora. Teléfono: un botón "Filtrar" con un cajón (no caben todos). */}
+            <div className={responsive.hideOnPhone}>
+              <Segmented label="Tipo de movimiento" tone="raised" value={filter} onChange={setFilter} options={FILTERS} />
+            </div>
+            <FilterSheet title="Filtrar movimientos" badge={filter === 'all' ? 0 : 1} className={responsive.phoneOnly}>
+              {(close) => (
+                <FilterOptions
+                  label="Tipo de movimiento"
+                  mode="single"
+                  options={FILTERS}
+                  isSelected={(value) => value === filter}
+                  onSelect={(value) => {
+                    setFilter(value as MovementFilter)
+                    close()
+                  }}
+                />
+              )}
+            </FilterSheet>
             <div className={styles.sums}>
               <span>
                 Entró <b className={styles.sumIn}>{formatMoney(inCents, undefined, { sign: true })}</b>

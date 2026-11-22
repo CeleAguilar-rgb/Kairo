@@ -2,12 +2,14 @@
 
 import type { CreateReminderInput } from '@kairo/shared'
 import { AnimatePresence, motion } from 'motion/react'
-import { useEffect, useOptimistic, useState, useTransition } from 'react'
+import { useEffect, useOptimistic, useRef, useState, useTransition } from 'react'
 
+import { usePageAction } from '@/components/layout/PageAction'
 import { PageHeading } from '@/components/layout/PageHeading'
 import { Button } from '@/components/ui/Button'
 import { Card, CardHeader, LineIcon } from '@/components/ui/Card'
 import { Doodle } from '@/components/ui/Doodle'
+import responsive from '@/components/ui/responsive.module.css'
 import { useToast } from '@/components/ui/Toast'
 import { addDays, minutesNowIn, minutesToWallTime, todayIn } from '@/lib/dates'
 import { EASE_OUT } from '@/lib/motion'
@@ -61,6 +63,7 @@ export function RemindersView({ reminders, nowIso, timeZone, hourFormat }: Remin
   const [now, setNow] = useState(nowIso)
   const [draft, setDraft] = useState<CreateReminderInput | null>(null)
   const [serverErrors, setServerErrors] = useState<Record<string, string>>({})
+  const todayRef = useRef<HTMLDivElement>(null)
 
   // El reloj avanza solo: lo que se atrasa se pone en rojo y lo de mañana pasa a "Para hoy" a medianoche.
   useEffect(() => {
@@ -123,6 +126,13 @@ export function RemindersView({ reminders, nowIso, timeZone, hourFormat }: Remin
     setDraft(newDraft(now, timeZone))
   }
 
+  // La acción de la pantalla (ver PageAction.tsx): en el teléfono el "+" flotante abre el formulario y sube hasta él,
+  // porque queda arriba de la lista y, si la persona ya bajó, no se vería. Con el formulario abierto solo sube.
+  usePageAction('Nuevo recordatorio', () => {
+    if (!draft) openForm()
+    todayRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  })
+
   const pendingCount = dueToday.length
   const countText = pendingCount === 0 ? null : `· ${pendingCount} ${pendingCount === 1 ? 'pendiente' : 'pendientes'}`
 
@@ -146,6 +156,7 @@ export function RemindersView({ reminders, nowIso, timeZone, hourFormat }: Remin
 
       <div className={styles.grid}>
         <motion.div
+          ref={todayRef}
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: EASE_OUT, delay: 0.12 }}
@@ -161,7 +172,7 @@ export function RemindersView({ reminders, nowIso, timeZone, hourFormat }: Remin
               iconTone="surface"
               icon={<LineIcon d={['M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9', 'M10.3 21a1.94 1.94 0 0 0 3.4 0']} />}
               action={
-                <Button variant="plain" className={styles.newButton} aria-expanded={draft !== null} onClick={draft ? () => setDraft(null) : openForm}>
+                <Button variant="plain" className={[styles.newButton, responsive.hideOnPhone].join(' ')} aria-expanded={draft !== null} onClick={draft ? () => setDraft(null) : openForm}>
                   <LineIcon d="M12 5v14M5 12h14" size={14} strokeWidth={2.2} />
                   Nuevo
                 </Button>

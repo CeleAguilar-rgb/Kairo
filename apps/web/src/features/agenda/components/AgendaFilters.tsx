@@ -1,4 +1,5 @@
-import { ChipRow } from '@/components/ui/ChipRow'
+import { FilterOptions, FilterSheet } from '@/components/ui/FilterSheet'
+import responsive from '@/components/ui/responsive.module.css'
 
 import { FILTER_TYPES, TYPE_LABEL } from '../agenda-utils'
 import type { AgendaEntryType } from '../types'
@@ -12,28 +13,24 @@ type AgendaFiltersProps = {
   onToggle: (type: AgendaEntryType) => void
 }
 
-// "Mostrar" en el teléfono: una fila de chips arriba del calendario, para decidir qué ver antes de mirarlo (en la
-// compu es la tarjeta "Mostrar" del panel de la derecha, y esta fila se oculta). Mismo estado y mismos tipos que ella.
+// "Mostrar" en el teléfono: un botón "Filtrar" en la barra de controles que abre un cajón con los tipos, para decidir
+// qué ver (en la compu es la tarjeta "Mostrar" del panel de la derecha, y este botón se oculta). Mismo estado y mismos
+// tipos que ella; el número del botón es cuántos tipos están apagados.
 export function AgendaFilters({ counts, hidden, onToggle }: AgendaFiltersProps) {
   return (
-    <ChipRow className={styles.row} role="group" aria-label="Mostrar en el calendario">
-      {FILTER_TYPES.map((type) => {
-        const on = !hidden.has(type)
-        return (
-          <button
-            key={type}
-            type="button"
-            role="checkbox"
-            aria-checked={on}
-            className={[styles.chip, on ? styles.chipOn : null].filter(Boolean).join(' ')}
-            onClick={() => onToggle(type)}
-          >
-            <span className={[styles.swatch, types[type]].join(' ')} aria-hidden="true" />
-            {TYPE_LABEL[type]}
-            <span className={styles.count}>{counts[type]}</span>
-          </button>
-        )
-      })}
-    </ChipRow>
+    <FilterSheet title="Mostrar en el calendario" badge={hidden.size} className={responsive.phoneOnly}>
+      <FilterOptions
+        label="Mostrar"
+        mode="multi"
+        options={FILTER_TYPES.map((type) => ({
+          value: type,
+          label: TYPE_LABEL[type],
+          count: counts[type],
+          leading: <span className={[styles.swatch, types[type]].join(' ')} aria-hidden="true" />,
+        }))}
+        isSelected={(value) => !hidden.has(value as AgendaEntryType)}
+        onSelect={(value) => onToggle(value as AgendaEntryType)}
+      />
+    </FilterSheet>
   )
 }

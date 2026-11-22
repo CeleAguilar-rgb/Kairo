@@ -1,0 +1,8 @@
+/* Solo en el teléfono (ver AddButton.tsx): el botón no se ve, su acción la hace el "+" flotante. `a.add` y
+   `button.add` pesan más que la clase `.button` de Button.module.css, así que mandan sin importar el orden de los CSS. */
+@media (max-width: 720px) {
+  button.add,
+  a.add {
+    display: none;
+  }
+}

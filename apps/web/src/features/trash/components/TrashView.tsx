@@ -8,6 +8,8 @@ import { PageHeading } from '@/components/layout/PageHeading'
 import { Button } from '@/components/ui/Button'
 import { LineIcon } from '@/components/ui/Card'
 import { Doodle } from '@/components/ui/Doodle'
+import { FilterOptions, FilterSheet } from '@/components/ui/FilterSheet'
+import responsive from '@/components/ui/responsive.module.css'
 import { useToast } from '@/components/ui/Toast'
 import { listItem } from '@/lib/motion'
 import { ChipRow } from '@/components/ui/ChipRow'
@@ -87,18 +89,23 @@ export function TrashView({ items: initialItems, nowIso, timeZone }: TrashViewPr
     })
   }
 
+  // "Vaciar papelera" se pinta en dos lugares: en el encabezado (escritorio) y junto a "Filtrar" (teléfono). Es el
+  // mismo botón; cada lugar le pone su clase y solo uno se ve según el ancho.
+  const emptyButton = (className?: string) =>
+    items.length > 0 ? (
+      <Button variant="ghost" className={[styles.emptyButton, className].filter(Boolean).join(' ')} onClick={() => setConfirmEmpty(true)} disabled={pending}>
+        <LineIcon d={TRASH_ICON} size={16} />
+        Vaciar papelera
+      </Button>
+    ) : null
+
   return (
     <div className={styles.page}>
       <section className={styles.header}>
         <PageHeading title="Papelera" doodle="spiral" doodleRotate={-8}>
           <p className={styles.lede}>Lo que borras se queda aquí 30 días. Después se borra para siempre.</p>
         </PageHeading>
-        {items.length > 0 ? (
-          <Button variant="ghost" className={styles.emptyButton} onClick={() => setConfirmEmpty(true)} disabled={pending}>
-            <LineIcon d={TRASH_ICON} size={16} />
-            Vaciar papelera
-          </Button>
-        ) : null}
+        {emptyButton(responsive.hideOnPhone)}
       </section>
 
       <AnimatePresence>
@@ -120,7 +127,29 @@ export function TrashView({ items: initialItems, nowIso, timeZone }: TrashViewPr
 
       <section className={styles.card} aria-label="Elementos en la papelera">
         <div className={styles.filtersWrap}>
-        <ChipRow role="group" aria-label="Filtrar" className={styles.filters}>
+        {/* Teléfono: "Filtrar" a la izquierda y "Vaciar papelera" a la derecha, en la misma fila. */}
+        <div className={[styles.phoneBar, responsive.phoneOnly].join(' ')}>
+          <FilterSheet title="Filtrar la papelera" badge={filter === 'all' ? 0 : 1}>
+            {(close) => (
+              <FilterOptions
+                label="Qué mostrar"
+                mode="single"
+                options={(['all', ...groups] as Filter[]).map((value) => ({
+                  value,
+                  label: value === 'all' ? 'Todo' : GROUP_LABEL[value],
+                  count: items.filter((item) => value === 'all' || item.group === value).length,
+                }))}
+                isSelected={(value) => value === filter}
+                onSelect={(value) => {
+                  setFilter(value as Filter)
+                  close()
+                }}
+              />
+            )}
+          </FilterSheet>
+          {emptyButton()}
+        </div>
+        <ChipRow role="group" aria-label="Filtrar" className={[styles.filters, responsive.hideOnPhone].join(' ')}>
           {(['all', ...groups] as Filter[]).map((value) => {
             const count = items.filter((item) => value === 'all' || item.group === value).length
             const selected = filter === value

@@ -4,9 +4,11 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 
 import { useCalmEntry } from '@/components/layout/SectionPanel'
+import { AddButton } from '@/components/ui/AddButton'
 import { Button } from '@/components/ui/Button'
-import { LineIcon } from '@/components/ui/Card'
 import { EmptyState } from '@/components/ui/EmptyState'
+import { IconTabs } from '@/components/ui/IconTabs'
+import responsive from '@/components/ui/responsive.module.css'
 import { Segmented } from '@/components/ui/Segmented'
 import type { IsoDate } from '@/lib/dates'
 import { DURATION } from '@/lib/motion'
@@ -38,6 +40,13 @@ const FILTERS: { value: GoalStatus; label: string }[] = [
   { value: 'paused', label: 'En pausa' },
 ]
 
+// El icono de cada estado para la barra del teléfono (ver IconTabs.tsx).
+const STATUS_ICON: Record<GoalStatus, string | string[]> = {
+  active: ['M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z', 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z'],
+  done: ['M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z', 'M8.5 12l2.5 2.5 4.5-5'],
+  paused: ['M9 5v14', 'M15 5v14'],
+}
+
 // Metas (Metas.dc.html): las tarjetas por estado (activas, logradas, en pausa), el detalle de cada una en un
 // panel, el formulario de nueva meta y la celebración al lograr una.
 export function GoalsView({ goals, today, habitBlocks, projects }: GoalsViewProps) {
@@ -61,30 +70,35 @@ export function GoalsView({ goals, today, habitBlocks, projects }: GoalsViewProp
 
   return (
     <>
-      <DailyToolbar
-        action={
-          <Button onClick={newGoal}>
-            <LineIcon d="M12 5v14M5 12h14" size={16} strokeWidth={2} />
-            Nueva meta
-          </Button>
-        }
-      >
+      <DailyToolbar desktopOnly action={<AddButton label="Nueva meta" onClick={newGoal} />}>
         Tus metas
       </DailyToolbar>
 
-      <Segmented
+      {/* Escritorio: las tres en una píldora con su cuenta cada una. Teléfono: barra de iconos con la cuenta en la
+          elegida (las tres con nombre no caben y la última quedaba cortada). */}
+      <div className={responsive.hideOnPhone}>
+        <Segmented
+          label="Estado de las metas"
+          value={filter}
+          onChange={setFilter}
+          options={FILTERS.map((item) => ({
+            value: item.value,
+            label: (
+              <>
+                {item.label}
+                <span className={styles.count}>{countOf(item.value)}</span>
+              </>
+            ),
+          }))}
+        />
+      </div>
+      <IconTabs
+        phoneOnly
+        id="goals-status"
         label="Estado de las metas"
-        value={filter}
-        onChange={setFilter}
-        options={FILTERS.map((item) => ({
-          value: item.value,
-          label: (
-            <>
-              {item.label}
-              <span className={styles.count}>{countOf(item.value)}</span>
-            </>
-          ),
-        }))}
+        items={FILTERS.map((item) => ({ key: item.value, label: item.label, icon: STATUS_ICON[item.value], count: countOf(item.value) }))}
+        activeKey={filter}
+        onSelect={(key) => setFilter(key as GoalStatus)}
       />
 
       <AnimatePresence mode="wait" initial={false}>

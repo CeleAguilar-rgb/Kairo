@@ -4,6 +4,7 @@ import { motion } from 'motion/react'
 import { useState, useTransition } from 'react'
 
 import { useCalmEntry } from '@/components/layout/SectionPanel'
+import { AddButton } from '@/components/ui/AddButton'
 import { Button } from '@/components/ui/Button'
 import { Card, LineIcon } from '@/components/ui/Card'
 import { ScrollFade } from '@/components/ui/ScrollFade'
@@ -42,14 +43,7 @@ export function MembershipsView({ view, today }: { view: MembershipsData; today:
 
   return (
     <>
-      <FinanceToolbar
-        action={
-          <Button onClick={() => setPanel({ type: 'membership', membership: null })}>
-            <LineIcon d={FINANCE_ICON.plus} size={16} strokeWidth={2} />
-            Agregar membresía
-          </Button>
-        }
-      >
+      <FinanceToolbar action={<AddButton label="Agregar membresía" onClick={() => setPanel({ type: 'membership', membership: null })} />}>
         <span className={styles.stat}>
           <span className={styles.statValue}>{formatMoney(view.monthlyCents)}</span>
           <span className={styles.statLabel}>en membresías al mes</span>

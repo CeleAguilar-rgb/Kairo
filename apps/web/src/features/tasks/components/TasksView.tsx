@@ -5,11 +5,14 @@ import { AnimatePresence, motion } from 'motion/react'
 import dynamic from 'next/dynamic'
 import { useMemo, useState, useTransition } from 'react'
 
-import { Button } from '@/components/ui/Button'
+import { AddButton } from '@/components/ui/AddButton'
 import { LineIcon } from '@/components/ui/Card'
 import { Doodle } from '@/components/ui/Doodle'
+import { FilterOptions, FilterSheet } from '@/components/ui/FilterSheet'
+import responsive from '@/components/ui/responsive.module.css'
 import { Segmented } from '@/components/ui/Segmented'
 import { useToast } from '@/components/ui/Toast'
+import { projectTone } from '@/features/projects'
 import type { IsoDate } from '@/lib/dates'
 import { EASE_OUT, SPRING } from '@/lib/motion'
 import { useNarrowScreen } from '@/lib/use-narrow-screen'
@@ -277,6 +280,7 @@ export function TasksView({
             className={[
               styles.doneToggle,
               showDone ? styles.doneToggleOn : null,
+              responsive.hideOnPhone,
             ]
               .filter(Boolean)
               .join(' ')}
@@ -308,7 +312,7 @@ export function TasksView({
                       size={16}
                       strokeWidth={2}
                     />
-                    Lista
+                    <span className={styles.viewLabel}>Lista</span>
                   </>
                 ),
               },
@@ -325,27 +329,58 @@ export function TasksView({
                       size={16}
                       strokeWidth={2}
                     />
-                    Tablero
+                    <span className={styles.viewLabel}>Tablero</span>
                   </>
                 ),
               },
             ]}
           />
-          <Button
+          {/* Teléfono: "Mostrar hechas" y el proyecto se juntan en un cajón "Filtrar", para que todo quepa en una fila. */}
+          <FilterSheet title="Filtrar tareas" badge={(projectFilter === 'all' ? 0 : 1) + (showDone && view === 'list' ? 1 : 0)} className={[responsive.phoneOnly, styles.pushRight].join(' ')}>
+            {(close) => (
+              <>
+                <FilterOptions
+                  label="Proyecto"
+                  mode="single"
+                  options={[
+                    { value: 'all', label: 'Todos los proyectos', count: pendingTotal },
+                    ...projects.map((project) => ({
+                      value: project.id,
+                      label: project.name,
+                      count: pendingIn(project.id),
+                      leading: <span className={styles.projectDot} style={{ background: projectTone(project.id) }} aria-hidden="true" />,
+                    })),
+                  ]}
+                  isSelected={(value) => value === projectFilter}
+                  onSelect={(value) => {
+                    setProjectFilter(value)
+                    close()
+                  }}
+                />
+                {view === 'list' ? (
+                  <FilterOptions
+                    label="Mostrar"
+                    mode="multi"
+                    options={[{ value: 'done', label: 'Tareas hechas' }]}
+                    isSelected={() => showDone}
+                    onSelect={() => setShowDone((value) => !value)}
+                  />
+                ) : null}
+              </>
+            )}
+          </FilterSheet>
+          <AddButton
+            label="Nueva tarea"
             onClick={() => {
               setCreateLoaded(true)
               setCreateOpen(true)
             }}
-            onPointerEnter={() => void loadCreateDrawer()}
-            onFocus={() => void loadCreateDrawer()}
-          >
-            <LineIcon d="M12 5v14M5 12h14" size={16} strokeWidth={2} />
-            Nueva tarea
-          </Button>
+            onPreload={() => void loadCreateDrawer()}
+          />
         </motion.div>
       </section>
 
-      <div className={styles.filters}>
+      <div className={[styles.filters, responsive.hideOnPhone].join(' ')}>
         <ProjectFilter
           value={projectFilter}
           onChange={setProjectFilter}

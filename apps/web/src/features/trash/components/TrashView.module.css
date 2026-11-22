@@ -65,6 +65,14 @@
   gap: var(--space-2);
 }
 
+/* Teléfono: "Filtrar" y "Vaciar papelera" en una sola fila, cada uno en su extremo. */
+.phoneBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
 .filter,
 .filterOn {
   all: unset;

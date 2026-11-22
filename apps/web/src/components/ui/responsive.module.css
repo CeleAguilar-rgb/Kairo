@@ -1,0 +1,14 @@
+/* Dos utilidades para lo que cambia entre teléfono y escritorio (el mismo corte de 720px que usa el resto de la
+   app). La clase va doblada (.a.a) para pesar más que el `display` que cada componente ya declara por su cuenta,
+   sin depender del orden en que se cargan los CSS. */
+@media (max-width: 720px) {
+  .hideOnPhone.hideOnPhone {
+    display: none;
+  }
+}
+
+@media (min-width: 721px) {
+  .phoneOnly.phoneOnly {
+    display: none;
+  }
+}

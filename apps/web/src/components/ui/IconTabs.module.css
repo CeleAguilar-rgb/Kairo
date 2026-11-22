@@ -1,0 +1,158 @@
+/* Ver IconTabs.tsx. En escritorio es la píldora de siempre (solo texto); en teléfono las pestañas sin elegir
+   se quedan con su icono y la elegida muestra icono + nombre. */
+.tabs {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  align-self: flex-start;
+  max-width: 100%;
+  /* Sin overflow aquí: el que se desliza es el contenedor interior de ScrollTabs. Con overflow-x el nav
+     también hacía scroll vertical (el interior sobresale 2px por su margen negativo). */
+  box-sizing: border-box;
+  border-radius: var(--radius-pill);
+  background: var(--surface-glass);
+  border: 1px solid var(--border);
+}
+
+.tab {
+  /* Las pestañas pueden ser <a> o <button>: se igualan. */
+  appearance: none;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 var(--space-7);
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--text);
+  transition: background var(--duration-base) ease;
+}
+
+.tab:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* La pestaña elegida: el texto cambia a crema sobre la píldora oscura que se desliza */
+.active,
+.active:hover {
+  background: transparent;
+  color: var(--text-on-inverted);
+}
+
+.pill {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-pill);
+  background: var(--surface-inverted);
+}
+
+.content {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* El icono solo se ve en el teléfono. */
+.icon {
+  display: none;
+  flex: none;
+}
+
+.text {
+  display: inline-flex;
+}
+
+.textInner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.short {
+  display: none;
+}
+
+/* La cuenta de cada pestaña: gris sobre la crema, lavanda sobre la píldora oscura */
+.count {
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.active .count {
+  background: var(--accent);
+  color: var(--text);
+}
+
+@media (max-width: 720px) {
+  .tabs {
+    gap: 2px;
+    /* En el teléfono la barra va centrada bajo el título (en escritorio queda a la izquierda). El margen automático
+       la centra tanto en una columna (la página) como en una fila (los controles de Proyectos). */
+    align-self: center;
+    margin-inline: auto;
+  }
+
+  .tab {
+    padding: 0;
+    min-width: 40px;
+  }
+
+  .icon {
+    display: inline-flex;
+  }
+
+  .long {
+    display: none;
+  }
+
+  .short {
+    display: inline;
+  }
+
+  /* El nombre aparece (y desaparece) abriendo el ancho en vez de saltar, para que el cambio se sienta fluido. */
+  .text {
+    display: grid;
+    grid-template-columns: 0fr;
+    opacity: 0;
+    transition:
+      grid-template-columns var(--duration-base) ease,
+      opacity var(--duration-base) ease;
+  }
+
+  .textInner {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .active {
+    padding: 0 var(--space-6) 0 var(--space-5);
+  }
+
+  .active .text {
+    grid-template-columns: 1fr;
+    opacity: 1;
+    margin-left: var(--space-3);
+  }
+}
+
+@media (max-width: 720px) and (prefers-reduced-motion: reduce) {
+  .text {
+    transition: none;
+  }
+}
