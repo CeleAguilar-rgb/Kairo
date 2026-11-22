@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { IconTabs } from '@/components/ui/IconTabs'
+import responsive from '@/components/ui/responsive.module.css'
 import { ScrollTabs } from '@/components/ui/ScrollTabs'
 import type { Profile, UserSection } from '@/lib/account/api'
 import { PerfilTab } from './PerfilTab'
@@ -40,7 +42,16 @@ export function PerfilView({ profile, sections }: PerfilViewProps) {
       <h1 className={styles.title}>Mi perfil</h1>
 
       <div className={styles.layout}>
-        <ScrollTabs className={styles.side} aria-label="Ajustes">
+        {/* Teléfono: barra de iconos centrada (la elegida muestra su nombre). Escritorio: la lista lateral. */}
+        <IconTabs
+          phoneOnly
+          id="profile-tabs"
+          label="Ajustes"
+          items={TABS.map((item) => ({ key: item.id, label: item.name, icon: item.icon }))}
+          activeKey={tab}
+          onSelect={(key) => setTab(key as Tab)}
+        />
+        <ScrollTabs className={[styles.side, responsive.hideOnPhone].join(' ')} aria-label="Ajustes">
           {TABS.map((item) => (
             <button
               key={item.id}
