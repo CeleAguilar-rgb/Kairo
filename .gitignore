@@ -33,6 +33,5 @@ Thumbs.db
 # Testing
 coverage/
 
-# Notas de aprendizaje: personales, no se suben (la plantilla sí)
-docs/learning/*.md
-!docs/learning/README.md
+# Notas personales locales: no se suben
+docs/learning/

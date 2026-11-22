@@ -32,8 +32,7 @@ packages/shared/   Esquemas Zod y tipos usados por web y api.
 docs/
 ├── guides/        Arquitectura, seguridad, base de datos, estilos, decisiones…
 ├── design/        Copia de las pantallas del canvas de diseño
-├── history/       Dónde nos quedamos y una nota por sesión
-└── learning/      Notas del usuario sobre lo que va aprendiendo
+└── history/       Dónde nos quedamos y una nota por sesión
 ```
 
 ## Reglas no negociables
@@ -68,19 +67,9 @@ docs/
 | Desplegar, configurar Vercel o tareas programadas | `docs/guides/architecture.md` (Despliegue y Tareas programadas) |
 | Saber dónde nos quedamos, cerrar una sesión | `docs/history/current.md` y `docs/history/README.md` |
 
-## Aprendizaje
-
-El usuario construye Kairo **para aprender**: estructura, buenas prácticas y el stack completo. Terminar rápido no es el objetivo principal; que entienda lo que se construye, sí.
-
-- El repo usa el estilo **Learning** de Claude Code (`.claude/settings.json`). En las partes con una decisión real (lógica de negocio, manejo de errores, cómo organizar datos, validaciones, consultas), **deja que el usuario escriba** el código con `TODO(human)` y una guía clara. Lo rutinario (configuración, boilerplate) lo puedes hacer tú.
-- **Plan del molde:** Inicio + Tareas se construyó junto, de punta a punta, explicando cada capa: esquema compartido → controller → service → repository → componente. **Desde Recordatorios, el orden se invierte (decisión #27, `docs/guides/roadmap.md`): primero el front del módulo completo (componente con datos dummy fieles al canvas y a `data-model.md`, animaciones reales) y después esquema compartido → controller → service → repository, ajustando `data-model.md` si el front terminó pidiendo otra forma.** El usuario escribe esas capas siguiendo el molde y tú revisas, señalas errores y explicas, en lugar de escribirlas por él. Si te pide que las hagas tú, hazlo.
-- Antes de resolver algo no trivial, pregúntale primero cómo lo haría. Después compara su idea con la tuya.
-- Pasos pequeños. Nada de módulos completos en un solo cambio.
-- Cuando aparezca un concepto nuevo importante, sugiérele escribir su nota en `docs/learning/` (ver su README). Si te pide revisarla, corrige y comenta, pero no la reescribas.
-- Explica con ejemplos del propio proyecto, no con ejemplos genéricos.
-
 ## Cómo trabajar en este repo
 
+- **Orden de cada módulo (decisión #27, `docs/guides/roadmap.md`):** primero el front completo (componente con datos dummy fieles al canvas y a `data-model.md`, animaciones reales) y después esquema compartido → controller → service → repository, ajustando `data-model.md` si el front terminó pidiendo otra forma.
 - **Nunca hagas commit ni push sin autorización explícita del usuario.** Al terminar un cambio, muestra qué archivos cambiaron, propón el mensaje de commit y espera su "sí". El push se pregunta aparte.
 - **Nunca trabajes en `main`.** `main` solo recibe lo que ya funciona y el usuario revisó, mediante Pull Request. Todo cambio va en su rama (`feat/…`, `fix/…`). Ramas y formato de commits (Conventional Commits): `docs/guides/conventions.md`.
 - Para cambios que toquen varios archivos o ambas apps, **propón un plan antes de escribir código**.
@@ -89,5 +78,4 @@ El usuario construye Kairo **para aprender**: estructura, buenas prácticas y el
 - **No cambies decisiones registradas en `docs/guides/decisions.md`** sin que el usuario lo pida.
 - Cambios al esquema de base de datos **siempre con migración de Drizzle** (`drizzle-kit generate`, revisar el SQL generado y subirlo al repo), nunca editando la BD a mano.
 - Si una tarea choca con alguna regla de este archivo, detente y avisa en lugar de buscarle la vuelta.
-- El usuario está aprendiendo buenas prácticas: cuando tomes una decisión de estructura no obvia, explícala en una o dos líneas.
 - Idioma: código (variables, funciones, tablas, columnas) y nombres de ramas en inglés; textos de la interfaz, rutas visibles, comentarios para el usuario, documentación y mensajes de commit en español (el tipo y alcance del commit, como `feat(tasks)`, se quedan en inglés).
