@@ -106,3 +106,29 @@
 .filters {
   display: flex;
 }
+
+/* El puntito de color de cada proyecto, en el cajón "Filtrar" del teléfono. */
+.projectDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: none;
+}
+
+/* Teléfono: una sola fila: Lista/Tablero (solo iconos), "Filtrar" y "+" (nueva tarea) a la derecha. "Mostrar hechas" y
+   el proyecto viven dentro del cajón de "Filtrar". */
+@media (max-width: 720px) {
+  .controls {
+    flex: 1 1 100%;
+    flex-wrap: nowrap;
+    gap: var(--space-3);
+  }
+
+  .viewLabel {
+    display: none;
+  }
+
+  .pushRight {
+    margin-left: auto;
+  }
+}

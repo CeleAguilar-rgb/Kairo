@@ -22,24 +22,20 @@
   gap: var(--space-4);
 }
 
-/* En el teléfono lo de la izquierda (el selector de mes, los totales) ocupa su fila y queda centrado, y la acción
-   ("Movimiento", "Agregar membresía") baja a la suya, a todo el ancho y con un botón fácil de tocar. */
+/* En el teléfono la acción ("Agregar membresía") no se ve (AddButton: la hace el "+" flotante) y el selector de mes
+   está bajo el título; lo que queda en la franja (los totales de membresías, las frases de Ahorros y Presupuesto)
+   ocupa todo el ancho. */
 @media (max-width: 720px) {
   .bar {
     gap: var(--space-5);
   }
 
   .start {
-    flex: 1 1 100%;
+    flex: 1 1 0;
     min-width: 0;
   }
 
   .action {
-    flex: 1 1 100%;
-  }
-
-  .action > * {
-    flex: 1;
-    justify-content: center;
+    flex: none;
   }
 }

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useId, useRef, useState, useTransition, type PointerEvent as ReactPointerEvent } from 'react'
 
+import { useCurrentPageAction } from '@/components/layout/PageAction'
 import { Button } from '@/components/ui/Button'
 import { LineIcon } from '@/components/ui/Card'
 import { PanelScrim } from '@/components/ui/PanelScrim'
@@ -15,6 +16,7 @@ import { quickExpenseAction } from '@/features/finance'
 import { createReminderAction } from '@/features/reminders'
 import { createNoteAction } from '@/features/writings'
 import { EASE_OUT, SPRING } from '@/lib/motion'
+import { useNarrowScreen } from '@/lib/use-narrow-screen'
 import { ChipRow } from '@/components/ui/ChipRow'
 
 import { dayFor, parseExpense, reminderSlot, WHENS, whenLabel } from '../capture'
@@ -64,6 +66,11 @@ export function QuickCapture({ open, onToggle, onClose, timeZone, demo }: QuickC
   const [error, setError] = useState<string | null>(null)
   const [saving, startSaving] = useTransition()
   const focus = useFocus()
+  // En el teléfono, si la pantalla tiene su propia acción de crear ("Nuevo evento", "Movimiento"…), el "+" hace
+  // eso en vez de abrir la captura rápida. En escritorio la pantalla tiene su botón con texto y el "+" no cambia.
+  const narrow = useNarrowScreen()
+  const pageAction = useCurrentPageAction()
+  const screenAction = narrow ? pageAction : null
   const pressTimer = useRef<number | null>(null)
   const pressStart = useRef<{ x: number; y: number } | null>(null)
   const longPressed = useRef(false)
@@ -90,6 +97,7 @@ export function QuickCapture({ open, onToggle, onClose, timeZone, demo }: QuickC
   function handlePressStart(event: ReactPointerEvent) {
     longPressed.current = false
     setPressed(true)
+    screenAction?.preload?.()
     pressStart.current = { x: event.clientX, y: event.clientY }
     pressTimer.current = window.setTimeout(() => {
       pressTimer.current = null
@@ -109,7 +117,7 @@ export function QuickCapture({ open, onToggle, onClose, timeZone, demo }: QuickC
 
   // Tras una pulsación larga el navegador igual dispara el clic al soltar: se ignora para no abrir también
   // la captura rápida. Con el pomodoro abierto el "+" es una "x" que lo cierra (así no se abre un panel
-  // encima del otro); si no, abre o cierra la captura.
+  // encima del otro); si la pantalla tiene su acción de crear, la hace; si no, abre o cierra la captura.
   function handleClick() {
     if (longPressed.current) {
       longPressed.current = false
@@ -117,6 +125,10 @@ export function QuickCapture({ open, onToggle, onClose, timeZone, demo }: QuickC
     }
     if (focus.expanded) {
       focus.setExpanded(false)
+      return
+    }
+    if (screenAction && !open) {
+      screenAction.run()
       return
     }
     onToggle()
@@ -274,7 +286,7 @@ export function QuickCapture({ open, onToggle, onClose, timeZone, demo }: QuickC
       <motion.button
         type="button"
         className={styles.fab}
-        aria-label={open ? 'Cerrar crear rápido' : focus.expanded ? 'Cerrar el pomodoro' : 'Crear rápido'}
+        aria-label={open ? 'Cerrar crear rápido' : focus.expanded ? 'Cerrar el pomodoro' : (screenAction?.label ?? 'Crear rápido')}
         aria-describedby="fab-hint"
         aria-expanded={open || focus.expanded}
         onClick={handleClick}

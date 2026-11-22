@@ -37,11 +37,13 @@
   gap: var(--space-4);
 }
 
-/* En el teléfono lo de la izquierda ocupa lo que sobra, así el selector de semana (flechas y fecha) queda
-   centrado en la pantalla y no pegado a la izquierda. */
+/* En el teléfono lo de la izquierda ocupa lo que sobra y se centra: el selector de semana (flechas y fecha), la
+   fecha de hoy y su pastilla de rutina quedan en medio de la pantalla y no pegados a la izquierda. */
 @media (max-width: 720px) {
   .start {
     flex: 1;
     min-width: 0;
+    justify-content: center;
+    text-align: center;
   }
 }

@@ -91,11 +91,6 @@
     min-width: 0;
   }
 
-  a.newButton {
-    flex: 1 1 100%;
-    justify-content: center;
-  }
-
   .gallery {
     gap: var(--space-6);
   }

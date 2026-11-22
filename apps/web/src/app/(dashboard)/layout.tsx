@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { DoodlesProvider } from '@/components/layout/Doodles'
 import { NavigationProvider, PageFrame } from '@/components/layout/Navigation'
+import { PageActionProvider } from '@/components/layout/PageAction'
 import { ToastProvider } from '@/components/ui/Toast'
 import { FocusProvider } from '@/features/focus'
 import { getFocusSetup } from '@/features/focus/api'
@@ -52,6 +53,7 @@ export default async function DashboardLayout({
       <DoodlesProvider>
         <NavigationProvider>
           <FocusProvider sessionsToday={focus.sessionsToday} tasks={focus.tasks}>
+          <PageActionProvider>
           <ShortcutsProvider timeZone={me.profile.timezone} demo={DEMO_MODE}>
             <div className={styles.shell}>
               <Topnav profile={me.profile} sections={me.sections} />
@@ -59,6 +61,7 @@ export default async function DashboardLayout({
               <BottomTabs sections={me.sections} />
             </div>
           </ShortcutsProvider>
+          </PageActionProvider>
           </FocusProvider>
         </NavigationProvider>
       </DoodlesProvider>
