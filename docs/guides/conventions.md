@@ -6,7 +6,7 @@ Reglas de estilo y forma de trabajar. Si algo no está aquí, sigue el estilo de
 
 - **Inglés:** código, nombres de archivos y carpetas, tablas, columnas, valores de enums, códigos de error, nombres de ramas, y el tipo y alcance de los commits (`feat(tasks)`).
 - **Español:** descripción y cuerpo de los mensajes de commit, textos de la interfaz, mensajes de error para el usuario, rutas visibles (`/tareas`), documentación en `docs/`, explicaciones al usuario.
-- Comentarios en el código: en español, porque los lee el usuario mientras aprende.
+- Comentarios en el código: en español.
 
 ## Nombres
 
@@ -173,7 +173,3 @@ Ejemplos: `feat(tasks): agregar subtareas`, `fix(auth): hacer que caduquen los c
 - El código compila, ESLint pasa y los tests críticos del área tocada pasan.
 - Commits pequeños, con un solo propósito.
 - Nunca `.env` ni secretos.
-
-## Explicar al usuario
-
-El usuario está aprendiendo estructura y buenas prácticas. Al cerrar una tarea, explica en pocas líneas qué hiciste y por qué, sobre todo si hay una decisión no obvia. Si hay una forma más simple y otra más correcta, menciona las dos y por qué elegiste una.
