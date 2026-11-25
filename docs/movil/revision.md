@@ -162,3 +162,11 @@ En el teléfono no hay hover: todo lo que aparece solo al pasar el mouse hay que
 - [x] Media — (hecho, falta probar en el teléfono) Filas de chips (filtros de Papelera y Personajes, "¿Cuándo?" de captura rápida, prioridad de tareas, categoría de movimientos, etiquetas del diario, días de la materia, chips de Inicio) en una sola línea que se desliza con desvanecido (`ChipRow`) y 44 px de toque con el dedo.
 - [x] Media — (hecho, falta probar en el teléfono) Finanzas completo con lo ya hecho: selector de mes centrado y acción ("Movimiento", "Agregar membresía") en su fila a todo el ancho; Resumen con las cuatro cifras en dos por dos; detalle de los movimientos en dos renglones en vez de cortarse; Ahorros y deudas con el monto y los botones repartidos; tarjetas de Membresías en una fila que se desliza con desvanecido; botes de basura, muestras de color y categorías a 44 px con el dedo.
 - [x] Baja — (hecho, falta probar en el teléfono) Presupuesto: "Así vas" va primero en una sola columna (tableta y teléfono), antes de las categorías.
+
+## Segunda pasada (2026-11-24, pedidos del usuario)
+
+- [x] Media — (hecho y visto a 375 y 320 px) Agenda › Día: los 7 días apachurrados. Ahora es una tira de días seguidos que se desliza, con degradado en las orillas y el día elegido (hoy al abrir) al centro.
+- [x] Media — (hecho) Lo mismo en "Esta semana" de Inicio y en el Menú semanal: hoy queda al centro aunque sea lunes.
+- [x] Media — (hecho) Mi perfil: los cinco doodles en una sola fila.
+- [x] Media — (hecho) Preferencias: temas de color como círculos en una cuadrícula cerrada (6 × 2), centrados junto con Apariencia e Intensidad. A 320 px la tarjeta ya no se sale de la pantalla.
+- [x] Baja — (hecho) Finanzas: el mes y sus flechas centrados bajo el título.

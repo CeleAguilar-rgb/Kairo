@@ -104,3 +104,17 @@
     width: 100%;
   }
 }
+
+/* La tira del teléfono (ScrollTabs con centerEdges): días de ancho fijo que se deslizan; el elegido va al centro.
+   Llega hasta las orillas de la tarjeta (margen negativo = el padding de .calendar en AgendaView) para que los días
+   de los lados se asomen cortados y se vea el degradado: con el ancho justo cabían cinco exactos y no se notaba. */
+.roll {
+  --center-item: 56px;
+  display: flex;
+  gap: var(--space-2);
+  margin: 0 calc(var(--space-7) * -1) var(--space-4);
+}
+
+.roll .pick {
+  flex: 0 0 56px;
+}

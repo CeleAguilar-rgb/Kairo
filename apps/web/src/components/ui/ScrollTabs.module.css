@@ -30,6 +30,15 @@
   );
 }
 
+/* Tiras de días en el teléfono: el hueco de cada orilla mide media tira menos medio día, así cualquier día
+   (también el primero y el último) puede quedar al centro. El 50% se mide contra el <nav>, que es lo que
+   ocupa el contenedor. Solo en pantallas angostas: en escritorio los días caben y se reparten el ancho. */
+@media (max-width: 720px) {
+  .centerEdges {
+    padding-inline: max(0px, calc(50% - var(--center-item, 56px) / 2));
+  }
+}
+
 .scroller::-webkit-scrollbar {
   display: none;
 }

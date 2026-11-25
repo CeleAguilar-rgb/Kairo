@@ -63,7 +63,7 @@ export function WeekCard({ events, today, timeZone, hourFormat, weekStart }: Wee
         action={<span className={styles.range}>{formatRange(days[0], days[6])}</span>}
       />
 
-      <ScrollTabs as="div" className={styles.days} role="group" aria-label="Días de la semana">
+      <ScrollTabs as="div" centerEdges className={styles.days} role="group" aria-label="Días de la semana">
         {days.map((day) => {
           const isSelected = day === selected
           const hasEvents = (byDay.get(day)?.length ?? 0) > 0

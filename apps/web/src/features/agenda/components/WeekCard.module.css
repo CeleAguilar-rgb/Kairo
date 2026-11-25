@@ -187,9 +187,14 @@
 }
 
 /* Teléfono: siete días de 56 px no caben en la tarjeta (se veían apachurrados), así que la fila se
-   desliza de lado (ScrollTabs) con el día elegido al centro. */
+   desliza de lado (ScrollTabs con centerEdges): se ven unos cinco, con degradado en las orillas, y el
+   día elegido (hoy al abrir) queda al centro aunque sea el primero o el último de la semana. */
 @media (max-width: 720px) {
+  .days {
+    --center-item: 56px;
+  }
+
   .day {
-    flex: 1 0 56px;
+    flex: 0 0 56px;
   }
 }

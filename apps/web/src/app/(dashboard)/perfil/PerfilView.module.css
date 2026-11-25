@@ -71,7 +71,9 @@
 
 @media (max-width: 860px) {
   .layout {
-    grid-template-columns: 1fr;
+    /* minmax(0, …): con 1fr la columna no baja del ancho mínimo de lo que lleva y una fila que no se parte
+       (las opciones de Apariencia) ensanchaba la tarjeta más allá de la pantalla en lugar de deslizarse. */
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .side {

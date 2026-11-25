@@ -1,7 +1,7 @@
 'use client'
 
 import type { ColorTheme, ThemeIntensity, ThemePreference } from '@kairo/shared'
-import { useState } from 'react'
+import { useState, type CSSProperties } from 'react'
 import { Card } from '@/components/ui/Card'
 import { Segmented } from '@/components/ui/Segmented'
 import { saveAppearance, saveThemePreference } from '@/lib/theme/actions'
@@ -94,7 +94,7 @@ export function PreferenciasTab({ themePreference, colorTheme, themeIntensity }:
         Preferencias
       </h2>
 
-      <div className={styles.field}>
+      <div className={[styles.field, themeStyles.centered].join(' ')}>
         <span className={styles.label}>Apariencia</span>
         <Segmented
           label="Apariencia"
@@ -111,11 +111,18 @@ export function PreferenciasTab({ themePreference, colorTheme, themeIntensity }:
         ) : null}
       </div>
 
-      <div className={themeStyles.section}>
+      <div className={[themeStyles.section, themeStyles.centered].join(' ')}>
         <span className={styles.label} id="color-theme-label">
           Tema de color
         </span>
-        <div role="radiogroup" aria-labelledby="color-theme-label" className={themeStyles.themes}>
+        {/* En el teléfono los temas son solo círculos en una cuadrícula cerrada: --theme-cols divide exacto el
+            número de temas, así no sobra uno solo en el último renglón. */}
+        <div
+          role="radiogroup"
+          aria-labelledby="color-theme-label"
+          className={themeStyles.themes}
+          style={{ '--theme-cols': closedGridColumns(COLOR_THEME_OPTIONS.length) } as CSSProperties}
+        >
           {COLOR_THEME_OPTIONS.map((option) => {
             const selected = option.value === appearance.colorTheme
             return (
@@ -129,15 +136,20 @@ export function PreferenciasTab({ themePreference, colorTheme, themeIntensity }:
               >
                 {/* La muestra de cada tema es fija (--swatch-*): no cambia con el tema activo. */}
                 <span className={themeStyles.swatch} style={{ background: `var(--swatch-${option.value})` }} aria-hidden="true" />
-                {option.label}
+                <span className={themeStyles.name}>{option.label}</span>
               </button>
             )
           })}
         </div>
-        {current ? <span className={themeStyles.hint}>{current.description}</span> : null}
+        {current ? (
+          <span className={themeStyles.hint}>
+            <span className={themeStyles.hintName}>{current.label} · </span>
+            {current.description}
+          </span>
+        ) : null}
       </div>
 
-      <div className={themeStyles.section}>
+      <div className={[themeStyles.section, themeStyles.centered].join(' ')}>
         <span className={styles.label}>Intensidad</span>
         <Segmented
           label="Intensidad"
@@ -156,4 +168,11 @@ export function PreferenciasTab({ themePreference, colorTheme, themeIntensity }:
       </div>
     </Card>
   )
+}
+
+// Cuántas columnas lleva la cuadrícula de temas en el teléfono: la mayor entre 7 y 4 que divida exacto el número
+// de temas (12 → 6 × 2), para que el último renglón quede lleno. Si ninguna divide, 7.
+function closedGridColumns(count: number): number {
+  for (let cols = 7; cols >= 4; cols--) if (count % cols === 0) return cols
+  return 7
 }

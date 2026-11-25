@@ -167,3 +167,18 @@ Cosas que salieron de revisar la versión de teléfono y que **también conviene
 - `TaskList`: el placeholder del campo rápido es "Agregar tarea…" en el teléfono (`useNarrowScreen`) y termina en puntos suspensivos si no cabe.
 
 **Dónde:** `lib/scroll-memory.ts`, `components/layout/Navigation.tsx`, `styles/tokens.css`, `features/writings/components/editor/` (`EditorToolbar`, `PageEditor`), `features/writings/components/world/FullPages.*`, `features/shortcuts/components/QuickCapture.module.css`, `features/tasks/components/TaskList.*`.
+
+## 16. Teléfono: tiras de días centradas en hoy, doodles en una fila, temas como círculos y mes de Finanzas centrado
+
+**Hoy:** (1) en Agenda › Día los 7 días de la semana iban en 7 columnas que se repartían el ancho y quedaban apachurrados; en Inicio ("Esta semana") y en el Menú semanal ya se deslizaban, pero cuando hoy era lunes no se podía centrar (no hay nada a su izquierda); (2) en Mi perfil cabían 4 doodles y el quinto bajaba solo; (3) en Preferencias los 12 temas eran píldoras de distinto ancho en renglones disparejos; (4) en Finanzas el mes y sus flechas quedaban pegados a la izquierda.
+
+**Cambio (solo ≤720px; en escritorio no cambia nada):**
+- `ScrollTabs` tiene la opción `centerEdges`: deja un hueco en cada orilla de media tira menos medio día (`--center-item`), así cualquier día puede ir al centro, y reconoce `aria-current="date"` como el activo.
+- **Agenda › Día:** en el teléfono la tira ya no es la semana: lleva 14 días antes y después de hoy (si con las flechas te vas a más de 10 días de hoy, se arma alrededor del día elegido). Se ven unos cinco, el elegido al centro, y la tira llega a las orillas de la tarjeta para que los días de los lados se asomen desvanecidos. En escritorio sigue la semana de 7 columnas.
+- **Inicio ("Esta semana") y Menú semanal:** siguen siendo la semana, con el hueco en las orillas: hoy (o el día elegido) va al centro aunque sea lunes o domingo.
+- **Doodles:** los cinco en una fila de 5 columnas de hasta 56 px, que se achican un poco en pantallas angostas.
+- **Tema de color:** cada tema es solo su círculo, en una cuadrícula cerrada (12 temas → 6 × 2; las columnas las calcula `closedGridColumns` para que el último renglón quede lleno). Abajo se lee "Nombre · descripción" del elegido; el nombre de cada círculo sigue para el lector de pantalla. Apariencia, Tema de color e Intensidad van centrados. **Es un cambio respecto al canvas** (`Temas.dc.html` usa píldoras con nombre), que conviene que vea Celeste.
+- **Perfil a 320 px:** la columna de `PerfilView` pasó de `1fr` a `minmax(0, 1fr)`; con `1fr` la fila de Apariencia ensanchaba la tarjeta fuera de la pantalla.
+- **Finanzas:** la cabecera ocupa todo el renglón, así el mes con sus flechas queda centrado.
+
+**Dónde:** `components/ui/ScrollTabs.*`, `features/agenda/components/DayView.*`, `features/agenda/components/WeekCard.*`, `features/daily/components/MenuWeek.module.css`, `app/(dashboard)/perfil/` (`PerfilTab.module.css`, `PreferenciasTab.*`, `PerfilView.module.css`), `features/finance/components/FinanceHeader.module.css`.

@@ -97,6 +97,24 @@
   color: var(--text-muted);
 }
 
+/* Teléfono: los cinco doodles en una sola fila repartida a lo ancho. Con 56px fijos cabían cuatro y el quinto
+   bajaba solo a otro renglón; aquí miden hasta 56px y se achican un poco si la tarjeta es angosta. */
+@media (max-width: 720px) {
+  .avatars {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 56px));
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .avatar,
+  .avatarSelected {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .avatar,
   .avatarSelected {

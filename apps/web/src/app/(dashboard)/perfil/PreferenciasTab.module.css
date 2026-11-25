@@ -61,6 +61,87 @@
   color: var(--text-muted);
 }
 
+/* El nombre del tema elegido antes de su descripción: solo hace falta en el teléfono, donde los temas son círculos. */
+.hintName {
+  display: none;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Teléfono: los 12 chips de distinto ancho quedaban en renglones disparejos. Aquí cada tema es solo su círculo de
+   color, en una cuadrícula cerrada (--theme-cols la pone el componente: 12 temas → 6 × 2), y abajo se lee el nombre
+   y la descripción del elegido. Apariencia, Tema de color e Intensidad van centrados para que se lean como un bloque. */
+@media (max-width: 720px) {
+  .centered {
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Centrado, cada control mide lo que su contenido; sin tope, "Apariencia" se salía de la tarjeta a 320px.
+     align-self va con la clase doblada para ganarle al `align-self: flex-start` de Segmented (Apariencia e
+     Intensidad), sin depender del orden en que se cargan los CSS. */
+  .centered.centered > * {
+    align-self: center;
+    max-width: 100%;
+  }
+
+  .themes {
+    display: grid;
+    grid-template-columns: repeat(var(--theme-cols, 7), minmax(0, 44px));
+    justify-content: center;
+    gap: var(--space-3);
+    width: 100%;
+  }
+
+  .theme,
+  .themeSelected {
+    position: relative;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    min-height: 0;
+    padding: 0;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .themeSelected {
+    box-shadow: inset 0 0 0 2px var(--text);
+  }
+
+  .swatch {
+    width: 74%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  /* El nombre sigue ahí para el lector de pantalla, solo no se ve. */
+  .name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .hintName {
+    display: inline;
+  }
+}
+
+/* Con el dedo, cada círculo llega a 44px de área de toque aunque se vea más chico. */
+@media (max-width: 720px) and (pointer: coarse) {
+  .theme::after,
+  .themeSelected::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .theme,
   .themeSelected {

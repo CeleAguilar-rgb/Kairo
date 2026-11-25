@@ -125,6 +125,15 @@
   padding-inline: var(--space-11);
 }
 
+/* En el teléfono se ven unos cinco días, con degradado en las orillas, y el elegido (hoy al abrir) queda al
+   centro aunque sea el primero o el último de la semana: el hueco de cada orilla mide media tira menos medio
+   día. La tira es más ancha que su contenedor (el margen negativo de arriba), por eso el 50% lleva + --space-11. */
+@media (max-width: 720px) {
+  .chipsScroll {
+    padding-inline: calc(50% + var(--space-11) - 30px);
+  }
+}
+
 /* Cada día pide 60px como mínimo: si caben se reparten el ancho; si no, se deslizan. */
 .chips {
   display: flex;

@@ -5,3 +5,11 @@
   justify-content: space-between;
   gap: var(--space-9);
 }
+
+/* Teléfono: el título (con el selector de mes debajo) ocupa todo el renglón. Sin esto la cabecera medía lo que el
+   título y el mes con sus flechas quedaba pegado a la izquierda en lugar de centrado. */
+@media (max-width: 720px) {
+  .hero > :first-child {
+    flex-basis: 100%;
+  }
+}
