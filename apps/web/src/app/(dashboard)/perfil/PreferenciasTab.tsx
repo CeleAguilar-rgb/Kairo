@@ -12,7 +12,7 @@ import themeStyles from './PreferenciasTab.module.css'
 const THEME_OPTIONS: { value: ThemePreference; label: string }[] = [
   { value: 'light', label: 'Claro' },
   { value: 'dark', label: 'Oscuro' },
-  { value: 'system', label: 'Como el sistema' },
+  { value: 'system', label: 'Sistema' },
 ]
 
 // Nombres y descripciones de Temas.dc.html, en el orden del canvas.
