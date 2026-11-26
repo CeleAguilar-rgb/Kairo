@@ -17,6 +17,15 @@ body {
   height: 100%;
 }
 
+/* En el escritorio la barra de arriba también se queda fija: al moverse con el teclado (Tab) o saltar a un ancla,
+   lo que recibe el foco queda debajo de ella y no escondido detrás. En el teléfono no hace falta: ahí cada
+   pantalla ya deja su propio margen (MenuWeek.module.css, scroll-margin-top). */
+@media (min-width: 721px) {
+  html {
+    scroll-padding-top: var(--topnav-height);
+  }
+}
+
 body {
   background: var(--bg);
   color: var(--text);

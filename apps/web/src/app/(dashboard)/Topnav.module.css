@@ -1,6 +1,13 @@
 /* Tres columnas: las de los lados miden lo mismo (1fr), así el nav queda
-   centrado de verdad aunque el logo y los íconos tengan anchos distintos. */
+   centrado de verdad aunque el logo y los íconos tengan anchos distintos.
+   Fija arriba al hacer scroll, también en el escritorio (antes solo en el teléfono). Arriba de todo es
+   transparente, para no cortar el brillo del fondo de la página; al bajar (data-scrolled, Topnav.tsx) toma el
+   color de la página (::before) y debajo una franja que se desvanece (::after). Para volver a que no sea fija
+   en el escritorio: docs/escritorio/colores-y-animacion.md (punto 15). */
 .header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-topnav);
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
@@ -9,6 +16,48 @@
   row-gap: var(--space-5);
   /* Mismo margen lateral que el contenido de las páginas (44px), como el .wrap del canvas */
   padding: var(--space-11) var(--space-14) 0;
+}
+
+.header::before,
+.header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+
+/* El color de la página detrás de la barra (z-index -1: debajo del logo, el nav y los íconos). */
+.header::before {
+  inset: 0;
+  z-index: -1;
+  background: var(--bg);
+}
+
+/* Debajo, una franja que se desvanece para que el contenido se pierda al pasar sin que se note dónde termina
+   la barra. Las paradas siguen una curva suave (no una recta): con una recta se ve dónde empieza y dónde acaba. */
+.header::after {
+  top: 100%;
+  /* Alto del desvanecido. Más alto = más suave pero tapa más contenido. */
+  height: 24px;
+  background: linear-gradient(
+    to bottom,
+    var(--bg) 0%,
+    color-mix(in srgb, var(--bg) 94%, transparent) 12%,
+    color-mix(in srgb, var(--bg) 82%, transparent) 25%,
+    color-mix(in srgb, var(--bg) 60%, transparent) 40%,
+    color-mix(in srgb, var(--bg) 38%, transparent) 55%,
+    color-mix(in srgb, var(--bg) 20%, transparent) 70%,
+    color-mix(in srgb, var(--bg) 7%, transparent) 85%,
+    transparent 100%
+  );
+}
+
+.header[data-scrolled]::before,
+.header[data-scrolled]::after {
+  opacity: 1;
 }
 
 .logo {
@@ -162,18 +211,13 @@
 }
 
 @media (max-width: 720px) {
-  /* Fija arriba al hacer scroll. Dos partes: la barra (logo e íconos) con el color de la página
-     sólido, para que nada del contenido se vea detrás del avatar, y debajo una franja que se
-     desvanece (::after), para que el contenido se pierda al pasar sin que se note dónde
-     termina la barra. Las paradas del degradado siguen una curva suave (no una recta): con
-     una recta se ve dónde empieza y dónde acaba el desvanecido.
+  /* En el teléfono la barra es sólida siempre (el color de la página en la propia barra, para que nada del
+     contenido se vea detrás del avatar) y el desvanecido de abajo (::after) también se ve siempre.
      El padding-top respeta la cámara y la hora cuando la app corre a pantalla completa o
-     instalada (env() vale 0 en Chrome normal, donde el sistema ya reserva ese espacio).
-     El z-index la deja encima del contenido y del menú del avatar, que cuelga de ella. */
+     instalada (env() vale 0 en Chrome normal, donde el sistema ya reserva ese espacio). */
   .header {
-    position: sticky;
-    top: 0;
-    z-index: var(--z-popover);
+    /* Dos columnas: el logo y los íconos (el nav no está, vive en la barra de abajo) */
+    grid-template-columns: minmax(0, 1fr) auto;
     /* Alto de la barra sólida: el último valor del padding (abajo) es lo que separa los íconos de donde
        empieza el desvanecido. Con 0 el degradado arranca justo debajo de los botones. */
     padding: max(var(--space-6), env(safe-area-inset-top)) var(--space-5) 0;
@@ -191,26 +235,12 @@
     transition-delay: 0s;
   }
 
+  .header::before {
+    display: none;
+  }
+
   .header::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 100%;
-    /* Alto del desvanecido. Más alto = más suave pero tapa más contenido. */
-    height: 24px;
-    pointer-events: none;
-    background: linear-gradient(
-      to bottom,
-      var(--bg) 0%,
-      color-mix(in srgb, var(--bg) 94%, transparent) 12%,
-      color-mix(in srgb, var(--bg) 82%, transparent) 25%,
-      color-mix(in srgb, var(--bg) 60%, transparent) 40%,
-      color-mix(in srgb, var(--bg) 38%, transparent) 55%,
-      color-mix(in srgb, var(--bg) 20%, transparent) 70%,
-      color-mix(in srgb, var(--bg) 7%, transparent) 85%,
-      transparent 100%
-    );
+    opacity: 1;
   }
 
   /* En el teléfono las secciones viven en la barra de abajo (BottomTabs, AppMas.dc.html). */

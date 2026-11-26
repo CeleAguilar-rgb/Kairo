@@ -18,7 +18,8 @@
 
 .panel {
   position: sticky;
-  top: var(--space-7);
+  /* Debajo de la barra de arriba, que también se queda fija en el escritorio */
+  top: calc(var(--topnav-height) + var(--space-7));
   gap: var(--space-8);
 }
 

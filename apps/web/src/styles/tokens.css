@@ -152,14 +152,17 @@
   /* Capas (z-index): de abajo hacia arriba, para que nada compita con números sueltos */
   --z-popover: 20;
   --z-adornment: 30;
+  /* La barra de arriba, fija al hacer scroll: encima de los doodles pegados del saludo, que si no flotarían
+     sobre ella; debajo de la barra del teléfono (50) y de lo que flota abajo. */
+  --z-topnav: 40;
   --z-scrim: 65;
   --z-drawer: 70;
   --z-toast: 80;
 
-  /* Alto de la barra fija de arriba (Topnav). En escritorio no es fija, así que vale 0; en el teléfono (más abajo)
-     mide lo que sus íconos más el aire de arriba. Lo usan los elementos "pegajosos" (position: sticky) para quedar
-     debajo de ella y no detrás. */
-  --topnav-height: 0px;
+  /* Alto de la barra fija de arriba (Topnav). Lo usan los elementos "pegajosos" (position: sticky) para quedar
+     debajo de ella y no detrás. En escritorio: el aire de arriba más la píldora del nav (enlaces de 40px, 4px de
+     relleno por lado y 1px de borde = 50px, más alta que los íconos de 44px); si se cambia uno, cambia el otro. */
+  --topnav-height: calc(var(--space-11) + 50px);
 
   /* Anchos de paneles y desenfoque del fondo detrás de ellos (scrim del canvas) */
   --panel-md: 440px;

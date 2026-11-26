@@ -35,6 +35,9 @@ export function Topnav({ profile, sections }: TopnavProps) {
   const logoRef = useRef<HTMLAnchorElement>(null)
   const endRef = useRef<HTMLDivElement>(null)
   const menuWrapRef = useRef<HTMLDivElement>(null)
+  // Si la página ya bajó: la barra (fija arriba) toma el color de la página y el desvanecido de abajo. Arriba de
+  // todo queda transparente, así no corta el brillo del fondo (Topnav.module.css, .header).
+  const [scrolled, setScrolled] = useState(false)
   const avatar = getAvatar(profile.avatarPath)
   const pendingHref = usePendingHref()
   const shortcuts = useShortcuts()
@@ -45,6 +48,15 @@ export function Topnav({ profile, sections }: TopnavProps) {
   const focus = useFocus()
   const running = focus.progress.running
   const clock = formatClock(focus.timer.state.secondsLeft)
+
+  useEffect(() => {
+    function handleScroll() {
+      setScrolled(window.scrollY > 0)
+    }
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   // Clic afuera o Escape cierran el menú, como cualquier menú nativo.
   useEffect(() => {
@@ -137,6 +149,7 @@ export function Topnav({ profile, sections }: TopnavProps) {
       ref={headerRef}
       className={styles.header}
       data-hidden={hiddenCount}
+      data-scrolled={scrolled ? '' : undefined}
       data-panel-open={menuOpen || doodleTrayOpen ? '' : undefined}
     >
       {/* Velo del teléfono para el menú del avatar y los doodles. Va aquí dentro (no en el layout) porque esos

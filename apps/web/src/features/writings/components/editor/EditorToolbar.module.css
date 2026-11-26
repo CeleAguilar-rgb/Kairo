@@ -2,7 +2,7 @@
    en su caja y recortaría la sombra de la tarjeta. */
 .toolbar {
   position: sticky;
-  /* Debajo de la barra fija de arriba (en el teléfono; en escritorio --topnav-height vale 0), no detrás de ella. */
+  /* Debajo de la barra fija de arriba, no detrás de ella. */
   top: calc(var(--topnav-height) + var(--space-3));
   z-index: 10;
   margin-bottom: var(--space-4);

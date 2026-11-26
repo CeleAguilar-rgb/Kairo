@@ -7,7 +7,7 @@
 
 .top {
   position: sticky;
-  /* Debajo de la barra fija de arriba del teléfono (0 en escritorio): con top: 0 quedaba detrás de ella al bajar. */
+  /* Debajo de la barra fija de arriba: con top: 0 quedaba detrás de ella al bajar. */
   top: var(--topnav-height);
   z-index: 2;
   display: flex;
