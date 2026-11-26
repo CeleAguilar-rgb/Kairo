@@ -174,12 +174,15 @@ export function HomeView(props: HomeViewProps) {
       />
 
       <LayoutGroup>
-        <motion.div className={styles.grid} layout layoutDependency={layoutKey}>
+        {/* layout="position": al prender o apagar una tarjeta las demás se mueven a su lugar nuevo, pero su tamaño
+            cambia directo. Con `layout` completo Motion animaba el tamaño con una escala y estiraba el texto
+            (p. ej. al cambiar de día en "Esta semana" la tarjeta y su vecina se veían aplastadas un momento). */}
+        <motion.div className={styles.grid} layout="position" layoutDependency={layoutKey}>
           <AnimatePresence mode="popLayout">
             {visible.map((card, index) => (
               <motion.div
                 key={card.id}
-                layout
+                layout="position"
                 layoutDependency={layoutKey}
                 className={[styles.cell, styles[`span${card.span}`]].join(' ')}
                 // La primera vez entran escalonadas; al prender/apagar una en

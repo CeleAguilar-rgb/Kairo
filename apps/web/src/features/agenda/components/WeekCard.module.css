@@ -42,7 +42,7 @@
   color: var(--on-selected);
 }
 
-/* La píldora oscura que viaja entre días (layoutId) */
+/* La píldora oscura del día elegido: aparece en su lugar (WeekCard.tsx) */
 .dayPill {
   position: absolute;
   inset: 0;
@@ -91,9 +91,13 @@
   background: var(--accent);
 }
 
-/* Recorta los eventos que salen hacia un lado; el alto lo da el contenido */
+/* Recorta los eventos que salen hacia un lado y, mientras la tarjeta se alarga, los que todavía no caben. Su alto
+   lo anima WeekCard.tsx siguiendo el de la lista que se ve. */
 .eventsViewport {
   position: relative;
+  /* Llena lo que sobre de la tarjeta cuando la de al lado es más alta: así su alto visible es el de verdad y la
+     animación de WeekCard.tsx parte de ahí y llega ahí. */
+  flex: 1 1 auto;
   overflow: hidden;
   margin: 0 calc(var(--space-3) * -1);
   padding: 0 var(--space-3);
