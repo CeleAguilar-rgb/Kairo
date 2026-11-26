@@ -78,6 +78,8 @@
 }
 
 .nav {
+  /* Referencia de los enlaces que no caben (.navLink[data-overflow]) */
+  position: relative;
   display: flex;
   gap: var(--space-1);
   padding: var(--space-1);
@@ -138,6 +140,16 @@
 .navLink:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
+}
+
+/* Una sección que no cabe en la fila (Topnav.tsx la mide): sigue en el DOM con su ancho para poder volver,
+   pero fuera del flujo e invisible. Se llega a ella desde el menú del avatar. */
+.navLink[data-overflow] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .logo {
@@ -361,6 +373,20 @@
   }
 }
 
+/* Escritorio: las secciones que no caben en el nav y las que nunca van en él (Escuela y Recordatorios). En el
+   teléfono no: ahí el menú usa .menuSections. */
+.menuSectionsDesktop {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+@media (max-width: 720px) {
+  .menuSectionsDesktop {
+    display: none;
+  }
+}
+
 /* Las herramientas que dejan la barra por falta de espacio (Topnav.tsx): solo en teléfonos angostos. */
 .menuTools {
   display: none;
@@ -431,31 +457,29 @@
   margin: var(--space-2) 0;
 }
 
-/* Medio: los íconos y el avatar necesitan más que la mitad de lo que sobra, así que las
-   columnas de los lados dejan de ser iguales y el nav se centra en el espacio libre
-   (queda casi al centro; lo importante es que no se pegue a la lupa). */
-@media (min-width: 1141px) and (max-width: 1240px) {
-  .header {
+/* Cuando el nav ya no cabe centrado de verdad (Topnav.tsx mide y pone data-nav-mode), las columnas de los
+   lados dejan de ser iguales y el nav se centra en el espacio entre el logo y los íconos. Si tampoco cabe ahí,
+   las últimas secciones pasan al menú del avatar. Antes, debajo de 1140px el nav bajaba a una fila propia;
+   para volver a eso, ver docs/escritorio/colores-y-animacion.md (punto 14). */
+.header[data-nav-mode='side'] {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.header[data-nav-mode='side'] .nav {
+  justify-self: center;
+}
+
+/* Antes de medir (el primer pintado, sin JavaScript todavía), en pantallas medianas: el mismo acomodo, y lo que
+   no quepa se recorta en vez de encimarse con el logo o los íconos. */
+@media (min-width: 721px) and (max-width: 1240px) {
+  .header:not([data-nav-mode]) {
     grid-template-columns: auto minmax(0, 1fr) auto;
   }
 
-  .nav {
-    justify-self: center;
-  }
-}
-
-/* Angosto: logo e íconos arriba, el nav abajo a todo lo ancho (con scroll si no cabe) */
-@media (max-width: 1140px) {
-  .header {
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
-
-  .nav {
-    grid-column: 1 / -1;
-    grid-row: 2;
+  .header:not([data-nav-mode]) .nav {
     justify-self: center;
     max-width: 100%;
-    overflow-x: auto;
+    overflow: hidden;
   }
 }
 

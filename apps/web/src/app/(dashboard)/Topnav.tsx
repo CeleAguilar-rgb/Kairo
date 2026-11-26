@@ -12,6 +12,7 @@ import { useFocus } from '@/features/focus'
 import { NOTIFICATIONS_TRIGGER, useShortcuts } from '@/features/shortcuts'
 import type { Profile, UserSection } from '@/lib/account/api'
 import { getAvatar } from '@/lib/account/avatars'
+import type { ModuleManifest } from '@/lib/modules/registry'
 import { popover, PRESS, SPRING } from '@/lib/motion'
 import { findActive, navModules, splitTabs } from './nav-modules'
 import styles from './Topnav.module.css'
@@ -25,6 +26,11 @@ function formatClock(totalSeconds: number) {
 
 type TopnavProps = { profile: Profile; sections: UserSection[] }
 
+// Cómo va el nav en el escritorio (ver el efecto de medida del nav): null mientras no se ha medido (y en el
+// teléfono), 'center' = centrado de verdad como en el canvas, 'side' = entre el logo y los íconos.
+type NavLayout = { mode: 'center' | 'side' | null; hidden: string[] }
+const NAV_UNMEASURED: NavLayout = { mode: null, hidden: [] }
+
 export function Topnav({ profile, sections }: TopnavProps) {
   const router = useRouter()
   const pathname = usePathname()
@@ -34,7 +40,9 @@ export function Topnav({ profile, sections }: TopnavProps) {
   const headerRef = useRef<HTMLElement>(null)
   const logoRef = useRef<HTMLAnchorElement>(null)
   const endRef = useRef<HTMLDivElement>(null)
+  const navRef = useRef<HTMLElement>(null)
   const menuWrapRef = useRef<HTMLDivElement>(null)
+  const [navLayout, setNavLayout] = useState<NavLayout>(NAV_UNMEASURED)
   // Si la página ya bajó: la barra (fija arriba) toma el color de la página y el desvanecido de abajo. Arriba de
   // todo queda transparente, así no corta el brillo del fondo (Topnav.module.css, .header).
   const [scrolled, setScrolled] = useState(false)
@@ -131,6 +139,115 @@ export function Topnav({ profile, sections }: TopnavProps) {
   const { rest: restModules } = splitTabs(mobileModules)
   // Si ya se hizo clic en otra sección, la píldora viaja hacia ella sin esperar a que cargue.
   const activeId = findActive(mobileModules, pendingHref ?? pathname)
+  // En el escritorio, el menú del avatar lista las secciones que no caben en el nav y las que nunca van en él
+  // (Escuela y Recordatorios, `inNav: false`), igual que en el teléfono.
+  const desktopRest = mobileModules.filter((module) => module.inNav === false || navLayout.hidden.includes(module.id))
+
+  // Escritorio: el nav va siempre en la misma fila que el logo y los íconos (antes, debajo de 1140px bajaba a
+  // una fila propia). Si no caben todas las secciones, las últimas, en el orden de la persona, pasan al menú
+  // del avatar; la activa siempre se queda. Mide cada enlace (los escondidos siguen midiendo: quedan fuera del
+  // flujo, invisibles) y decide el modo: 'center' si cabe centrado de verdad entre dos columnas iguales, como
+  // en el canvas; si no, 'side', entre el logo y los íconos.
+  const navKey = visibleModules.map((module) => module.id).join(',')
+  useLayoutEffect(() => {
+    const header = headerRef.current
+    const logo = logoRef.current
+    const end = endRef.current
+    const nav = navRef.current
+    if (!header || !logo || !end || !nav) return
+    let alive = true
+
+    function measure() {
+      if (!alive || !header || !logo || !end || !nav) return
+      if (window.matchMedia('(max-width: 720px)').matches) {
+        setNavLayout(NAV_UNMEASURED)
+        return
+      }
+      const style = getComputedStyle(header)
+      const gap = parseFloat(style.columnGap) || 0
+      const inner = header.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight)
+      const navStyle = getComputedStyle(nav)
+      const chrome =
+        parseFloat(navStyle.paddingLeft) +
+        parseFloat(navStyle.paddingRight) +
+        parseFloat(navStyle.borderLeftWidth) +
+        parseFloat(navStyle.borderRightWidth)
+      const linkGap = parseFloat(navStyle.columnGap) || 0
+      const links = Array.from(nav.querySelectorAll<HTMLElement>('[data-nav-id]')).map((el) => ({
+        id: el.dataset.navId ?? '',
+        width: el.getBoundingClientRect().width,
+      }))
+      const full = chrome + links.reduce((sum, link) => sum + link.width, 0) + linkGap * Math.max(0, links.length - 1)
+      const logoWidth = logo.getBoundingClientRect().width
+      const endWidth = end.getBoundingClientRect().width
+      // 1px de holgura por los redondeos.
+      const available = inner - logoWidth - endWidth - gap * 2 - 1
+
+      let next: NavLayout
+      if (full + Math.max(logoWidth, endWidth) * 2 + gap * 2 <= inner - 1) {
+        next = { mode: 'center', hidden: [] }
+      } else if (full <= available) {
+        next = { mode: 'side', hidden: [] }
+      } else {
+        const active = links.find((link) => link.id === activeId)
+        const keep = new Set<string>(active ? [active.id] : [])
+        let used = chrome + (active?.width ?? 0)
+        for (const link of links) {
+          if (link.id === activeId) continue
+          const add = link.width + (keep.size > 0 ? linkGap : 0)
+          // Se corta en el primero que no cabe: así se van siempre las últimas, no una del medio.
+          if (used + add > available) break
+          used += add
+          keep.add(link.id)
+        }
+        next = { mode: 'side', hidden: links.filter((link) => !keep.has(link.id)).map((link) => link.id) }
+      }
+      setNavLayout((current) =>
+        current.mode === next.mode && current.hidden.join() === next.hidden.join() ? current : next,
+      )
+    }
+
+    measure()
+    const observer = new ResizeObserver(measure)
+    for (const element of [header, logo, end, nav]) observer.observe(element)
+    // Con la fuente ya cargada los enlaces miden distinto.
+    void document.fonts?.ready.then(measure)
+    return () => {
+      alive = false
+      observer.disconnect()
+    }
+  }, [navKey, activeId])
+
+  function renderSectionItem(module: ModuleManifest) {
+    return (
+      <Link
+        key={module.id}
+        href={module.href}
+        role="menuitem"
+        className={[styles.menuItem, module.id === activeId ? styles.menuItemActive : null].filter(Boolean).join(' ')}
+        aria-current={module.id === activeId ? 'page' : undefined}
+        onClick={closePanels}
+      >
+        <svg
+          className={styles.menuIcon}
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          {module.icon.map((d) => (
+            <path key={d} d={d} />
+          ))}
+        </svg>
+        {module.label}
+      </Link>
+    )
+  }
 
   async function handleSignOut() {
     // Import dinámico: el cliente de Supabase pesa ~65 KB y solo se necesita aquí, al
@@ -149,6 +266,7 @@ export function Topnav({ profile, sections }: TopnavProps) {
       ref={headerRef}
       className={styles.header}
       data-hidden={hiddenCount}
+      data-nav-mode={navLayout.mode ?? undefined}
       data-scrolled={scrolled ? '' : undefined}
       data-panel-open={menuOpen || doodleTrayOpen ? '' : undefined}
     >
@@ -183,9 +301,11 @@ export function Topnav({ profile, sections }: TopnavProps) {
         kairo
       </Link>
 
-      <nav className={styles.nav} aria-label="Secciones">
+      <nav ref={navRef} className={styles.nav} aria-label="Secciones">
         {visibleModules.map((module) => {
           const active = module.id === activeId
+          // No cabe: sigue aquí para medirse, pero invisible y fuera del teclado; vive en el menú del avatar.
+          const overflow = navLayout.hidden.includes(module.id)
           return (
             <Link
               key={module.id}
@@ -194,6 +314,10 @@ export function Topnav({ profile, sections }: TopnavProps) {
                 .filter(Boolean)
                 .join(' ')}
               aria-current={active ? 'page' : undefined}
+              data-nav-id={module.id}
+              data-overflow={overflow ? '' : undefined}
+              aria-hidden={overflow || undefined}
+              tabIndex={overflow ? -1 : undefined}
             >
               {/* La píldora oscura es un solo elemento que "viaja": layoutId hace
                   que Motion la anime de la posición del enlace anterior al nuevo. */}
@@ -437,36 +561,13 @@ export function Topnav({ profile, sections }: TopnavProps) {
                 </div>
                 {restModules.length > 0 ? (
                   <div className={styles.menuSections}>
-                    {restModules.map((module) => (
-                      <Link
-                        key={module.id}
-                        href={module.href}
-                        role="menuitem"
-                        className={[styles.menuItem, module.id === activeId ? styles.menuItemActive : null]
-                          .filter(Boolean)
-                          .join(' ')}
-                        aria-current={module.id === activeId ? 'page' : undefined}
-                        onClick={closePanels}
-                      >
-                        <svg
-                          className={styles.menuIcon}
-                          width="18"
-                          height="18"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="1.8"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          aria-hidden="true"
-                        >
-                          {module.icon.map((d) => (
-                            <path key={d} d={d} />
-                          ))}
-                        </svg>
-                        {module.label}
-                      </Link>
-                    ))}
+                    {restModules.map(renderSectionItem)}
+                    <div className={styles.menuDivider} />
+                  </div>
+                ) : null}
+                {desktopRest.length > 0 ? (
+                  <div className={styles.menuSectionsDesktop}>
+                    {desktopRest.map(renderSectionItem)}
                     <div className={styles.menuDivider} />
                   </div>
                 ) : null}
