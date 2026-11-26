@@ -320,10 +320,15 @@ export function Topnav({ profile, sections }: TopnavProps) {
               tabIndex={overflow ? -1 : undefined}
             >
               {/* La píldora oscura es un solo elemento que "viaja": layoutId hace
-                  que Motion la anime de la posición del enlace anterior al nuevo. */}
+                  que Motion la anime de la posición del enlace anterior al nuevo.
+                  layoutDependency: que solo se mida al cambiar de sección. Motion mide en coordenadas de la
+                  página y la barra está fija; sin esto, al cambiar de página estando abajo, el repintado que
+                  trae la ruta nueva la medía con la página todavía abajo y luego ya arriba (Next sube la
+                  página), y la píldora cruzaba la pantalla desde donde estaba antes de subir. */}
               {active ? (
                 <motion.span
                   layoutId="topnav-active"
+                  layoutDependency={module.id}
                   className={styles.activePill}
                   transition={SPRING.slide}
                 />

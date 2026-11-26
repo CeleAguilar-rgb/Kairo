@@ -48,7 +48,16 @@ function Tab({ label, icon, active, href }: TabProps) {
   return (
     <Link href={href} className={className} aria-current={active ? 'page' : undefined}>
       <motion.span className={styles.iconWrap} whileTap={PRESS.icon} transition={SPRING.pop}>
-        {active ? <motion.span layoutId="bottomtabs-active" className={styles.activePill} transition={SPRING.slide} /> : null}
+        {/* layoutDependency: que solo se mida al cambiar de pestaña; la barra está fija y, sin esto, al cambiar
+            de página estando abajo la píldora cruzaba la pantalla (ver el mismo caso en Topnav). */}
+        {active ? (
+          <motion.span
+            layoutId="bottomtabs-active"
+            layoutDependency={href}
+            className={styles.activePill}
+            transition={SPRING.slide}
+          />
+        ) : null}
         <motion.svg
           className={styles.icon}
           width="21"
