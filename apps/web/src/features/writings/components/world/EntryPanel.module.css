@@ -110,15 +110,20 @@
 }
 
 .soft:hover {
-  background: var(--border);
+  background: var(--surface-muted-hover);
   color: var(--text);
 }
 
 .danger {
   min-height: 36px;
   padding: 0 var(--space-7);
-  background: var(--danger);
-  color: var(--surface);
+  /* Rojo suave: lo borrado va a la papelera (se puede recuperar) */
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.danger:hover:not(:disabled) {
+  background: var(--danger-soft-hover);
 }
 
 .primary:focus-visible,

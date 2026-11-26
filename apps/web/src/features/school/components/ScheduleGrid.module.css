@@ -25,7 +25,7 @@
 }
 
 .viewToggle:hover {
-  background: var(--surface-hover);
+  background: var(--surface-raised-hover);
 }
 
 .viewToggle:focus-visible {

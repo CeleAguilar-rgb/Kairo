@@ -162,9 +162,9 @@
 }
 
 .sectionOn {
-  background: var(--surface-inverted);
+  background: var(--selected);
   border: 1.5px solid var(--surface-inverted);
-  color: var(--text-on-inverted);
+  color: var(--on-selected);
   box-shadow: var(--shadow-md);
 }
 
@@ -268,8 +268,8 @@
 }
 
 .previewPillActive {
-  background: var(--surface-inverted);
-  color: var(--text-on-inverted);
+  background: var(--selected);
+  color: var(--on-selected);
 }
 
 .error {

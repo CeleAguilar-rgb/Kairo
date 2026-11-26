@@ -146,8 +146,8 @@
 
 .kindSelected,
 .kindSelected:hover {
-  background: var(--surface-inverted);
-  color: var(--text-on-inverted);
+  background: var(--selected);
+  color: var(--on-selected);
   box-shadow: none;
 }
 
@@ -463,7 +463,7 @@
 }
 
 .cancel:hover {
-  background: var(--surface-hover);
+  background: var(--surface-card-hover);
   color: var(--text);
 }
 

@@ -115,14 +115,14 @@
 .tabActive {
   background: transparent;
   border-color: transparent;
-  color: var(--text-on-inverted);
+  color: var(--on-selected);
 }
 
 .tabPill {
   position: absolute;
   inset: 0;
   border-radius: var(--radius-pill);
-  background: var(--surface-inverted);
+  background: var(--selected);
 }
 
 .tabContent {
@@ -226,8 +226,8 @@
 }
 
 .dayOn {
-  background: var(--surface-inverted);
-  color: var(--text-on-inverted);
+  background: var(--selected);
+  color: var(--on-selected);
 }
 
 .active {

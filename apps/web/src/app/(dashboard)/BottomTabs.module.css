@@ -62,7 +62,10 @@
   position: absolute;
   inset: 0;
   border-radius: var(--radius-pill);
-  background: var(--surface-inverted);
+  /* Lo elegido (styles/states.css): en claro, la tinta de siempre; en oscuro, un velo del acento con anillo,
+     porque --surface-inverted casi no se distinguía de la barra. Bitácora: docs/escritorio/colores-y-animacion.md (punto 3). */
+  background: var(--selected);
+  box-shadow: var(--selected-ring);
 }
 
 .icon {
@@ -72,7 +75,7 @@
 }
 
 .tabActive .icon {
-  color: var(--text-on-inverted);
+  color: var(--on-selected);
 }
 
 .label {

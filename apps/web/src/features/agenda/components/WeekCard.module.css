@@ -39,7 +39,7 @@
 }
 
 .daySelected {
-  color: var(--text-on-inverted);
+  color: var(--on-selected);
 }
 
 /* La píldora oscura que viaja entre días (layoutId) */
@@ -47,7 +47,7 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: var(--surface-inverted);
+  background: var(--selected);
   box-shadow: var(--selected-ring);
 }
 

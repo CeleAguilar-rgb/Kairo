@@ -31,7 +31,14 @@
   border-radius: 50%;
   background: var(--surface);
   box-shadow: var(--shadow-sm);
-  transition: transform var(--duration-base) ease;
+  /* La perilla llega con un asentamiento leve (--ease-spring), como algo físico */
+  transition:
+    transform var(--duration-slow) var(--ease-spring),
+    box-shadow var(--duration-base) var(--ease-out);
+}
+
+.toggle:hover .knob {
+  box-shadow: var(--shadow-md);
 }
 
 .checked .knob {

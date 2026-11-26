@@ -82,8 +82,8 @@
 }
 
 .filterOn {
-  background: var(--surface-inverted);
-  color: var(--text-on-inverted);
+  background: var(--selected);
+  color: var(--on-selected);
 }
 
 .menuWrap {
@@ -348,7 +348,7 @@
 }
 
 .boardCard:hover {
-  background: var(--surface-hover);
+  background: var(--surface-card-hover);
 }
 
 .boardCard:focus-visible {

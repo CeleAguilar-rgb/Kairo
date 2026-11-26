@@ -37,20 +37,25 @@
   background: var(--surface-hover);
 }
 
+.option:active:not(.selected) {
+  background: var(--surface-press);
+}
+
 .option:focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
 }
 
+/* Lo elegido usa --selected: en oscuro ya no se confunde con pasar el mouse (modes/dark.css) */
 .selected {
-  color: var(--text-on-inverted);
+  color: var(--on-selected);
 }
 
 .pill {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: var(--surface-inverted);
+  background: var(--selected);
   box-shadow: var(--selected-ring);
 }
 

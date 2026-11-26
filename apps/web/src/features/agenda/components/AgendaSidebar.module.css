@@ -65,7 +65,7 @@
 }
 
 .action:hover {
-  background: var(--accent-glow);
+  background: var(--surface-inverted-muted-hover);
 }
 
 .action:focus-visible {

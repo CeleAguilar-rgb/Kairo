@@ -40,14 +40,14 @@
 .active,
 .active:hover {
   background: transparent;
-  color: var(--text-on-inverted);
+  color: var(--on-selected);
 }
 
 .pill {
   position: absolute;
   inset: 0;
   border-radius: var(--radius-pill);
-  background: var(--surface-inverted);
+  background: var(--selected);
 }
 
 .content {

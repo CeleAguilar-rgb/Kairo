@@ -109,13 +109,13 @@
 }
 
 .kind:disabled {
-  opacity: 0.5;
+  opacity: var(--opacity-disabled);
   cursor: default;
 }
 
 .kindOn {
-  background: var(--surface-inverted);
-  color: var(--text-on-inverted);
+  background: var(--selected);
+  color: var(--on-selected);
 }
 
 .kindName {

@@ -15,8 +15,17 @@
   color: var(--text);
   cursor: pointer;
   transition:
-    background var(--duration-base) ease,
-    border-color var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out);
+}
+
+/* Al pasar el mouse por una casilla vacía, el borde toma el acento: invita a marcarla */
+.checkbox:hover:not(.checked):not(:disabled) {
+  border-color: var(--accent-strong);
+}
+
+.inverted:hover:not(.checked):not(:disabled) {
+  border-color: var(--accent);
 }
 
 /* Área de toque de 44px sin agrandar la caja (igual que en el canvas) */

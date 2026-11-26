@@ -45,8 +45,11 @@
   --text-on-inverted-soft: var(--bone-200);
   --border-inverted: var(--tint-bone-16);
 
-  --accent: var(--p-600);
-  --accent-soft: var(--p-900);
+  /* Los dos rellenos de acento, un poco hacia el neutro cálido: el tono 900 puro (eventos, íconos,
+     chips) se veía morado eléctrico y frío sobre casi negro. Para volver: var(--p-600) y var(--p-900).
+     Bitácora: docs/escritorio/colores-y-animacion.md (punto 2). */
+  --accent: color-mix(in srgb, var(--p-600) 85%, var(--night-300));
+  --accent-soft: color-mix(in srgb, var(--p-900) 50%, var(--night-200));
   --accent-ink: var(--p-200);
   --accent-strong: var(--p-400);
   --accent-warm: var(--amber-night);
@@ -57,6 +60,12 @@
   --danger-on-inverted: var(--danger-night);
   --caution: var(--rose-night);
   --caution-ink: var(--rose-300);
+
+  /* Lo elegido (sección activa, opción de un segmentado): un velo de acento y el anillo de
+     --selected-ring. Antes era --surface-inverted (#2a2824), casi igual que pasar el mouse.
+     Para volver: var(--surface-inverted). Bitácora: docs/escritorio/colores-y-animacion.md (punto 3). */
+  --selected: color-mix(in srgb, var(--p-300) 16%, var(--surface));
+  --on-selected: var(--text);
 
   --surface-hover: var(--tint-bone-06);
   --surface-glass: var(--tint-night-70);

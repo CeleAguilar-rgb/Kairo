@@ -72,7 +72,7 @@
 }
 
 .more:hover {
-  background: var(--surface-hover);
+  background: var(--surface-card-hover);
 }
 
 .more:focus-visible {
@@ -281,7 +281,7 @@
 
 .person:hover {
   color: var(--text);
-  background: var(--surface-raised);
+  background: var(--surface-muted-hover);
 }
 
 /* El estado y la etiqueta se ven como las etiquetas del canvas, pero se pueden cambiar */

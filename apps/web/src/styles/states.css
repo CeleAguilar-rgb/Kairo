@@ -1,0 +1,44 @@
+/*
+ * Estados (pasar el mouse, presionar, foco, elegido, peligro suave). No están en el canvas: el
+ * canvas da cada superficie en reposo y unos pocos hovers sueltos. Aquí cada estado se ARMA con
+ * los semánticos del modo activo, así sirve igual en claro, oscuro, los 12 temas y las tres
+ * intensidades sin repetir valores en light.css, dark.css e intensity.css.
+ *
+ * Va después de modes/ e intensity.css: un var() en :root se resuelve con el valor final del
+ * modo y la intensidad. La receta es siempre la misma: la superficie de siempre con un poco del
+ * color de su texto encima (en claro oscurece, en oscuro aclara).
+ *
+ * Bitácora de por qué y cómo volver atrás: docs/escritorio/colores-y-animacion.md.
+ */
+
+:root {
+  /* Presionar sobre algo transparente (el par de --surface-hover, que vive en modes/) */
+  --surface-press: color-mix(in srgb, var(--text) 10%, transparent);
+
+  /* Pasar el mouse y presionar sobre una superficie que ya tiene color. Antes, algunos botones
+     cambiaban su fondo por --surface-hover (translúcido) y se ACLARABAN al pasar el mouse. */
+  --surface-card-hover: color-mix(in srgb, var(--surface), var(--text) 5%);
+  --surface-raised-hover: color-mix(in srgb, var(--surface-raised), var(--text) 5%);
+  --surface-muted-hover: color-mix(in srgb, var(--surface-muted), var(--text) 6%);
+  --surface-muted-press: color-mix(in srgb, var(--surface-muted), var(--text) 11%);
+  --surface-inverted-hover: color-mix(in srgb, var(--surface-inverted), var(--text-on-inverted) 9%);
+  --surface-inverted-muted-hover: color-mix(in srgb, var(--surface-inverted-muted), var(--text-on-inverted) 10%);
+  --accent-soft-hover: color-mix(in srgb, var(--accent-soft), var(--accent-ink) 9%);
+  --action-hover: color-mix(in srgb, var(--action), var(--on-action) 9%);
+
+  /* Lo elegido sobre lo que tiene el mouse encima: en claro es la tinta de siempre; en oscuro
+     antes era casi igual que el hover (--surface-inverted). Ver --selected en modes/. */
+  --selected-hover: color-mix(in srgb, var(--selected), var(--on-selected) 8%);
+
+  /* Campos donde se escribe: el borde se marca al pasar el mouse y, con foco, toma el color de
+     foco con un halo suave (en lugar del contorno separado por 3px, que se veía técnico). */
+  --border-input-hover: color-mix(in srgb, var(--border-input), var(--text) 40%);
+  --focus-halo: color-mix(in srgb, var(--focus-ring) 24%, transparent);
+
+  /* Peligro suave: confirmar algo que se puede deshacer (va a la papelera) o que no borra nada
+     (cerrar sesiones). El rojo lleno (--danger + --on-danger) queda para lo irreversible. */
+  --danger-soft-hover: color-mix(in srgb, var(--danger-soft), var(--danger) 10%);
+  /* Relleno de una barra de error ("te pasaste"): el rojo con un poco de la tarjeta, más cálido
+     que el ladrillo puro. El texto que lo explica sigue en --danger. */
+  --danger-fill: color-mix(in srgb, var(--danger) 72%, var(--surface));
+}

@@ -19,8 +19,9 @@
   background: var(--progress-ink);
 }
 
+/* Barra de error ("te pasaste"): rojo cálido, no ladrillo puro. El texto sigue en --danger. */
 .danger {
-  background: var(--danger);
+  background: var(--danger-fill);
 }
 
 .caution {

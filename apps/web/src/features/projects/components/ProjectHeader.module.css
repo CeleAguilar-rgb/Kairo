@@ -96,8 +96,8 @@
 }
 
 .boardLink:hover {
-  transform: translateY(-1px);
-  background: var(--surface-hover);
+  transform: translateY(var(--lift-sm));
+  background: var(--surface-card-hover);
   color: var(--text);
 }
 
@@ -127,7 +127,7 @@
 }
 
 .more:hover {
-  background: var(--surface-hover);
+  background: var(--surface-card-hover);
 }
 
 .more:focus-visible,

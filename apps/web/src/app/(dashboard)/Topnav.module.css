@@ -59,7 +59,7 @@
 }
 
 .navLinkActive {
-  color: var(--text-on-inverted);
+  color: var(--on-selected);
 }
 
 /* Detrás del ícono y el texto (los dos llevan position relative + z-index 1) */
@@ -67,7 +67,9 @@
   position: absolute;
   inset: 0;
   border-radius: var(--radius-pill);
-  background: var(--surface-inverted);
+  background: var(--selected);
+  /* En oscuro, el anillo fino del elemento elegido (en claro es invisible), como en Segmented */
+  box-shadow: var(--selected-ring);
 }
 
 .navIcon,
@@ -142,8 +144,8 @@
 
 .iconButtonOpen,
 .iconButtonOpen:hover {
-  background: var(--surface-inverted);
-  color: var(--text-on-inverted);
+  background: var(--selected);
+  color: var(--on-selected);
 }
 
 .iconButton:focus-visible {
@@ -462,6 +464,6 @@
 /* Con el panel abierto el chip se invierte igual que los demás botones de la barra. */
 .focusRunning.iconButtonOpen,
 .focusRunning.iconButtonOpen:hover {
-  background: var(--surface-inverted);
-  color: var(--text-on-inverted);
+  background: var(--selected);
+  color: var(--on-selected);
 }

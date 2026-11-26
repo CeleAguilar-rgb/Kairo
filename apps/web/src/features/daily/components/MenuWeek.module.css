@@ -106,7 +106,7 @@
 }
 
 .viewToggle:hover {
-  background: var(--surface-hover);
+  background: var(--surface-raised-hover);
 }
 
 .viewToggle:focus-visible {
@@ -167,8 +167,8 @@
 }
 
 .chipOn {
-  background: var(--surface-inverted);
-  color: var(--text-on-inverted);
+  background: var(--selected);
+  color: var(--on-selected);
 }
 
 .dayMeals {
@@ -342,7 +342,7 @@
 }
 
 .clear:disabled {
-  opacity: 0.5;
+  opacity: var(--opacity-disabled);
   cursor: default;
 }
 

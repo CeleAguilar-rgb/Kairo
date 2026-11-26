@@ -52,6 +52,13 @@
  * --caution                  aviso suave antes de un error: la barra del presupuesto al llegar al 80% (no está en el PDF; sale de FinResumen.dc.html)
  * --caution-ink              texto sobre --surface para ese mismo aviso
  * --surface-hover             tinte sutil al pasar el mouse sobre superficies planas (no está en el PDF)
+ * --selected                 fondo de lo elegido: sección activa del menú, opción de un segmentado o de unas pestañas
+ *                            (en claro, la tinta de --surface-inverted; en oscuro, un velo de acento distinto del hover)
+ * --on-selected              texto e íconos sobre --selected
+ *
+ * Estados armados (styles/states.css, uno para todos los modos): --surface-press, --surface-raised-hover,
+ * --surface-muted-hover, --surface-muted-press, --surface-inverted-hover, --accent-soft-hover, --action-hover,
+ * --selected-hover, --border-input-hover, --focus-halo, --danger-soft-hover y --danger-fill
  * --surface-glass           superficie translúcida sobre --bg: nav, estadísticas del saludo, filas sobre --accent-soft
  * --surface-inverted-glass  bloque translúcido dentro de --surface-inverted (bloque actual de la rutina)
  * --accent-glow             fila seleccionada dentro de --surface-inverted (pendiente abierto)

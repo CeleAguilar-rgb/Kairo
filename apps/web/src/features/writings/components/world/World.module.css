@@ -158,7 +158,7 @@
 }
 
 .ghost:disabled {
-  opacity: 0.5;
+  opacity: var(--opacity-disabled);
   cursor: default;
 }
 
@@ -195,7 +195,7 @@
 }
 
 .iconButton:disabled {
-  opacity: 0.35;
+  opacity: var(--opacity-disabled);
   pointer-events: none;
 }
 

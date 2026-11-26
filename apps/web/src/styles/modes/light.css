@@ -56,6 +56,9 @@
   --caution: var(--rose-300);
   --caution-ink: var(--rose-700);
 
+  --selected: var(--surface-inverted);
+  --on-selected: var(--text-on-inverted);
+
   --surface-hover: var(--tint-ink-06);
   --surface-glass: var(--tint-cream-70);
   --surface-inverted-glass: var(--tint-cream-08);

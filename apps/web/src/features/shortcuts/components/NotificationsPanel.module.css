@@ -98,7 +98,7 @@
 
 .item:hover,
 .itemUnread:hover {
-  background: var(--surface-hover);
+  background: color-mix(in srgb, var(--accent-soft) 48%, var(--surface));
 }
 
 .icon {

@@ -30,13 +30,15 @@
     box-shadow var(--duration-base) var(--ease-out);
 }
 
-.select:hover {
-  border-color: var(--text-subtle);
+/* Igual que Input: antes el hover era --text-subtle, el mismo gris del borde, y no se notaba */
+.select:hover:not(:disabled) {
+  border-color: var(--border-input-hover);
 }
 
 .select:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
+  outline: none;
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px var(--focus-halo);
 }
 
 .chevron {

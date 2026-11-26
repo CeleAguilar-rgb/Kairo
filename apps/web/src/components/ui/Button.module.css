@@ -24,7 +24,7 @@
 
 .button:disabled {
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: var(--opacity-disabled);
 }
 
 .iconOnly {
@@ -34,6 +34,7 @@
   gap: 0;
 }
 
+/* Principal: se levanta un poco y su color se aclara apenas (antes solo se levantaba) */
 .solid {
   background: var(--action);
   color: var(--on-action);
@@ -41,17 +42,24 @@
 }
 
 .solid:hover:not(:disabled) {
-  transform: translateY(-1px);
+  transform: translateY(var(--lift-sm));
+  background: var(--action-hover);
   box-shadow: var(--shadow-md);
 }
 
+/* Secundario: al pasar el mouse se OSCURECE un paso (antes tomaba --surface-hover, translúcido,
+   y se aclaraba en lugar de oscurecerse) */
 .secondary {
   background: var(--surface-muted);
   border-color: var(--border);
 }
 
 .secondary:hover:not(:disabled) {
-  background: var(--surface-hover);
+  background: var(--surface-muted-hover);
+}
+
+.secondary:active:not(:disabled) {
+  background: var(--surface-muted-press);
 }
 
 .ghost {
@@ -60,15 +68,34 @@
 
 .ghost:hover:not(:disabled) {
   background: var(--surface-hover);
+  border-color: var(--border-input);
 }
 
+.ghost:active:not(:disabled),
+.plain:active:not(:disabled) {
+  background: var(--surface-press);
+}
+
+/* Peligro suave: confirmar algo que se puede deshacer (va a la papelera, Deshacer) o que no borra
+   nada (cerrar sesiones). Antes todo iba en rojo lleno; ver docs/escritorio/colores-y-animacion.md. */
 .danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.danger:hover:not(:disabled) {
+  background: var(--danger-soft-hover);
+}
+
+/* Peligro lleno: solo para lo que no se puede deshacer (borrar para siempre, vaciar la papelera) */
+.dangerSolid {
   background: var(--danger);
   color: var(--on-danger);
 }
 
-.danger:hover:not(:disabled) {
-  transform: translateY(-1px);
+.dangerSolid:hover:not(:disabled) {
+  transform: translateY(var(--lift-sm));
+  box-shadow: var(--shadow-sm);
 }
 
 .plain:hover:not(:disabled) {

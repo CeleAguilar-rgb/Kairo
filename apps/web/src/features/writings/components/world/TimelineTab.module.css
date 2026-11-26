@@ -38,8 +38,8 @@
 }
 
 .eraOn {
-  background: var(--surface-inverted);
-  color: var(--text-on-inverted);
+  background: var(--selected);
+  color: var(--on-selected);
   box-shadow: var(--shadow-featured);
 }
 
@@ -125,7 +125,7 @@
 }
 
 .editEra:hover {
-  background: var(--border);
+  background: var(--surface-muted-hover);
 }
 
 .events {

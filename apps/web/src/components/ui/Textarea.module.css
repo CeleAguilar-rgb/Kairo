@@ -29,9 +29,15 @@
   color: var(--text-subtle);
 }
 
+/* Igual que Input (states.css): borde marcado al pasar el mouse; foco del color de foco con halo */
+.textarea:hover:not(:disabled) {
+  border-color: var(--border-input-hover);
+}
+
 .textarea:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 1px;
+  outline: none;
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px var(--focus-halo);
 }
 
 .invalid {

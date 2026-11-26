@@ -34,6 +34,23 @@
   color: var(--text-subtle);
 }
 
+/* Pasar el mouse marca el borde; el foco lo pinta del color de foco con un halo suave, pegado al
+   campo (antes: sin cambio al pasar el mouse y un contorno separado 3px). Ver states.css. */
+.input:hover:not(:disabled) {
+  border-color: var(--border-input-hover);
+}
+
+.input:focus-visible {
+  outline: none;
+  border-color: var(--focus-ring);
+  box-shadow: 0 0 0 3px var(--focus-halo);
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  opacity: var(--opacity-disabled);
+}
+
 .input.invalid {
   border-color: var(--danger);
 }

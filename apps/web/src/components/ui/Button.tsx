@@ -7,7 +7,9 @@ import { PRESS } from '@/lib/motion'
 
 import styles from './Button.module.css'
 
-type ButtonVariant = 'solid' | 'secondary' | 'ghost' | 'danger' | 'plain'
+// danger: rojo suave, para confirmar algo que se puede deshacer o que no borra nada.
+// dangerSolid: rojo lleno, solo para lo irreversible (borrar para siempre, vaciar la papelera).
+type ButtonVariant = 'solid' | 'secondary' | 'ghost' | 'danger' | 'dangerSolid' | 'plain'
 
 // Omit: motion.button tipa estos eventos distinto al <button> nativo (conflicto
 // conocido de framer-motion con los tipos de React).
@@ -27,6 +29,7 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
   secondary: styles.secondary,
   ghost: styles.ghost,
   danger: styles.danger,
+  dangerSolid: styles.dangerSolid,
   plain: styles.plain,
 }
 

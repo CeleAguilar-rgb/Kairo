@@ -118,7 +118,7 @@ export function TrashView({ items: initialItems, nowIso, timeZone }: TrashViewPr
             <Button variant="ghost" onClick={() => setConfirmEmpty(false)}>
               Cancelar
             </Button>
-            <Button variant="danger" onClick={empty}>
+            <Button variant="dangerSolid" onClick={empty}>
               Vaciar papelera
             </Button>
           </motion.div>
@@ -198,7 +198,7 @@ export function TrashView({ items: initialItems, nowIso, timeZone }: TrashViewPr
                         <Button variant="ghost" className={styles.small} onClick={() => setAsking(null)}>
                           Cancelar
                         </Button>
-                        <Button variant="danger" className={styles.small} aria-label={`Borrar para siempre: ${name}`} onClick={() => purge(item)}>
+                        <Button variant="dangerSolid" className={styles.small} aria-label={`Borrar para siempre: ${name}`} onClick={() => purge(item)}>
                           Borrar
                         </Button>
                       </div>

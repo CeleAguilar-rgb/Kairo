@@ -4,6 +4,7 @@
 @import '../styles/modes/light.css';
 @import '../styles/modes/dark.css';
 @import '../styles/modes/intensity.css';
+@import '../styles/states.css';
 
 * {
   box-sizing: border-box;
