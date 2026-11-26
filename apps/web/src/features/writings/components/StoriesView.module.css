@@ -23,13 +23,13 @@
   background: var(--surface-raised);
   cursor: pointer;
   transition:
-    transform var(--duration-base) ease,
-    box-shadow var(--duration-base) ease,
-    background var(--duration-base) ease;
+    transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    background var(--duration-base) var(--ease-out);
 }
 
 .book:hover {
-  transform: translateY(-2px);
+  transform: translateY(var(--lift-md));
 }
 
 .book:focus-visible {
@@ -107,7 +107,7 @@
   border: 2px dashed var(--border-control);
   cursor: pointer;
   font-weight: 500;
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .addBook:hover {
@@ -175,7 +175,7 @@
   border-top: 1px solid var(--border-soft);
   text-decoration: none;
   color: var(--text);
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .row:hover {
@@ -233,7 +233,7 @@
   background: var(--surface-raised);
   text-decoration: none;
   color: var(--text);
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .person:hover {

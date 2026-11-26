@@ -51,7 +51,7 @@
   border: 1px solid var(--border);
   background: var(--surface);
   cursor: pointer;
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .iconButton:hover {

@@ -110,7 +110,7 @@
   font: inherit;
   color: var(--text);
   text-align: right;
-  transition: border-color var(--duration-base) ease;
+  transition: border-color var(--duration-base) var(--ease-out);
 }
 
 .limit::placeholder {
@@ -138,8 +138,8 @@
   color: var(--text-muted);
   cursor: pointer;
   transition:
-    background var(--duration-base) ease,
-    color var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
 }
 
 .trash:hover {
@@ -184,7 +184,7 @@
   color: var(--text);
   font-weight: 500;
   cursor: pointer;
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .addCategory:hover {

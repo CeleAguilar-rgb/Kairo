@@ -20,7 +20,7 @@ import { ProjectsCard, type Project } from '@/features/projects'
 import { RemindersCard, type Reminder } from '@/features/reminders'
 import { TodayTasksCard, type Task } from '@/features/tasks'
 import type { IsoDate } from '@/lib/dates'
-import { DURATION, EASE_OUT, SPRING } from '@/lib/motion'
+import { DURATION, EASE_OUT, PRESS, SPRING } from '@/lib/motion'
 import { ChipRow } from '@/components/ui/ChipRow'
 
 import { HOME_CARDS, type HomeCardId } from '../cards'
@@ -231,7 +231,7 @@ export function HomeView(props: HomeViewProps) {
             aria-expanded={adjustOpen}
             aria-controls="home-adjust"
             onClick={() => setAdjustOpen((open) => !open)}
-            whileTap={{ scale: 0.97 }}
+            whileTap={PRESS.button}
           >
             <motion.span
               className={styles.adjustIcon}
@@ -284,7 +284,7 @@ export function HomeView(props: HomeViewProps) {
                         .join(' ')}
                       aria-pressed={on}
                       onClick={() => toggleCard(card.id)}
-                      whileTap={{ scale: 0.94 }}
+                      whileTap={PRESS.button}
                     >
                       {/* Palomita (prendida) o + (apagada) en el mismo lugar: se cruzan
                           girando, sin cambiar el ancho del chip. */}

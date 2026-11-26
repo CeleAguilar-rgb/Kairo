@@ -23,7 +23,7 @@
   font-weight: 500;
   white-space: nowrap;
   color: var(--text);
-  transition: background 200ms ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .tab:hover {

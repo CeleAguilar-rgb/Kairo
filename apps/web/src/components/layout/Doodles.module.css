@@ -72,7 +72,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .doodleButton:hover {

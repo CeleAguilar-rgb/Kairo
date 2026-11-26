@@ -41,7 +41,7 @@ export function PageHeading({ title, doodle, doodleRotate = 10, squiggleWidth = 
             className={styles.doodle}
             initial={{ scale: 0, rotate: doodleRotate - 60 }}
             animate={{ scale: 1, rotate: doodleRotate }}
-            transition={{ ...SPRING.pop, delay: 0.5 }}
+            transition={{ ...SPRING.celebrate, delay: 0.5 }}
             whileHover={{ rotate: -doodleRotate, scale: 1.1 }}
           >
             <Doodle kind={doodle} size={44} />

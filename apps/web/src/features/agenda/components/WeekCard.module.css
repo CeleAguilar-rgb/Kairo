@@ -26,7 +26,7 @@
   border-radius: var(--radius-18);
   background: var(--surface-raised);
   color: var(--text);
-  transition: color var(--duration-base) ease;
+  transition: color var(--duration-base) var(--ease-out);
 }
 
 .day:hover:not(.daySelected) {
@@ -80,7 +80,7 @@
   margin-top: var(--space-1);
   border-radius: 50%;
   background: transparent;
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .dotOn {

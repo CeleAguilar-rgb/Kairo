@@ -31,7 +31,7 @@
   font-size: 13px;
   font-weight: 500;
   text-decoration: none;
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 a.chip:hover {
@@ -49,7 +49,7 @@ a.chip:hover {
   border-radius: var(--radius-pill);
   cursor: pointer;
   transition:
-    background var(--duration-base) ease,
+    background var(--duration-base) var(--ease-out),
     transform var(--duration-base) var(--ease-spring);
 }
 
@@ -85,8 +85,8 @@ a.chip:hover {
   cursor: pointer;
   color: var(--text-muted);
   transition:
-    background var(--duration-base) ease,
-    color var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
 }
 
 .delete:hover {
@@ -111,7 +111,7 @@ a.chip:hover {
   font-size: 28px;
   font-weight: 500;
   line-height: 1.2;
-  transition: color var(--duration-base) ease;
+  transition: color var(--duration-base) var(--ease-out);
 }
 
 /* Tachado que se dibuja de izquierda a derecha (no text-decoration: esa no se anima) */
@@ -222,7 +222,7 @@ a.chip:hover {
 }
 
 .subTitle {
-  transition: color var(--duration-base) ease;
+  transition: color var(--duration-base) var(--ease-out);
 }
 
 .subDone {
@@ -239,8 +239,8 @@ a.chip:hover {
   color: var(--text);
   resize: vertical;
   transition:
-    border-color var(--duration-base) ease,
-    background var(--duration-base) ease;
+    border-color var(--duration-base) var(--ease-out),
+    background var(--duration-base) var(--ease-out);
 }
 
 .textarea:focus {

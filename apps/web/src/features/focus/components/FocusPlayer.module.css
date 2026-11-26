@@ -268,7 +268,7 @@
 .dotPending {
   height: 10px;
   border-radius: var(--radius-pill);
-  transition: width 0.2s ease;
+  transition: width var(--duration-base) var(--ease-out);
 }
 
 .dotDone {

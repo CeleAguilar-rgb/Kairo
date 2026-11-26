@@ -296,8 +296,8 @@
   cursor: pointer;
   color: var(--text-muted);
   transition:
-    background 200ms ease,
-    color 200ms ease;
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
 }
 
 /* Un área de toque más grande que la flecha, sin que se vea */
@@ -353,7 +353,7 @@
   font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 200ms ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .addButton:hover {

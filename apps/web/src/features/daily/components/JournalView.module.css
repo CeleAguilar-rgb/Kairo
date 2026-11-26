@@ -60,7 +60,7 @@
   padding: var(--space-3) var(--space-2);
   border-radius: var(--radius-16);
   cursor: pointer;
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .mood:hover {
@@ -139,7 +139,7 @@
   background: var(--surface);
   font: inherit;
   color: var(--text);
-  transition: border-color var(--duration-base) ease;
+  transition: border-color var(--duration-base) var(--ease-out);
 }
 
 .input:focus {
@@ -165,8 +165,8 @@
   background: var(--surface-raised);
   color: var(--text);
   transition:
-    background var(--duration-base) ease,
-    color var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
 }
 
 .tag:hover:not(.tagOn) {
@@ -379,7 +379,7 @@
   border-radius: var(--radius-pill);
   color: var(--text-muted);
   cursor: pointer;
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .trash:hover {

@@ -56,7 +56,7 @@
   color: var(--text);
   font-weight: 500;
   cursor: pointer;
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .option:hover {

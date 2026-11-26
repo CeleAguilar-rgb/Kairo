@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'motion/react'
 
-import { DURATION, EASE_OUT, SPRING } from '@/lib/motion'
+import { DURATION, EASE_OUT, PRESS, SPRING } from '@/lib/motion'
 
 import styles from './Checkbox.module.css'
 
@@ -31,7 +31,7 @@ export function Checkbox({ checked, onToggle, label, tone = 'surface', className
       onClick={onToggle}
       className={classes}
       initial={false}
-      whileTap={{ scale: 0.86 }}
+      whileTap={PRESS.icon}
       animate={checked ? { scale: [1, 1.12, 1] } : { scale: 1 }}
       transition={{ duration: 0.3, ease: EASE_OUT }}
     >
@@ -57,7 +57,7 @@ export function Checkbox({ checked, onToggle, label, tone = 'surface', className
           strokeLinejoin="round"
           initial={false}
           animate={checked ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-          transition={checked ? { ...SPRING.pop, delay: 0.04 } : { duration: DURATION.fast }}
+          transition={checked ? { ...SPRING.celebrate, delay: 0.04 } : { duration: DURATION.fast }}
         />
       </svg>
     </motion.button>

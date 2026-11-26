@@ -48,7 +48,7 @@
   color: var(--text-on-inverted);
   font-weight: 500;
   cursor: pointer;
-  transition: transform var(--duration-fast) ease;
+  transition: transform var(--duration-fast) var(--ease-out);
 }
 
 .undo:active {

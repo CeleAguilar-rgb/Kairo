@@ -89,7 +89,7 @@
   color: var(--text);
   font-size: 15px;
   cursor: pointer;
-  transition: background var(--duration-fast) ease;
+  transition: background var(--duration-fast) var(--ease-out);
 }
 
 .tool:hover:not(:disabled) {

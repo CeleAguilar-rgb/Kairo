@@ -134,8 +134,8 @@
   font-size: 14px;
   cursor: pointer;
   transition:
-    border-color var(--duration-base) ease,
-    color var(--duration-base) ease;
+    border-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
 }
 
 .ghost:hover {
@@ -237,7 +237,7 @@
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .chip:hover {
@@ -290,12 +290,12 @@
   border-radius: var(--radius-22);
   cursor: pointer;
   transition:
-    transform var(--duration-base) ease,
-    box-shadow var(--duration-base) ease;
+    transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
 }
 
 .tile:hover {
-  transform: translateY(-2px);
+  transform: translateY(var(--lift-md));
   box-shadow: var(--shadow-md);
 }
 

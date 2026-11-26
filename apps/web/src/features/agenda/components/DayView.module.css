@@ -24,8 +24,8 @@
   border-radius: var(--radius-16);
   cursor: pointer;
   transition:
-    background 200ms ease,
-    color 200ms ease;
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
 }
 
 .pick:hover {

@@ -34,7 +34,7 @@
   font-size: 12px;
   color: var(--text-muted);
   -webkit-tap-highlight-color: transparent;
-  transition: color var(--duration-base) ease;
+  transition: color var(--duration-base) var(--ease-out);
 }
 
 .tabActive {
@@ -68,7 +68,7 @@
 .icon {
   position: relative;
   z-index: 1;
-  transition: color var(--duration-base) ease;
+  transition: color var(--duration-base) var(--ease-out);
 }
 
 .tabActive .icon {

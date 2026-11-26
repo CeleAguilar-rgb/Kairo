@@ -58,7 +58,7 @@
   border-radius: var(--radius-14);
   background: var(--surface-raised);
   cursor: pointer;
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .meal:hover {
@@ -80,7 +80,7 @@
 .mealDish {
   flex: 1;
   min-width: 0;
-  transition: color var(--duration-base) ease;
+  transition: color var(--duration-base) var(--ease-out);
 }
 
 .mealDone .mealDish {

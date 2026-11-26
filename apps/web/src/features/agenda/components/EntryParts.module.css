@@ -16,7 +16,7 @@
   border-style: solid;
   font-size: 12px;
   cursor: pointer;
-  transition: opacity 250ms ease;
+  transition: opacity var(--duration-base) var(--ease-out);
 }
 
 .chipText {
@@ -46,13 +46,13 @@
   font-size: 13px;
   line-height: 1.3;
   transition:
-    transform 200ms ease,
-    box-shadow 200ms ease,
-    opacity 250ms ease;
+    transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    opacity var(--duration-base) var(--ease-out);
 }
 
 .block:hover {
-  transform: translateY(-1px);
+  transform: translateY(var(--lift-sm));
   box-shadow: var(--shadow-md);
 }
 

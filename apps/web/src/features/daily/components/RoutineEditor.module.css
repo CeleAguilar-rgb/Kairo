@@ -98,8 +98,8 @@
   background: var(--surface);
   border: 1px solid var(--border);
   transition:
-    background var(--duration-base) ease,
-    color var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
 }
 
 .tab:hover:not(.tabActive) {
@@ -199,8 +199,8 @@
   background: var(--surface-raised);
   color: var(--text-muted);
   transition:
-    background var(--duration-base) ease,
-    color var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
 }
 
 /* Con el dedo, los días de la rutina llegan a 44px de área de toque sin crecer. */
@@ -348,7 +348,7 @@
   justify-content: center;
   border-radius: 50%;
   cursor: pointer;
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .edit:hover {
@@ -375,7 +375,7 @@
   cursor: pointer;
   font-weight: 500;
   color: var(--text-muted);
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .addBlock:hover {

@@ -18,7 +18,7 @@
   background: var(--surface-glass);
   color: var(--text);
   cursor: pointer;
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .trigger:hover {

@@ -69,7 +69,7 @@
   background: transparent;
   font: inherit;
   color: var(--text);
-  transition: border-color var(--duration-base) ease;
+  transition: border-color var(--duration-base) var(--ease-out);
 }
 
 .gradeInput::placeholder {

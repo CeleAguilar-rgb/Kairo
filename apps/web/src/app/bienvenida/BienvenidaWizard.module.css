@@ -35,7 +35,7 @@
   background: var(--border-control);
   transition:
     width var(--duration-base) var(--ease-out),
-    background var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out);
 }
 
 .dotActive {
@@ -44,7 +44,7 @@
   background: var(--text);
   transition:
     width var(--duration-base) var(--ease-out),
-    background var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out);
 }
 
 .stepTwo {
@@ -114,8 +114,8 @@
   cursor: pointer;
   background: var(--surface-raised);
   transition:
-    transform var(--duration-base) ease,
-    box-shadow var(--duration-base) ease;
+    transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
 }
 
 .avatarSelected {
@@ -150,9 +150,9 @@
   cursor: pointer;
   transition:
     transform var(--duration-base) var(--ease-out),
-    background var(--duration-base) ease,
-    border-color var(--duration-base) ease,
-    box-shadow var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
 }
 
 .sectionOff {
@@ -170,7 +170,7 @@
 
 .sectionOff:hover,
 .sectionOn:hover {
-  transform: translateY(-2px);
+  transform: translateY(var(--lift-md));
 }
 
 .sectionOff:focus-visible,

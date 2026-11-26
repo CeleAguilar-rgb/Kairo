@@ -91,9 +91,9 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   transition:
-    background 200ms ease,
-    border-color 200ms ease,
-    color 200ms ease;
+    background var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
 }
 
 .free:hover {

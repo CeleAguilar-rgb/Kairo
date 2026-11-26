@@ -25,7 +25,9 @@
   font: inherit;
   color: var(--text);
   cursor: pointer;
-  transition: border-color var(--duration-base) ease;
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
 }
 
 .select:hover {

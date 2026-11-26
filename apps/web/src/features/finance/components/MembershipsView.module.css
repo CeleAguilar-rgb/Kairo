@@ -162,8 +162,8 @@
   cursor: pointer;
   box-shadow: var(--shadow-md);
   transition:
-    opacity var(--duration-base) ease,
-    box-shadow var(--duration-base) ease;
+    opacity var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
 }
 
 .tile:focus-visible {
@@ -220,8 +220,8 @@
   opacity: 0.7;
   cursor: pointer;
   transition:
-    opacity var(--duration-base) ease,
-    background var(--duration-base) ease;
+    opacity var(--duration-base) var(--ease-out),
+    background var(--duration-base) var(--ease-out);
 }
 
 .tileTrash:hover {
@@ -276,8 +276,8 @@
 
 .row {
   transition:
-    opacity var(--duration-base) ease,
-    background var(--duration-base) ease;
+    opacity var(--duration-base) var(--ease-out),
+    background var(--duration-base) var(--ease-out);
 }
 
 .row:hover {

@@ -34,6 +34,6 @@
   transform: translateY(6px);
   pointer-events: none;
   transition:
-    opacity var(--duration-base) ease,
+    opacity var(--duration-base) var(--ease-out),
     transform var(--duration-base) var(--ease-out);
 }

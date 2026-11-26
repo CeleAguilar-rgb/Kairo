@@ -8,7 +8,7 @@
   cursor: pointer;
   flex-shrink: 0;
   background: var(--border-control);
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 /* Área de toque de 44px de alto sin agrandar el interruptor (igual que la casilla de Checkbox). */

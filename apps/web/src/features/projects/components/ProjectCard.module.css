@@ -9,12 +9,12 @@
   border-radius: var(--radius-28);
   overflow: hidden;
   transition:
-    transform 250ms var(--ease-out),
-    box-shadow 250ms ease;
+    transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
 }
 
 .card:hover {
-  transform: translateY(-4px);
+  transform: translateY(var(--lift-lg));
   box-shadow: var(--shadow-lg);
   color: var(--text);
 }

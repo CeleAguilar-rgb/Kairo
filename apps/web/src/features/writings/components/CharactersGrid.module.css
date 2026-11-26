@@ -25,12 +25,12 @@
   text-decoration: none;
   color: var(--text);
   transition:
-    transform var(--duration-base) ease,
-    box-shadow var(--duration-base) ease;
+    transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
 }
 
 .card:hover {
-  transform: translateY(-2px);
+  transform: translateY(var(--lift-md));
   box-shadow: var(--shadow-md);
   color: var(--text);
 }

@@ -43,7 +43,7 @@ export function Drawer({ open, onClose, title, hideTitle = false, width = 'md', 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
+            transition={{ duration: 0.3, ease: EASE_OUT }}
           />
           <motion.aside
             key="panel"

@@ -9,7 +9,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   cursor: pointer;
-  transition: box-shadow var(--duration-base) ease;
+  transition: box-shadow var(--duration-base) var(--ease-out);
 }
 
 .card:hover {

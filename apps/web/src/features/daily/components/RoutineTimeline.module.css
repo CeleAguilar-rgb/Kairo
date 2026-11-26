@@ -61,8 +61,8 @@
   background: var(--surface-raised);
   color: var(--text);
   transition:
-    background var(--duration-base) ease,
-    color var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
 }
 
 .iconDone {
@@ -95,7 +95,7 @@
 
 .title {
   font-weight: 500;
-  transition: color var(--duration-base) ease;
+  transition: color var(--duration-base) var(--ease-out);
 }
 
 .titleDone {
@@ -276,11 +276,11 @@
   color: var(--text);
   font-weight: 500;
   cursor: pointer;
-  transition: transform var(--duration-base) ease;
+  transition: transform var(--duration-base) var(--ease-out);
 }
 
 .pomodoro:hover {
-  transform: translateY(-1px);
+  transform: translateY(var(--lift-sm));
 }
 
 .pomodoro:focus-visible {

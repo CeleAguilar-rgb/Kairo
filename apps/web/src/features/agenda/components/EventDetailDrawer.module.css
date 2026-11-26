@@ -40,7 +40,7 @@
   justify-content: center;
   border-radius: var(--radius-pill);
   cursor: pointer;
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .iconButton:hover {

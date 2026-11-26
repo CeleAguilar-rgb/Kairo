@@ -124,12 +124,30 @@
   --tint-cream-70: rgba(255, 253, 249, 0.7);
   --tint-cream-08: rgba(243, 238, 230, 0.08);
 
-  /* Duración y curvas de animación (Motion las reutiliza igual) */
+  /* Duración y curvas de animación (Motion las reutiliza igual: lib/motion.ts). Qué curva va con qué
+     está en docs/guides/theming.md, "Animación". */
+  --duration-press: 100ms;
   --duration-fast: 150ms;
   --duration-base: 200ms;
   --duration-slow: 380ms;
+  /* Entrar y cambios de estado (pasar el mouse, color, borde): arranca rápido y se asienta */
   --ease-out: cubic-bezier(0.3, 0.7, 0.2, 1);
-  --ease-spring: cubic-bezier(0.3, 1.6, 0.5, 1);
+  /* Algo que va de un lugar a otro sin salir ni entrar (un interruptor, un indicador) */
+  --ease-in-out: cubic-bezier(0.45, 0, 0.25, 1);
+  /* Rebote leve para lo funcional. Antes era (0.3, 1.6, 0.5, 1), que ahora es --ease-celebrate */
+  --ease-spring: cubic-bezier(0.34, 1.3, 0.64, 1);
+  /* El rebote juguetón: solo para celebrar (algo terminado) y adornos (doodles) */
+  --ease-celebrate: cubic-bezier(0.3, 1.6, 0.5, 1);
+
+  /* Presionar y levantar: la misma respuesta en toda la app */
+  --press-scale: 0.97;
+  --press-scale-icon: 0.92;
+  --lift-sm: -1px;
+  --lift-md: -2px;
+  --lift-lg: -4px;
+
+  /* Deshabilitado: una sola opacidad (antes había 0.35, 0.4, 0.5 y 0.6) */
+  --opacity-disabled: 0.45;
 
   /* Capas (z-index): de abajo hacia arriba, para que nada compita con números sueltos */
   --z-popover: 20;

@@ -18,8 +18,8 @@
   border: 1.5px solid var(--border);
   cursor: pointer;
   transition:
-    border-color 200ms ease,
-    background 200ms ease;
+    border-color var(--duration-base) var(--ease-out),
+    background var(--duration-base) var(--ease-out);
 }
 
 .scope:hover {

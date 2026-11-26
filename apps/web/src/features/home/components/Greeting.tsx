@@ -73,7 +73,7 @@ export function Greeting({ hello, subtitle, pendingCount, activeProjects, dueThi
             className={styles.sun}
             initial={{ scale: 0, rotate: -90 }}
             animate={{ scale: 1, rotate: 8 }}
-            transition={{ ...SPRING.pop, delay: 0.9 }}
+            transition={{ ...SPRING.celebrate, delay: 0.9 }}
           >
             <span className={styles.sunSpin}><Doodle kind="sun" size={62} strokeWidth={2} /></span>
           </motion.span>

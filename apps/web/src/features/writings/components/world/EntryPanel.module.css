@@ -47,7 +47,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-16);
   cursor: pointer;
-  transition: border-color var(--duration-base) ease;
+  transition: border-color var(--duration-base) var(--ease-out);
 }
 
 .kid:hover {
@@ -90,7 +90,7 @@
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
-  transition: transform var(--duration-base) ease;
+  transition: transform var(--duration-base) var(--ease-out);
 }
 
 .primary {
@@ -100,7 +100,7 @@
 }
 
 .primary:hover {
-  transform: translateY(-1px);
+  transform: translateY(var(--lift-sm));
   color: var(--text-on-inverted);
 }
 

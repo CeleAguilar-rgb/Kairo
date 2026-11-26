@@ -50,8 +50,8 @@
   color: var(--text);
   white-space: nowrap;
   transition:
-    background var(--duration-base) ease,
-    color var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
 }
 
 .navLink:hover:not(.navLinkActive) {
@@ -81,7 +81,7 @@
 }
 
 .navLink:hover .navIcon {
-  transform: translateY(-1px) rotate(-6deg);
+  transform: translateY(var(--lift-sm)) rotate(-6deg);
 }
 
 .navLink:focus-visible {
@@ -119,8 +119,8 @@
   color: var(--text);
   cursor: pointer;
   transition:
-    background var(--duration-base) ease,
-    color var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
 }
 
 /* Atajos.dc.html: .badge (hay avisos sin leer). */

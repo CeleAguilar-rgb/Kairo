@@ -22,8 +22,8 @@
   font-weight: 500;
   text-decoration: none;
   transition:
-    background var(--duration-base) ease,
-    color var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
 }
 
 .back:hover {

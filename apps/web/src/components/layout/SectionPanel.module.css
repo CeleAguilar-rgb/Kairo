@@ -18,7 +18,7 @@
 .panel[data-switching] {
   opacity: 0.7;
   pointer-events: none;
-  transition: opacity var(--duration-base) ease 150ms;
+  transition: opacity var(--duration-base) var(--ease-out) 150ms;
 }
 
 @media (prefers-reduced-motion: reduce) {

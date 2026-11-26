@@ -5,7 +5,7 @@ import { useOptimistic, useTransition } from 'react'
 
 import { Card, CardHeader, CardLink, LineIcon } from '@/components/ui/Card'
 import { useToast } from '@/components/ui/Toast'
-import { DURATION, fadeUp, SPRING, staggerList } from '@/lib/motion'
+import { DURATION, fadeUp, PRESS, SPRING, staggerList } from '@/lib/motion'
 
 import { toggleMealDoneAction } from '../meal-actions'
 import { MEAL_LABEL, type MealPlan } from '../types'
@@ -48,7 +48,7 @@ export function MenuCard({ meals: initial }: { meals: MealPlan[] }) {
                 aria-pressed={meal.done}
                 aria-label={`${MEAL_LABEL[meal.meal]}: ${meal.dish}${meal.done ? ', comido' : ''}`}
                 onClick={() => toggle(meal)}
-                whileTap={{ scale: 0.98 }}
+                whileTap={PRESS.card}
               >
                 <span className={styles.mealKind}>{MEAL_LABEL[meal.meal]}</span>
                 <span className={styles.mealDish}>{meal.dish}</span>
@@ -67,7 +67,7 @@ export function MenuCard({ meals: initial }: { meals: MealPlan[] }) {
                       strokeLinejoin="round"
                       aria-hidden="true"
                       initial={{ scale: 0, rotate: -30 }}
-                      animate={{ scale: 1, rotate: 0, transition: SPRING.pop }}
+                      animate={{ scale: 1, rotate: 0, transition: SPRING.celebrate }}
                       exit={{ scale: 0, opacity: 0, transition: { duration: DURATION.fast } }}
                     >
                       <path d="M5 12l5 5L20 7" />

@@ -166,12 +166,12 @@
   justify-content: center;
   cursor: pointer;
   transition:
-    transform 150ms ease,
-    box-shadow 150ms ease;
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
 }
 
 .cell:hover:not(.cellInert) {
-  transform: translateY(-1px);
+  transform: translateY(var(--lift-sm));
 }
 
 .cell:focus-visible {

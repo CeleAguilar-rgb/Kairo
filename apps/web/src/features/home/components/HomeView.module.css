@@ -68,7 +68,7 @@
   font: inherit;
   font-weight: 500;
   cursor: pointer;
-  transition: background var(--duration-base) ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .adjustButton:hover {
@@ -133,8 +133,8 @@
   font-weight: 500;
   cursor: pointer;
   transition:
-    background var(--duration-base) ease,
-    color var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out);
 }
 
 .chip:hover:not(.chipOn) {

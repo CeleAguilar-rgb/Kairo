@@ -96,9 +96,9 @@
   opacity: 0;
   transform: scale(0.8);
   transition:
-    opacity var(--duration-base) ease,
+    opacity var(--duration-base) var(--ease-out),
     transform var(--duration-base) var(--ease-spring),
-    background var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out);
 }
 
 /* El botón aparece al pasar por la fila, o siempre que tenga foco de teclado */

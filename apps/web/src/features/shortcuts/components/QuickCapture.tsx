@@ -15,7 +15,7 @@ import { useFocus } from '@/features/focus'
 import { quickExpenseAction } from '@/features/finance'
 import { createReminderAction } from '@/features/reminders'
 import { createNoteAction } from '@/features/writings'
-import { EASE_OUT, SPRING } from '@/lib/motion'
+import { EASE_OUT, PRESS, SPRING } from '@/lib/motion'
 import { useNarrowScreen } from '@/lib/use-narrow-screen'
 import { ChipRow } from '@/components/ui/ChipRow'
 
@@ -297,7 +297,7 @@ export function QuickCapture({ open, onToggle, onClose, timeZone, demo }: QuickC
         onPointerCancel={endPress}
         onContextMenu={(event) => event.preventDefault()}
         animate={{ rotate: open || focus.expanded ? 45 : 0 }}
-        whileTap={{ scale: 0.92 }}
+        whileTap={PRESS.icon}
         transition={SPRING.pop}
       >
         <LineIcon d={['M12 5v14M5 12h14']} size={24} strokeWidth={2.2} />

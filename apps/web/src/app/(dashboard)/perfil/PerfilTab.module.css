@@ -44,8 +44,8 @@
   cursor: pointer;
   background: var(--surface-raised);
   transition:
-    transform var(--duration-base) ease,
-    box-shadow var(--duration-base) ease;
+    transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
 }
 
 .avatarSelected {

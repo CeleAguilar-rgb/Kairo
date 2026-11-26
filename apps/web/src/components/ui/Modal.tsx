@@ -44,7 +44,7 @@ export function Modal({ open, onClose, title, description, tone = 'default', ico
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
+            transition={{ duration: 0.25, ease: EASE_OUT }}
           />
           <motion.div
             key="dialog"

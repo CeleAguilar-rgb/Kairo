@@ -16,12 +16,12 @@
   font-weight: 500;
   box-shadow: var(--shadow-sm);
   transition:
-    transform var(--duration-base) ease,
-    box-shadow var(--duration-base) ease;
+    transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
 }
 
 .back:hover {
-  transform: translateY(-1px);
+  transform: translateY(var(--lift-sm));
   box-shadow: var(--shadow-md);
 }
 

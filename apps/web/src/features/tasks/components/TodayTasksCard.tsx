@@ -10,7 +10,7 @@ import { Doodle } from '@/components/ui/Doodle'
 import { ProgressRing } from '@/components/ui/Progress'
 import { useToast } from '@/components/ui/Toast'
 import { formatRelativeDay, type IsoDate } from '@/lib/dates'
-import { listItem, SPRING, staggerList } from '@/lib/motion'
+import { listItem, PRESS, SPRING, staggerList } from '@/lib/motion'
 
 import { updateTaskStatus } from '../actions'
 import { dueTone } from '../grouping'
@@ -103,7 +103,7 @@ export function TodayTasksCard({ tasks: initial, today, onDoneCountChange }: Tod
         icon={<LineIcon d={['M8 4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z', 'M8.5 12l2.5 2.5 4.5-5']} />}
         action={
           <>
-            <motion.span whileHover={{ rotate: 90 }} whileTap={{ scale: 0.9 }} transition={SPRING.pop}>
+            <motion.span whileHover={{ rotate: 90 }} whileTap={PRESS.icon} transition={SPRING.pop}>
               <Link href="/tareas?nueva=1" className={styles.add} aria-label="Nuevo pendiente">
                 <LineIcon d="M12 5v14M5 12h14" strokeWidth={2} />
               </Link>

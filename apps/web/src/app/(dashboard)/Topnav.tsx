@@ -12,7 +12,7 @@ import { useFocus } from '@/features/focus'
 import { NOTIFICATIONS_TRIGGER, useShortcuts } from '@/features/shortcuts'
 import type { Profile, UserSection } from '@/lib/account/api'
 import { getAvatar } from '@/lib/account/avatars'
-import { popover, SPRING } from '@/lib/motion'
+import { popover, PRESS, SPRING } from '@/lib/motion'
 import { findActive, navModules, splitTabs } from './nav-modules'
 import styles from './Topnav.module.css'
 
@@ -304,7 +304,7 @@ export function Topnav({ profile, sections }: TopnavProps) {
             aria-label={`Menú de ${profile.name ?? 'tu cuenta'}`}
             onClick={() => shortcuts.toggle('menu')}
             whileHover={{ rotate: -8, scale: 1.04 }}
-            whileTap={{ scale: 0.94 }}
+            whileTap={PRESS.icon}
             transition={SPRING.pop}
           >
             <svg

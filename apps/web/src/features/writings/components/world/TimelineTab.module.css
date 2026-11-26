@@ -25,9 +25,9 @@
   color: var(--text);
   cursor: pointer;
   transition:
-    background var(--duration-base) ease,
-    color var(--duration-base) ease,
-    box-shadow var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
 }
 
 .era:focus-visible,

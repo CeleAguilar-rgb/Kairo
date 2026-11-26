@@ -11,7 +11,7 @@ import { IconTabs } from '@/components/ui/IconTabs'
 import responsive from '@/components/ui/responsive.module.css'
 import { Segmented } from '@/components/ui/Segmented'
 import { formatDueLabel, type IsoDate } from '@/lib/dates'
-import { DURATION, EASE_OUT, SPRING } from '@/lib/motion'
+import { DURATION, EASE_OUT, PRESS, SPRING } from '@/lib/motion'
 import { useEntering } from '@/lib/use-entering'
 
 import { PROJECT_KIND_LABEL, type Project, type ProjectKind } from '../types'
@@ -167,7 +167,7 @@ export function ProjectsView({ projects, today, weekEnd }: ProjectsViewProps) {
             transition: { duration: 0.45, ease: EASE_OUT, delay: entering ? 0.2 + shown.length * 0.045 : 0 },
           }}
           whileHover={{ scale: 1.015 }}
-          whileTap={{ scale: 0.98 }}
+          whileTap={PRESS.card}
           transition={SPRING.panel}
         >
           <Link href="/proyectos/nuevo" className={styles.newTile}>

@@ -14,7 +14,7 @@ import { Segmented } from '@/components/ui/Segmented'
 import { useToast } from '@/components/ui/Toast'
 import { projectTone } from '@/features/projects'
 import type { IsoDate } from '@/lib/dates'
-import { EASE_OUT, SPRING } from '@/lib/motion'
+import { EASE_OUT, PRESS, SPRING } from '@/lib/motion'
 import { useNarrowScreen } from '@/lib/use-narrow-screen'
 
 import { createTask, deleteTask, restoreTask, updateTaskStatus } from '../actions'
@@ -234,7 +234,7 @@ export function TasksView({
               className={styles.bolt}
               initial={{ scale: 0, rotate: -50 }}
               animate={{ scale: 1, rotate: 10 }}
-              transition={{ ...SPRING.pop, delay: 0.5 }}
+              transition={{ ...SPRING.celebrate, delay: 0.5 }}
               whileHover={{ rotate: -8, scale: 1.1 }}
             >
               <Doodle kind="bolt" size={42} />
@@ -286,7 +286,7 @@ export function TasksView({
               .join(' ')}
             aria-pressed={showDone}
             onClick={() => setShowDone((value) => !value)}
-            whileTap={{ scale: 0.96 }}
+            whileTap={PRESS.button}
             // En el tablero las hechas siempre se ven en su columna: el interruptor no aplica.
             disabled={view === 'board'}
             title={

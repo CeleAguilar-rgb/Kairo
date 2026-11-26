@@ -28,7 +28,9 @@
   font-weight: 500;
   color: var(--text);
   cursor: pointer;
-  transition: color var(--duration-base) ease;
+  transition:
+    color var(--duration-base) var(--ease-out),
+    background var(--duration-base) var(--ease-out);
 }
 
 .option:hover:not(.selected) {

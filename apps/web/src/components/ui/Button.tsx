@@ -3,6 +3,8 @@
 import { motion } from 'motion/react'
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
 
+import { PRESS } from '@/lib/motion'
+
 import styles from './Button.module.css'
 
 type ButtonVariant = 'solid' | 'secondary' | 'ghost' | 'danger' | 'plain'
@@ -41,7 +43,12 @@ export function Button({
     .join(' ')
 
   return (
-    <motion.button type={type} className={classes} whileTap={{ scale: 0.97 }} {...rest}>
+    <motion.button
+      type={type}
+      className={classes}
+      whileTap={rest.disabled ? undefined : iconOnly ? PRESS.icon : PRESS.button}
+      {...rest}
+    >
       {children}
     </motion.button>
   )

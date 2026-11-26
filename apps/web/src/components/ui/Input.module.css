@@ -25,7 +25,9 @@
   background: var(--surface);
   font: inherit;
   color: var(--text);
-  transition: border-color var(--duration-base) ease;
+  transition:
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
 }
 
 .input::placeholder {

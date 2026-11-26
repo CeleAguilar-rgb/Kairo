@@ -6,7 +6,7 @@ import { LineIcon } from '@/components/ui/Card'
 import { CountUp, ProgressBar } from '@/components/ui/Progress'
 import { Doodle } from '@/components/ui/Doodle'
 import type { IsoDate } from '@/lib/dates'
-import { EASE_OUT } from '@/lib/motion'
+import { EASE_OUT, PRESS } from '@/lib/motion'
 
 import { goalAchievedText, goalDueText, goalPercent, goalProgressText, goalRatio } from '../goal-utils'
 import { GOAL_AREA_LABEL, GOAL_KIND_ICON, GOAL_KIND_LABEL } from '../routine-meta'
@@ -37,8 +37,8 @@ export function GoalCard({ goal, today, delay = 0, calm = false, onOpen }: GoalC
       onClick={() => onOpen(goal)}
       initial={calm ? false : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE_OUT, delay } }}
-      whileHover={{ y: -3 }}
-      whileTap={{ scale: 0.99 }}
+      whileHover={{ y: -2 }}
+      whileTap={PRESS.card}
     >
       <div className={styles.top}>
         <AreaChip area={goal.area} />

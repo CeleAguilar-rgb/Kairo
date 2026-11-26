@@ -9,7 +9,7 @@ import { Drawer } from '@/components/ui/Drawer'
 import { Input } from '@/components/ui/Input'
 import { Segmented } from '@/components/ui/Segmented'
 import { Select } from '@/components/ui/Select'
-import { DURATION, EASE_OUT, SPRING } from '@/lib/motion'
+import { DURATION, EASE_OUT, PRESS, SPRING } from '@/lib/motion'
 import { ChipRow } from '@/components/ui/ChipRow'
 
 import { PRIORITY_LABEL, STATUS_LABEL } from '../types'
@@ -163,7 +163,7 @@ function TaskCreateForm({ projects, defaultProjectId, pending, onClose, onCreate
                   aria-checked={selected}
                   className={[styles.priority, styles[`priority_${value}`], selected ? styles.prioritySelected : null].filter(Boolean).join(' ')}
                   onClick={() => setPriority(value)}
-                  whileTap={{ scale: 0.94 }}
+                  whileTap={PRESS.button}
                   animate={{ opacity: selected ? 1 : 0.7 }}
                   transition={{ duration: DURATION.base }}
                 >

@@ -28,8 +28,8 @@
   background: var(--surface-glass);
   box-shadow: inset 0 0 0 1px var(--border);
   transition:
-    background var(--duration-base) ease,
-    box-shadow var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
 }
 
 /* Mientras se arrastra una tarjeta encima, la columna se enciende */
@@ -115,13 +115,13 @@
   border: 1px solid var(--border);
   cursor: grab;
   transition:
-    transform var(--duration-base) ease,
-    box-shadow var(--duration-base) ease,
-    opacity var(--duration-base) ease;
+    transform var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    opacity var(--duration-base) var(--ease-out);
 }
 
 .card:hover {
-  transform: translateY(-2px);
+  transform: translateY(var(--lift-md));
   box-shadow: var(--shadow-md);
 }
 
@@ -166,9 +166,9 @@
   color: var(--text-muted);
   opacity: 0;
   transition:
-    background var(--duration-base) ease,
-    color var(--duration-base) ease,
-    opacity var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    color var(--duration-base) var(--ease-out),
+    opacity var(--duration-base) var(--ease-out);
 }
 
 .card:hover .delete,
@@ -200,9 +200,9 @@
   cursor: pointer;
   color: var(--text-muted);
   transition:
-    background var(--duration-base) ease,
+    background var(--duration-base) var(--ease-out),
     transform var(--duration-base) var(--ease-out),
-    color var(--duration-base) ease;
+    color var(--duration-base) var(--ease-out);
 }
 
 .next:hover {

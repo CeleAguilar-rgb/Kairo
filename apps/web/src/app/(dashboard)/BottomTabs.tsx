@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 
 import { usePendingHref } from '@/components/layout/Navigation'
 import type { UserSection } from '@/lib/account/api'
-import { EASE_OUT, SPRING } from '@/lib/motion'
+import { EASE_OUT, PRESS, SPRING } from '@/lib/motion'
 
 import styles from './BottomTabs.module.css'
 import { findActive, navModules, splitTabs } from './nav-modules'
@@ -47,7 +47,7 @@ function Tab({ label, icon, active, href }: TabProps) {
 
   return (
     <Link href={href} className={className} aria-current={active ? 'page' : undefined}>
-      <motion.span className={styles.iconWrap} whileTap={{ scale: 0.92 }} transition={SPRING.pop}>
+      <motion.span className={styles.iconWrap} whileTap={PRESS.icon} transition={SPRING.pop}>
         {active ? <motion.span layoutId="bottomtabs-active" className={styles.activePill} transition={SPRING.slide} /> : null}
         <motion.svg
           className={styles.icon}

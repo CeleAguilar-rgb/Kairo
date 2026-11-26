@@ -38,7 +38,7 @@
   min-width: 0;
   border-radius: var(--radius-16);
   cursor: pointer;
-  transition: background 200ms ease;
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .day:hover {

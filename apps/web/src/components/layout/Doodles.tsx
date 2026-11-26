@@ -80,7 +80,7 @@ export function DoodlePicker({ compact = false }: { compact?: boolean }) {
             className={styles.doodleButton}
             aria-label={`Agregar ${DOODLE_LABEL[kind].toLowerCase()}`}
             onClick={() => add(kind)}
-            variants={{ hidden: { opacity: 0, scale: 0.6 }, show: { opacity: 1, scale: 1, transition: SPRING.pop } }}
+            variants={{ hidden: { opacity: 0, scale: 0.6 }, show: { opacity: 1, scale: 1, transition: SPRING.celebrate } }}
             whileHover={{ rotate: -6, scale: 1.06 }}
             whileTap={{ scale: 0.85 }}
           >
@@ -145,7 +145,7 @@ export function DoodleTray({ buttonClassName, openClassName, open, onToggle, onC
         onClick={onToggle}
         whileHover={{ rotate: -10 }}
         whileTap={{ scale: 0.9 }}
-        transition={SPRING.pop}
+        transition={SPRING.celebrate}
       >
         <LineIcon
           size={22}
@@ -184,7 +184,7 @@ export function PlacedDoodles() {
               className={styles.placed}
               style={{ left: slot.left, top: slot.top }}
               initial={{ scale: 0, rotate: slot.rotate - 20, opacity: 0 }}
-              animate={{ scale: 1, rotate: slot.rotate, opacity: 1, transition: SPRING.pop }}
+              animate={{ scale: 1, rotate: slot.rotate, opacity: 1, transition: SPRING.celebrate }}
               exit={{ scale: 0, opacity: 0, transition: { duration: 0.2 } }}
               drag
               dragConstraints={areaRef}

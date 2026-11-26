@@ -111,8 +111,8 @@
   text-underline-offset: 3px;
   text-decoration-color: var(--border-control);
   transition:
-    background var(--duration-base) ease,
-    text-decoration-color var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    text-decoration-color var(--duration-base) var(--ease-out);
 }
 
 /* Con el dedo, 32px de alto es poco: el área de toque llega a 44px sin cambiar cómo se ve el enlace. */
@@ -147,7 +147,7 @@
   opacity: 0;
   transform: translateX(-4px);
   transition:
-    opacity var(--duration-base) ease,
+    opacity var(--duration-base) var(--ease-out),
     transform var(--duration-base) var(--ease-out);
 }
 

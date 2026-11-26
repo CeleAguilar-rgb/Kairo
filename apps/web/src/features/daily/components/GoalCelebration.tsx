@@ -75,7 +75,7 @@ export function GoalCelebration({ title, onClose, onSeeShowcase }: GoalCelebrati
                 <Doodle kind={burst.kind} size={34} strokeWidth={2} />
               </motion.span>
             ))}
-            <motion.span initial={{ scale: 0, rotate: -40 }} animate={{ scale: 1, rotate: 0, transition: { ...SPRING.pop, delay: 0.15 } }}>
+            <motion.span initial={{ scale: 0, rotate: -40 }} animate={{ scale: 1, rotate: 0, transition: { ...SPRING.celebrate, delay: 0.15 } }}>
               <Doodle kind="star" size={96} strokeWidth={1.6} />
             </motion.span>
             <h2 id={titleId} className={styles.heading}>
