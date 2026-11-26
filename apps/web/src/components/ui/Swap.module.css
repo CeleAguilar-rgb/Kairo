@@ -1,0 +1,20 @@
+/* Swap.tsx: el texto de antes sale de la línea (Motion lo pone en position: absolute) mientras entra el nuevo,
+   así que este contenedor es su referencia. inline-block + nowrap: no se parte a la mitad mientras cambia. */
+.swap {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.item {
+  display: inline-block;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

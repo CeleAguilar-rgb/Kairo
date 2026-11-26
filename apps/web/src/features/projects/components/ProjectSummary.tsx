@@ -10,6 +10,7 @@ import { Checkbox } from '@/components/ui/Checkbox'
 import { Doodle } from '@/components/ui/Doodle'
 import { CountUp, ProgressBar, ProgressRing } from '@/components/ui/Progress'
 import { Segmented } from '@/components/ui/Segmented'
+import { Swap } from '@/components/ui/Swap'
 import { useToast } from '@/components/ui/Toast'
 import { dayOfMonth, formatDayMonth, formatDuration, formatDueLabel, formatMonthShort, type IsoDate } from '@/lib/dates'
 import { DURATION, EASE_OUT, SPRING } from '@/lib/motion'
@@ -320,7 +321,7 @@ export function ProjectSummary({ project, today, weekEnd }: ProjectSummaryProps)
               <div className={styles.stats}>
                 <div className={styles.stat}>
                   <span className={styles.statValue}>
-                    {doneCount} de {total}
+                    <Swap value={doneCount} /> de {total}
                   </span>
                   <span className={styles.statLabel}>tareas hechas</span>
                 </div>

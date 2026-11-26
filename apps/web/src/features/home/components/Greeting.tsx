@@ -14,7 +14,7 @@ import styles from './Greeting.module.css'
 
 type GreetingProps = {
   hello: string
-  subtitle: string
+  subtitle: ReactNode
   pendingCount: number
   activeProjects: number | null
   dueThisWeekCents: number | null

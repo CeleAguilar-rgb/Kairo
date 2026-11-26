@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/Button'
 import { Card, CardHeader, LineIcon } from '@/components/ui/Card'
 import { Doodle } from '@/components/ui/Doodle'
 import responsive from '@/components/ui/responsive.module.css'
+import { Swap } from '@/components/ui/Swap'
 import { useToast } from '@/components/ui/Toast'
 import { addDays, minutesNowIn, minutesToWallTime, todayIn } from '@/lib/dates'
 import { EASE_OUT } from '@/lib/motion'
@@ -134,7 +135,13 @@ export function RemindersView({ reminders, nowIso, timeZone, hourFormat }: Remin
   })
 
   const pendingCount = dueToday.length
-  const countText = pendingCount === 0 ? null : `· ${pendingCount} ${pendingCount === 1 ? 'pendiente' : 'pendientes'}`
+  // El número se desvanece en su lugar al marcar uno (Swap).
+  const countText =
+    pendingCount === 0 ? null : (
+      <>
+        · <Swap value={pendingCount} /> {pendingCount === 1 ? 'pendiente' : 'pendientes'}
+      </>
+    )
 
   const renderRow = (reminder: Reminder, index: number, tone: 'accent' | 'surface') => (
     <ReminderRow

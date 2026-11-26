@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button'
 import { Card, CardHeader, LineIcon } from '@/components/ui/Card'
 import { Doodle } from '@/components/ui/Doodle'
 import { EmptyState } from '@/components/ui/EmptyState'
+import { Swap } from '@/components/ui/Swap'
 import { useToast } from '@/components/ui/Toast'
 import { formatRange, type IsoDate } from '@/lib/dates'
 import { DURATION, EASE_OUT, SPRING } from '@/lib/motion'
@@ -160,9 +161,11 @@ export function ProjectSprints({ projectId, sprints, today, weekEnd }: ProjectSp
                   <div className={styles.progress}>
                     <div className={styles.progressRow}>
                       <span>
-                        {doneCount} de {tasks.length} tareas hechas
+                        <Swap value={doneCount} /> de {tasks.length} tareas hechas
                       </span>
-                      <span className={styles.muted}>{Math.round(fraction * 100)}%</span>
+                      <span className={styles.muted}>
+                        <Swap value={Math.round(fraction * 100)} />%
+                      </span>
                     </div>
                     <div className={styles.track} role="progressbar" aria-label="Tareas hechas del sprint" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(fraction * 100)}>
                       <motion.div className={styles.fill} initial={{ scaleX: 0 }} animate={{ scaleX: fraction }} transition={SPRING.soft} />

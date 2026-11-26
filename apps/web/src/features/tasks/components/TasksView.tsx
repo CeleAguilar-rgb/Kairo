@@ -11,6 +11,7 @@ import { Doodle } from '@/components/ui/Doodle'
 import { FilterOptions, FilterSheet } from '@/components/ui/FilterSheet'
 import responsive from '@/components/ui/responsive.module.css'
 import { Segmented } from '@/components/ui/Segmented'
+import { Swap } from '@/components/ui/Swap'
 import { useToast } from '@/components/ui/Toast'
 import { projectTone } from '@/features/projects'
 import type { IsoDate } from '@/lib/dates'
@@ -102,7 +103,13 @@ export function TasksView({
   const dueThisWeek = tasks.filter(
     (t) => t.status !== 'done' && t.dueOn && t.dueOn <= weekEnd,
   ).length
-  const summary = `${pendingTotal} ${pendingTotal === 1 ? 'pendiente' : 'pendientes'} en total, ${dueThisWeek} ${dueThisWeek === 1 ? 'vence' : 'vencen'} esta semana.`
+  // Los números se desvanecen en su lugar al marcar una tarea (Swap).
+  const summary = (
+    <>
+      <Swap value={pendingTotal} /> {pendingTotal === 1 ? 'pendiente' : 'pendientes'} en total, <Swap value={dueThisWeek} />{' '}
+      {dueThisWeek === 1 ? 'vence' : 'vencen'} esta semana.
+    </>
+  )
 
   function patch(taskId: string, change: (task: Task) => Task) {
     setTasks((current) => current.map((t) => (t.id === taskId ? change(t) : t)))

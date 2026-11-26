@@ -1,9 +1,9 @@
 'use client'
 
 import { motion, useInView, useSpring, useTransform } from 'motion/react'
-import { useEffect, useRef, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 
-import { EASE_OUT, SPRING } from '@/lib/motion'
+import { DURATION, EASE_OUT, SPRING } from '@/lib/motion'
 
 import styles from './Progress.module.css'
 
@@ -18,12 +18,14 @@ type ProgressBarProps = {
 }
 
 // Barra que se llena desde la izquierda la primera vez que entra a la pantalla
-// y luego sigue al valor con un resorte suave. Anima scaleX, no width: así el
+// y luego sigue al valor sin esperar. Anima scaleX, no width: así el
 // navegador no recalcula el layout en cada cuadro.
 export function ProgressBar({ value, label, tone = 'accent', delay = 0 }: ProgressBarProps) {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-40px' })
   const clamped = Math.min(1, Math.max(0, value))
+  // El retraso y los 0.7 s son solo para la entrada; después, un cambio (registrar un avance) se ve al instante.
+  const [entered, setEntered] = useState(false)
 
   return (
     <div
@@ -39,7 +41,10 @@ export function ProgressBar({ value, label, tone = 'accent', delay = 0 }: Progre
         className={[styles.fill, styles[tone]].join(' ')}
         initial={{ scaleX: 0 }}
         animate={{ scaleX: inView ? clamped : 0 }}
-        transition={{ duration: 0.7, ease: EASE_OUT, delay }}
+        transition={entered ? { duration: DURATION.slow, ease: EASE_OUT } : { duration: 0.7, ease: EASE_OUT, delay }}
+        onAnimationComplete={() => {
+          if (inView) setEntered(true)
+        }}
       />
     </div>
   )
@@ -58,6 +63,9 @@ type ProgressRingProps = {
 export function ProgressRing({ value, size = 56, stroke = 5, children, tone = 'inverted' }: ProgressRingProps) {
   const radius = (size - stroke) / 2 - 1
   const center = size / 2
+  // Al cargar se dibuja con calma y un respiro (delay); al marcar un pendiente responde de inmediato. Antes el
+  // delay y el resorte lento valían también para los cambios, y el aro arrancaba ~250 ms después del clic.
+  const [entered, setEntered] = useState(false)
 
   return (
     <div className={styles.ring} style={{ width: size, height: size }}>
@@ -80,7 +88,8 @@ export function ProgressRing({ value, size = 56, stroke = 5, children, tone = 'i
           className={styles.ringFill}
           initial={{ pathLength: 0 }}
           animate={{ pathLength: Math.min(1, Math.max(0.001, value)) }}
-          transition={{ ...SPRING.soft, delay: 0.2 }}
+          transition={entered ? SPRING.slide : { ...SPRING.soft, delay: 0.2 }}
+          onAnimationComplete={() => setEntered(true)}
         />
       </svg>
       <span className={styles.ringLabel}>{children}</span>

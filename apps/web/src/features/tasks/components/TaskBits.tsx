@@ -1,3 +1,4 @@
+import { Swap } from '@/components/ui/Swap'
 import { projectTone } from '@/features/projects'
 
 import { PRIORITY_LABEL, type TaskPriority } from '../types'
@@ -31,7 +32,7 @@ export function SubtaskCount({ done, total, className }: { done: number; total: 
   if (total === 0) return null
   return (
     <span className={className} aria-label={`${done} de ${total} subtareas`}>
-      {done}/{total}
+      <Swap value={done} />/{total}
     </span>
   )
 }

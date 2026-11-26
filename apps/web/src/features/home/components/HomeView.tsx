@@ -22,6 +22,7 @@ import { TodayTasksCard, type Task } from '@/features/tasks'
 import type { IsoDate } from '@/lib/dates'
 import { DURATION, EASE_OUT, PRESS, SPRING } from '@/lib/motion'
 import { ChipRow } from '@/components/ui/ChipRow'
+import { Swap } from '@/components/ui/Swap'
 
 import { HOME_CARDS, type HomeCardId } from '../cards'
 
@@ -351,28 +352,43 @@ function isEmptyCard(id: HomeCardId, data: HomeData): boolean {
 }
 
 // "Jueves 8 de octubre, Celeste. Tienes 4 pendientes y un pago esta semana."
+// El número de pendientes cambia al marcar uno en "Pendientes de hoy": se desvanece en su lugar (Swap), y al
+// llegar a cero (o salir de él) se desvanece la frase completa.
 function buildSubtitle(
   dateText: string,
   name: string,
   pending: number,
   payments: number | null,
-) {
-  const pendingText =
-    pending === 0
-      ? 'no tienes pendientes'
-      : pending === 1
-        ? 'tienes 1 pendiente'
-        : `tienes ${pending} pendientes`
+): ReactNode {
+  const sentence = (
+    <Swap value={pending === 0 ? 'ninguno' : 'alguno'}>
+      {pending === 0 ? (
+        'No tienes pendientes'
+      ) : (
+        <>
+          Tienes <Swap value={pending} /> {pending === 1 ? 'pendiente' : 'pendientes'}
+        </>
+      )}
+    </Swap>
+  )
   const lead = `${dateText}, ${name}.`
-  const sentence = pendingText.charAt(0).toUpperCase() + pendingText.slice(1)
-  if (payments === null) return `${lead} ${sentence}.`
+  if (payments === null)
+    return (
+      <>
+        {lead} {sentence}.
+      </>
+    )
   const paymentsText =
     payments === 0
       ? 'ningún pago'
       : payments === 1
         ? 'un pago'
         : `${payments} pagos`
-  return `${lead} ${sentence} y ${paymentsText} esta semana.`
+  return (
+    <>
+      {lead} {sentence} y {paymentsText} esta semana.
+    </>
+  )
 }
 
 // Si falla una sección, solo cae su tarjeta (docs/guides/design.md, Errores).

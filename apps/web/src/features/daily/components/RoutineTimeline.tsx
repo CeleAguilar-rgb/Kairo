@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useCalmEntry } from '@/components/layout/SectionPanel'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { LineIcon } from '@/components/ui/Card'
+import { Swap } from '@/components/ui/Swap'
 import { formatWallTime, minutesToWallTime } from '@/lib/dates'
 import { DURATION, EASE_OUT, fadeUp, staggerList } from '@/lib/motion'
 
@@ -145,8 +146,17 @@ function FocusCard({
   const nextTask = info.tasks[info.doneCount] ?? null
   const elapsed = Math.max(0, nowMinutes - startMinutes(block))
   const total = endMinutes(block) - startMinutes(block)
+  // Los minutos y las tareas hechas cambian en su lugar: se desvanecen (Swap) en vez de saltar.
   const progressText =
-    info.doneCount === 0 ? `Llevas ${elapsed} min de ${total}` : `${info.doneCount} ${info.doneCount === 1 ? 'tarea hecha' : 'tareas hechas'} en este bloque`
+    info.doneCount === 0 ? (
+      <>
+        Llevas <Swap value={elapsed} /> min de {total}
+      </>
+    ) : (
+      <>
+        <Swap value={info.doneCount} /> {info.doneCount === 1 ? 'tarea hecha' : 'tareas hechas'} en este bloque
+      </>
+    )
 
   return (
     <motion.li variants={fadeUp} className={[styles.row, styles.focusRow].join(' ')}>

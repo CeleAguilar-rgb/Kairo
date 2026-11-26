@@ -8,6 +8,7 @@ import { Card, CardHeader, LineIcon } from '@/components/ui/Card'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { Doodle } from '@/components/ui/Doodle'
 import { ProgressRing } from '@/components/ui/Progress'
+import { Swap } from '@/components/ui/Swap'
 import { useToast } from '@/components/ui/Toast'
 import { formatRelativeDay, type IsoDate } from '@/lib/dates'
 import { listItem, PRESS, SPRING, staggerList } from '@/lib/motion'
@@ -110,7 +111,7 @@ export function TodayTasksCard({ tasks: initial, today, onDoneCountChange }: Tod
             </motion.span>
             <ProgressRing value={tasks.length ? doneCount / tasks.length : 0}>
               <span className={styles.ringText}>
-                {doneCount}/{tasks.length}
+                <Swap value={doneCount} />/{tasks.length}
               </span>
             </ProgressRing>
           </>

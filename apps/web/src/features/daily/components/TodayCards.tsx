@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import { Card, CardHeader, CardLink, LineIcon } from '@/components/ui/Card'
 import { CountUp } from '@/components/ui/Progress'
+import { Swap } from '@/components/ui/Swap'
 
 import { lateSummaryText } from '../routine-utils'
 import { MEAL_LABEL, type MealPlan, type Streak } from '../types'
@@ -22,7 +23,13 @@ export function DayProgressCard({ done, total, pct, late }: DayProgressCardProps
       </ProgressDial>
       <div className={styles.progressText}>
         <h2 id="today-progress" className={styles.progressTitle}>
-          {total === 0 ? 'Sin bloques que cuenten' : `Vas ${done} de ${total}`}
+          {total === 0 ? (
+            'Sin bloques que cuenten'
+          ) : (
+            <>
+              Vas <Swap value={done} /> de {total}
+            </>
+          )}
         </h2>
         <span className={styles.hint}>{total === 0 ? 'Hoy no hay bloques para el reporte.' : lateSummaryText(late)}</span>
       </div>
