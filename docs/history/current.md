@@ -2,7 +2,7 @@
 
 > Léelo al empezar cada sesión. Actualízalo al terminar. Máximo ~60 líneas: es un resumen, no un diario. El detalle va en `sessions/`.
 
-**Última actualización:** 2026-11-24 · Versión de teléfono en la rama `movil` (tiras de días centradas en hoy, doodles, temas de color y mes de Finanzas; capturas del después en `docs/movil/despues.md`; todas las pantallas revisadas a 375 px en el demo, ahora con el menú de arriba en una sola fila; falta el tablero de personajes y probar en un teléfono real). Siguen pendientes los adornos de temporada y probar los avisos en el navegador
+**Última actualización:** 2026-11-25 · Escritorio: colores en sus estados y animación, segunda y tercera revisión (menú de arriba, "Esta semana", aro y números, temas como círculos, la píldora del menú) (rama `feat/escritorio-estados-y-animacion`, 9 commits subidos; Celeste la junta). Bitácora para Celeste con antes/después y cómo volver atrás en `docs/escritorio/colores-y-animacion.md`; falta sentir el rebote a mano y que Celeste revise los puntos ⚠. Sigue la versión de teléfono en `movil` (falta el tablero de personajes y probar en un teléfono real), los adornos de temporada y probar los avisos en el navegador
 
 ## Fase actual
 
@@ -10,6 +10,14 @@
 
 ## Lo último que se hizo
 
+- **2026-11-25 · Escritorio: estados y animación (rama `feat/escritorio-estados-y-animacion`, que parte de `movil`; un commit por tema, subida a GitHub sin juntar con `main`).**
+  - `styles/states.css` arma hover, presionar, foco, elegido y peligro suave para todos los modos y temas.
+  - En oscuro, lo elegido (`--selected`) ya no se confunde con el hover, y el morado se mezcló hacia el neutro cálido.
+  - Rojo lleno solo para lo irreversible (`dangerSolid`); foco con halo y hover en los campos.
+  - Una curva y duraciones con token en 238 transiciones; `PRESS` para presionar; el rebote juguetón solo al celebrar (`SPRING.celebrate`).
+  - Decisión #60. `tsc` y `eslint` pasan; visto en claro, oscuro y dos temas. Detalle en `sessions/2026-11-25-escritorio-estados-y-animacion.md`.
+  - Segunda revisión (puntos 12 a 15): "Esta semana" sin animación rota ni tarjeta estirada; el aro responde al instante; los números se desvanecen (`Swap`); el menú de arriba va en una fila (lo que no cabe, al menú del avatar) y se queda fijo al bajar. Decisión #61.
+  - Tercera revisión (puntos 16 y 17): temas de color como círculos también en el escritorio (⚠ para Celeste). La píldora del menú de arriba y la de la barra de abajo ya no cruzan la pantalla al cambiar de página estando abajo (`layoutDependency`; en el teléfono pasaba desde `movil`).
 - **2026-11-24 · Teléfono: tiras de días, Perfil y Finanzas (rama `movil`).** En Agenda › Día la tira es de días seguidos alrededor de hoy (±14), con degradado y el elegido al centro; en Inicio y el Menú semanal la semana deja hueco en las orillas para que hoy vaya al centro (`ScrollTabs` con `centerEdges`). Doodles en una fila; temas de color como círculos en cuadrícula cerrada 6 × 2, centrados con Apariencia e Intensidad (cambio respecto al canvas, en `para-celeste.md` punto 16); Perfil ya no se sale a 320 px; mes de Finanzas centrado. Solo ≤720px. `tsc` y `eslint` pasan; visto a 375 y 320 px y en escritorio a 1280. Detalle en `sessions/2026-11-24-telefono-tiras-de-dias-y-perfil.md`.
 - **2026-11-23 · Capturas del "después" del teléfono (rama `movil`).** `docs/movil/despues.md` pone lado a lado las 21 capturas de `antes.md` con las mismas pantallas tomadas ahora (carpeta `despues/`, mismo número), con una línea de qué cambió. Tomadas con Edge sin ventana simulando el teléfono en el demo; la 04 y la 05 a 412 px, no en el teléfono real. Detalle en `sessions/2026-11-23-telefono-capturas-despues.md`.
 - **2026-11-22 · Teléfono: el menú de arriba en una sola fila (rama `movil`, sin commit).** Pestañas de iconos centradas (`IconTabs`) en Finanzas, Día a día, Escritos y Escuela; "Filtrar" con cajón (`FilterSheet`) en Agenda, Tareas, Movimientos y Papelera (con "Vaciar papelera" al lado); filtros de Proyectos y Metas como barra de iconos; la fecha de Agenda es la navegación; el mes de Finanzas sube al encabezado; y **el "+" flotante ejecuta la acción de cada pantalla** (`usePageAction`/`AddButton`), así el botón de arriba ya no se ve en el teléfono. Escuela y Escritos no se movieron (en proceso). `tsc` y `eslint` pasan; visto a 375 px y comprobado en 1280 px. Detalle en `sessions/2026-11-22-telefono-menus-una-fila.md`.
@@ -39,6 +47,8 @@
 - **2026-10-13/14 · Shell del dashboard y primeros tests** (Jest + Supertest contra la base real). **Fase 0:** login completo (invitación, entrar, recuperar contraseña, guard global por JWKS), Motion integrado. Decisión #26: código por correo pasó a "Después". Detalle en `sessions/2026-10-10-*.md` a `2026-10-13-*.md`.
 
 ## Siguiente paso
+
+**Escritorio (rama `feat/escritorio-estados-y-animacion`, ya subida):** sentir el rebote a mano (demo de antes y de después lado a lado, como dice el final de la bitácora) y que Celeste revise los puntos ⚠ de `docs/escritorio/colores-y-animacion.md` (también el 14 y el 15, el menú de arriba, y el 16, los temas como círculos). Ella se encarga de juntar la rama.
 
 **Teléfono (rama `movil`):** todas las pantallas están revisadas y vistas a 375 px en el demo (2026-11-22), incluido el teclado simulado, el scroll por pantalla y el menú de arriba en una fila. Falta el tablero de la base de personajes (la usuaria lo pospuso: está en desarrollo), probar todo en un teléfono real (teclado abierto, modo oscuro, letra grande) y, cuando lo apruebe, pasar `movil` a `main` por Pull Request.
 

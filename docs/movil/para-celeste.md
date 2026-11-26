@@ -10,15 +10,15 @@ Cosas que salieron de revisar la versión de teléfono y que **también conviene
 
 **Dónde:** `features/trash/components/TrashView.tsx` (ya hecho; vale para escritorio y teléfono porque es el mismo componente).
 
-## 2. Menú de secciones: un deslizador horizontal con degradado si no caben todas
+## 2. Menú de secciones: las que no caben, en el menú del avatar
 
-**Hoy:** el nav de arriba (`Topnav`) solo muestra las secciones con `inNav: true`. Escuela y Recordatorios se dejaron fuera (`inNav: false`) porque con 8 o 9 secciones el nav ya no cabe junto a los íconos en pantallas medianas.
+> **Actualizado el 2026-11-25:** esto ya se resolvió en el escritorio, de otra forma que el deslizador que se proponía aquí. Detalle, antes/después y cómo volver: punto 14 de `docs/escritorio/colores-y-animacion.md` (decisión #61).
 
-**Propuesta:** que el nav se pueda **deslizar de lado** cuando no caben todas, con el mismo desvanecido que ya tienen las pestañas del teléfono: el borde se va difuminando poco a poco donde hay más elementos escondidos, y desaparece al llegar al final. Así Escuela y Recordatorios (y cualquier sección futura) podrían estar en el nav sin apretarlo.
+**Antes:** el nav de arriba (`Topnav`) solo mostraba las secciones con `inNav: true`. Escuela y Recordatorios se dejaron fuera (`inNav: false`) porque con 8 o 9 secciones el nav no cabía junto a los íconos en pantallas medianas. Además, debajo de 1140 px el nav bajaba a una segunda fila.
 
-**Cómo copiarlo:** el componente `components/ui/ScrollTabs.tsx` ya hace esto (una sola línea, desvanecido progresivo dentro de la píldora y la sección activa centrada). Bastaría envolver el `<nav>` del Topnav con él y quitar `inNav: false` de `features/school/module.ts` y `features/reminders/module.ts`.
+**Lo que se hizo:** el nav va siempre en una fila. `Topnav.tsx` mide si cabe centrado; si no, lo pone entre el logo y los íconos, y las últimas secciones que tampoco caben ahí pasan al **menú del avatar** (nunca la sección en la que estás). En ese menú también están, en el escritorio, **Escuela y Recordatorios**, igual que en el teléfono. Desde 1241 px se ve igual que el canvas.
 
-**Mientras tanto:** en el teléfono, Escuela y Recordatorios ya aparecen (la barra de abajo y el menú del avatar usan `navModules(sections, { mobile: true })`); el escritorio queda como estaba.
+**La propuesta que quedó atrás:** que el nav se deslizara de lado con el desvanecido de `ScrollTabs`. Se prefirió el menú del avatar porque así ninguna sección queda escondida a medias detrás del degradado. Si Celeste prefiere el deslizador, sigue siendo posible: envolver el `<nav>` del Topnav con `ScrollTabs` y quitar `inNav: false` de `features/school/module.ts` y `features/reminders/module.ts`.
 
 ## 3. Botón "+" (captura rápida) en lavanda
 
@@ -27,6 +27,8 @@ Cosas que salieron de revisar la versión de teléfono y que **también conviene
 **Cambio:** pintarlo de **lavanda** (`background: var(--accent)`, ícono con `color: var(--accent-ink)`) y dejar solo la sombra de siempre. Contrasta con el fondo claro y con las tarjetas oscuras sin bordes, sin detectar qué hay detrás y sin sombras especiales. Así quedó en el teléfono.
 
 **Dónde:** `features/shortcuts/components/QuickCapture.module.css`, la regla `.fab` (ya hecho; aplica a escritorio y teléfono porque es el mismo botón). Es un cambio de diseño respecto al canvas (`Atajos.dc.html` lo pinta con `--action`), por eso conviene que lo vea ella antes de adoptarlo.
+
+> **Actualizado el 2026-11-25:** el usuario lo confirmó también para el escritorio. No hubo que cambiar nada: el botón ya era lavanda ahí. Para volver al color del canvas, en `.fab`: `background: var(--action)` y `color: var(--on-action)`.
 
 ## 4. Menús flotantes en el teléfono: al centro, con el fondo oscurecido y uno a la vez
 
@@ -159,7 +161,8 @@ Cosas que salieron de revisar la versión de teléfono y que **también conviene
 
 **Cambio:**
 - `lib/scroll-memory.ts` + `NavigationProvider` (`components/layout/Navigation.tsx`): se guarda el scroll en el **clic** del enlace (si se guardara al desplazarse, la pantalla de carga encoge la página y el navegador recorta el scroll a 0) y se restaura al llegar, esperando a que la página tenga altura. Solo cuando se llega por un enlace (con "atrás" Next ya restaura), nunca en un cambio de pestaña dentro de una pantalla, y se rinde si la persona empieza a desplazarse. Es solo en memoria.
-- Token nuevo `--topnav-height` (`styles/tokens.css`): 0 en escritorio, el alto de la barra fija en el teléfono. `EditorToolbar` y `FullPages` lo usan en `top` de su `position: sticky`. Cualquier sticky nuevo debe usarlo.
+- Token nuevo `--topnav-height` (`styles/tokens.css`): el alto de la barra fija de arriba. `EditorToolbar` y `FullPages` lo usan en `top` de su `position: sticky`, y desde el 2026-11-25 también el panel del Menú semanal y la columna derecha del formulario de Proyecto. Cualquier sticky nuevo debe usarlo.
+  - **Actualizado el 2026-11-25:** antes valía 0 en el escritorio, porque ahí la barra no era fija. Ahora la barra de arriba también se queda fija en el escritorio y el token vale 74 px (el aire de arriba más la píldora del nav). Detalle y cómo volver: punto 15 de `docs/escritorio/colores-y-animacion.md`.
 - `EditorToolbar`: la tarjeta (fondo, borde, sombra) y dentro una fila `ScrollFade`; en ≤720px la fila no envuelve y se desliza (sin barra de scroll, los botones no se encogen). Con el dedo los botones miden 44 px. En escritorio queda igual.
 - Título de página (`PageEditor`) y nombre de ficha (`FullPages`): `textarea` con `field-sizing: content`, como ya hacía el resumen de la ficha. Enter no hace salto de línea.
 - `PageEditor`: "Guardado" y "···" van juntos en `.tools` y bajan juntos si no caben junto a las migas. `FullPages` oculta (`visibility: hidden`, sigue ocupando el hueco) el texto "Personaje · Sudria" de la barra de arriba en ≤720px.
@@ -178,6 +181,7 @@ Cosas que salieron de revisar la versión de teléfono y que **también conviene
 - **Inicio ("Esta semana") y Menú semanal:** siguen siendo la semana, con el hueco en las orillas: hoy (o el día elegido) va al centro aunque sea lunes o domingo.
 - **Doodles:** los cinco en una fila de 5 columnas de hasta 56 px, que se achican un poco en pantallas angostas.
 - **Tema de color:** cada tema es solo su círculo, en una cuadrícula cerrada (12 temas → 6 × 2; las columnas las calcula `closedGridColumns` para que el último renglón quede lleno). Abajo se lee "Nombre · descripción" del elegido; el nombre de cada círculo sigue para el lector de pantalla. Apariencia, Tema de color e Intensidad van centrados. **Es un cambio respecto al canvas** (`Temas.dc.html` usa píldoras con nombre), que conviene que vea Celeste.
+  - **Actualizado el 2026-11-25:** a pedido del usuario, los círculos se aplicaron también al escritorio (los 12 en una fila desde 1081 px, 6 × 2 más angosto; sin centrar). Detalle y cómo volver a los chips: punto 16 de `docs/escritorio/colores-y-animacion.md`.
 - **Perfil a 320 px:** la columna de `PerfilView` pasó de `1fr` a `minmax(0, 1fr)`; con `1fr` la fila de Apariencia ensanchaba la tarjeta fuera de la pantalla.
 - **Finanzas:** la cabecera ocupa todo el renglón, así el mes con sus flechas queda centrado.
 

@@ -17,6 +17,7 @@ apps/web/src/styles/
 │   ├── light.css       # [data-mode="light"] → asigna primitivos a semánticos
 │   ├── dark.css        # [data-mode="dark"] → la misma lista; ver "Modo oscuro"
 │   └── intensity.css   # [data-intensity] → Teñido e Intenso sobrescriben algunos semánticos
+├── states.css          # Estados armados (hover, presionar, foco, elegido, peligro suave); ver "Estados"
 ├── seasons/            # Adornos por mes (ver "Temporadas")
 └── globals.css         # Reset, tipografía base, fuentes
 ```
@@ -65,6 +66,17 @@ Canvas: `Temas.dc.html` (12 temas × 3 intensidades, en claro y en oscuro) y `Pa
 - **Muestras del selector:** `--swatch-<tema>` (el tono 300 de cada tema), fijas, porque el selector pinta los 12 a la vez.
 - **Dónde se guarda:** `profiles.color_theme` y `profiles.theme_intensity`, con `PATCH /v1/me/appearance` (los dos juntos). La cookie `kairo_appearance` (`sage.tinted`) es su copia, igual que `kairo_theme`, y `AppearanceSync` corrige si no coinciden. Las cuentas existentes y las nuevas arrancan en `lavender` + `subtle`.
 
+## Estados
+
+El canvas da cada superficie en reposo y pocos estados. `styles/states.css` arma los que faltan con una sola receta: **la superficie de siempre con un poco del color de su texto** (`color-mix`). En claro oscurece y en oscuro aclara, y sirve igual para los 12 temas y las 3 intensidades sin repetir valores en los modos. Decisión #60; antes/después y cómo volver atrás en `docs/escritorio/colores-y-animacion.md`.
+
+- **Pasar el mouse:** sobre algo transparente, `--surface-hover`; sobre algo que ya tiene fondo, la variante de ese fondo (`--surface-card-hover`, `--surface-raised-hover`, `--surface-muted-hover`, `--surface-inverted-hover`, `--accent-soft-hover`, `--action-hover`, `--danger-soft-hover`). **Nunca** cambies un fondo opaco por `--surface-hover`: se aclara en claro y no se nota en oscuro.
+- **Presionar:** `--surface-press` (o `--surface-muted-press`) en CSS, y `PRESS` de `lib/motion.ts` en Motion (botón 0.97, ícono 0.92, tarjeta 0.985).
+- **Elegido** (sección activa, opción de un segmentado, pestaña, chip o día elegido): `--selected` + `--on-selected`, nunca `--surface-inverted`, que es la tarjeta destacada. En oscuro lleva además `--selected-ring`.
+- **Foco:** botones y enlaces, el contorno de siempre (`--focus-ring`, 2 px, separado 3 px). Campos donde se escribe: el borde toma `--focus-ring` con un halo de 3 px de `--focus-halo`.
+- **Deshabilitado:** `opacity: var(--opacity-disabled)` y `cursor: not-allowed`.
+- **Peligro:** `variant="danger"` es rojo suave, para confirmar algo que se puede deshacer o que no borra nada. `variant="dangerSolid"` es rojo lleno, solo para lo irreversible. Una barra de error usa `--danger-fill`.
+
 ## Temporadas (adornos por mes)
 
 Una festividad por mes, elegida automáticamente por la fecha en la zona horaria del usuario:
@@ -95,10 +107,17 @@ Las preferencias visuales se guardan en el perfil y también en una cookie (ver 
 
 Al usuario le importan mucho las animaciones; que se sientan cuidadas, no decorativas por relleno.
 
-- Duraciones y curvas como tokens (`--duration-fast`, `--duration-base`, `--ease-out`…), también para Motion.
-- Animar solo `transform` y `opacity` (y color en transiciones de estado). No animar `width`, `height`, `top` ni `left`.
+- Duraciones y curvas como tokens (`--duration-fast`, `--duration-base`, `--ease-out`…), también para Motion (`lib/motion.ts` repite los mismos valores). En CSS nunca la palabra `ease` ni milisegundos sueltos en una transición.
+- **Qué curva:** `--ease-out` para entrar y para cambios de estado (color, borde, sombra); `--ease-in-out` para algo que va de un lugar a otro; `--ease-spring` / `SPRING.pop` para lo funcional que aparece (un asentamiento apenas visible); `SPRING.panel` para paneles y modales (sin rebote).
+- **El rebote juguetón es para celebrar y adornar, no para la interfaz:** `--ease-celebrate` / `SPRING.celebrate` solo en el check de una casilla, una meta cumplida, algo liquidado y los doodles. Lo funcional se mueve calmado y predecible (confianza); lo que celebra puede rebotar (calidez).
+- Subir al pasar el mouse: `--lift-sm` (botones), `--lift-md` (tarjetas), `--lift-lg` (la tarjeta grande de proyecto).
+- Animar solo `transform` y `opacity` (y color en transiciones de estado). No animar `width`, `height`, `top` ni `left`. Excepción: cuando una tarjeta tiene que cambiar de largo porque cambió su contenido, se anima el `height` de la zona que cambia (no una escala), como "Esta semana" (`WeekCard.tsx`), y al terminar vuelve a `auto`.
 - Paneles laterales y modales: entrada y salida sin saltos de layout.
 - Listas: aparición escalonada corta al cargar; marcar un pendiente tiene su microanimación.
+- **Nada cambia de golpe:** si un texto o número cambia en su lugar ("2/5", "Tienes 3 pendientes", un contador de una lista), va dentro de `<Swap value={…}>` (`components/ui/Swap.tsx`): lo de antes se desvanece y lo nuevo entra con un desenfoque leve. Para un número que debe contar hasta su valor (estadísticas, montos) está `CountUp`. Si cambia un bloque entero (la lista de otro día), lo de antes sale rápido y luego entra lo nuevo (`AnimatePresence mode="wait"`), sin encimarse.
+- **El retraso es solo para la entrada:** un `delay` o una duración larga que adornan la primera vez que algo aparece no se repiten cuando el valor cambia por un clic (ver `ProgressRing` y `ProgressBar`): la respuesta a lo que hace la persona va de inmediato.
+- **`layout` de Motion cuando cambia el tamaño:** `layout` completo anima el tamaño con una escala y estira el texto de adentro. En contenedores cuyo alto cambia por el contenido (la cuadrícula de Inicio), `layout="position"`: se mueven a su lugar nuevo sin escalar su tamaño.
+- **`layoutId` dentro de una barra fija:** Motion mide en coordenadas de la página. Una píldora que viaja dentro de algo `fixed` o `sticky` (el menú de arriba, la barra de abajo del teléfono) lleva `layoutDependency` con el id de su elemento, para que solo se mida cuando cambia de lugar. Sin eso, al cambiar de página estando abajo, cruza la pantalla.
 - **Respetar `prefers-reduced-motion`:** sin movimiento, solo cambios de opacidad o instantáneos.
 
 ## Responsive (preparado, no construido)
