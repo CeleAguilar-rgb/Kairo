@@ -47,6 +47,8 @@
 
   --accent: var(--p-600);
   --accent-soft: var(--p-900);
+  /* --accent (600) con --text encima daba 3.4–4.6:1 según el tema; el 700 da 5.0:1 o más en los 12 */
+  --accent-fill: var(--p-700);
   --accent-ink: var(--p-200);
   --accent-strong: var(--p-400);
   --accent-warm: var(--amber-night);

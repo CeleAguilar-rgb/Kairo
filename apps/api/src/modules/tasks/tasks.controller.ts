@@ -13,8 +13,8 @@ import {
 import {
   type CreateTaskInput,
   createTaskSchema,
-  type UpdateTaskStatusInput,
-  updateTaskStatusSchema,
+  type UpdateTaskInput,
+  updateTaskSchema,
 } from '@kairo/shared'
 import { CurrentUser } from '../../auth/current-user.decorator.js'
 import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe.js'
@@ -42,12 +42,12 @@ export class TasksController {
   // mueve una tarea en el tablero, la marca hecha desde el detalle, o
   // alterna una subtarea (se le manda su propio id).
   @Patch(':id')
-  updateStatus(
+  update(
     @CurrentUser() userId: string,
     @Param('id', new ParseUUIDPipe()) taskId: string,
-    @Body(new ZodValidationPipe(updateTaskStatusSchema)) body: UpdateTaskStatusInput,
+    @Body(new ZodValidationPipe(updateTaskSchema)) body: UpdateTaskInput,
   ) {
-    return this.tasksService.setStatus(userId, taskId, body.status)
+    return this.tasksService.update(userId, taskId, body)
   }
 
   // DELETE manda a la papelera (conventions.md), nunca borra de verdad.

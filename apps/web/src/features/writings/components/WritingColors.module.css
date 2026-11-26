@@ -8,7 +8,7 @@
 }
 
 .tone_accent {
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--text);
 }
 
@@ -34,7 +34,7 @@
 }
 
 .spine_lavender {
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--text);
 }
 

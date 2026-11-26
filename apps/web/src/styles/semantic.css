@@ -41,6 +41,9 @@
  * --text-on-inverted-soft   texto secundario legible sobre --surface-inverted, más claro que -muted (horarios de la rutina)
  * --border-inverted         borde de bloques dentro de --surface-inverted
  * --accent                  lo hecho, lo elegido, el avance: checks, anillo, barras, subrayado, doodles (lavanda)
+ * --accent-fill             relleno de acento que lleva texto o íconos encima (chips, etiquetas, insignias). En claro es
+ *                           --accent; en oscuro un tono más oscuro, porque con --text encima --accent no llegaba a 4.5:1
+ *                           en ningún tema (decisión #60)
  * --accent-soft              fondo suave de acento: recordatorios, eventos, chips (lavanda-suave)
  * --accent-ink               texto sobre --accent-soft (lavanda-tinta)
  * --accent-strong            lavanda fuerte para relleno de barras de metas y énfasis puntual (mismo valor que --focus-ring, pero con otro uso)

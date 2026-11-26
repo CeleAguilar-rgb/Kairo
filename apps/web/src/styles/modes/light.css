@@ -45,6 +45,7 @@
 
   --accent: var(--p-300);
   --accent-soft: var(--p-100);
+  --accent-fill: var(--accent);
   --accent-ink: var(--p-800);
   --accent-strong: var(--p-600);
   --accent-warm: var(--amber-200);

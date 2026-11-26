@@ -1,3 +1,4 @@
+import { LineIcon } from '@/components/ui/Card'
 import { projectTone } from '@/features/projects'
 
 import { PRIORITY_LABEL, type TaskPriority } from '../types'
@@ -55,5 +56,19 @@ export function PriorityBadge({ priority, long = false }: { priority: TaskPriori
 }
 
 export function DueText({ label, tone }: { label: string; tone: 'today' | 'overdue' | 'normal' }) {
+  if (tone === 'overdue') {
+    // Lo vencido no se marca solo con rojo (quien no distingue bien el color no lo vería): lleva un ícono
+    // de alerta y "Vencida" para lectores de pantalla. La palabra visible no cabía en la columna de la fecha.
+    return (
+      <span className={[styles.due, styles.due_overdue].join(' ')}>
+        <LineIcon d={OVERDUE_ICON} size={13} strokeWidth={2.2} />
+        <span className={styles.srOnly}>Vencida: </span>
+        {label}
+      </span>
+    )
+  }
   return <span className={[styles.due, styles[`due_${tone}`]].join(' ')}>{label}</span>
 }
+
+// Círculo con signo de admiración
+const OVERDUE_ICON = ['M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z', 'M12 8v5', 'M12 16.5v.01']

@@ -38,7 +38,7 @@ export function PerfilView({ profile, sections }: PerfilViewProps) {
   const [tab, setTab] = useState<Tab>('perfil')
 
   return (
-    <div className={styles.wrap}>
+    <main className={styles.wrap}>
       <h1 className={styles.title}>Mi perfil</h1>
 
       <div className={styles.layout}>
@@ -84,6 +84,6 @@ export function PerfilView({ profile, sections }: PerfilViewProps) {
           {tab === 'preferencias' ? <PreferenciasTab themePreference={profile.theme} colorTheme={profile.colorTheme} themeIntensity={profile.themeIntensity} /> : null}
         </div>
       </div>
-    </div>
+    </main>
   )
 }

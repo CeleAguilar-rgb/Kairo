@@ -198,7 +198,7 @@
 }
 
 .checkOn {
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--text);
 }
 

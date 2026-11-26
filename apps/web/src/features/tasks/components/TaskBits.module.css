@@ -77,4 +77,18 @@
 .due_overdue {
   color: var(--danger);
   font-weight: 600;
+  /* Ícono + fecha en una línea, pegados a la derecha como las demás fechas */
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 3px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }

@@ -145,6 +145,33 @@ export class TasksRepository {
     })
   }
 
+  // Notas del detalle. Mismo filtro que setStatus: id + userId + no borrada (security.md #4).
+  async setNotes(userId: string, taskId: string, notes: string | null) {
+    return this.db.transaction(async (tx) => {
+      const [task] = await tx
+        .update(tasks)
+        .set({ notes })
+        .where(
+          and(
+            eq(tasks.id, taskId),
+            eq(tasks.userId, userId),
+            isNull(tasks.deletedAt),
+          ),
+        )
+        .returning()
+
+      if (!task) return undefined
+
+      const subtasks = await tx
+        .select()
+        .from(tasks)
+        .where(and(eq(tasks.parentTaskId, taskId), isNull(tasks.deletedAt)))
+        .orderBy(asc(tasks.position))
+
+      return { task, subtasks }
+    })
+  }
+
   // Papelera (security.md #11, docs/guides/design.md "Borrar"): nunca se
   // borra la fila, solo se marca deletedAt. Sus subtareas se van con ella en
   // la misma transacción — es "lo que arrastra" que nombra el diálogo.

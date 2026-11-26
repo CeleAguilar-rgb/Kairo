@@ -46,6 +46,13 @@ export function SearchPalette({ open, onClose, demo }: SearchPaletteProps) {
   const [searching, startSearch] = useTransition()
   useDialogFocus(open, panelRef, onClose)
 
+  // El campo se enfoca en cuanto se abre, sin esperar a que termine la animación: con Ctrl+K
+  // se escribe de inmediato y antes se perdían las primeras letras. preventScroll evita el
+  // salto de página que motivaba esperar (ver focusFirst en lib/use-dialog-focus.ts).
+  useEffect(() => {
+    if (open) inputRef.current?.focus({ preventScroll: true })
+  }, [open])
+
   const trimmed = query.trim()
   const creating = trimmed.startsWith('+')
   const taskTitle = (creating ? trimmed.slice(1) : trimmed).trim()
@@ -147,7 +154,6 @@ export function SearchPalette({ open, onClose, demo }: SearchPaletteProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.25, ease: EASE_OUT }}
-            onAnimationComplete={() => inputRef.current?.focus()}
             onClick={(event) => event.stopPropagation()}
           >
             <div className={styles.searchRow}>

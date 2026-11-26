@@ -1,5 +1,5 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
-import type { CreateTaskInput, TaskStatus } from '@kairo/shared'
+import type { CreateTaskInput, TaskStatus, UpdateTaskInput } from '@kairo/shared'
 import { ProjectsService } from '../projects/projects.service.js'
 import { TasksRepository } from './tasks.repository.js'
 import type { tasks } from '../../db/schema/tasks.js'
@@ -54,6 +54,25 @@ export class TasksService {
   // Sirve tanto para una tarea (moverla en el tablero, marcarla hecha) como
   // para una subtarea (su checkbox en el detalle): las dos son filas de
   // tasks, así que un solo método de repository las cambia igual.
+  // PATCH /tasks/:id: cambia el estado, las notas o las dos cosas. Las notas vacías se guardan
+  // como null, igual que al crear una tarea sin notas.
+  async update(userId: string, taskId: string, input: UpdateTaskInput) {
+    let result: Awaited<ReturnType<TasksRepository['setStatus']>>
+    if (input.notes !== undefined) {
+      result = await this.repository.setNotes(userId, taskId, input.notes || null)
+    }
+    if (input.status !== undefined) {
+      result = await this.repository.setStatus(userId, taskId, input.status)
+    }
+    if (!result) {
+      throw new NotFoundException({
+        code: 'TASK_NOT_FOUND',
+        message: 'No encontramos esa tarea.',
+      })
+    }
+    return this.withProject(userId, result.task, result.subtasks)
+  }
+
   async setStatus(userId: string, taskId: string, status: TaskStatus) {
     const result = await this.repository.setStatus(userId, taskId, status)
     if (!result) {

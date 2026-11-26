@@ -230,6 +230,12 @@ a.chip:hover {
   text-decoration: line-through;
 }
 
+/* "Guardando…" / "Guardado" junto al título de Notas */
+.saveState {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
 .textarea {
   font: inherit;
   padding: var(--space-5) var(--space-6);

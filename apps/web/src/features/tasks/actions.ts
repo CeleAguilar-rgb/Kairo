@@ -1,6 +1,6 @@
 'use server'
 
-import type { CreateTaskInput, TaskStatus } from '@kairo/shared'
+import { type CreateTaskInput, type TaskStatus, updateTaskSchema } from '@kairo/shared'
 import { revalidatePath } from 'next/cache'
 import { api, ApiError } from '@/lib/api-client'
 
@@ -43,6 +43,23 @@ export async function updateTaskStatus(
     return { task }
   } catch (error) {
     return toActionError(error, 'No pudimos actualizar la tarea.')
+  }
+}
+
+// Notas del detalle (se guardan solas mientras escribes). Vacías se guardan como null.
+export async function updateTaskNotes(
+  taskId: string,
+  notes: string,
+): Promise<ActionResult<{ task: Task }>> {
+  const parsed = updateTaskSchema.safeParse({ notes })
+  if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? 'Revisa las notas.' }
+  try {
+    const task = await api.patch<Task>(`/tasks/${taskId}`, parsed.data)
+    revalidatePath('/tareas')
+    revalidatePath('/')
+    return { task }
+  } catch (error) {
+    return toActionError(error, 'No pudimos guardar las notas.')
   }
 }
 

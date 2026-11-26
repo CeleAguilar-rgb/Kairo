@@ -64,7 +64,7 @@
 }
 
 .kind_school {
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--text);
   border: 1.5px solid var(--text);
 }

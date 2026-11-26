@@ -123,6 +123,59 @@ describe('Tasks (e2e)', () => {
         .send({ status: 'done' })
         .expect(404)
     })
+
+    it('no se pueden cambiar las notas de la tarea de otro usuario', async () => {
+      const created = await request(app.getHttpServer())
+        .post('/v1/tasks')
+        .set(authHeader(userA))
+        .send(newTask({ title: 'Notas de Ana' }))
+        .expect(201)
+
+      await request(app.getHttpServer())
+        .patch(`/v1/tasks/${created.body.id}`)
+        .set(authHeader(userB))
+        .send({ notes: 'Escrito por Beto' })
+        .expect(404)
+    })
+  })
+
+  describe('notas (PATCH con notes)', () => {
+    it('guarda las notas y las vacías quedan en null', async () => {
+      const created = await request(app.getHttpServer())
+        .post('/v1/tasks')
+        .set(authHeader(userA))
+        .send(newTask({ title: 'Con notas' }))
+        .expect(201)
+
+      const saved = await request(app.getHttpServer())
+        .patch(`/v1/tasks/${created.body.id}`)
+        .set(authHeader(userA))
+        .send({ notes: '  Llevar copia del acta  ' })
+        .expect(200)
+      expect(saved.body.notes).toBe('Llevar copia del acta')
+      expect(saved.body.status).toBe(created.body.status)
+
+      const cleared = await request(app.getHttpServer())
+        .patch(`/v1/tasks/${created.body.id}`)
+        .set(authHeader(userA))
+        .send({ notes: '   ' })
+        .expect(200)
+      expect(cleared.body.notes).toBeNull()
+    })
+
+    it('un PATCH sin estado ni notas responde 400', async () => {
+      const created = await request(app.getHttpServer())
+        .post('/v1/tasks')
+        .set(authHeader(userA))
+        .send(newTask({ title: 'Sin cambios' }))
+        .expect(201)
+
+      await request(app.getHttpServer())
+        .patch(`/v1/tasks/${created.body.id}`)
+        .set(authHeader(userA))
+        .send({})
+        .expect(400)
+    })
   })
 
   describe('subtareas (filas de tasks con parentTaskId)', () => {

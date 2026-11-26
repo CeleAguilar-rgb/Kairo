@@ -17,9 +17,9 @@ import type { IsoDate } from '@/lib/dates'
 import { EASE_OUT, SPRING } from '@/lib/motion'
 import { useNarrowScreen } from '@/lib/use-narrow-screen'
 
-import { createTask, deleteTask, restoreTask, updateTaskStatus } from '../actions'
-import { groupTasks } from '../grouping'
-import type { Task, TaskStatus } from '../types'
+import { createTask, deleteTask, restoreTask, updateTaskNotes, updateTaskStatus } from '../actions'
+import { groupTasks, summarizePending } from '../grouping'
+import { STATUS_LABEL, type Task, type TaskStatus } from '../types'
 
 import { TaskBoard } from './TaskBoard'
 import { TaskDeleteDialog } from './TaskDeleteDialog'
@@ -99,38 +99,73 @@ export function TasksView({
   const activeProject = projects.find((p) => p.id === projectFilter) ?? null
 
   const pendingTotal = tasks.filter((t) => t.status !== 'done').length
-  const dueThisWeek = tasks.filter(
-    (t) => t.status !== 'done' && t.dueOn && t.dueOn <= weekEnd,
-  ).length
-  const summary = `${pendingTotal} ${pendingTotal === 1 ? 'pendiente' : 'pendientes'} en total, ${dueThisWeek} ${dueThisWeek === 1 ? 'vence' : 'vencen'} esta semana.`
+  const summary = summarizePending(tasks, today, weekEnd)
 
   function patch(taskId: string, change: (task: Task) => Task) {
     setTasks((current) => current.map((t) => (t.id === taskId ? change(t) : t)))
   }
 
-  // Optimista: la pantalla cambia al instante y el PATCH va detrás. Sirve
-  // tanto para una tarea (taskId = su id) como para una subtarea (taskId =
-  // el id de la subtarea): las dos son filas de tasks en la API.
-  function applyStatus(taskId: string, status: TaskStatus, cascadeSubtasks = false) {
+  // Optimista: la pantalla cambia al instante y el PATCH va detrás.
+  function applyStatus(taskId: string, status: TaskStatus) {
     patch(taskId, (t) => ({
       ...t,
       status,
       doneAt: status === 'done' ? new Date().toISOString() : null,
       // Al cerrar una tarea, sus subtareas quedan hechas (así lo hace el canvas).
-      subtasks:
-        cascadeSubtasks && status === 'done'
-          ? t.subtasks.map((s) => ({ ...s, done: true }))
-          : t.subtasks,
+      subtasks: status === 'done' ? t.subtasks.map((s) => ({ ...s, done: true })) : t.subtasks,
     }))
-    startTransition(async () => {
-      const result = await updateTaskStatus(taskId, status)
-      if ('error' in result) toast.show({ message: result.error, icon: 'info' })
-    })
   }
 
+  // Devuelve una tarea a como estaba antes de cambiarle el estado: la lista y la API.
+  // La API no "desmarca" sola las subtareas que se cerraron junto con la tarea, así que
+  // se reabren una por una las que antes estaban pendientes.
+  async function revertStatus(previous: Task) {
+    patch(previous.id, () => previous)
+    const result = await updateTaskStatus(previous.id, previous.status)
+    if ('error' in result) {
+      toast.show({ message: result.error, icon: 'info' })
+      return
+    }
+    await Promise.all(
+      previous.subtasks.filter((s) => !s.done).map((s) => updateTaskStatus(s.id, 'todo')),
+    )
+  }
+
+  // Notas del detalle. No es optimista: el campo ya muestra lo escrito, y la lista
+  // solo se actualiza con lo que la API confirmó que guardó.
+  async function saveNotes(task: Task, notes: string): Promise<boolean> {
+    const result = await updateTaskNotes(task.id, notes)
+    if ('error' in result) {
+      toast.show({ message: result.error, icon: 'info' })
+      return false
+    }
+    patch(task.id, (t) => ({ ...t, notes: result.task.notes }))
+    return true
+  }
+
+  // Marcar hecha o mover de columna: si se marca sin querer, la tarea se va de la lista (las hechas
+  // están ocultas) y antes no quedaba rastro. Ahora el aviso dice qué pasó y ofrece "Deshacer";
+  // si la API falla, la tarea vuelve a como estaba en vez de quedarse cambiada solo en pantalla.
   function setStatus(task: Task, status: TaskStatus) {
     if (task.status === status) return
-    applyStatus(task.id, status, true)
+    const previous = task
+    applyStatus(task.id, status)
+    startTransition(async () => {
+      const result = await updateTaskStatus(task.id, status)
+      if ('error' in result) {
+        patch(task.id, () => previous)
+        toast.show({ message: result.error, icon: 'info' })
+        return
+      }
+      toast.show({
+        message:
+          status === 'done'
+            ? `"${task.title}" está hecha.`
+            : `"${task.title}" pasó a ${STATUS_LABEL[status]}.`,
+        icon: status === 'done' ? 'check' : 'info',
+        onUndo: () => startTransition(() => revertStatus(previous)),
+      })
+    })
   }
 
   function toggleDone(task: Task) {
@@ -149,7 +184,14 @@ export function TasksView({
     }))
     startTransition(async () => {
       const result = await updateTaskStatus(subtaskId, done ? 'done' : 'todo')
-      if ('error' in result) toast.show({ message: result.error, icon: 'info' })
+      if ('error' in result) {
+        // Si falla, la subtarea vuelve a como estaba (sin aviso de "Deshacer": se marcan seguido).
+        patch(task.id, (t) => ({
+          ...t,
+          subtasks: t.subtasks.map((s) => (s.id === subtaskId ? { ...s, done: !done } : s)),
+        }))
+        toast.show({ message: result.error, icon: 'info' })
+      }
     })
   }
 
@@ -275,29 +317,27 @@ export function TasksView({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: EASE_OUT, delay: 0.1 }}
         >
-          <motion.button
-            type="button"
-            className={[
-              styles.doneToggle,
-              showDone ? styles.doneToggleOn : null,
-              responsive.hideOnPhone,
-            ]
-              .filter(Boolean)
-              .join(' ')}
-            aria-pressed={showDone}
-            onClick={() => setShowDone((value) => !value)}
-            whileTap={{ scale: 0.96 }}
-            // En el tablero las hechas siempre se ven en su columna: el interruptor no aplica.
-            disabled={view === 'board'}
-            title={
-              view === 'board'
-                ? 'En el tablero las hechas están en su columna'
-                : undefined
-            }
-          >
-            <LineIcon d="M5 12l5 5L20 7" size={16} strokeWidth={2} />
-            Mostrar hechas
-          </motion.button>
+          {/* En el tablero las hechas siempre se ven en su columna: ahí el interruptor no aplica y se
+              oculta (antes quedaba desactivado y la razón solo salía al pasar el mouse). En el teléfono
+              vive dentro del cajón "Filtrar". */}
+          {view === 'list' ? (
+            <motion.button
+              type="button"
+              className={[
+                styles.doneToggle,
+                showDone ? styles.doneToggleOn : null,
+                responsive.hideOnPhone,
+              ]
+                .filter(Boolean)
+                .join(' ')}
+              aria-pressed={showDone}
+              onClick={() => setShowDone((value) => !value)}
+              whileTap={{ scale: 0.96 }}
+            >
+              <LineIcon d="M5 12l5 5L20 7" size={16} strokeWidth={2} />
+              Mostrar hechas
+            </motion.button>
+          ) : null}
           <Segmented
             label="Vista"
             value={view}
@@ -435,6 +475,7 @@ export function TasksView({
         onToggleSubtask={toggleSubtask}
         onChangeStatus={setStatus}
         onDelete={setDeletingTask}
+        onSaveNotes={saveNotes}
       />
       <TaskDeleteDialog
         task={deletingTask}

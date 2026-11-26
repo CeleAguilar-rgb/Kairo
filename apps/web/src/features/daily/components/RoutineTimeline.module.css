@@ -83,7 +83,7 @@
 .iconFocus {
   align-self: start;
   margin-top: var(--space-4);
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--text);
 }
 
@@ -215,7 +215,7 @@
   font-weight: 500;
   padding: 2px var(--space-4);
   border-radius: var(--radius-pill);
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--text);
 }
 
@@ -272,7 +272,7 @@
   min-height: 40px;
   padding: 0 var(--space-7);
   border-radius: var(--radius-pill);
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--text);
   font-weight: 500;
   cursor: pointer;

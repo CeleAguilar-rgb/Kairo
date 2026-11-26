@@ -4,14 +4,14 @@ import { AnimatePresence, motion } from 'motion/react'
 import { TASK_STATUSES } from '@kairo/shared'
 import { useState, type DragEvent, type ReactNode } from 'react'
 
-import type { IsoDate } from '@/lib/dates'
+import { addDays, type IsoDate } from '@/lib/dates'
 import { DURATION, EASE_OUT, SPRING } from '@/lib/motion'
 import { useEntering } from '@/lib/use-entering'
 
-import { dueLabel, dueTone } from '../grouping'
+import { byDue, dueLabel, dueTone } from '../grouping'
 import { STATUS_LABEL, type Task, type TaskStatus } from '../types'
 
-import { DueText, ProjectChip, SubtaskCount } from './TaskBits'
+import { DueText, PriorityBadge, ProjectChip, SubtaskCount } from './TaskBits'
 import styles from './TaskBoard.module.css'
 
 type TaskBoardProps = {
@@ -42,6 +42,12 @@ const COLUMN_ICON: Record<TaskStatus, ReactNode> = {
   done: <path d="M5 12l5 5L20 7" />,
 }
 
+// Cerrada antes de los últimos 7 días (contando hoy). Sin fecha de cierre (datos viejos) cuenta
+// como antigua: así no llena la columna. doneAt es un momento en UTC; para esta cuenta basta su día.
+function isOlderThanAWeek(doneAt: string | null, today: IsoDate): boolean {
+  return !doneAt || doneAt.slice(0, 10) < addDays(today, -6)
+}
+
 // Vista Tablero de Tareas.dc.html: una columna por estado. Se arrastra una
 // tarjeta a otra columna, o se usa la flecha de la tarjeta (que también sirve
 // con teclado y en pantallas táctiles, donde arrastrar no funciona).
@@ -56,6 +62,7 @@ export function TaskBoard({
 }: TaskBoardProps) {
   const [dragId, setDragId] = useState<string | null>(null)
   const [overStatus, setOverStatus] = useState<TaskStatus | null>(null)
+  const [showOlderDone, setShowOlderDone] = useState(false)
   // Al entrar, las tarjetas llegan escalonadas por columna; las que se mueven o se crean después no esperan.
   const entering = useEntering()
 
@@ -74,11 +81,18 @@ export function TaskBoard({
   return (
     <div className={styles.board}>
       {TASK_STATUSES.map((status, columnIndex) => {
-        const cards = tasks
-          .filter((t) => t.status === status)
-          .sort((a, b) => a.position - b.position)
+        const column = tasks.filter((t) => t.status === status)
+        // Abiertas: por fecha, como la Lista (lo más urgente arriba). Hecho: lo último que se cerró arriba.
+        const sorted =
+          status === 'done'
+            ? column.sort((a, b) => (b.doneAt ?? '').localeCompare(a.doneAt ?? ''))
+            : column.sort(byDue)
+        // "Hecho" crecía sin límite: muestra lo de los últimos 7 días y el resto detrás de un botón.
+        const olderDone = status === 'done' && !showOlderDone ? sorted.filter((t) => isOlderThanAWeek(t.doneAt, today)) : []
+        const cards = olderDone.length > 0 ? sorted.filter((t) => !olderDone.includes(t)) : sorted
         const isOver = overStatus === status && dragId !== null
-        const next = TASK_STATUSES[(columnIndex + 1) % TASK_STATUSES.length]
+        // Sin flecha en la última columna: antes daba la vuelta y regresaba una tarea hecha a "Por hacer".
+        const next = columnIndex < TASK_STATUSES.length - 1 ? TASK_STATUSES[columnIndex + 1] : null
         return (
           <motion.section
             key={status}
@@ -208,26 +222,28 @@ export function TaskBoard({
                               <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />
                             </svg>
                           </button>
-                          <button
-                            type="button"
-                            className={styles.next}
-                            onClick={() => onMove(task, next)}
-                            aria-label={`Mover "${task.title}" a ${STATUS_LABEL[next]}`}
-                          >
-                            <svg
-                              width="16"
-                              height="16"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              aria-hidden="true"
+                          {next ? (
+                            <button
+                              type="button"
+                              className={styles.next}
+                              onClick={() => onMove(task, next)}
+                              aria-label={`Mover "${task.title}" a ${STATUS_LABEL[next]}`}
                             >
-                              <path d="M9 6l6 6-6 6" />
-                            </svg>
-                          </button>
+                              <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                aria-hidden="true"
+                              >
+                                <path d="M9 6l6 6-6 6" />
+                              </svg>
+                            </button>
+                          ) : null}
                         </div>
                       </div>
                       <h3 className={styles.cardTitle}>
@@ -257,6 +273,8 @@ export function TaskBoard({
                           </svg>
                         ) : null}
                         <SubtaskCount done={subsDone} total={task.subtasks.length} />
+                        {/* La Lista mostraba la prioridad y el tablero no; en "Hecho" ya no importa */}
+                        {status !== 'done' ? <PriorityBadge priority={task.priority} /> : null}
                         <span className={styles.cardDue}>
                           <DueText
                             label={dueLabel(task.dueOn, today, weekEnd)}
@@ -270,7 +288,13 @@ export function TaskBoard({
               })}
             </AnimatePresence>
 
-            {cards.length === 0 ? (
+            {olderDone.length > 0 ? (
+              <button type="button" className={styles.olderDone} onClick={() => setShowOlderDone(true)}>
+                Ver {olderDone.length} {olderDone.length === 1 ? 'anterior' : 'anteriores'}
+              </button>
+            ) : null}
+
+            {cards.length === 0 && olderDone.length === 0 ? (
               <p className={styles.dropHint}>Arrastra una tarjeta aquí</p>
             ) : null}
           </motion.section>

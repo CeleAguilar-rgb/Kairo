@@ -25,7 +25,7 @@
 }
 
 .task {
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--text);
-  border-color: var(--accent);
+  border-color: var(--accent-fill);
 }

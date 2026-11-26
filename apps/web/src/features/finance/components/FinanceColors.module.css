@@ -3,7 +3,7 @@
 
 /* Una categoría (FinPresupuesto): Lavanda, Lavanda suave, Arena, Durazno y Crema. */
 .cat_lavender {
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--text);
 }
 
@@ -34,7 +34,7 @@
 }
 
 .card_lavender {
-  background: var(--accent);
+  background: var(--accent-fill);
   color: var(--text);
 }
 

@@ -66,14 +66,21 @@ export function Greeting({ hello, subtitle, pendingCount, activeProjects, dueThi
     <section className={styles.hero} aria-labelledby="home-hello">
       <div className={styles.helloBlock}>
         <div className={styles.helloRow}>
-          <h1 id="home-hello" className={styles.hello}>
+          {/* Fundido corto (antes "se escribía" de izquierda a derecha con CSS; a la usuaria no le gustó) */}
+          <motion.h1
+            id="home-hello"
+            className={styles.hello}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, ease: EASE_OUT }}
+          >
             {hello}
-          </h1>
+          </motion.h1>
           <motion.span
             className={styles.sun}
             initial={{ scale: 0, rotate: -90 }}
             animate={{ scale: 1, rotate: 8 }}
-            transition={{ ...SPRING.pop, delay: 0.9 }}
+            transition={{ ...SPRING.pop, delay: 0.3 }}
           >
             <span className={styles.sunSpin}><Doodle kind="sun" size={62} strokeWidth={2} /></span>
           </motion.span>
@@ -86,7 +93,7 @@ export function Greeting({ hello, subtitle, pendingCount, activeProjects, dueThi
             strokeLinecap="round"
             initial={{ pathLength: 0 }}
             animate={{ pathLength: 1 }}
-            transition={{ duration: 1, delay: 0.9, ease: 'easeOut' }}
+            transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
           />
         </svg>
         <motion.p

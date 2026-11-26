@@ -127,7 +127,7 @@ export function SchoolView({
   }
 
   return (
-    <div className={styles.page}>
+    <main className={styles.page}>
       <SchoolHeader
         mode={mode}
         onModeChange={setMode}
@@ -187,6 +187,6 @@ export function SchoolView({
         onClose={() => setTermDrawerOpen(false)}
         onSaved={() => setTermDrawerOpen(false)}
       />
-    </div>
+    </main>
   )
 }

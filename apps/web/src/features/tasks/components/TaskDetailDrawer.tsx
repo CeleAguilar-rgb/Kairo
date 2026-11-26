@@ -1,6 +1,7 @@
 'use client'
 
 import { AnimatePresence, motion } from 'motion/react'
+import { useEffect, useEffectEvent, useRef, useState } from 'react'
 
 import { Button } from '@/components/ui/Button'
 import { Checkbox } from '@/components/ui/Checkbox'
@@ -33,6 +34,82 @@ type TaskDetailDrawerProps = {
   onChangeStatus?: (task: Task, status: TaskStatus) => void
   // Si viene, el panel muestra "Borrar" (Tareas); Inicio no lo necesita.
   onDelete?: (task: Task) => void
+  // Si viene, las notas se editan y se guardan solas (Tareas). Devuelve si se guardó.
+  onSaveNotes?: (task: Task, notes: string) => Promise<boolean>
+}
+
+type SaveState = 'idle' | 'saving' | 'saved' | 'error'
+
+const SAVE_LABEL: Record<SaveState, string> = {
+  idle: '',
+  saving: 'Guardando…',
+  saved: 'Guardado',
+  error: 'No se pudo guardar. Se intentará otra vez al seguir escribiendo.',
+}
+
+// Espera tras la última tecla antes de guardar: suficiente para no mandar una petición por letra.
+const SAVE_DELAY_MS = 800
+
+// Notas de la tarea: se guardan solas un momento después de dejar de escribir, al salir del campo
+// y al cerrar el panel. Antes había un campo "Notas" que no guardaba nada y lo escrito se perdía.
+function NotesField({ task, onSave }: { task: Task; onSave: (task: Task, notes: string) => Promise<boolean> }) {
+  const [value, setValue] = useState(task.notes ?? '')
+  const [state, setState] = useState<SaveState>('idle')
+  // Refs: lo último escrito y lo último guardado, para el temporizador y para el guardado al cerrar.
+  const savedRef = useRef(task.notes ?? '')
+  const valueRef = useRef(value)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  async function save() {
+    if (timerRef.current) clearTimeout(timerRef.current)
+    timerRef.current = null
+    const notes = valueRef.current
+    if (notes.trim() === savedRef.current.trim()) return
+    setState('saving')
+    const ok = await onSave(task, notes)
+    if (ok) savedRef.current = notes
+    // Si siguió escribiendo mientras se guardaba, el próximo guardado ya está en camino.
+    if (valueRef.current === notes) setState(ok ? 'saved' : 'error')
+  }
+
+  // useEffectEvent: la limpieza ve el task y onSave más recientes sin que el efecto dependa de ellos.
+  const saveOnClose = useEffectEvent(() => {
+    if (timerRef.current) clearTimeout(timerRef.current)
+    const notes = valueRef.current
+    if (notes.trim() !== savedRef.current.trim()) void onSave(task, notes)
+  })
+
+  // Al cerrar el panel (se desmonta el campo) se guarda lo que faltaba.
+  useEffect(() => () => saveOnClose(), [])
+
+  return (
+    <>
+      <div className={styles.sectionHead}>
+        <label htmlFor="detail-notes" className={styles.sectionTitle}>
+          Notas
+        </label>
+        <span className={styles.saveState} role="status" aria-live="polite">
+          {SAVE_LABEL[state]}
+        </span>
+      </div>
+      <textarea
+        id="detail-notes"
+        rows={4}
+        maxLength={5000}
+        className={styles.textarea}
+        placeholder="Escribe lo que necesites recordar…"
+        value={value}
+        onChange={(event) => {
+          setValue(event.target.value)
+          valueRef.current = event.target.value
+          setState('idle')
+          if (timerRef.current) clearTimeout(timerRef.current)
+          timerRef.current = setTimeout(() => void save(), SAVE_DELAY_MS)
+        }}
+        onBlur={() => void save()}
+      />
+    </>
+  )
 }
 
 // Panel lateral del detalle de un pendiente (Main.dc.html y Tareas.dc.html).
@@ -46,6 +123,7 @@ export function TaskDetailDrawer({
   onToggleSubtask,
   onChangeStatus,
   onDelete,
+  onSaveNotes,
 }: TaskDetailDrawerProps) {
   const focus = useFocus()
   const done = task?.status === 'done'
@@ -166,7 +244,8 @@ export function TaskDetailDrawer({
             </div>
           </motion.div>
 
-          {task.notes ? (
+          {/* Sin onSaveNotes (Inicio) las notas solo se leen; con él (Tareas) se editan aquí mismo */}
+          {!onSaveNotes && task.notes ? (
             <motion.p className={styles.notes} variants={fadeUp}>
               {task.notes}
             </motion.p>
@@ -233,17 +312,12 @@ export function TaskDetailDrawer({
             </motion.section>
           ) : null}
 
-          <motion.div className={styles.section} variants={fadeUp}>
-            <label htmlFor="detail-notes" className={styles.sectionTitle}>
-              Notas
-            </label>
-            <textarea
-              id="detail-notes"
-              rows={4}
-              className={styles.textarea}
-              placeholder="Escribe lo que necesites recordar…"
-            />
-          </motion.div>
+          {onSaveNotes ? (
+            <motion.div className={styles.section} variants={fadeUp}>
+              {/* key: al abrir otra tarea, el campo arranca de cero con sus notas */}
+              <NotesField key={task.id} task={task} onSave={onSaveNotes} />
+            </motion.div>
+          ) : null}
 
           <motion.div className={styles.actions} variants={fadeUp}>
             <Button

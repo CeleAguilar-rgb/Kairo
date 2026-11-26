@@ -100,7 +100,7 @@ export function TrashView({ items: initialItems, nowIso, timeZone }: TrashViewPr
     ) : null
 
   return (
-    <div className={styles.page}>
+    <main className={styles.page}>
       <section className={styles.header}>
         <PageHeading title="Papelera" doodle="spiral" doodleRotate={-8}>
           <p className={styles.lede}>Lo que borras se queda aquí 30 días. Después se borra para siempre.</p>
@@ -228,6 +228,6 @@ export function TrashView({ items: initialItems, nowIso, timeZone }: TrashViewPr
           </div>
         ) : null}
       </section>
-    </div>
+    </main>
   )
 }

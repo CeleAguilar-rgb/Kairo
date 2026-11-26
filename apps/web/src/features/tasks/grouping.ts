@@ -37,12 +37,37 @@ export function groupTasks(tasks: Task[], today: IsoDate, weekEnd: IsoDate, show
   }
   if (showDone) byKey.done = tasks.filter((t) => t.status === 'done')
 
-  // Dentro de cada grupo: por fecha y luego por el orden que eligió la persona.
-  const byDue = (a: Task, b: Task) => (a.dueOn ?? '9999').localeCompare(b.dueOn ?? '9999') || a.position - b.position
-
   return (Object.keys(byKey) as TaskGroupKey[])
     .map((key) => ({ key, name: GROUP_NAME[key], items: byKey[key].sort(byDue) }))
     .filter((group) => group.items.length > 0)
+}
+
+// Orden de las tareas abiertas (grupos de la Lista y columnas del Tablero): por fecha, las sin
+// fecha al final, y luego por el orden que eligió la persona.
+export function byDue(a: Task, b: Task): number {
+  return (a.dueOn ?? '9999').localeCompare(b.dueOn ?? '9999') || a.position - b.position
+}
+
+// Resumen bajo el título de Tareas: "21 pendientes: 1 para hoy, 8 vencidas y 3 más esta semana."
+// Antes decía "N vencen esta semana" contando también lo vencido de días pasados, y parecía que
+// todo era de hoy o de esta semana. Las partes en cero no se dicen.
+export function summarizePending(tasks: Task[], today: IsoDate, weekEnd: IsoDate): string {
+  const pending = tasks.filter((t) => t.status !== 'done')
+  if (pending.length === 0) return 'No tienes pendientes.'
+  const forToday = pending.filter((t) => t.dueOn === today).length
+  const overdue = pending.filter((t) => t.dueOn !== null && t.dueOn < today).length
+  const laterThisWeek = pending.filter((t) => t.dueOn !== null && t.dueOn > today && t.dueOn <= weekEnd).length
+
+  const parts = [
+    forToday > 0 ? `${forToday} para hoy` : null,
+    overdue > 0 ? `${overdue} ${overdue === 1 ? 'vencida' : 'vencidas'}` : null,
+    laterThisWeek > 0 ? `${laterThisWeek} más esta semana` : null,
+  ].filter((part): part is string => part !== null)
+
+  const total = `${pending.length} ${pending.length === 1 ? 'pendiente' : 'pendientes'}`
+  if (parts.length === 0) return `${total}.`
+  const list = parts.length === 1 ? parts[0] : `${parts.slice(0, -1).join(', ')} y ${parts[parts.length - 1]}`
+  return `${total}: ${list}.`
 }
 
 // La misma etiqueta de fecha que usa Proyectos (lógica compartida en lib/dates).

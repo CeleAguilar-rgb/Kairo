@@ -37,18 +37,6 @@
   /* La letra a mano se sale un poco de su caja (la s final): este margen la
      incluye en la caja, así el sol no la tapa */
   padding-right: 0.12em;
-  animation: write 1.1s cubic-bezier(0.6, 0, 0.2, 1) both;
-}
-
-@keyframes write {
-  /* Márgenes negativos: el recorte deja espacio para los trazos que se salen de
-     la caja del texto (rabitos, acentos, la s final) y no se los come al terminar */
-  from {
-    clip-path: inset(-0.3em 100% -0.3em -0.3em);
-  }
-  to {
-    clip-path: inset(-0.3em -0.3em -0.3em -0.3em);
-  }
 }
 
 .sun {
@@ -62,7 +50,7 @@
    en cada cuadro (con Motion eran ~60 por segundo para siempre). */
 .sunSpin {
   display: inline-flex;
-  animation: spin 40s linear 1.4s infinite;
+  animation: spin 40s linear 0.8s infinite;
 }
 
 @keyframes spin {
@@ -74,6 +62,8 @@
 .squiggle {
   margin: calc(var(--space-1) * -1) 0 var(--space-1) var(--space-1);
   max-width: 100%;
+  /* El trazo (5px) baja hasta y=17 en la tercera onda y el SVG mide 16: sin esto se cortaba abajo */
+  overflow: visible;
 }
 
 .subtitle {
@@ -215,7 +205,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hello,
   .sunSpin {
     animation: none;
   }
