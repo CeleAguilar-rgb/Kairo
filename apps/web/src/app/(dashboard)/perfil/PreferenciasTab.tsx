@@ -115,13 +115,19 @@ export function PreferenciasTab({ themePreference, colorTheme, themeIntensity }:
         <span className={styles.label} id="color-theme-label">
           Tema de color
         </span>
-        {/* En el teléfono los temas son solo círculos en una cuadrícula cerrada: --theme-cols divide exacto el
-            número de temas, así no sobra uno solo en el último renglón. */}
+        {/* Cada tema es solo su círculo. En el escritorio van todos en una fila (--theme-count); más angosto, en una
+            cuadrícula cerrada: --theme-cols divide exacto el número de temas, así no sobra uno solo en el último
+            renglón. */}
         <div
           role="radiogroup"
           aria-labelledby="color-theme-label"
           className={themeStyles.themes}
-          style={{ '--theme-cols': closedGridColumns(COLOR_THEME_OPTIONS.length) } as CSSProperties}
+          style={
+            {
+              '--theme-count': COLOR_THEME_OPTIONS.length,
+              '--theme-cols': closedGridColumns(COLOR_THEME_OPTIONS.length),
+            } as CSSProperties
+          }
         >
           {COLOR_THEME_OPTIONS.map((option) => {
             const selected = option.value === appearance.colorTheme
@@ -131,6 +137,7 @@ export function PreferenciasTab({ themePreference, colorTheme, themeIntensity }:
                 type="button"
                 role="radio"
                 aria-checked={selected}
+                title={option.label}
                 className={selected ? themeStyles.themeSelected : themeStyles.theme}
                 onClick={() => handleAppearanceChange({ ...appearance, colorTheme: option.value })}
               >
@@ -170,7 +177,7 @@ export function PreferenciasTab({ themePreference, colorTheme, themeIntensity }:
   )
 }
 
-// Cuántas columnas lleva la cuadrícula de temas en el teléfono: la mayor entre 7 y 4 que divida exacto el número
+// Cuántas columnas lleva la cuadrícula de temas cuando no caben en una fila: la mayor entre 7 y 4 que divida exacto el número
 // de temas (12 → 6 × 2), para que el último renglón quede lleno. Si ninguna divide, 7.
 function closedGridColumns(count: number): number {
   for (let cols = 7; cols >= 4; cols--) if (count % cols === 0) return cols

@@ -1,4 +1,8 @@
-/* Selector de tema de color (Temas.dc.html: chips con su punto de color, el elegido con anillo). */
+/* Selector de tema de color. El canvas (Temas.dc.html) usa chips con su punto de color y el nombre; aquí cada tema
+   es solo su círculo de color, en una cuadrícula cerrada, y abajo se lee el nombre y la descripción del elegido.
+   Empezó en el teléfono (los 12 chips de distinto ancho quedaban en renglones disparejos) y el 2026-11-25 se aplicó
+   también al escritorio, a pedido. Para volver a los chips en el escritorio: docs/escritorio/colores-y-animacion.md
+   (punto 16). */
 
 .section {
   display: flex;
@@ -7,38 +11,45 @@
   margin-top: var(--space-11);
 }
 
+/* Escritorio: los temas en una sola fila (--theme-count la pone el componente). Más angosto, en renglones
+   cerrados (--theme-cols: 12 temas → 6 × 2), para que no quede uno solo en el último renglón. */
 .themes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
+  display: grid;
+  grid-template-columns: repeat(var(--theme-count, 12), 48px);
+  gap: var(--space-3);
+}
+
+@media (max-width: 1080px) {
+  .themes {
+    grid-template-columns: repeat(var(--theme-cols, 7), 48px);
+  }
 }
 
 .theme,
 .themeSelected {
   all: unset;
   box-sizing: border-box;
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: var(--space-4);
-  min-height: 52px;
-  padding: var(--space-3) var(--space-7) var(--space-3) var(--space-3);
-  border-radius: var(--radius-pill);
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
   cursor: pointer;
   color: var(--text);
-  background: var(--surface-glass);
-  box-shadow: inset 0 0 0 1px var(--border);
+  background: transparent;
   transition:
-    background var(--duration-base) ease,
-    box-shadow var(--duration-base) ease;
+    background var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
 }
 
 .theme:hover {
   background: var(--surface-raised);
 }
 
+/* El elegido, con el anillo del canvas */
 .themeSelected {
-  font-weight: 500;
-  background: var(--surface);
   box-shadow: inset 0 0 0 2px var(--text);
 }
 
@@ -49,11 +60,21 @@
 }
 
 .swatch {
-  width: 28px;
-  height: 28px;
+  width: 74%;
+  aspect-ratio: 1;
   border-radius: 50%;
   flex-shrink: 0;
   box-shadow: inset 0 0 0 1px var(--border-control);
+}
+
+/* El nombre sigue ahí para el lector de pantalla, solo no se ve (con el mouse sale en el title del botón). */
+.name {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .hint {
@@ -61,16 +82,14 @@
   color: var(--text-muted);
 }
 
-/* El nombre del tema elegido antes de su descripción: solo hace falta en el teléfono, donde los temas son círculos. */
+/* El nombre del tema elegido antes de su descripción */
 .hintName {
-  display: none;
   color: var(--text);
   font-weight: 500;
 }
 
-/* Teléfono: los 12 chips de distinto ancho quedaban en renglones disparejos. Aquí cada tema es solo su círculo de
-   color, en una cuadrícula cerrada (--theme-cols la pone el componente: 12 temas → 6 × 2), y abajo se lee el nombre
-   y la descripción del elegido. Apariencia, Tema de color e Intensidad van centrados para que se lean como un bloque. */
+/* Teléfono: Apariencia, Tema de color e Intensidad van centrados para que se lean como un bloque, y los círculos
+   se achican hasta 44px para caber en pantallas angostas. */
 @media (max-width: 720px) {
   .centered {
     align-items: center;
@@ -86,49 +105,9 @@
   }
 
   .themes {
-    display: grid;
     grid-template-columns: repeat(var(--theme-cols, 7), minmax(0, 44px));
     justify-content: center;
-    gap: var(--space-3);
     width: 100%;
-  }
-
-  .theme,
-  .themeSelected {
-    position: relative;
-    justify-content: center;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1;
-    min-height: 0;
-    padding: 0;
-    border-radius: 50%;
-    background: transparent;
-    box-shadow: none;
-  }
-
-  .themeSelected {
-    box-shadow: inset 0 0 0 2px var(--text);
-  }
-
-  .swatch {
-    width: 74%;
-    height: auto;
-    aspect-ratio: 1;
-  }
-
-  /* El nombre sigue ahí para el lector de pantalla, solo no se ve. */
-  .name {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-
-  .hintName {
-    display: inline;
   }
 }
 
